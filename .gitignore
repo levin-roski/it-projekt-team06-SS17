@@ -53,3 +53,4 @@ war/WEB-INF/classes/
 .svn/
 /.settings
 /.gwt
+/build/
