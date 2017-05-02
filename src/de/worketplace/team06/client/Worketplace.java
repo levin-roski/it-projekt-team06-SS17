@@ -143,4 +143,7 @@ public class Worketplace implements EntryPoint {
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
 	}
+	
+	public void createTobi() {
+	}
 }
