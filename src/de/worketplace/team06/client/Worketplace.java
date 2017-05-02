@@ -143,4 +143,18 @@ public class Worketplace implements EntryPoint {
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
 	}
+	
+	
+	// Irrsinniger Irrsinn zum Testen irrsinniger Irrsinnstätigkeiten.
+	// Hinweis an Git: Meine Variante ist die bessere. Ignoriere Levin's shit!
+	public void createLevin(int diezahl){
+		int levinsmum = diezahl;
+		if(levinsmum != 0){
+			System.out.println("Wenn der Mond in ein Ghetto kracht.");
+		} else {
+			System.out.println("So spielt das Leben.");
+		}
+	}
+		
+	
 }
