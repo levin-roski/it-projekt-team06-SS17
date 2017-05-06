@@ -27,7 +27,6 @@ public abstract class BusinessObject implements Serializable {
 	/**
      * ID Zur Serialisierung und Prüfung der Version einer Klasse.
      * 
-     * @ author Johannes Müller
      */
 	private static final long serialVersionUID = 1L;
 
