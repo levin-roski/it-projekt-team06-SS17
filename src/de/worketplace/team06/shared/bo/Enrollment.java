@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 
  */
-public class Participation extends BusinessObject {
+public class Enrollment extends BusinessObject {
 
     /**
 	 * ID Zur Serialisierung und Prüfung der Version einer Klasse.
@@ -15,7 +15,7 @@ public class Participation extends BusinessObject {
 	/**
      * Default constructor
      */
-    public Participation() {
+    public Enrollment() {
     }
 
     /**
