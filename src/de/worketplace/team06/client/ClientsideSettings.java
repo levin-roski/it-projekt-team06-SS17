@@ -2,6 +2,8 @@ package de.worketplace.team06.client;
 
 import java.util.logging.Logger;
 
+import com.google.gwt.core.client.GWT;
+
 /**
  * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen relevant sind
  *
@@ -31,13 +33,13 @@ public class ClientsideSettings {
 	/**
 	 * 
 	 */
-	private static final Logger Log = Logger.getLogger(LOGGER_NAME);
+	private static final Logger log = Logger.getLogger(LOGGER_NAME);
 	
 	/**
 	 * 
 	 */
 	public static Logger getLogger() {
-		return Log;
+		return log;
 	}
 	
 	/**
@@ -45,7 +47,11 @@ public class ClientsideSettings {
 	 * @return
 	 */
 	public static EditorAsync getEditor() {
-		// TODO getEditor schreiben
+		if (editor == null) {
+			editor = GWT.create(Editor.class);
+		}
+		
+		return editor;
 	}
 	
 	/**
@@ -53,6 +59,10 @@ public class ClientsideSettings {
 	 * @return
 	 */
 	public static ReportGeneratorAsync getReportGenerator() {
-		// TODO getReportGenerator schreiben
+		if (reportGenerator == null) {
+			reportGenerator= GWT.create(ReportGenerator.class);
+		}
+		
+		return reportGenerator;
 	}
 }
