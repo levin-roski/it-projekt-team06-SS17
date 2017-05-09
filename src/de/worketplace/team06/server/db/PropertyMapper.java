@@ -1,5 +1,12 @@
 package de.worketplace.team06.server.db;
 
-public class Property {
+import java.util.*;
 
+/**
+ * 
+ */
+public class PropertyMapper {
+
+	
+	
 }
