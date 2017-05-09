@@ -6,16 +6,26 @@ import java.util.*;
  */
 public class PartnerProfileMapper {
 
+	private static PartnerProfileMapper partnerProfileMapper = null;
+	 /**
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
+	protected PartnerProfileMapper(){
+		
+	}
+	
+	public static PartnerProfileMapper partnerProfileMapper(){
+		if (partnerProfileMapper == null){
+			partnerProfileMapper = new PartnerProfileMapper();
+		}
+		return partnerProfileMapper; 
+	}
+	
 	 /**
      * Default constructor
      */
-    public PartnerProfileMapper() {
-    }
-
-    /**
-     * @param partnerProfile 
-     * @return
-     */
+  
     public PartnerProfile insert(PartnerProfile partnerProfile) {
         // TODO implement here
         return null;

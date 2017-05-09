@@ -32,14 +32,6 @@ import de.worketplace.team06.shared.bo.*;
 	     * @return
 	     */
 	    public Team insert (Team t) {
-	        // TODO implement here
-	    	Connection con = DBConnection.connection();
-	    	
-	    	try{
-	    		Statement stmt = con.createStatement();
-	    		
-	    		}
-	    	
 	        return null;
 	    }
 
