@@ -20,7 +20,7 @@ public class CallMapper {
 		
 		return callMapper;
 	}
-	
+/*	
 	public Call findByKey(int id)
 	
 	public Call findBy schauen 
@@ -30,4 +30,5 @@ public class CallMapper {
 	public Call update(Call a)
 	
 	public void delete(Call a)
+*/
 }

@@ -20,9 +20,9 @@ public class PersonMapper {
 		
 		return personMapper;
 	}
-	
+/*	
 	public Person findByKey(int id)
-	
+
 	public Person findBy schauen 
 	
 	public Person insert(Person a)
@@ -30,4 +30,5 @@ public class PersonMapper {
 	public Person update(Person a)
 	
 	public void delete(Person a)
+*/
 }

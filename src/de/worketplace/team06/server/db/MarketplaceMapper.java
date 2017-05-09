@@ -20,7 +20,7 @@ public class MarketplaceMapper {
 		
 		return marketplaceMapper;
 	}
-	
+/*	
 	public Marketplace findByKey(int id)
 	
 	public Marketplace findBy schauen 
@@ -30,4 +30,5 @@ public class MarketplaceMapper {
 	public Marketplace update(Marketplace a)
 	
 	public void delete(Marketplace a)
+*/
 }

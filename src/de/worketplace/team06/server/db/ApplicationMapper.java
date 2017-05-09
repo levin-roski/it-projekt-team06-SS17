@@ -20,7 +20,7 @@ public class ApplicationMapper {
 		
 		return applicationMapper;
 	}
-	
+/*
 	public Application findByKey(int id)
 	
 	public Application findBy schauen 
@@ -30,4 +30,5 @@ public class ApplicationMapper {
 	public Application update(Application a)
 	
 	public void delete(Application a)
+*/
 }

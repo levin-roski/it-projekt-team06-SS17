@@ -20,7 +20,7 @@ public class EnrollmentMapper {
 		
 		return enrollmentMapper;
 	}
-	
+/*	
 	public Enrollment findByKey(int id)
 	
 	public Enrollment findBy schauen 
@@ -30,4 +30,5 @@ public class EnrollmentMapper {
 	public Enrollment update(Enrollment a)
 	
 	public void delete(Enrollment a)
+*/
 }
