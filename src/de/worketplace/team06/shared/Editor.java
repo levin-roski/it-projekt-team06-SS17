@@ -6,41 +6,76 @@ import java.util.*;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+
 import de.worketplace.team06.shared.bo.*;
+
 /**
+ * <p>
+ * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Verwaltung des worketplace.
+ * </p>
+ * <p>
+ * Neben den Business Objekten existiert diese Klasse um die Verflechtungen der Business 
+ * Objekte darzustellen. Des Weiteren wird die eigentliche Applikationslogik in dieser 
+ * Klasse realisiert. Diese Klasse wird benötigt damit andere Subklassen von
+ * {@link BusinessObject} nicht zu sehr mtieinander gekoppelt werden. In der vorliegenden 
+ * Klasse wird das Wissen darüber, wie einzelene "Daten"-Objekte koexistieren gekapselt.
  * 
+ * <p>
+ * <code>@RemoteServiceRelativePath("bankadministration")</code> ist bei der
+ * Adressierung des aus der zugehörigen Impl-Klasse entstehenden
+ * Servlet-Kompilats behilflich. Es gibt im Wesentlichen einen Teil der URL des
+ * Servlets an.
+ * </p>
+ * 
+ * @author Thies, Johannes Müller
  */
 @RemoteServiceRelativePath("worketplaceadministration")
 public interface Editor extends RemoteService {
 
 
     /**
+     * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
+     * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
+     * {@link EditorImpl} notwendig. Bitte diese Methode direkt nach der
+     * Instantiierung aufrufen.
      * 
+     * @throws IllegalArgumentException
+     * @author Thies
      */
     public void init() throws IllegalArgumentException;
 
     /**
-     * @param userID 
+     * Abfragen ob der User existiert.
+     * 
+     * @param userID die zu abfragende ID eines Users
      * @return
      */
     public boolean checkExistence(int userID) throws IllegalArgumentException;
 
     /**
-     * @param person
+     * Speichern eines Objekts vom Typ Person (Subklasse von OrgaUnit)
+     * 
+     * @param person die zu speichernde Person
      */
     public void savePerson(Person person) throws IllegalArgumentException;
 
     /**
-     * @param team
+     * Speichern eines Objekts vom Typ Team (Subklasse von OrgaUnit)
+     * 
+     * @param team das zu speichernde Team
      */
     public void saveTeam(Team team) throws IllegalArgumentException;
 
     /**
-     * @param organisation
+     * Speichern eines Objekts vom Typ Organisation (Subklasse von OrgaUnit)
+     * 
+     * @param organisation die zu speichernde Organisation
      */
     public void saveOrganisation(Organisation organisation) throws IllegalArgumentException;
 
     /**
+     * Abfragen des Partnerprofils einer Organisationseinheit. 
+     * 
      * @param orgaUnit 
      * @return
      */
