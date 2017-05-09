@@ -144,10 +144,4 @@ public class Worketplace implements EntryPoint {
 		nameField.addKeyUpHandler(handler);
 	}
 	
-
-
-
-	
-	
-	
 }
