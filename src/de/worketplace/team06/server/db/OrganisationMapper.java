@@ -11,7 +11,7 @@ public class OrganisationMapper {
 	/**
      * Default constructor
      */
-	private static OrganisationMapper teamMapper = null;
+	private static OrganisationMapper organisationMapper = null;
 	 /**
 	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
@@ -36,8 +36,7 @@ public class OrganisationMapper {
     	
     	try{
     		Statement stmt = con.createStatement();
-    		
-    		}
+    	}
         return null;
     }
 
@@ -54,7 +53,8 @@ public class OrganisationMapper {
      * @param orgaUnit
      */
     public Organisation findById (int id){
-    	
+    	Team a = new Team();
+    	return a; 
     }
     
     
@@ -65,7 +65,7 @@ public class OrganisationMapper {
     /**
      * @return
      */
-    public Vector<Organisaoion> findAll() {
+    public Vector<Organisation> findAll() {
         // TODO implement here
         return null;
     }
