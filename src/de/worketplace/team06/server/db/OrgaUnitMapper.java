@@ -1,5 +1,7 @@
 package de.worketplace.team06.server.db;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.*;
 
 import de.worketplace.team06.shared.bo.OrgaUnit;
@@ -7,19 +9,38 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
 	 * 
 	 */
 	public class OrgaUnitMapper {
-
 	    /**
 	     * Default constructor
 	     */
-	    public OrgaUnitMapper() {
-	    }
-
+		private static OrgaUnitMapper orgaUnitMapper = null;
+		 /**
+		   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+		   * neue Instanzen dieser Klasse zu erzeugen.
+		   */
+		protected OrgaUnitMapper(){
+			
+		}
+		
+		public static OrgaUnitMapper orgaUnitMapper(){
+			if (orgaUnitMapper == null){
+				orgaUnitMapper = new OrgaUnitMapper();
+			}
+			return orgaUnitMapper; 
+		}
 	    /**
 	     * @param orgaUnit 
 	     * @return
 	     */
-	    public OrgaUnit insert(OrgaUnit orgaUnit) {
+	    public OrgaUnit insert(OrgaUnit o) {
 	        // TODO implement here
+	    	Connection con = DBConnection.connection();
+	    	
+	    	try{
+	    		Statement stmt = con.createStatement();
+	    		
+	    		ResultSet rs = stmt.executeQuery(" ");
+	    	}
+	    	
 	        return null;
 	    }
 
