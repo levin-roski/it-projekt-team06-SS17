@@ -1,68 +1,33 @@
 package de.worketplace.team06.server.db;
 
-import java.util.*;
+import java.sql.*;
+import java.util.Vector;
 
-/**
- * 
- */
-public class CallMapper extends ApplicationMapper {
+import de.worketplace.team06.shared.bo.*;
 
-    /**
-     * Default constructor
-     */
-    public CallMapper() {
-    }
+public class CallMapper {
+	
+	private static CallMapper callMapper = null;
+	
+	protected CallMapper() {
+		
+	}
 
-
-    /**
-     * @param call 
-     * @return
-     */
-    public Call insert(Call call) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param call 
-     * @return
-     */
-    public Call update(Call call) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param call
-     */
-    public void delete(Call call) {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public Vector<Call> findAll() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param partnerProfile 
-     * @return
-     */
-    public Vector<Call> findByPartnerProfile(PartnerProfile partnerProfile) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param orgaUnit 
-     * @return
-     */
-    public Vector<Call> findByOrgaUnit(OrgaUnit orgaUnit) {
-        // TODO implement here
-        return null;
-    }
-
+	public static CallMapper callMapper() {
+		if (callMapper == null) {
+			callMapper = new CallMapper();
+		}
+		
+		return callMapper;
+	}
+	
+	public Call findByKey(int id)
+	
+	public Call findBy schauen 
+	
+	public Call insert(Call a)
+	
+	public Call update(Call a)
+	
+	public void delete(Call a)
 }

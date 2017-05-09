@@ -1,63 +1,33 @@
 package de.worketplace.team06.server.db;
 
-package server.db;
+import java.sql.*;
+import java.util.Vector;
 
-import java.util.*;
+import de.worketplace.team06.shared.bo.*;
 
-/**
- * 
- */
-public class MarketplaceMapper extends ApplicationMapper {
+public class MarketplaceMapper {
+	
+	private static MarketplaceMapper marketplaceMapper = null;
+	
+	protected MarketplaceMapper() {
+		
+	}
 
-    /**
-     * Default constructor
-     */
-    public MarketplaceMapper() {
-    }
-
-
-
-
-    /**
-     * @param marketplace 
-     * @return
-     */
-    public Marketplace insert(Marketplace marketplace) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param marketplace 
-     * @return
-     */
-    public Marketplace update(Marketplace marketplace) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param marketplace
-     */
-    public void delete(Marketplace marketplace) {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public Vector<Marketplace> findAll() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param orgaUnit 
-     * @return
-     */
-    public Vector<Marketplace> findByOrgaUnit(OrgaUnit orgaUnit) {
-        // TODO implement here
-        return null;
-    }
-
+	public static MarketplaceMapper marketplaceMapper() {
+		if (marketplaceMapper == null) {
+			marketplaceMapper = new MarketplaceMapper();
+		}
+		
+		return marketplaceMapper;
+	}
+	
+	public Marketplace findByKey(int id)
+	
+	public Marketplace findBy schauen 
+	
+	public Marketplace insert(Marketplace a)
+	
+	public Marketplace update(Marketplace a)
+	
+	public void delete(Marketplace a)
 }
