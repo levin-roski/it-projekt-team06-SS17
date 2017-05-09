@@ -21,11 +21,26 @@ public class ApplicationMapper {
 		return applicationMapper;
 	}
 /*
-	public Application findByKey(int id)
+	public Application findByID(int id)
+		
 	
-	public Application findBy schauen 
 	
-	public Application insert(Application a)
+	public Vector<Application> findAll() {
+		Connection con = DBConnection.connection();
+		
+		Vector<Application> result = new Vector<Application>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT appl_id, appl_created, appl_text, call_id, rat_id FROM application " + "ORDER BY id");
+		}
+	}
+	
+	
+/*	public Application findBy schauen 
+ * 
+ * public Application insert(Application a)
 	
 	public Application update(Application a)
 	
