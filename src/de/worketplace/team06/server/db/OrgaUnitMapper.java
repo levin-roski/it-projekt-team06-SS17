@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.db;
 
 import java.util.*;
+
+import de.worketplace.team06.shared.bo.OrgaUnit;
 	/**
 	 * 
 	 */

@@ -29,7 +29,7 @@ import de.worketplace.team06.shared.bo.*;
  * 
  * @author Thies, Johannes Müller
  */
-@RemoteServiceRelativePath("worketplaceadministration")
+@RemoteServiceRelativePath("editorController")
 public interface Editor extends RemoteService {
 
 

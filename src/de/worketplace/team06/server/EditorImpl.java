@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+
 import de.worketplace.team06.shared.Editor;
 import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
@@ -27,8 +28,11 @@ public class EditorImpl extends RemoteServiceServlet implements Editor{
 	private static final long serialVersionUID = 1L;
 
 	public void init() throws IllegalArgumentException{
+		/*this.cMapper = CustomerMapper.customerMapper();
+		this.ouMapper = OrgaUnitMapper.orgaUnitMapper();*/
 		
 	}
+	
 	
 
 	/**
@@ -45,7 +49,7 @@ public class EditorImpl extends RemoteServiceServlet implements Editor{
 	 */
 	@Override
 	public void savePerson(Person person) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO Hannes testet was in dieser Methode
 		
 	}
 
