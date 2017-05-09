@@ -1,52 +1,57 @@
 package de.worketplace.team06.server.db;
 
-package server.db;
-
 import java.util.*;
 
 /**
  * 
  */
-public class MarketplaceMapper extends ApplicationMapper {
+public class CallMapper extends ApplicationMapper {
 
     /**
      * Default constructor
      */
-    public MarketplaceMapper() {
+    public CallMapper() {
     }
 
 
-
-
     /**
-     * @param marketplace 
+     * @param call 
      * @return
      */
-    public Marketplace insert(Marketplace marketplace) {
+    public Call insert(Call call) {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param marketplace 
+     * @param call 
      * @return
      */
-    public Marketplace update(Marketplace marketplace) {
+    public Call update(Call call) {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param marketplace
+     * @param call
      */
-    public void delete(Marketplace marketplace) {
+    public void delete(Call call) {
         // TODO implement here
     }
 
     /**
      * @return
      */
-    public Vector<Marketplace> findAll() {
+    public Vector<Call> findAll() {
+        // TODO implement here
+        return null;
+    }
+
+    /**
+     * @param partnerProfile 
+     * @return
+     */
+    public Vector<Call> findByPartnerProfile(PartnerProfile partnerProfile) {
         // TODO implement here
         return null;
     }
@@ -55,7 +60,7 @@ public class MarketplaceMapper extends ApplicationMapper {
      * @param orgaUnit 
      * @return
      */
-    public Vector<Marketplace> findByOrgaUnit(OrgaUnit orgaUnit) {
+    public Vector<Call> findByOrgaUnit(OrgaUnit orgaUnit) {
         // TODO implement here
         return null;
     }
