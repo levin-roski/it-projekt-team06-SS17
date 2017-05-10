@@ -1,7 +1,13 @@
 package de.worketplace.team06.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -19,14 +25,23 @@ public class Index implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		final Image logo = new Image("logo.png");
+		RootPanel.get("logo").add(logo);
+		
+		final Button editorButton = new Button("Editor");
+		editorButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Window.Location.assign("Editor.html");
+			}
+		});
+		RootPanel.get("editorButton").add(editorButton);
 
-		// RootPanel.get("sayHello").add();
-
-		final Button sendButton = new Button("Send");
-		// We can add style names to widgets
-		sendButton.addStyleName("sendButton");
-		// Add the nameField and sendButton to the RootPanel
-		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("editorButton").add(sendButton);
+		final Button reportGeneratorButton = new Button("ReportGenerator");
+		reportGeneratorButton.addClickHandler(new ClickHandler() {
+		  public void onClick(ClickEvent event) {
+		    Window.Location.assign("ReportGenerator.html");
+		  }
+		});
+		RootPanel.get("reportGeneratorButton").add(reportGeneratorButton);
 	}
 }
