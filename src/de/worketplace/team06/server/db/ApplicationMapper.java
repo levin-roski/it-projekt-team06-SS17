@@ -20,9 +20,30 @@ public class ApplicationMapper {
 		
 		return applicationMapper;
 	}
-/*
-	public Application findByID(int id)
+
+	public Application findById(int id) {
+		Connection con = DBConnection.connection();
 		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("Select id, created, text FROM application " + "WHERE id = " + id);
+			
+			if (rs.next()) {
+				Application a = new Application();
+				a.setId(rs.getInt("id"));
+				a.setCreated(rs.getTimestamp("created"));
+				a.setText(rs.getString("text"));
+				return a;
+			}
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+			
 	
 	
 	public Vector<Application> findAll() {
@@ -33,9 +54,24 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT appl_id, appl_created, appl_text, call_id, rat_id FROM application " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("Select id, created, text FROM application " + "ORDER BY id");
+			
+			while (rs.next()) {
+				
+				Application a = new Application();
+				a.setId(rs.getInt("id"));
+				a.setCreated(rs.getTimestamp("created"));
+				a.setText(rs.getString("text"));
+				
+				result.addElement(a);
+			}
 		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
 	}
+	
 	
 	
 /*	public Application findBy schauen 
