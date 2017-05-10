@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import com.google.appengine.api.utils.SystemProperty;
 
 /**
+ * 
  * Verwalten einer Verbindung zur Datenbank.
  * <p>
  * <b>Vorteil:</b> Sehr einfacher Verbindungsaufbau zur Datenbank.

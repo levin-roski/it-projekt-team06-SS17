@@ -1,8 +1,6 @@
 package de.worketplace.team06.client;
 
-import de.worketplace.team06.shared.FieldVerifier;
-import de.worketplace.team06.shared.GreetingService;
-import de.worketplace.team06.shared.GreetingServiceAsync;
+import de.worketplace.team06.shared.EditorAsync;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -35,15 +33,16 @@ public class Editor implements EntryPoint {
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+	private final EditorAsync editor = GWT.create(Editor.class);
 
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Hallo");
-
-		RootPanel.get("sayHello").add(sendButton);
+		
+		// RootPanel.get("sayHello").add();
+		
+		
 
 	}
 }
