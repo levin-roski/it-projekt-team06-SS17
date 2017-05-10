@@ -1,6 +1,9 @@
 package de.worketplace.team06.client;
 
 import de.worketplace.team06.shared.FieldVerifier;
+import de.worketplace.team06.shared.GreetingService;
+import de.worketplace.team06.shared.GreetingServiceAsync;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -142,21 +145,5 @@ public class Worketplace implements EntryPoint {
 		MyHandler handler = new MyHandler();
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
-	}
-	
-
-	public void createTobi() {
-	}
-
-	
-	// Irrsinniger Irrsinn zum Testen irrsinniger Irrsinnstätigkeiten.
-	// Hinweis an Git: Meine Variante ist die bessere. Ignoriere Levin's shit!
-	public void createLevin(int diezahl){
-		int levinsmum = diezahl;
-		if(levinsmum != 0){
-			System.out.println("Wenn der Mond in ein Ghetto kracht.");
-		} else {
-			System.out.println("So spielt das Leben.");
-		}
 	}
 }
