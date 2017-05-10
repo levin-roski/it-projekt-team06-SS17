@@ -7,12 +7,21 @@ import java.util.*;
  */
 public class ProjectMapper {
 
-	/**
-     * Default constructor
-     */
-    public ProjectMapper() {
-    }
-
+	private static ProjectMapper projectMapper = null;
+	 /**
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
+	protected ProjectMapper(){
+		
+	}
+	
+	public static ProjectMapper projecteMapper(){
+		if (projectMapper == null){
+			projectMapper = new ProjectMapper();
+		}
+		return projectMapper; 
+	}
 
     /**
      * @param project 

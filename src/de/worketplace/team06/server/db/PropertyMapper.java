@@ -7,11 +7,21 @@ import java.util.*;
  */
 public class PropertyMapper {
 
-	/**
-     * Default constructor
-     */
-    public PropertyMapper() {
-    }
+	private static PropertyMapper propertyMapper = null;
+	 /**
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
+	protected PropertyMapper(){
+		
+	}
+	
+	public static PropertyMapper propertyMapper(){
+		if (propertyMapper == null){
+			propertyMapper = new PropertyMapper();
+		}
+		return propertyMapper; 
+	}
 
     /**
      * @param property 
