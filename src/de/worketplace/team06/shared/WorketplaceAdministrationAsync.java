@@ -19,15 +19,15 @@ import de.worketplace.team06.shared.bo.Rating;
 import de.worketplace.team06.shared.bo.Team;
 
 /**
- * Das asynchrone Gegenstück des Interface {@link Editor}. Es wird
+ * Das asynchrone Gegenstück des Interface {@link WorketplaceAdministration}. Es wird
  * semiautomatisch durch das Google Plugin erstellt und gepflegt. Daher erfolgt
  * hier keine weitere Dokumentation. Für weitere Informationen siehe das
- * synchrone Interface {@link Editor}.
+ * synchrone Interface {@link WorketplaceAdministration}.
  * 
  * @author thies
  */
 
-public interface EditorAsync {
+public interface WorketplaceAdministrationAsync {
 
 	void applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText,
 			AsyncCallback<Application> callback);

@@ -18,7 +18,7 @@ public class ClientsideSettings {
 	/**
 	 * 
 	 */
-	private static EditorAsync editor = null;
+	private static WorketplaceAdministrationAsync editor = null;
 	
 	/**
 	 * 
@@ -46,7 +46,7 @@ public class ClientsideSettings {
 	 * 
 	 * @return
 	 */
-	public static EditorAsync getEditor() {
+	public static WorketplaceAdministrationAsync getEditor() {
 		if (editor == null) {
 			editor = GWT.create(Editor.class);
 		}

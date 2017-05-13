@@ -30,13 +30,13 @@ import de.worketplace.team06.shared.bo.*;
  * @author Thies, Johannes Müller
  */
 @RemoteServiceRelativePath("editorController")
-public interface Editor extends RemoteService {
+public interface WorketplaceAdministration extends RemoteService {
 
 
     /**
      * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
      * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
-     * {@link EditorImpl} notwendig. Bitte diese Methode direkt nach der
+     * {@link WorketplaceAdministrationImpl} notwendig. Bitte diese Methode direkt nach der
      * Instantiierung aufrufen.
      * 
      * @throws IllegalArgumentException

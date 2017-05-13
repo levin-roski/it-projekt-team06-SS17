@@ -6,7 +6,7 @@ import java.util.Vector;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 
-import de.worketplace.team06.shared.Editor;
+import de.worketplace.team06.shared.WorketplaceAdministration;
 import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Enrollment;
@@ -20,7 +20,7 @@ import de.worketplace.team06.shared.bo.Property;
 import de.worketplace.team06.shared.bo.Rating;
 import de.worketplace.team06.shared.bo.Team;
 
-public class EditorImpl extends RemoteServiceServlet implements Editor{
+public class WorketplaceAdministrationImpl extends RemoteServiceServlet implements WorketplaceAdministration{
 
 	/**
 	 *  

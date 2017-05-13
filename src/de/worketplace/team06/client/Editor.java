@@ -1,6 +1,6 @@
 package de.worketplace.team06.client;
 
-import de.worketplace.team06.shared.EditorAsync;
+import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -33,7 +33,7 @@ public class Editor implements EntryPoint {
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final EditorAsync editor = GWT.create(Editor.class);
+	private final WorketplaceAdministrationAsync editor = GWT.create(Editor.class);
 
 	/**
 	 * This is the entry point method.
