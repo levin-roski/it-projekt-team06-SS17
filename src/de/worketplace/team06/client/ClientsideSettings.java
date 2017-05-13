@@ -1,8 +1,10 @@
 package de.worketplace.team06.client;
 
 import java.util.logging.Logger;
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+import de.worketplace.team06.shared.*;
 
 /**
  * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen relevant sind
@@ -18,7 +20,7 @@ public class ClientsideSettings {
 	/**
 	 * 
 	 */
-	private static WorketplaceAdministrationAsync editor = null;
+	private static WorketplaceAdministrationAsync worketplaceAdministration = null;
 	
 	/**
 	 * 
@@ -46,12 +48,12 @@ public class ClientsideSettings {
 	 * 
 	 * @return
 	 */
-	public static WorketplaceAdministrationAsync getEditor() {
-		if (editor == null) {
-			editor = GWT.create(Editor.class);
+	public static WorketplaceAdministrationAsync getWorketplaceAdministration() {
+		if (worketplaceAdministration == null) {
+			worketplaceAdministration = GWT.create(WorketplaceAdministration.class);
 		}
 		
-		return editor;
+		return worketplaceAdministration;
 	}
 	
 	/**

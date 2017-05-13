@@ -1,22 +1,9 @@
 package de.worketplace.team06.shared;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.util.Date;
 import java.util.Vector;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-import de.worketplace.team06.shared.bo.Application;
-import de.worketplace.team06.shared.bo.Call;
-import de.worketplace.team06.shared.bo.Enrollment;
-import de.worketplace.team06.shared.bo.Marketplace;
-import de.worketplace.team06.shared.bo.OrgaUnit;
-import de.worketplace.team06.shared.bo.Organisation;
-import de.worketplace.team06.shared.bo.PartnerProfile;
-import de.worketplace.team06.shared.bo.Person;
-import de.worketplace.team06.shared.bo.Project;
-import de.worketplace.team06.shared.bo.Property;
-import de.worketplace.team06.shared.bo.Rating;
-import de.worketplace.team06.shared.bo.Team;
+import de.worketplace.team06.shared.bo.*;
 
 /**
  * Das asynchrone Gegenstück des Interface {@link WorketplaceAdministration}. Es wird
