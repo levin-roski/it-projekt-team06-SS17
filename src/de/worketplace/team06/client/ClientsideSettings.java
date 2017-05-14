@@ -2,7 +2,6 @@ package de.worketplace.team06.client;
 
 import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.shared.*;
 
@@ -25,7 +24,7 @@ public class ClientsideSettings {
 	/**
 	 * 
 	 */
-	private static ReportGeneratorAsync reportGenerator = null;
+//	private static ReportGeneratorAsync reportGenerator = null;
 	
 	/**
 	 * 
@@ -60,11 +59,11 @@ public class ClientsideSettings {
 	 * 
 	 * @return
 	 */
-	public static ReportGeneratorAsync getReportGenerator() {
-		if (reportGenerator == null) {
-			reportGenerator= GWT.create(ReportGenerator.class);
-		}
-		
-		return reportGenerator;
-	}
+//	public static ReportGeneratorAsync getReportGenerator() {
+//		if (reportGenerator == null) {
+//			reportGenerator= GWT.create(ReportGenerator.class);
+//		}
+//		
+//		return reportGenerator;
+//	}
 }

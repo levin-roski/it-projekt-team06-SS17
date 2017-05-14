@@ -15,7 +15,8 @@ import de.worketplace.team06.shared.bo.*;
  */
 
 public interface WorketplaceAdministrationAsync {
-
+	void getTestUnit(AsyncCallback<OrgaUnit> callback);
+	
 	void applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText,
 			AsyncCallback<Application> callback);
 
@@ -92,5 +93,4 @@ public interface WorketplaceAdministrationAsync {
 	void saveRating(Rating rating, AsyncCallback<Void> callback);
 
 	void saveTeam(Team team, AsyncCallback<Void> callback);
-
 }

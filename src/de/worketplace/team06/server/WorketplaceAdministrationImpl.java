@@ -33,7 +33,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 	}
 	
-	
+	public OrgaUnit getTestUnit() throws IllegalArgumentException {
+		OrgaUnit test = new OrgaUnit();
+		test.setName("Hans");
+		return test;
+	}
 
 	/**
 	 *  

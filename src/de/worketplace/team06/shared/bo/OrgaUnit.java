@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 
  */
-public abstract class OrgaUnit extends BusinessObject {
+public class OrgaUnit extends BusinessObject {
 
     /**
 	 * ID Zur Serialisierung und Prüfung der Version einer Klasse.
