@@ -247,8 +247,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
 			OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Project p = new Project();
+		p.setTitle(title);
+		p.setDescription(description);
+		p.setProjectLeaderID(projectLeaderPerson.getID());
+		p.setProjectOwnerID(projectOwnerOrgaUnit.getID());
+		p.setStartDate(startDate);
+		p.setEndDate(endDate);
+		
+		//Setzen einer vorläufigen ID
+		p.setID(1);
+		
+		//Objekt in der DB speichern
+		return this.projectMapper.insert(p);
 	}
 
 	/**
