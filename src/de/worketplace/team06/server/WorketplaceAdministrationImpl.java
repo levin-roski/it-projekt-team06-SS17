@@ -91,8 +91,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 
 	public void init() throws IllegalArgumentException{
-		/*this.cMapper = CustomerMapper.customerMapper();
-		this.ouMapper = OrgaUnitMapper.orgaUnitMapper();*/
+
+		//DB Mapper initialisieren
+		this.appMapper = ApplicationMapper.applicationMapper();
+		this.callMapper = CallMapper.callMapper();
+		this.enrollMapper = EnrollmentMapper.enrollmentMapper();
+		this.marketMapper = MarketplaceMapper.marketplaceMapper();
+		this.orgaMapper = OrganisationMapper.organisationMapper();
+		this.partnerMapper = PartnerProfileMapper.partnerProfileMapper();
+		this.personMapper = PersonMapper.personMapper();
+		this.projectMapper = ProjectMapper.projecteMapper();
+		this.propertyMapper = PropertyMapper.propertyMapper();
+		this.ratingMapper = RatingMapper.ratingMapper();
+		this.teamMapper = TeamMapper.teamMapper();
+		
 		
 	}
 	
