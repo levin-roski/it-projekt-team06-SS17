@@ -21,6 +21,9 @@ public class EnrollmentMapper {
 		return enrollmentMapper;
 	}
 /*	
+ * 
+ * PATRICK
+ * 
 	public Enrollment findByKey(int id)
 	
 	public Enrollment findBy schauen 

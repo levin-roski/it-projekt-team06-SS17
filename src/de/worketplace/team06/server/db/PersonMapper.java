@@ -21,6 +21,9 @@ public class PersonMapper {
 		return personMapper;
 	}
 /*	
+ * 
+ * PATRICK
+ * 
 	public Person findByKey(int id)
 
 	public Person findBy schauen 
