@@ -42,14 +42,12 @@ import de.worketplace.team06.shared.bo.*;
 	    			Team t = new Team();
 	    			t.setID(rs.getInt("id"));
 	    			t.setCreated(rs.getTimestamp("created"));
-	    		 
-	    			reutrn t;
 	    		}	
 	    	}
 	    	catch (SQLExpetion e){
 	    		e.printStackTrace();
-	    		return null;
 	    	}
+	    	return rs;
 	    }
 	  
 	    public Vector<Team> findAll() {
@@ -120,7 +118,7 @@ import de.worketplace.team06.shared.bo.*;
 	        try {
 	        	Statement stmt = con.createStatement();
 	        	
-	        	stmt.executeUpdate("DELETE FROM team " + "WHERE id=" + c.getID());
+	        	stmt.executeUpdate("DELETE FROM team " + "WHERE id=" + t.getID());
 	        }
 	        catch (SQLException e){
 	        	e.printStackTrace();
