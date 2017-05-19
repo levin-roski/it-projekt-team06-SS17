@@ -29,10 +29,7 @@ public class RatingMapper {
 		return ratingMapper; 
 	}
 
-    /**
-     * @param rating 
-     * @return
-     */
+
 	public Rating findById (int id){
     	Connection con = DBConnection.connection();
     	
@@ -44,7 +41,9 @@ public class RatingMapper {
     		if (rs.next()) {
     			Rating r = new Rating();
     			r.setID(rs.getInt("id"));
+    			r.setRatingStatement(rs.getString("statement"));
     			r.setCreated(rs.getTimestamp("created"));
+    			r.setRating(rs.getDouble("rating"));
     		}	
     	}
     	catch (SQLExpetion e){
@@ -114,7 +113,7 @@ public class RatingMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE rting " 
+        	stmt.executeUpdate("UPDATE rating " 
         	+ "SET statement=\"" + r.getRatingStatement() + "\", "
         	+ "created=\"" +  r.getCreated() + "\" " 
         	+ "rating=\"" +  r.getRating() + "\" " 
