@@ -359,12 +359,18 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Erstellen eines Marktplatzes
 	 */
+	// Wir benötigen für den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
 	@Override
 	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Marketplace m = new Marketplace();
+		m.setTitle(title);
+		//m.setCreated();
+		m.setID(1);
+		
+		//Objekt in der DB speichern
+		return this.marketMapper.insert(m);
 	}
 
 	/**
@@ -372,8 +378,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.marketMapper.update(marketplace);
 	}
 
 	/**
