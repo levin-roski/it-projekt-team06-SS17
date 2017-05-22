@@ -123,11 +123,34 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
+	 *  Methode zum erstellen einer Person. Es werden alle Attribute bis auf die partnerprofileID 
+	 *  gesetzt. Die Partnerprofile id kann zu einem spätzeren Zeitpunkt über die savePerson Methode
+	 *  gespeichert werden. 
 	 *  
 	 */
-	public void createPerson(String firstName, String lastName, String street, int zipcode, String city) throws IllegalArgumentException
+	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException
 	{
-	// TODO Methode befüllen
+		Person p = new Person();
+		Date created = new Date();
+		p.setFirstName(firstName);
+		p.setLastName(lastName);
+		p.setCity(city);
+		p.setCreated(created);
+		p.setDescription(description);
+		p.setGoogleID(googleID);
+		p.setStreet(street);
+		p.setZipcode(zipcode);
+		
+		/**
+		 *  Setzen einer vorläufigen ID. 
+		 *  Der korrekte bzw vortlaufende Primärschlüssel (=id) wird über eine Datenbankabfrage in der
+		 *  personMapper.insert Methode generiert. (Die Id muss mit den Datensätzen in der Datenbank
+		 *  konsistent sein) 
+		 */
+		p.setID(1);
+		
+		return this.personMapper.insert(p);
+		
 	}
 	
 	/**
