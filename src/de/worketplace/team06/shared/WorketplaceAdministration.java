@@ -3,10 +3,9 @@ package de.worketplace.team06.shared;
 
 import java.util.*;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-
-
 import de.worketplace.team06.shared.bo.*;
 
 /**
@@ -29,14 +28,14 @@ import de.worketplace.team06.shared.bo.*;
  * 
  * @author Thies, Johannes Müller
  */
-@RemoteServiceRelativePath("editorController")
-public interface Editor extends RemoteService {
-
+@RemoteServiceRelativePath("worketplaceAdmin")
+public interface WorketplaceAdministration extends RemoteService {
+	public OrgaUnit getTestUnit();
 
     /**
      * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
      * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
-     * {@link EditorImpl} notwendig. Bitte diese Methode direkt nach der
+     * {@link WorketplaceAdministrationImpl} notwendig. Bitte diese Methode direkt nach der
      * Instantiierung aufrufen.
      * 
      * @throws IllegalArgumentException

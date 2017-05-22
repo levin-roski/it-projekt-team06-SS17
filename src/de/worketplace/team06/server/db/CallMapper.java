@@ -21,6 +21,9 @@ public class CallMapper {
 		return callMapper;
 	}
 /*	
+ * 
+ * PATRICK
+ * 
 	public Call findByKey(int id)
 	
 	public Call findBy schauen 

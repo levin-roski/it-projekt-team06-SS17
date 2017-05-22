@@ -1,6 +1,9 @@
 package de.worketplace.team06.client;
 
 import de.worketplace.team06.shared.FieldVerifier;
+import de.worketplace.team06.shared.GreetingService;
+import de.worketplace.team06.shared.GreetingServiceAsync;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -143,5 +146,4 @@ public class Worketplace implements EntryPoint {
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
 	}
-	
 }

@@ -1,34 +1,22 @@
 package de.worketplace.team06.shared;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.util.Date;
 import java.util.Vector;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-import de.worketplace.team06.shared.bo.Application;
-import de.worketplace.team06.shared.bo.Call;
-import de.worketplace.team06.shared.bo.Enrollment;
-import de.worketplace.team06.shared.bo.Marketplace;
-import de.worketplace.team06.shared.bo.OrgaUnit;
-import de.worketplace.team06.shared.bo.Organisation;
-import de.worketplace.team06.shared.bo.PartnerProfile;
-import de.worketplace.team06.shared.bo.Person;
-import de.worketplace.team06.shared.bo.Project;
-import de.worketplace.team06.shared.bo.Property;
-import de.worketplace.team06.shared.bo.Rating;
-import de.worketplace.team06.shared.bo.Team;
+import de.worketplace.team06.shared.bo.*;
 
 /**
- * Das asynchrone Gegenstück des Interface {@link Editor}. Es wird
+ * Das asynchrone Gegenstück des Interface {@link WorketplaceAdministration}. Es wird
  * semiautomatisch durch das Google Plugin erstellt und gepflegt. Daher erfolgt
  * hier keine weitere Dokumentation. Für weitere Informationen siehe das
- * synchrone Interface {@link Editor}.
+ * synchrone Interface {@link WorketplaceAdministration}.
  * 
  * @author thies
  */
 
-public interface EditorAsync {
-
+public interface WorketplaceAdministrationAsync {
+	void getTestUnit(AsyncCallback<OrgaUnit> callback);
+	
 	void applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText,
 			AsyncCallback<Application> callback);
 
@@ -105,5 +93,4 @@ public interface EditorAsync {
 	void saveRating(Rating rating, AsyncCallback<Void> callback);
 
 	void saveTeam(Team team, AsyncCallback<Void> callback);
-
 }

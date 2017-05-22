@@ -5,35 +5,114 @@ import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.worketplace.team06.shared.*;
+//import de.worketplace.team06.shared.WorketplaceAdministration;
+import de.worketplace.team06.shared.bo.*;
+import de.hdm.thies.bankProjekt.server.db.CustomerMapper;
+import de.worketplace.team06.server.db.*;
 
-import de.worketplace.team06.shared.Editor;
-import de.worketplace.team06.shared.bo.Application;
-import de.worketplace.team06.shared.bo.Call;
-import de.worketplace.team06.shared.bo.Enrollment;
-import de.worketplace.team06.shared.bo.Marketplace;
-import de.worketplace.team06.shared.bo.OrgaUnit;
-import de.worketplace.team06.shared.bo.Organisation;
-import de.worketplace.team06.shared.bo.PartnerProfile;
-import de.worketplace.team06.shared.bo.Person;
-import de.worketplace.team06.shared.bo.Project;
-import de.worketplace.team06.shared.bo.Property;
-import de.worketplace.team06.shared.bo.Rating;
-import de.worketplace.team06.shared.bo.Team;
 
-public class EditorImpl extends RemoteServiceServlet implements Editor{
+
+public class WorketplaceAdministrationImpl extends RemoteServiceServlet implements WorketplaceAdministration{
 
 	/**
 	 *  
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObjekt "Application" mit der Datenbank
+	 * abgleicht.
+	 */
+	private ApplicationMapper appMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Call" mit der Datenbank
+	 * abgleicht.
+	 */
+	private CallMapper callMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Enrollment" mit der Datenbank
+	 * abgleicht.
+	 */
+	private EnrollmentMapper enrollMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Marketplace" mit der Datenbank
+	 * abgleicht.
+	 */
+	private MarketplaceMapper marketMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Organisation" mit der Datenbank
+	 * abgleicht.
+	 */
+	private OrganisationMapper orgaMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Partner" mit der Datenbank
+	 * abgleicht.
+	 */
+	private PartnerProfileMapper partnerMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Person" mit der Datenbank
+	 * abgleicht.
+	 */
+	private PersonMapper personMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Project" mit der Datenbank
+	 * abgleicht.
+	 */
+	private ProjectMapper projectMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Property" mit der Datenbank
+	 * abgleicht.
+	 */
+	private PropertyMapper propertyMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Rating" mit der Datenbank
+	 * abgleicht.
+	 */
+	private RatingMapper ratingMapper = null;
+	
+	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "Team" mit der Datenbank
+	 * abgleicht.
+	 */
+	private TeamMapper teamMapper = null;
+	
+
+	
 
 	public void init() throws IllegalArgumentException{
-		/*this.cMapper = CustomerMapper.customerMapper();
-		this.ouMapper = OrgaUnitMapper.orgaUnitMapper();*/
+
+		//DB Mapper initialisieren
+		this.appMapper = ApplicationMapper.applicationMapper();
+		this.callMapper = CallMapper.callMapper();
+		this.enrollMapper = EnrollmentMapper.enrollmentMapper();
+		this.marketMapper = MarketplaceMapper.marketplaceMapper();
+		this.orgaMapper = OrganisationMapper.organisationMapper();
+		this.partnerMapper = PartnerProfileMapper.partnerProfileMapper();
+		this.personMapper = PersonMapper.personMapper();
+		this.projectMapper = ProjectMapper.projecteMapper();
+		this.propertyMapper = PropertyMapper.propertyMapper();
+		this.ratingMapper = RatingMapper.ratingMapper();
+		this.teamMapper = TeamMapper.teamMapper();
+		
 		
 	}
 	
-	
+	public OrgaUnit getTestUnit() throws IllegalArgumentException {
+		OrgaUnit test = new OrgaUnit();
+		test.setName("Hans");
+		return test;
+	}
 
 	/**
 	 *  
@@ -168,8 +247,20 @@ public class EditorImpl extends RemoteServiceServlet implements Editor{
 	@Override
 	public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
 			OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Project p = new Project();
+		p.setTitle(title);
+		p.setDescription(description);
+		p.setProjectLeaderID(projectLeaderPerson.getID());
+		p.setProjectOwnerID(projectOwnerOrgaUnit.getID());
+		p.setStartDate(startDate);
+		p.setEndDate(endDate);
+		
+		//Setzen einer vorläufigen ID
+		p.setID(1);
+		
+		//Objekt in der DB speichern
+		return this.projectMapper.insert(p);
 	}
 
 	/**

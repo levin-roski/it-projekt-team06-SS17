@@ -1,7 +1,8 @@
 package de.worketplace.team06.server;
 
-import de.worketplace.team06.client.GreetingService;
 import de.worketplace.team06.shared.FieldVerifier;
+import de.worketplace.team06.shared.GreetingService;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

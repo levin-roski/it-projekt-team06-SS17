@@ -6,12 +6,12 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets --><servlet>
-  	<servlet-name>editor</servlet-name>
-  	<servlet-class>de.worketplace.team06.server.EditorImpl</servlet-class>
+  	<servlet-name>worketplaceAdministration</servlet-name>
+  	<servlet-class>de.worketplace.team06.server.WorketplaceAdministrationImpl</servlet-class>
 </servlet>
 	<servlet-mapping>
-		<servlet-name>editor</servlet-name>
-		<url-pattern>/editor/editorController</url-pattern>
+		<servlet-name>worketplaceAdministration</servlet-name>
+		<url-pattern>/editor/worketplaceAdmin</url-pattern>
 	</servlet-mapping>
 	<servlet>
     <servlet-name>greetServlet</servlet-name>

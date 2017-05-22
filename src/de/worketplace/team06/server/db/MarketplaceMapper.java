@@ -21,6 +21,10 @@ public class MarketplaceMapper {
 		return marketplaceMapper;
 	}
 /*	
+ * 
+ * 
+ * PATRICK
+ * 
 	public Marketplace findByKey(int id)
 	
 	public Marketplace findBy schauen 
