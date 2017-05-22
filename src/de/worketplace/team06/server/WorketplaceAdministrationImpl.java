@@ -333,7 +333,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setStartDate(startDate);
 		p.setEndDate(endDate);
 		
-		//Setzen einer vorläufigen ID
+		//Setzen einer vorlaueufigen ID
 		p.setID(1);
 		
 		//Objekt in der DB speichern
@@ -367,6 +367,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
 		//m.setCreated();
+		
+		//Setzen einer vorlaueufigen ID
 		m.setID(1);
 		
 		//Objekt in der DB speichern
@@ -424,8 +426,19 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Application a = new Application();
+		a.setCreated(created);
+		a.setApplicationText(applicationText);
+		
+		//***WICHTIG*** Hier muss noch das BO angepasst werden.
+		//a.setCall(call.getID());
+		//a.setOrgaUnit(applicantOrgaUnit.getID());
+		
+		//Setzen einer vorlaueufigen ID
+		a.setID(1);
+		
+		//Speichern einer ausgehenden Bewerbung in der Datenbank.
+		return this.appMapper.insert(a);
 	}
 
 	/**
@@ -433,7 +446,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.appMapper.update(application);
 		
 	}
 
