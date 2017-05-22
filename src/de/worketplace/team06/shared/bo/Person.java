@@ -13,7 +13,6 @@ public class Person extends OrgaUnit {
 	 /**
      * Deklaration der Attribute.
      */
-    private String googleID;  
     
     private String firstName;
     
@@ -28,9 +27,6 @@ public class Person extends OrgaUnit {
     /**
      * Getter Methoden für die einzelnen Attribute. 
      */
-    public String getGoogleID() {
-        return this.googleID;
-    }
     
     public String getFirstName() {
 		return firstName;
@@ -55,9 +51,6 @@ public class Person extends OrgaUnit {
     /**
      * Setter Methoden für die einzelnen Attribute.
      */
-    public void setGoogleID(String googleID) {
-        this.googleID = googleID;
-    }
     
     public void setVorname(String vorname) {
 		this.firstName = vorname;
