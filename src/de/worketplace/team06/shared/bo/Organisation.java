@@ -41,7 +41,7 @@ public class Organisation extends OrgaUnit {
         return this.street;
     }
 
-    public int getPostalcode() {
+    public int getZipcode() {
         return this.zipcode;
     }
 
@@ -60,7 +60,7 @@ public class Organisation extends OrgaUnit {
         this.street = street;
     }
 
-    public void setPostalcode(int postalcode) {
+    public void setZipcode(int postalcode) {
         this.zipcode = postalcode;
     }
 

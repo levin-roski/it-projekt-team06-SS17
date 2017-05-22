@@ -40,7 +40,7 @@ public class Person extends OrgaUnit {
 		return street;
 	}
     
-    public int getPostalcode() {
+    public int getZipcode() {
 		return zipcode;
 	}
     
@@ -52,11 +52,11 @@ public class Person extends OrgaUnit {
      * Setter Methoden für die einzelnen Attribute.
      */
     
-    public void setVorname(String vorname) {
+    public void setFirstName(String vorname) {
 		this.firstName = vorname;
 	}
     
-    public void setNachname(String nachname) {
+    public void setLastName(String nachname) {
 		this.lastName = nachname;
 	}
     
@@ -64,7 +64,7 @@ public class Person extends OrgaUnit {
 		this.street = street;
 	}
 
-	public void setPostalcode(int postalcode) {
+	public void setZipcode(int postalcode) {
 		this.zipcode = postalcode;
 	}
 	

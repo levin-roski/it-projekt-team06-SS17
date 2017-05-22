@@ -109,7 +109,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	public Person getTestUnit() throws IllegalArgumentException {
 		Person test = new Person();
-		test.setVorname("Hans");
+		test.setFirstName("Hans");
 		return test;
 	}
 
@@ -125,9 +125,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	/**
 	 *  
 	 */
+	public void createPerson(String firstName, String lastName, String street, int zipcode, String city) throws IllegalArgumentException
+	{
+	// TODO Methode befüllen
+	}
+	
+	/**
+	 *  
+	 */
 	@Override
 	public void savePerson(Person person) throws IllegalArgumentException {
-		// TODO Hannes testet was in dieser Methode
+		this.personMapper.update(person);
 		
 	}
 
