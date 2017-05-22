@@ -251,8 +251,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Marktplätze aus der DB
+		return this.marketMapper.findAll();
 	}
 
 	/**
@@ -260,8 +261,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.marketMapper.findById(orgaUnit.getID());
 	}
 
 	/**
@@ -269,8 +270,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getAllProjects() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//Auslesen aller Projekte aus der DB
+		return this.projectMapper.findAll();
 	}
 
 	/**
@@ -278,8 +279,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** Nochmals prüfen...
+		//Auslesen aller Projekte für eine OrgaUnit aus der DB
+		int findID = orgaUnit.getID();
+		return this.orgaMapper.findById(findID);
 	}
 
 	/**
@@ -287,8 +290,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Call> getAllCalls() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Calls aus der DB
+		return this.callMapper.findAll();
 	}
 
 	/**
@@ -296,8 +300,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Application> getAllApplications() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//Auslesen aller Bewerbungen aus der DB
+		return this.appMapper.findAll();
 	}
 
 	/**
@@ -305,8 +309,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** Nochmals prüfen...
+		//Auslesen aller Bewerbungen für eine OrgaUnit aus der DB
+		int findID = orgaUnit.getID();
+		return this.appMapper.findByOrganisationApplicant(findID);
 	}
 
 	/**
