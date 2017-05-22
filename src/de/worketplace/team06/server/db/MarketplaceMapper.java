@@ -35,4 +35,14 @@ public class MarketplaceMapper {
 	
 	public void delete(Marketplace a)
 */
+
+	public Vector<Marketplace> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Vector<Marketplace> findById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -13,7 +13,7 @@ public class OrganisationMapper {
      */
 	private static OrganisationMapper organisationMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected OrganisationMapper(){
@@ -52,9 +52,9 @@ public class OrganisationMapper {
     /**
      * @param orgaUnit
      */
-    public Organisation findById (int id){
-    	Team a = new Team();
-    	return a; 
+    public Vector<Project> findById (int id){
+    	// TODO implement here
+    	return null; 
     }
     
     

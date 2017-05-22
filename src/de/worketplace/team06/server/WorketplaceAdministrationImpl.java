@@ -226,12 +226,120 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.orgaMapper.update(organisation);
 		
 	}
+	@Override
+	public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList)
+			throws IllegalArgumentException {
+		
+		PartnerProfile profile = new PartnerProfile();
+		Date created = new Date();
+		
+		profile.setCreated(created);
+		profile.setLastedit(created);
+	
+		profile.setPropertyList(propertyList);
+		profile.setID(1);
+		
+		profile = this.partnerMapper.insert(profile);
+		call.setPartnerProfileID(profile.getID());
+		this.callMapper.update(call);
+		
+		return profile;
+	}
 
+	@Override
+	public PartnerProfile createPartnerProfileFor(Team team, Vector<Property> propertyList)
+			throws IllegalArgumentException {
+		
+		PartnerProfile profile = new PartnerProfile();
+		Date created = new Date();
+		
+		profile.setCreated(created);
+		profile.setLastedit(created);
+	
+		profile.setPropertyList(propertyList);
+		profile.setID(1);
+		
+		profile = this.partnerMapper.insert(profile);
+		team.setPartnerProfileID(profile.getID()); 
+		this.teamMapper.update(team);
+		
+		return profile;
+	}
+
+	@Override
+	public PartnerProfile createPartnerProfileFor(Organisation orga, Vector<Property> propertyList)
+			throws IllegalArgumentException {
+		
+		PartnerProfile profile = new PartnerProfile();
+		Date created = new Date();
+		
+		profile.setCreated(created);
+		profile.setLastedit(created);
+	
+		profile.setPropertyList(propertyList);
+		profile.setID(1);
+		
+		profile = this.partnerMapper.insert(profile);
+		orga.setPartnerProfileID(profile.getID()); 
+		this.orgaMapper.update(orga);
+		
+		return profile;
+	}
+
+	@Override
+	public PartnerProfile createPartnerProfileFor(Person person, Vector<Property> propertyList)
+			throws IllegalArgumentException {
+		
+		PartnerProfile profile = new PartnerProfile();
+		Date created = new Date();
+		
+		profile.setCreated(created);
+		profile.setLastedit(created);
+	
+		profile.setPropertyList(propertyList);
+		profile.setID(1);
+		
+		profile = this.partnerMapper.insert(profile);
+		person.setPartnerProfileID(profile.getID()); 
+		this.personMapper.update(person);
+		
+		return profile;
+		
+	}
+
+	@Override
+	public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(call.getPartnerProfileID());
+	}
+
+	@Override
+	public PartnerProfile getPartnerProfileFor(Team team) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(team.getPartnerProfileID());
+	}
+
+	@Override
+	public PartnerProfile getPartnerProfileFor(Organisation orga) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(orga.getPartnerProfileID());
+	}
+
+	@Override
+	public PartnerProfile getPartnerProfileFor(Person person) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(person.getPartnerProfileID());
+	}
+
+	@Override
+	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
+		this.partnerMapper.update(partnerProfile);
+		
+	}
+	
+	
 	/**
 	 *  
 	 */
 	@Override
-	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
+			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -240,8 +348,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  
 	 */
 	@Override
-	public void savePartnerProfileFor(OrgaUnit orgaUnit, PartnerProfile partnerProfile)
-			throws IllegalArgumentException {
+	public void saveProperty(Property property) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -250,9 +357,18 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  
 	 */
 	@Override
+	public Vector<Property> getAllProperties() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 *  
+	 */
+	@Override
 	public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		//Auslesen aller Marktplätze aus der DB
+		//Auslesen aller Marktplï¿½tze aus der DB
 		return this.marketMapper.findAll();
 	}
 
@@ -279,8 +395,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals prüfen...
-		//Auslesen aller Projekte für eine OrgaUnit aus der DB
+		//***WICHTIG*** Nochmals prï¿½fen...
+		//Auslesen aller Projekte fï¿½r eine OrgaUnit aus der DB
 		int findID = orgaUnit.getID();
 		return this.orgaMapper.findById(findID);
 	}
@@ -309,8 +425,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals prüfen...
-		//Auslesen aller Bewerbungen für eine OrgaUnit aus der DB
+		//***WICHTIG*** Nochmals prï¿½fen...
+		//Auslesen aller Bewerbungen fï¿½r eine OrgaUnit aus der DB
 		int findID = orgaUnit.getID();
 		return this.appMapper.findByOrganisationApplicant(findID);
 	}
@@ -367,7 +483,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	/**
 	 *  Erstellen eines Marktplatzes
 	 */
-	// Wir benötigen für den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
+	// Wir benï¿½tigen fï¿½r den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
 	@Override
 	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
 		Marketplace m = new Marketplace();
@@ -531,34 +647,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public void saveProperty(Property property) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Property> getAllProperties() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

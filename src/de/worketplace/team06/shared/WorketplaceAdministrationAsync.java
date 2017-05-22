@@ -63,8 +63,6 @@ public interface WorketplaceAdministrationAsync {
 
 	void getMarketplacesFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Marketplace>> callback);
 
-	void getPartnerProfileFor(OrgaUnit orgaUnit, AsyncCallback<PartnerProfile> callback);
-
 	void getProjectsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
 
 	void init(AsyncCallback<Void> callback);
@@ -82,7 +80,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void saveOrganisation(Organisation organisation, AsyncCallback<Void> callback);
 
-	void savePartnerProfileFor(OrgaUnit orgaUnit, PartnerProfile partnerProfile, AsyncCallback<Void> callback);
+	void savePartnerProfileFor(PartnerProfile partnerProfile, AsyncCallback<Void> callback);
 
 	void savePerson(Person person, AsyncCallback<Void> callback);
 
@@ -93,4 +91,21 @@ public interface WorketplaceAdministrationAsync {
 	void saveRating(Rating rating, AsyncCallback<Void> callback);
 
 	void saveTeam(Team team, AsyncCallback<Void> callback);
+
+	void createPartnerProfileFor(Call call, Vector<Property> propertyList, AsyncCallback<PartnerProfile> callback);
+
+	void createPartnerProfileFor(Team team, Vector<Property> propertyList, AsyncCallback<PartnerProfile> callback);
+
+	void createPartnerProfileFor(Organisation orga, Vector<Property> propertyList,
+			AsyncCallback<PartnerProfile> callback);
+
+	void createPartnerProfileFor(Person person, Vector<Property> propertyList, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileFor(Call call, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileFor(Team team, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileFor(Organisation orga, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileFor(Person person, AsyncCallback<PartnerProfile> callback);
 }

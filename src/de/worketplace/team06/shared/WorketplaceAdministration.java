@@ -73,19 +73,43 @@ public interface WorketplaceAdministration extends RemoteService {
     public void saveOrganisation(Organisation organisation) throws IllegalArgumentException;
 
     /**
-     * Abfragen des Partnerprofils einer Organisationseinheit. 
+     * Create Methoden für die PartnerProfile. Team, Organisation und Person wurden in separate Tabellen ausgelagert.
+     * Deshalb ist es notwendig für jedes Subklasse von OrgaUnit(Team, Organisation, Person) eine create-Methode zu
+     * erstellen. Einer Ausschreibung (Call) kann ebenfalls ein Partnerprofil angehängt werden. Deshalb muss auch hierfür 
+     * eine Create-Methode erstellt werden. 
      * 
-     * @param orgaUnit 
+     */
+    public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList) throws IllegalArgumentException;
+    
+    public PartnerProfile createPartnerProfileFor(Team team, Vector<Property> propertyList) throws IllegalArgumentException;
+    
+    public PartnerProfile createPartnerProfileFor(Organisation orga, Vector<Property> propertyList) throws IllegalArgumentException;
+    
+    public PartnerProfile createPartnerProfileFor(Person person, Vector<Property> propertyList) throws IllegalArgumentException;
+    
+    /**
+     * Abfragen der Partnerprofile. 
+     * 
+     * @param
      * @return
      */
-    public PartnerProfile getPartnerProfileFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+    public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException;
+    
+    public PartnerProfile getPartnerProfileFor(Team team) throws IllegalArgumentException;
+    
+    public PartnerProfile getPartnerProfileFor(Organisation orga) throws IllegalArgumentException;
+    
+    public PartnerProfile getPartnerProfileFor(Person person) throws IllegalArgumentException;
 
     /**
-     * @param orgaUnit 
-     * @param partnerProfile
+     * Änderungen des Partnerprofils in der Datenbank speichern. 
+     * 
+     * @param PartnerProfile des Partnerprofils, dass gespeichert werden soll. 
+     * @return void
      */
-    public void savePartnerProfileFor(OrgaUnit orgaUnit, PartnerProfile partnerProfile) throws IllegalArgumentException;
-
+    public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException;
+    
+    
     /**
      * @return
      */

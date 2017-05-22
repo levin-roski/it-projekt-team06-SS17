@@ -15,7 +15,7 @@ public class Team extends OrgaUnit {
 	/**
      * Deklaration der Attribute.
      */
-    private String name;
+    private String teamName;
     
     private int membercount;
     
@@ -29,7 +29,7 @@ public class Team extends OrgaUnit {
 	 * Getter Methoden für die einzelnen Attribute. 
 	 */
 	public String getName() {
-		return name;
+		return teamName;
 	}
 	
 	public int getMembercount() {
@@ -40,7 +40,7 @@ public class Team extends OrgaUnit {
 	 * Setter Methoden für die einzelnen Attribute. 
 	 */
 	public void setName(String name) {
-		this.name = name;
+		this.teamName = name;
 	}
 
 	public void setMembercount(int membercount) {

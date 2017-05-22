@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 
  */
-public class OrgaUnit extends BusinessObject {
+public abstract class OrgaUnit extends BusinessObject {
 
     /**
 	 * ID Zur Serialisierung und Prüfung der Version einer Klasse.
@@ -38,7 +38,7 @@ public class OrgaUnit extends BusinessObject {
         return this.description;
     }
 
-    public int getPartnerProfile() {
+    public int getPartnerProfileID() {
         return this.partnerprofileID;
     }
 
@@ -53,7 +53,7 @@ public class OrgaUnit extends BusinessObject {
         this.description = description;
     }
 
-    public void setPartnerProfile(int partnerProfileID) {
+    public void setPartnerProfileID(int partnerProfileID) {
         this.partnerprofileID = partnerProfileID;
     }
 
