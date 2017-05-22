@@ -15,7 +15,7 @@ import de.worketplace.team06.shared.bo.*;
  */
 
 public interface WorketplaceAdministrationAsync {
-	void getTestUnit(AsyncCallback<OrgaUnit> callback);
+	void getTestUnit(AsyncCallback<Person> callback);
 	
 	void applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText,
 			AsyncCallback<Application> callback);

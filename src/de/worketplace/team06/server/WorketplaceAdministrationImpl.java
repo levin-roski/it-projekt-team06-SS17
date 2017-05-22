@@ -8,7 +8,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.worketplace.team06.shared.*;
 //import de.worketplace.team06.shared.WorketplaceAdministration;
 import de.worketplace.team06.shared.bo.*;
-import de.hdm.thies.bankProjekt.server.db.CustomerMapper;
 import de.worketplace.team06.server.db.*;
 
 
@@ -108,9 +107,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 	}
 	
-	public OrgaUnit getTestUnit() throws IllegalArgumentException {
-		OrgaUnit test = new OrgaUnit();
-		test.setName("Hans");
+	public Person getTestUnit() throws IllegalArgumentException {
+		Person test = new Person();
+		test.setVorname("Hans");
 		return test;
 	}
 
