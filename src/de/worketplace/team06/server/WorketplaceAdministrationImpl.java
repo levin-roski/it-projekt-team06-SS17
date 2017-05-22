@@ -341,11 +341,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Speichern eines Projekts.
 	 */
 	@Override
 	public void saveProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.projectMapper.update(project);
 		
 	}
 
