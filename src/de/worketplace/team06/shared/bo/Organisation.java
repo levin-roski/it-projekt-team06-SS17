@@ -60,8 +60,8 @@ public class Organisation extends OrgaUnit {
         this.street = street;
     }
 
-    public void setZipcode(int postalcode) {
-        this.zipcode = postalcode;
+    public void setZipcode(int zipcode) {
+        this.zipcode = zipcode;
     }
 
     public void setCity(String city) {

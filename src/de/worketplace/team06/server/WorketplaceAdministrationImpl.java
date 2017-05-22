@@ -128,18 +128,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  gespeichert werden. 
 	 *  
 	 */
-	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException
-	{
+	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException {
 		Person p = new Person();
 		Date created = new Date();
-		p.setFirstName(firstName);
-		p.setLastName(lastName);
-		p.setCity(city);
+		
 		p.setCreated(created);
 		p.setDescription(description);
 		p.setGoogleID(googleID);
+		
+		p.setFirstName(firstName);
+		p.setLastName(lastName);
 		p.setStreet(street);
 		p.setZipcode(zipcode);
+		p.setCity(city);
+		
 		
 		/**
 		 *  Setzen einer vorläufigen ID. 
@@ -150,7 +152,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setID(1);
 		
 		return this.personMapper.insert(p);
-		
 	}
 	
 	/**
@@ -159,24 +160,70 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void savePerson(Person person) throws IllegalArgumentException {
 		this.personMapper.update(person);
-		
 	}
 
+	/**
+	 *  
+	 */
+	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
+		
+		Team t = new Team();
+		Date created = new Date();
+		
+		t.setCreated(created);
+		t.setDescription(description);
+		t.setGoogleID(googleID);
+		
+		t.setName(name);
+		t.setMembercount(membercount);
+		
+		/**
+		 *  Siehe createPerson
+		 */
+		t.setID(1);
+		
+		return this.teamMapper.insert(t);
+	}
+	
 	/**
 	 *  
 	 */
 	@Override
 	public void saveTeam(Team team) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.teamMapper.update(team);
 	}
 
 	/**
 	 *  
 	 */
+	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
+		
+		Organisation o = new Organisation();
+		Date created = new Date();
+		
+		o.setCreated(created);
+		o.setDescription(description);
+		o.setGoogleID(googleID);
+		
+		o.setName(name);
+		o.setStreet(street);
+		o.setZipcode(zipcode);
+		o.setCity(city);
+		
+		/**
+		 *  Siehe createPerson
+		 */
+		o.setID(1);
+		
+		return this.orgaMapper.insert(o);
+	}
+	
+	/**
+	 *  
+	 */
 	@Override
 	public void saveOrganisation(Organisation organisation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.orgaMapper.update(organisation);
 		
 	}
 
