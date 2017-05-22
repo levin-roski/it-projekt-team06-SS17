@@ -493,8 +493,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
 			int period) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Enrollment e = new Enrollment();
+		//***WICHTIG*** Hier muss noch das BO angepasst werden.
+		//e.setProject(project.getID());
+		//e.setOrgaUnit(orgaUnit.getID());
+		//e.setRating(rating.getID());
+		e.setCreated(startDate);
+		e.setEndDate(endDate);
+		e.setPeriod(period);
+		
+		//Setzen einer vorlauefigen ID
+		e.setID(1);
+		
+		return this.enrollMapper.insert(e);
+		
 	}
 
 	/**
@@ -502,8 +514,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveEnrollment(Enrollment enrollment) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.enrollMapper.update(enrollment);
+				
 	}
 
 	/**
