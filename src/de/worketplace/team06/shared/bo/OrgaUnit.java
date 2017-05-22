@@ -19,136 +19,42 @@ public abstract class OrgaUnit extends BusinessObject {
     }
 
     /**
-     * Variable für den Namen.
+     * Deklaration der Attribute.
      */
-    private String name;
-
-    /**
-     * Variable für die Beschreibung.
-     */
+    private String googleID;  
+    
     private String description;
 
-    /**
-     * Variable für die Speicherung der ID des Partnerproifls.
-     */
     private int partnerprofileID;
-
-    /**
-     * Variable für die Speicherung der GoogleID.
-     */
-    public String googleID;
-
-    /**
-     * Variable für den Straßennamen.
-     */
-    private String street;
-
-    /**
-     * Variable für die Postleitzahl.
-     */
-    private int postalcode;
-
-    /**
-     * Variable für den Ort. 
-     */
-    private String city;
     
     /**
-     * Straßennamen holen.
+     * Getter Methoden für die einzelnen Attribute setzen.
      */
-    public String getStreet() {
-        return this.street;
-    }
-
-    /**
-     * Postleitzahl holen.
-     */
-    public int getPostalcode() {
-        return this.postalcode;
-    }
-
-    /**
-     * Ort holen.
-     */
-    public String getCity() {
-        return this.city;
-    }
-
-    /**
-     * Straße setzen. 
-     */
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    /**
-     * Postleitzahl setzen.
-     */
-    public void setPostalcode(int postalcode) {
-        this.postalcode = postalcode;
-    }
-
-    /**
-     * Ort setzen.
-     */
-    public void setCity(String city) {
-        this.city = city;
+    public String getGoogleID() {
+        return this.googleID;
     }
     
-    /**
-     * Beschreibung holen.
-     */
     public String getDescription() {
         return this.description;
     }
 
-    /**
-     * Partnerprofile ID holen
-     */
     public int getPartnerProfile() {
         return this.partnerprofileID;
     }
 
     /**
-     * Google ID holen.
-     */
-    public String getGoogleID() {
-        return this.googleID;
-    }
-
-	/**
-	 *  Namen holen.
-	 */
-	public String getName() {
-		return name;
-	}
-
-    /**
-     * Beschreibung setzen.
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * partnerProfileID setzen.
-     */
-    public void setPartnerProfile(int partnerProfileID) {
-        this.partnerprofileID = partnerProfileID;
-    }
-
-    /**
-     * @param googleID
+     * Setter Methoden für die einzelnen Attribute setzen. 
      */
     public void setGoogleID(String googleID) {
         this.googleID = googleID;
     }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * Namen setzen.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setPartnerProfile(int partnerProfileID) {
+        this.partnerprofileID = partnerProfileID;
+    }
 
 }
