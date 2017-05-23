@@ -81,11 +81,8 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList) throws IllegalArgumentException;
     
-    public PartnerProfile createPartnerProfileFor(Team team, Vector<Property> propertyList) throws IllegalArgumentException;
-    
-    public PartnerProfile createPartnerProfileFor(Organisation orga, Vector<Property> propertyList) throws IllegalArgumentException;
-    
-    public PartnerProfile createPartnerProfileFor(Person person, Vector<Property> propertyList) throws IllegalArgumentException;
+    public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
+			throws IllegalArgumentException;
     
     /**
      * Abfragen der Partnerprofile. 
@@ -95,11 +92,7 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException;
     
-    public PartnerProfile getPartnerProfileFor(Team team) throws IllegalArgumentException;
-    
-    public PartnerProfile getPartnerProfileFor(Organisation orga) throws IllegalArgumentException;
-    
-    public PartnerProfile getPartnerProfileFor(Person person) throws IllegalArgumentException;
+    public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException;
 
     /**
      * Änderungen des Partnerprofils in der Datenbank speichern. 
@@ -288,5 +281,6 @@ public interface WorketplaceAdministration extends RemoteService {
      * @return
      */
     public Vector<Property> getAllProperties() throws IllegalArgumentException;
+
 
 }

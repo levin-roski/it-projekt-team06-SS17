@@ -247,7 +247,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	@Override
-	public PartnerProfile createPartnerProfileFor(Team team, Vector<Property> propertyList)
+	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
 			throws IllegalArgumentException {
 		
 		PartnerProfile profile = new PartnerProfile();
@@ -260,51 +260,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		profile.setID(1);
 		
 		profile = this.partnerMapper.insert(profile);
-		team.setPartnerProfileID(profile.getID()); 
-		this.teamMapper.update(team);
+		orgaunit.setPartnerProfileID(profile.getID()); 
+		//OrgaUnitMapper
+		//this..update(orgaunit);
 		
 		return profile;
-	}
-
-	@Override
-	public PartnerProfile createPartnerProfileFor(Organisation orga, Vector<Property> propertyList)
-			throws IllegalArgumentException {
-		
-		PartnerProfile profile = new PartnerProfile();
-		Date created = new Date();
-		
-		profile.setCreated(created);
-		profile.setLastedit(created);
-	
-		profile.setPropertyList(propertyList);
-		profile.setID(1);
-		
-		profile = this.partnerMapper.insert(profile);
-		orga.setPartnerProfileID(profile.getID()); 
-		this.orgaMapper.update(orga);
-		
-		return profile;
-	}
-
-	@Override
-	public PartnerProfile createPartnerProfileFor(Person person, Vector<Property> propertyList)
-			throws IllegalArgumentException {
-		
-		PartnerProfile profile = new PartnerProfile();
-		Date created = new Date();
-		
-		profile.setCreated(created);
-		profile.setLastedit(created);
-	
-		profile.setPropertyList(propertyList);
-		profile.setID(1);
-		
-		profile = this.partnerMapper.insert(profile);
-		person.setPartnerProfileID(profile.getID()); 
-		this.personMapper.update(person);
-		
-		return profile;
-		
 	}
 
 	@Override
@@ -313,19 +273,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	@Override
-	public PartnerProfile getPartnerProfileFor(Team team) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(team.getPartnerProfileID());
+	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
 	}
 
-	@Override
-	public PartnerProfile getPartnerProfileFor(Organisation orga) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(orga.getPartnerProfileID());
-	}
-
-	@Override
-	public PartnerProfile getPartnerProfileFor(Person person) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(person.getPartnerProfileID());
-	}
 
 	@Override
 	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
