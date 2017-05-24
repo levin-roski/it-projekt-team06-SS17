@@ -15,7 +15,7 @@ import de.worketplace.team06.shared.bo.*;
  */
 
 public interface WorketplaceAdministrationAsync {
-	void getTestUnit(AsyncCallback<OrgaUnit> callback);
+	void getTestUnit(AsyncCallback<Person> callback);
 	
 	void applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText,
 			AsyncCallback<Application> callback);
@@ -63,8 +63,6 @@ public interface WorketplaceAdministrationAsync {
 
 	void getMarketplacesFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Marketplace>> callback);
 
-	void getPartnerProfileFor(OrgaUnit orgaUnit, AsyncCallback<PartnerProfile> callback);
-
 	void getProjectsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
 
 	void init(AsyncCallback<Void> callback);
@@ -82,7 +80,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void saveOrganisation(Organisation organisation, AsyncCallback<Void> callback);
 
-	void savePartnerProfileFor(OrgaUnit orgaUnit, PartnerProfile partnerProfile, AsyncCallback<Void> callback);
+	void savePartnerProfileFor(PartnerProfile partnerProfile, AsyncCallback<Void> callback);
 
 	void savePerson(Person person, AsyncCallback<Void> callback);
 
@@ -93,4 +91,17 @@ public interface WorketplaceAdministrationAsync {
 	void saveRating(Rating rating, AsyncCallback<Void> callback);
 
 	void saveTeam(Team team, AsyncCallback<Void> callback);
+
+	void createPartnerProfileFor(Call call, Vector<Property> propertyList, AsyncCallback<PartnerProfile> callback);
+
+	void createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList,
+			AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileFor(Call call, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileFor(OrgaUnit orgaunit, AsyncCallback<PartnerProfile> callback);
+
+	
+
+	
 }

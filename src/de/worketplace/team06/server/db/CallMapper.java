@@ -21,6 +21,9 @@ public class CallMapper {
 		return callMapper;
 	}
 /*	
+ * 
+ * PATRICK
+ * 
 	public Call findByKey(int id)
 	
 	public Call findBy schauen 
@@ -31,4 +34,12 @@ public class CallMapper {
 	
 	public void delete(Call a)
 */
+
+	public Call update(Call call) {
+		// TODO Auto-generated method stub
+		return null;
+		
+	}
+
+
 }

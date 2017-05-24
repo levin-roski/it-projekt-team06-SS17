@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.db;
 
 import java.util.*;
+
+import de.worketplace.team06.shared.bo.PartnerProfile;
 /**
  * 
  */
@@ -8,7 +10,7 @@ public class PartnerProfileMapper {
 
 	private static PartnerProfileMapper partnerProfileMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected PartnerProfileMapper(){
@@ -63,5 +65,10 @@ public class PartnerProfileMapper {
         // TODO implement here
         return null;
     }
+
+	public PartnerProfile findPartnerProfileByID(int partnerProfileID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

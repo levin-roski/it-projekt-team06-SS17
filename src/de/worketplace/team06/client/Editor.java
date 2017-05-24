@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.OrgaUnit;
+import de.worketplace.team06.shared.bo.Person;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -30,16 +31,17 @@ public class Editor implements EntryPoint {
 		worketplaceAdministration.getTestUnit(new GetOrgaUnitCallback());
 	}
 
-	private class GetOrgaUnitCallback implements AsyncCallback<OrgaUnit> {
+	private class GetOrgaUnitCallback implements AsyncCallback<Person> {
 		@Override
 		public void onFailure(Throwable caught) {
 		}
 
 		@Override
-		public void onSuccess(OrgaUnit result) {
+		public void onSuccess(Person result) {
 			if (result != null) {
-				nameLabel.setText(result.getName());
+				nameLabel.setText(result.getFirstName());
 			}
 		}
+
 	}
 }

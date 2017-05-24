@@ -8,7 +8,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.worketplace.team06.shared.*;
 //import de.worketplace.team06.shared.WorketplaceAdministration;
 import de.worketplace.team06.shared.bo.*;
-import de.hdm.thies.bankProjekt.server.db.CustomerMapper;
 import de.worketplace.team06.server.db.*;
 
 
@@ -108,9 +107,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 	}
 	
-	public OrgaUnit getTestUnit() throws IllegalArgumentException {
-		OrgaUnit test = new OrgaUnit();
-		test.setName("Hans");
+	public Person getTestUnit() throws IllegalArgumentException {
+		Person test = new Person();
+		test.setFirstName("Hans");
 		return test;
 	}
 
@@ -124,37 +123,174 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
+	 *  Methode zum erstellen einer Person. Es werden alle Attribute bis auf die partnerprofileID 
+	 *  gesetzt. Die Partnerprofile id kann zu einem spätzeren Zeitpunkt über die savePerson Methode
+	 *  gespeichert werden. 
+	 *  
+	 */
+	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException {
+		Person p = new Person();
+		Date created = new Date();
+		
+		p.setCreated(created);
+		p.setDescription(description);
+		p.setGoogleID(googleID);
+		
+		p.setFirstName(firstName);
+		p.setLastName(lastName);
+		p.setStreet(street);
+		p.setZipcode(zipcode);
+		p.setCity(city);
+		
+		
+		/**
+		 *  Setzen einer vorläufigen ID. 
+		 *  Der korrekte bzw vortlaufende Primärschlüssel (=id) wird über eine Datenbankabfrage in der
+		 *  personMapper.insert Methode generiert. (Die Id muss mit den Datensätzen in der Datenbank
+		 *  konsistent sein) 
+		 */
+		p.setID(1);
+		
+		return this.personMapper.insert(p);
+	}
+	
+	/**
 	 *  
 	 */
 	@Override
 	public void savePerson(Person person) throws IllegalArgumentException {
-		// TODO Hannes testet was in dieser Methode
-		
+		this.personMapper.update(person);
 	}
 
+	/**
+	 *  
+	 */
+	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
+		
+		Team t = new Team();
+		Date created = new Date();
+		
+		t.setCreated(created);
+		t.setDescription(description);
+		t.setGoogleID(googleID);
+		
+		t.setName(name);
+		t.setMembercount(membercount);
+		
+		/**
+		 *  Siehe createPerson
+		 */
+		t.setID(1);
+		
+		return this.teamMapper.insert(t);
+	}
+	
 	/**
 	 *  
 	 */
 	@Override
 	public void saveTeam(Team team) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.teamMapper.update(team);
 	}
 
+	/**
+	 *  
+	 */
+	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
+		
+		Organisation o = new Organisation();
+		Date created = new Date();
+		
+		o.setCreated(created);
+		o.setDescription(description);
+		o.setGoogleID(googleID);
+		
+		o.setName(name);
+		o.setStreet(street);
+		o.setZipcode(zipcode);
+		o.setCity(city);
+		
+		/**
+		 *  Siehe createPerson
+		 */
+		o.setID(1);
+		
+		return this.orgaMapper.insert(o);
+	}
+	
 	/**
 	 *  
 	 */
 	@Override
 	public void saveOrganisation(Organisation organisation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.orgaMapper.update(organisation);
 		
 	}
+	@Override
+	public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList)
+			throws IllegalArgumentException {
+		
+		PartnerProfile profile = new PartnerProfile();
+		Date created = new Date();
+		
+		profile.setCreated(created);
+		profile.setLastedit(created);
+	
+		profile.setPropertyList(propertyList);
+		profile.setID(1);
+		
+		profile = this.partnerMapper.insert(profile);
+		call.setPartnerProfileID(profile.getID());
+		this.callMapper.update(call);
+		
+		return profile;
+	}
 
+	@Override
+	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
+			throws IllegalArgumentException {
+		
+		PartnerProfile profile = new PartnerProfile();
+		Date created = new Date();
+		
+		profile.setCreated(created);
+		profile.setLastedit(created);
+	
+		profile.setPropertyList(propertyList);
+		profile.setID(1);
+		
+		profile = this.partnerMapper.insert(profile);
+		orgaunit.setPartnerProfileID(profile.getID()); 
+		//OrgaUnitMapper
+		//this..update(orgaunit);
+		
+		return profile;
+	}
+
+	@Override
+	public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(call.getPartnerProfileID());
+	}
+
+	@Override
+	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
+	}
+
+
+	@Override
+	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
+		this.partnerMapper.update(partnerProfile);
+		
+	}
+	
+	
 	/**
 	 *  
 	 */
 	@Override
-	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
+			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -163,10 +299,18 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  
 	 */
 	@Override
-	public void savePartnerProfileFor(OrgaUnit orgaUnit, PartnerProfile partnerProfile)
-			throws IllegalArgumentException {
+	public void saveProperty(Property property) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 *  
+	 */
+	@Override
+	public Vector<Property> getAllProperties() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -174,8 +318,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Marktpl�tze aus der DB
+		return this.marketMapper.findAll();
 	}
 
 	/**
@@ -183,8 +328,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.marketMapper.findById(orgaUnit.getID());
 	}
 
 	/**
@@ -192,8 +337,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getAllProjects() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//Auslesen aller Projekte aus der DB
+		return this.projectMapper.findAll();
 	}
 
 	/**
@@ -201,8 +346,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** Nochmals pr�fen...
+		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
+		int findID = orgaUnit.getID();
+		return this.orgaMapper.findById(findID);
 	}
 
 	/**
@@ -210,8 +357,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Call> getAllCalls() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Calls aus der DB
+		return this.callMapper.findAll();
 	}
 
 	/**
@@ -219,8 +367,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Application> getAllApplications() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//Auslesen aller Bewerbungen aus der DB
+		return this.appMapper.findAll();
 	}
 
 	/**
@@ -228,8 +376,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** Nochmals pr�fen...
+		//Auslesen aller Bewerbungen f�r eine OrgaUnit aus der DB
+		int findID = orgaUnit.getID();
+		return this.appMapper.findByOrganisationApplicant(findID);
 	}
 
 	/**
@@ -256,7 +406,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setStartDate(startDate);
 		p.setEndDate(endDate);
 		
-		//Setzen einer vorläufigen ID
+		//Setzen einer vorlaueufigen ID
 		p.setID(1);
 		
 		//Objekt in der DB speichern
@@ -264,11 +414,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Speichern eines Projekts.
 	 */
 	@Override
 	public void saveProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.projectMapper.update(project);
 		
 	}
 
@@ -282,12 +432,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Erstellen eines Marktplatzes
 	 */
+	// Wir ben�tigen f�r den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
 	@Override
 	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Marketplace m = new Marketplace();
+		m.setTitle(title);
+		//m.setCreated();
+		
+		//Setzen einer vorlaueufigen ID
+		m.setID(1);
+		
+		//Objekt in der DB speichern
+		return this.marketMapper.insert(m);
 	}
 
 	/**
@@ -295,8 +453,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.marketMapper.update(marketplace);
 	}
 
 	/**
@@ -342,8 +499,19 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Application a = new Application();
+		a.setCreated(created);
+		a.setApplicationText(applicationText);
+		
+		//***WICHTIG*** Hier muss noch das BO angepasst werden.
+		//a.setCall(call.getID());
+		//a.setOrgaUnit(applicantOrgaUnit.getID());
+		
+		//Setzen einer vorlaueufigen ID
+		a.setID(1);
+		
+		//Speichern einer ausgehenden Bewerbung in der Datenbank.
+		return this.appMapper.insert(a);
 	}
 
 	/**
@@ -351,7 +519,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.appMapper.update(application);
 		
 	}
 
@@ -398,8 +566,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
 			int period) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Enrollment e = new Enrollment();
+		//***WICHTIG*** Hier muss noch das BO angepasst werden.
+		//e.setProject(project.getID());
+		//e.setOrgaUnit(orgaUnit.getID());
+		//e.setRating(rating.getID());
+		e.setCreated(startDate);
+		e.setEndDate(endDate);
+		e.setPeriod(period);
+		
+		//Setzen einer vorlauefigen ID
+		e.setID(1);
+		
+		return this.enrollMapper.insert(e);
+		
 	}
 
 	/**
@@ -407,8 +587,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveEnrollment(Enrollment enrollment) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.enrollMapper.update(enrollment);
+				
 	}
 
 	/**
@@ -418,34 +598,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public void saveProperty(Property property) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Property> getAllProperties() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

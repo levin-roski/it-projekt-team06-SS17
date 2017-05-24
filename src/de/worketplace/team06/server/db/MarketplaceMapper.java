@@ -21,6 +21,10 @@ public class MarketplaceMapper {
 		return marketplaceMapper;
 	}
 /*	
+ * 
+ * 
+ * PATRICK
+ * 
 	public Marketplace findByKey(int id)
 	
 	public Marketplace findBy schauen 
@@ -31,4 +35,14 @@ public class MarketplaceMapper {
 	
 	public void delete(Marketplace a)
 */
+
+	public Vector<Marketplace> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Vector<Marketplace> findById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

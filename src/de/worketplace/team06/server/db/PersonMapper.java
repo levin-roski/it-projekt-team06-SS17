@@ -21,6 +21,9 @@ public class PersonMapper {
 		return personMapper;
 	}
 /*	
+ * 
+ * PATRICK
+ * 
 	public Person findByKey(int id)
 
 	public Person findBy schauen 
@@ -31,4 +34,14 @@ public class PersonMapper {
 	
 	public void delete(Person a)
 */
+
+	public void update(Person person) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Person insert(Person p) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

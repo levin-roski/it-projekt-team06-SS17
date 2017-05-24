@@ -99,4 +99,18 @@ public class Call extends BusinessObject {
         this.deadline = deadline;
     }
 
+	/**
+	 * @return the partnerProfileID
+	 */
+	public int getPartnerProfileID() {
+		return partnerProfileID;
+	}
+
+	/**
+	 * @param partnerProfileID the partnerProfileID to set
+	 */
+	public void setPartnerProfileID(int partnerProfileID) {
+		this.partnerProfileID = partnerProfileID;
+	}
+
 }
