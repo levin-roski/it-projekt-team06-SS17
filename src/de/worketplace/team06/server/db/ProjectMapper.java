@@ -9,10 +9,7 @@ import java.util.*;
 import de.worketplace.team06.shared.bo.Project;
 import de.worketplace.team06.shared.bo.Team;
 
-/**
- * 
- */
-public class ProjectMapper {
+ class ProjectMapper {
 
 	private static ProjectMapper projectMapper = null;
 	 /**
