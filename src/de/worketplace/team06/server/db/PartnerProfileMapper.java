@@ -1,8 +1,13 @@
 package de.worketplace.team06.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 import de.worketplace.team06.shared.bo.PartnerProfile;
+import de.worketplace.team06.shared.bo.Project;
 /**
  * 
  */
@@ -24,51 +29,107 @@ public class PartnerProfileMapper {
 		return partnerProfileMapper; 
 	}
 	
-	 /**
-     * Default constructor
-     */
+	public PartnerProfile findById (int id){
+    	Connection con = DBConnection.connection();
+    	
+    	try{
+    		Statement stmt= con.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT id, created FROM Team " + "WHERE id= " + id);
+    		
+    		if (rs.next()) {
+    			PartnerProfile part = new PartnerProfile();
+    			part.setID(rs.getInt("id"));
+    			part.setLastEdit(rs.getDate("lastEdit"));
+    			part.setCreated(rs.getTimestamp("created"));
+    		}	
+    	}
+    	catch (SQLExpetion e){
+    		e.printStackTrace();
+    	}
+    	return rs;
+    }
   
-    public PartnerProfile insert(PartnerProfile partnerProfile) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param partnerProfile 
-     * @return
-     */
-    public PartnerProfile update(PartnerProfile partnerProfile) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param partnerProfile
-     */
-    public void delete(PartnerProfile partnerProfile) {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
     public Vector<PartnerProfile> findAll() {
-        // TODO implement here
-        return null;
+        Connection con = DBConnection.connection();
+        Vector<PartnerProfile> result = new Vector<PartnerProfile>();
+        
+        try{
+        	Statement stmt = con.createStatement();
+        	
+        	ResultSet rs = stmt.executeQuery("SELECT id, lastEdit, created "
+        	+ "FROM Team ");
+        	
+        	while (rs.next()){
+        		Project part = new Project();
+        		part.setID(rs.getInt("id"));
+        		part.setLastEdit(rs.getDate("lastEdit"))
+        		part.setCreated(rs.getTimestamp("created"));
+        		
+        		result.addElement(part);
+        	}
+        }
+        catch (SQLException e){
+        	e.printStackTrace();
+        }
+        return result ;
+    }
+    
+    
+    
+    public PartnerProfile insert (PartnerProfile part) {
+        Connection con = DBConnection.connection();
+        
+        try {
+        	Statement stmt = con.createStatement();
+        	
+        	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM partnerProfile ");
+        	
+        	if (rs.next()){
+        	part.setID(rs.getInt("maxid") + 1);
+        	stmt = con.createStatement();
+        	
+        	stmt.executeUpdate("INSERT INTO partnerProfile (id, lastEdit, created) " 
+        	+ "VALUES (" 
+        	+ part.getID() + ", " 
+        	+ part.getLastEdit() + "','"
+        	+ "')");
+        	}
+        }
+       catch (SQLExpetion e){
+    	e.printStackTrace();
+    }
+    
+    return part;
+    } 
+    
+    public PartnerProfile update(PartnerProfile part) {
+        Connection con = DBConnection.connection();
+        
+        try{
+        	Statement stmt = con.createStatement();
+        	
+        	stmt.executeUpdate("UPDATE project " 
+        	+ "SET lastEdit=\"" + part.getlastEdit() + "\", "
+        	+ "WHERE id=" + part.getID());
+        }
+        
+        catch (SQLException e){
+        	e.printStackTrace();
+        } 
+        return part;
     }
 
-    /**
-     * @param property 
-     * @return
-     */
-    public Vector<PartnerProfile> findPartnerProfileByProperty(PropertyMapper property) {
-        // TODO implement here
-        return null;
+    public void delete(PartnerProfile part) {
+        Connection con = DBConnection.connection();
+        
+        try {
+        	Statement stmt = con.createStatement();
+        	
+        	stmt.executeUpdate("DELETE FROM partnerProfile " + "WHERE id=" + part.getID());
+        }
+        catch (SQLException e){
+        	e.printStackTrace();
+        }
     }
-
-	public PartnerProfile findPartnerProfileByID(int partnerProfileID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }
