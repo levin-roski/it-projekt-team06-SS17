@@ -97,7 +97,7 @@ import de.worketplace.team06.shared.bo.Team;
         	proj.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
         	
-        	stmt.executeUpdate("INSERT INTO team (id, title, description, projectLeaderID, projectOwnerID, startDate, endDate) " 
+        	stmt.executeUpdate("INSERT INTO project (id, title, description, projectLeaderID, projectOwnerID, startDate, endDate) " 
         	+ "VALUES (" 
         	+ proj.getID() + ", " 
         	+ proj.getTitle() + "','" 
