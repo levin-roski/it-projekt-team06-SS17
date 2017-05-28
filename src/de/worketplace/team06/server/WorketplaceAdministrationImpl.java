@@ -633,8 +633,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Property p = new Property();
+		p.setName(name);
+		p.setValue(value);
+		
+		//Setzen einer vorläufigen ID
+		p.setID(1);
+		
+		//Objekt in der Datenbank speichern
+		return propertyMapper.insert(p);
 	}
 
 	/**
@@ -642,8 +649,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveProperty(Property property) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.propertyMapper.update(property);
 	}
 
 	/**
