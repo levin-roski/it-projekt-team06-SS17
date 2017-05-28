@@ -656,7 +656,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  
 	 */
 	@Override
-	public Vector<Property> getAllProperties() throws IllegalArgumentException {
+	public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

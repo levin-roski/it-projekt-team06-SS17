@@ -55,7 +55,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void getAllProjects(AsyncCallback<Vector<Project>> callback);
 
-	void getAllProperties(AsyncCallback<Vector<Property>> callback);
+	void getAllPropertiesFor(PartnerProfile partnerprofile, AsyncCallback<Vector<Property>> callback);
 
 	void getApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
 
