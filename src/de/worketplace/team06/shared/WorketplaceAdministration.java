@@ -287,4 +287,6 @@ public interface WorketplaceAdministration extends RemoteService {
      * @return
      */
     public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile);
+
+	Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException;
 }

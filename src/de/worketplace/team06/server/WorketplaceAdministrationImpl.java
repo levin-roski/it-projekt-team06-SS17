@@ -254,13 +254,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Auslesen aller Ausschreibungen
+	 *  Auslesen aller Ausschreibungen für ein Projekt
 	 */
 	@Override
-	public Vector<Call> getAllCalls() throws IllegalArgumentException {
+	public Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		//Auslesen aller Calls aus der DB
-		return this.callMapper.findAll();
+		//Auslesen aller Calls aus der DB für ein Projekt
+		return this.callMapper.findByProject(project);
 	}
 	
 	

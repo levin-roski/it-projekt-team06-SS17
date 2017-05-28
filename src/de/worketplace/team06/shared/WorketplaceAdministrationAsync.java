@@ -103,6 +103,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void getProjectsFor(Marketplace marketplace, AsyncCallback<Vector<Project>> callback);
 
+	void getAllCallsFor(Project project, AsyncCallback<Vector<Call>> callback);
+
 	
 
 	
