@@ -149,7 +149,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen einer Bewerbung für eie Ausschreibung.
+	 *  Erstellen einer Bewerbung für eine Ausschreibung.
 	 */
 	@Override
 	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
