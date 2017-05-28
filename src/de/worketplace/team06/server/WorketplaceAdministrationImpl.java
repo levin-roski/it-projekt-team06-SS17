@@ -657,8 +657,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** Methode muss im Mapper angelegt werden!
+		return this.propertyMapper.findByPartnerProfile(partnerprofile);
 	}
 
 	
