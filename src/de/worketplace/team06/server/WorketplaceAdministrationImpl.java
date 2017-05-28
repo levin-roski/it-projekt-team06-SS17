@@ -619,9 +619,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.orgaMapper.findByMarketplace(marketplace);
 	}
 	
-	
-	
-	
+
 	
 	/*
 	 * ---------------------------
