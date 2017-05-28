@@ -676,8 +676,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Rating rateApplication(Application application, Double rating, String ratingStatemant)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Rating r = new Rating();
+		r.setRating(rating);
+		r.setRatingStatement(ratingStatement);
+		
+		//***WICHTIG*** Hier fehlt noch die Zuweisung zur Application. Wie realisieren wir das genau?
+		
+		//Setzen einer vorläufigen ID
+		r.setID(1);
+		
+		//Speichern des Objekts in der Datenbank
+		return this.ratingMapper.insert(rating);
 	}
 
 	/**
