@@ -149,7 +149,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen einer Bewerbung für eie Ausschreibung.
 	 */
 	@Override
 	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
@@ -170,7 +170,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Bewerbung.
 	 */
 	@Override
 	public void saveApplication(Application application) throws IllegalArgumentException {
@@ -179,7 +179,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Löschen einer Bewerbung.
 	 */
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
@@ -188,16 +188,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  
+	 *  Auslesen aller Bewerbungen
 	 */
 	@Override
+	//Die Methode ist ggf. sinnfrei. Bewerbungen sollten entweder für ein Projekt, eine Ausschreibung oder einen USer ausgelesen werden.
 	public Vector<Application> getAllApplications() throws IllegalArgumentException {
 		//Auslesen aller Bewerbungen aus der DB
 		return this.appMapper.findAll();
 	}
 
 	/**
-	 *  
+	 *  Auslesen aller Bewerbungen für eine Organisationseinheit.
 	 */
 	@Override
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
@@ -208,7 +209,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  
+	 *  Auslesen aller Bewerbungen für ein Projekt einer Organisationseinheit.
 	 */
 	@Override
 	public Vector<Application> getApplicationsForProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
@@ -225,7 +226,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen einer Ausschreibung.
 	 */
 	@Override
 	public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
@@ -235,7 +236,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Ausschreibung.
 	 */
 	@Override
 	public void saveCall(Call call) throws IllegalArgumentException {
@@ -244,7 +245,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Löschen einer Ausschreibung.
 	 */
 	@Override
 	public void deleteCall(Call call) throws IllegalArgumentException {
@@ -253,7 +254,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Auslesen aller Ausschreibungen
 	 */
 	@Override
 	public Vector<Call> getAllCalls() throws IllegalArgumentException {
@@ -271,7 +272,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen einer Beteiligung
 	 */
 	@Override
 	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
@@ -293,7 +294,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Beteiligung.
 	 */
 	@Override
 	public void saveEnrollment(Enrollment enrollment) throws IllegalArgumentException {
@@ -302,7 +303,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Löschen einer Beteiligung.
 	 */
 	@Override
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
@@ -336,7 +337,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Speichern von Änderungen eines Marktplatzes
 	 */
 	@Override
 	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
@@ -344,7 +345,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Löschen eines Marktplatzes
 	 */
 	@Override
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
@@ -353,7 +354,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  
+	 *  Auslesen aller Marktplätze
 	 */
 	@Override
 	public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException {
@@ -363,7 +364,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Auslesen aller Marktplätze für eine Organisations-Einheit
 	 */
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
@@ -380,7 +381,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen einer Organisation
 	 */
 	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
 		
@@ -405,7 +406,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Organisation
 	 */
 	@Override
 	public void saveOrganisation(Organisation organisation) throws IllegalArgumentException {
@@ -422,7 +423,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen eines PartnerProfils
 	 */
 	@Override
 	public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList)
@@ -445,7 +446,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Erstellen eines PartnerProfils für eine Organisation
 	 */
 	@Override
 	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
@@ -469,7 +470,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Auslesen eines PartnerProfils für eine Ausschreibung
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException {
@@ -477,7 +478,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Auslesen eines PartnerProfils für eine Organisations-Einheit.
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
@@ -485,7 +486,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Speichern von Änderungen für ein PartnerProfil 
 	 */
 	@Override
 	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
@@ -534,7 +535,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Person
 	 */
 	@Override
 	public void savePerson(Person person) throws IllegalArgumentException {
@@ -550,7 +551,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen eines Projekts auf einem Marktplatz
 	 */
 	@Override
 	public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
@@ -572,7 +573,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Speichern eines Projekts.
+	 *  Speichern von Änderungen eines Projekts.
 	 */
 	@Override
 	public void saveProject(Project project) throws IllegalArgumentException {
@@ -581,7 +582,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Löschen eines Projekts
 	 */
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
@@ -590,7 +591,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Auslesen aller Projekte.
 	 */
 	@Override
 	public Vector<Project> getAllProjects() throws IllegalArgumentException {
@@ -628,7 +629,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen von Eigenschaften für ein PartnerProfil
 	 */
 	@Override
 	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
@@ -645,7 +646,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Eigenschaft
 	 */
 	@Override
 	public void saveProperty(Property property) throws IllegalArgumentException {
@@ -670,7 +671,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen einer Bewertung für eine Bewerbung
 	 */
 	@Override
 	public Rating rateApplication(Application application, Double rating, String ratingStatemant)
@@ -680,7 +681,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Bewertung
 	 */
 	@Override
 	public void saveRating(Rating rating) throws IllegalArgumentException {
@@ -689,7 +690,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Löschen einer Bewertung
 	 */
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
@@ -706,7 +707,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  
+	 *  Erstellen eines Teams
 	 */
 	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
 		
@@ -729,7 +730,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 		
 	/**
-	 *  
+	 *  Speichern von Änderungen an einem Team.
 	 */
 	@Override
 	public void saveTeam(Team team) throws IllegalArgumentException {
