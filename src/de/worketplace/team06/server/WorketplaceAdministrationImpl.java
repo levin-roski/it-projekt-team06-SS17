@@ -599,7 +599,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Auslesen aller Projekte einer Organisations-Einheit
 	 */
 	@Override
 	public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
@@ -608,6 +608,18 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		int findID = orgaUnit.getID();
 		return this.orgaMapper.findById(findID);
 	}
+	
+	/**
+	 *  Auslesen aller Projekte für einen Marktplatz
+	 */
+	@Override
+	public Vector<Project> getProjectsFor(Marketplace marketplace) throws IllegalArgumentException {
+		//***WICHTIG*** Nochmals prüfen! Methode für das Suchen nach Projekten für einen Marktplatz im Mapper anlegen
+		int findID = marketplace.getID();
+		return this.orgaMapper.findByMarketplace(marketplace);
+	}
+	
+	
 	
 	
 	

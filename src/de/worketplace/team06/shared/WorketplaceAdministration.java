@@ -126,6 +126,12 @@ public interface WorketplaceAdministration extends RemoteService {
     public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
     /**
+     * @param Marketplace
+     * @return
+     */
+    public Vector<Project> getProjectsFor(Marketplace marketplace) throws IllegalArgumentException;
+    
+    /**
      * @return
      */
     public Vector<Call> getAllCalls() throws IllegalArgumentException;

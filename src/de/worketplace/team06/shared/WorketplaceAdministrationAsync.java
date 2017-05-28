@@ -101,6 +101,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void getPartnerProfileFor(OrgaUnit orgaunit, AsyncCallback<PartnerProfile> callback);
 
+	void getProjectsFor(Marketplace marketplace, AsyncCallback<Vector<Project>> callback);
+
 	
 
 	
