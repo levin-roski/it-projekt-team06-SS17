@@ -188,13 +188,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  Auslesen aller Bewerbungen
+	 *  Auslesen aller Bewerbungen für eine Organisationseinheit
 	 */
 	@Override
-	//Die Methode ist ggf. sinnfrei. Bewerbungen sollten entweder für ein Projekt, eine Ausschreibung oder einen USer ausgelesen werden.
-	public Vector<Application> getAllApplications() throws IllegalArgumentException {
+	public Vector<Application> getAllApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Bewerbungen aus der DB
-		return this.appMapper.findAll();
+		return this.appMapper.findbyOrgaUnit(orgaUnit);
 	}
 
 	/**
