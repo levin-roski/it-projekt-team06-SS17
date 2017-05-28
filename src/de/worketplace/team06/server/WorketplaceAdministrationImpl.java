@@ -324,7 +324,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
-		// Wir ben�tigen f�r den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
+		// Wir benötigen für den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
 		//m.setCreated();
