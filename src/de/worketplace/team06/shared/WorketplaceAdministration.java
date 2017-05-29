@@ -134,13 +134,14 @@ public interface WorketplaceAdministration extends RemoteService {
     /**
      * @return
      */
-    public Vector<Call> getAllCalls() throws IllegalArgumentException;
+    //public Vector<Call> getAllCalls() throws IllegalArgumentException;
 
     /**
      * @return
      */
-    public Vector<Application> getAllApplications() throws IllegalArgumentException;
-
+    //public Vector<Application> getAllApplications() throws IllegalArgumentException;
+    
+    
     /**
      * @param orgaUnit 
      * @return

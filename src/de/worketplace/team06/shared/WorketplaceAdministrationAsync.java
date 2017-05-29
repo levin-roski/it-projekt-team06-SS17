@@ -47,9 +47,9 @@ public interface WorketplaceAdministrationAsync {
 
 	void deleteRating(Rating rating, AsyncCallback<Void> callback);
 
-	void getAllApplications(AsyncCallback<Vector<Application>> callback);
+	//void getAllApplications(AsyncCallback<Vector<Application>> callback);
 
-	void getAllCalls(AsyncCallback<Vector<Call>> callback);
+	//void getAllCalls(AsyncCallback<Vector<Call>> callback);
 
 	void getAllMarketplaces(AsyncCallback<Vector<Marketplace>> callback);
 
