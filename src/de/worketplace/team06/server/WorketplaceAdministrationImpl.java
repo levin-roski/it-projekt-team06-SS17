@@ -700,7 +700,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveRating(Rating rating) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.ratingMapper.update(rating);
 		
 	}
 
