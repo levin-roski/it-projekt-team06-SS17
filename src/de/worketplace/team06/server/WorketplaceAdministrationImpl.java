@@ -155,7 +155,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
 			throws IllegalArgumentException {
 		Application a = new Application();
-		a.setCreated(created);
+		a.setCreated(createDate);
 		a.setApplicationText(applicationText);
 		
 		//***WICHTIG*** Hier muss noch das BO angepasst werden.
@@ -231,8 +231,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
 			String description, Date deadline) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Call c = new Call();
+		c.setTitle(title);
+		c.setDescription(description);
+		c.setDeadline(deadline);
+		c.setPartnerProfileID(partnerProfile.getID());
+		c.setProjektLeaderID(projectLeaderPerson.getID());
+		c.setProjekt(project.getID()); //@DB-Team: Methode muss noch deklariert werden.
+		return this.callMapper.insert(c); //@DB-Team: Methode muss noch deklariert werden.
 	}
 
 	/**
@@ -240,7 +246,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void saveCall(Call call) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.callMapper.update(call);
 		
 	}
 
@@ -260,7 +266,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Calls aus der DB für ein Projekt
-		return this.callMapper.findByProject(project);
+		return this.callMapper.findByProjectID(project.getID());
 	}
 	
 	
