@@ -191,21 +191,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  Auslesen aller Bewerbungen für eine Organisationseinheit
 	 */
 	@Override
-	public Vector<Application> getAllApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Bewerbungen aus der DB
 		return this.appMapper.findbyOrgaUnit(orgaUnit);
 	}
 
 	/**
-	 *  Auslesen aller Bewerbungen für eine Organisationseinheit.
+	 *  Auslesen aller Bewerbungen für ein Projekt.
 	 */
 	@Override
-	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+	public Vector<Application> getApplicationsFor(Project project) throws IllegalArgumentException {
 		//***WICHTIG*** Nochmals pr�fen...
 		//Auslesen aller Bewerbungen f�r eine OrgaUnit aus der DB
-		int findID = orgaUnit.getID();
-		return this.appMapper.findByOrganisationApplicant(findID);
+		return this.appMapper.findByProject(project);
 	}
 	
 	/**
@@ -260,13 +259,23 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
+	 *  Auslesen aller Ausschreibungen
+	 */
+	@Override
+	public Vector<Call> getAllCalls() throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Calls aus der DB für ein Projekt
+		return this.callMapper.findAll();
+	}
+	
+	/**
 	 *  Auslesen aller Ausschreibungen für ein Projekt
 	 */
 	@Override
-	public Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException {
+	public Vector<Call> getCallsFor(Project project) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Calls aus der DB für ein Projekt
-		return this.callMapper.findByProjectID(project.getID());
+		return this.callMapper.findByProjectId(project.getID());
 	}
 	
 	
@@ -375,7 +384,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.marketMapper.findById(orgaUnit.getID());
+		return this.marketMapper.findByOrgaId(orgaUnit.getID());
 	}
 
 	
@@ -476,6 +485,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
+	 *  Speichern von Änderungen für ein PartnerProfil 
+	 */
+	@Override
+	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
+		this.partnerMapper.update(partnerProfile);
+		
+	}
+	
+	/**
 	 *  Auslesen eines PartnerProfils für eine Ausschreibung
 	 */
 	@Override
@@ -489,15 +507,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
 		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
-	}
-
-	/**
-	 *  Speichern von Änderungen für ein PartnerProfil 
-	 */
-	@Override
-	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
-		this.partnerMapper.update(partnerProfile);
-		
 	}
 	
 	

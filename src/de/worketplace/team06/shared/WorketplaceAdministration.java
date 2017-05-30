@@ -134,7 +134,7 @@ public interface WorketplaceAdministration extends RemoteService {
     /**
      * @return
      */
-    //public Vector<Call> getAllCalls() throws IllegalArgumentException;
+    public Vector<Call> getAllCalls() throws IllegalArgumentException;
 
     /**
      * @return
@@ -289,7 +289,14 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile);
 
-	Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException;
+    /**
+     * @return
+     */
+	public Vector<Call> getCallsFor(Project project) throws IllegalArgumentException;
 
-	Vector<Application> getAllApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+    /**
+     * @return
+     */
+	public Vector<Application> getApplicationsFor(Project project) throws IllegalArgumentException;
+
 }

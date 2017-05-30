@@ -49,7 +49,7 @@ public interface WorketplaceAdministrationAsync {
 
 	//void getAllApplications(AsyncCallback<Vector<Application>> callback);
 
-	//void getAllCalls(AsyncCallback<Vector<Call>> callback);
+	void getAllCalls(AsyncCallback<Vector<Call>> callback);
 
 	void getAllMarketplaces(AsyncCallback<Vector<Marketplace>> callback);
 
@@ -57,6 +57,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void getAllPropertiesFor(PartnerProfile partnerprofile, AsyncCallback<Vector<Property>> callback);
 
+	void getApplicationsFor(Project project, AsyncCallback<Vector<Application>> callback);
+	
 	void getApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
 
 	void getApplicationsForProjectsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
@@ -103,9 +105,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void getProjectsFor(Marketplace marketplace, AsyncCallback<Vector<Project>> callback);
 
-	void getAllCallsFor(Project project, AsyncCallback<Vector<Call>> callback);
-
-	void getAllApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
+	void getCallsFor(Project project, AsyncCallback<Vector<Call>> callback);
 
 	
 
