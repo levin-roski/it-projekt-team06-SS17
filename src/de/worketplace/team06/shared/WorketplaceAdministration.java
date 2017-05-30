@@ -293,4 +293,20 @@ public interface WorketplaceAdministration extends RemoteService {
      */
 	public Vector<Application> getApplicationsFor(Call call) throws IllegalArgumentException;
 
+	/**
+	 * 
+	 * @param project
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Vector<Enrollment> getEnrollmentFor(Project project) throws IllegalArgumentException;
+
+	/**
+	 * 
+	 * @param orgaUnit
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+
 }

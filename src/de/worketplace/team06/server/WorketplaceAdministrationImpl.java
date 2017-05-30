@@ -329,8 +329,24 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		// TODO Auto-generated method stub
 		
 	}
-
 	
+	/**
+	 * Auslesen aller Beteiligungen für ein Projekt
+	 */
+	@Override
+	public Vector<Enrollment> getEnrollmentFor(Project project) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.enrollMapper.findByProject(project);
+	}
+	
+	/**
+	 * Auslesen aller Beteiligungen für eine OrganisationsEinheit
+	 */
+	@Override
+	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.enrollMapper.findByOrgaUnit(orgaUnit);
+	}
 	
 	
 	
@@ -392,7 +408,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.marketMapper.findByOrgaId(orgaUnit.getID());
+		return this.marketMapper.findByOrgaUnit(orgaUnit);
 	}
 
 	

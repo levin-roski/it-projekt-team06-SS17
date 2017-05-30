@@ -105,7 +105,9 @@ public interface WorketplaceAdministrationAsync {
 
 	void getCallsFor(Project project, AsyncCallback<Vector<Call>> callback);
 
+	void getEnrollmentFor(Project project, AsyncCallback<Vector<Enrollment>> callback);
 	
+	void getEnrollmentFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Enrollment>> callback);
 
 	
 }
