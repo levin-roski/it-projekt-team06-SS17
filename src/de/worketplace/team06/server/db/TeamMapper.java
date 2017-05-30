@@ -15,13 +15,12 @@ import de.worketplace.team06.shared.bo.*;
 	     * Default constructor
 	     */
 		private static TeamMapper teamMapper = null;
-		 /**
-		   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
-		   * neue Instanzen dieser Klasse zu erzeugen.
-		   */
 		
 		protected TeamMapper(){
-			
+			 /**
+			   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+			   * neue Instanzen dieser Klasse zu erzeugen.
+			   */
 		}
 		
 		public static TeamMapper teamMapper(){
@@ -57,7 +56,7 @@ import de.worketplace.team06.shared.bo.*;
 	        try{
 	        	Statement stmt = con.createStatement();
 	        	
-	        	ResultSet rs = stmt.executeQuery("SELECT id, created "+ "FROM Team ");
+	        	ResultSet rs = stmt.executeQuery("SELECT * FROM Team ");
 	        	
 	        	while (rs.next()){
 	        		Team t = new Team();
@@ -118,7 +117,7 @@ import de.worketplace.team06.shared.bo.*;
 	        try {
 	        	Statement stmt = con.createStatement();
 	        	
-	        	stmt.executeUpdate("DELETE FROM team " + "WHERE id=" + t.getID());
+	        	stmt.executeUpdate("DELETE * FROM team " + "WHERE id=" + t.getID());
 	        }
 	        catch (SQLException e){
 	        	e.printStackTrace();

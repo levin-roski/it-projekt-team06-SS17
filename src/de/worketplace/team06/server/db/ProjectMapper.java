@@ -13,7 +13,7 @@ import de.worketplace.team06.shared.bo.Team;
 
 	private static ProjectMapper projectMapper = null;
 	 /**
-	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
+	   * Geschützter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected ProjectMapper(){
@@ -32,7 +32,10 @@ import de.worketplace.team06.shared.bo.Team;
     	
     	try{
     		Statement stmt= con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT id, created FROM Team " + "WHERE id= " + id);
+    		ResultSet rs = stmt.executeQuery("SELECT id, created, title, "
+    				+ "description, projectLeaderID, projectOwnerID, "
+    				+ "startDate, endDate, FROM Team " 
+    				+ "WHERE id= " + id);
     		
     		if (rs.next()) {
     			Project proj = new Project();

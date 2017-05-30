@@ -47,15 +47,15 @@ public interface WorketplaceAdministrationAsync {
 
 	void deleteRating(Rating rating, AsyncCallback<Void> callback);
 
-	void getAllApplications(AsyncCallback<Vector<Application>> callback);
+	//void getAllApplications(AsyncCallback<Vector<Application>> callback);
 
-	void getAllCalls(AsyncCallback<Vector<Call>> callback);
+	//void getAllCalls(AsyncCallback<Vector<Call>> callback);
 
 	void getAllMarketplaces(AsyncCallback<Vector<Marketplace>> callback);
 
 	void getAllProjects(AsyncCallback<Vector<Project>> callback);
 
-	void getAllProperties(AsyncCallback<Vector<Property>> callback);
+	void getAllPropertiesFor(PartnerProfile partnerprofile, AsyncCallback<Vector<Property>> callback);
 
 	void getApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
 
@@ -100,6 +100,12 @@ public interface WorketplaceAdministrationAsync {
 	void getPartnerProfileFor(Call call, AsyncCallback<PartnerProfile> callback);
 
 	void getPartnerProfileFor(OrgaUnit orgaunit, AsyncCallback<PartnerProfile> callback);
+
+	void getProjectsFor(Marketplace marketplace, AsyncCallback<Vector<Project>> callback);
+
+	void getAllCallsFor(Project project, AsyncCallback<Vector<Call>> callback);
+
+	void getAllApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
 
 	
 

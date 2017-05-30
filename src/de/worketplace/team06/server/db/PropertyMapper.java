@@ -39,7 +39,7 @@ public class PropertyMapper {
     				("SELECT id, created, name, value FROM Property " + "WHERE id= " + id);
     		
     		if (rs.next()) {
-    			Rating prop = new Property();
+    			Property prop = new Property();
     			prop.setID(rs.getInt("id"));
     			prop.setCreated(rs.getTimestamp("created"));
     			prop.setName(rs.getString("name"));

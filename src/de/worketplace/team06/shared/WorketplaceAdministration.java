@@ -126,15 +126,22 @@ public interface WorketplaceAdministration extends RemoteService {
     public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
     /**
+     * @param Marketplace
      * @return
      */
-    public Vector<Call> getAllCalls() throws IllegalArgumentException;
+    public Vector<Project> getProjectsFor(Marketplace marketplace) throws IllegalArgumentException;
+    
+    /**
+     * @return
+     */
+    //public Vector<Call> getAllCalls() throws IllegalArgumentException;
 
     /**
      * @return
      */
-    public Vector<Application> getAllApplications() throws IllegalArgumentException;
-
+    //public Vector<Application> getAllApplications() throws IllegalArgumentException;
+    
+    
     /**
      * @param orgaUnit 
      * @return
@@ -280,7 +287,9 @@ public interface WorketplaceAdministration extends RemoteService {
     /**
      * @return
      */
-    public Vector<Property> getAllProperties() throws IllegalArgumentException;
+    public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile);
 
+	Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException;
 
+	Vector<Application> getAllApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 }

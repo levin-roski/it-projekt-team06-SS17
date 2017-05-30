@@ -20,6 +20,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	private static final long serialVersionUID = 1L;
 	
 	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Referenzen der Datenbank Mapper
+	 * ***************************************************************************
+	 */
+	
 	/**
 	 * Referenz auf den DatenbankMapper, der das BusinessObjekt "Application" mit der Datenbank
 	 * abgleicht.
@@ -86,6 +92,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	private TeamMapper teamMapper = null;
 	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Referenzen der Datenbank Mapper
+	 * ***************************************************************************
+	 */
 
 	
 
@@ -122,6 +133,381 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return false;
 	}
 
+	
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Methoden für BusinessObjekte
+	 * ***************************************************************************
+	 */
+
+	
+	/*
+	 * ------------------------------
+	 * -- METHODEN für APPLICATION --
+	 * ------------------------------
+	 */
+	
+	/**
+	 *  Erstellen einer Bewerbung für eine Ausschreibung.
+	 */
+	@Override
+	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
+			throws IllegalArgumentException {
+		Application a = new Application();
+		a.setCreated(createDate);
+		a.setApplicationText(applicationText);
+		
+		//***WICHTIG*** Hier muss noch das BO angepasst werden.
+		//a.setCall(call.getID());
+		//a.setOrgaUnit(applicantOrgaUnit.getID());
+		
+		//Setzen einer vorlaueufigen ID
+		a.setID(1);
+		
+		//Speichern einer ausgehenden Bewerbung in der Datenbank.
+		return this.appMapper.insert(a);
+	}
+	
+	/**
+	 *  Speichern von Änderungen einer Bewerbung.
+	 */
+	@Override
+	public void saveApplication(Application application) throws IllegalArgumentException {
+		this.appMapper.update(application);
+		
+	}
+
+	/**
+	 *  Löschen einer Bewerbung.
+	 */
+	@Override
+	public void deleteApplication(Application application) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 *  Auslesen aller Bewerbungen für eine Organisationseinheit
+	 */
+	@Override
+	public Vector<Application> getAllApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Bewerbungen aus der DB
+		return this.appMapper.findbyOrgaUnit(orgaUnit);
+	}
+
+	/**
+	 *  Auslesen aller Bewerbungen für eine Organisationseinheit.
+	 */
+	@Override
+	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		//***WICHTIG*** Nochmals pr�fen...
+		//Auslesen aller Bewerbungen f�r eine OrgaUnit aus der DB
+		int findID = orgaUnit.getID();
+		return this.appMapper.findByOrganisationApplicant(findID);
+	}
+	
+	/**
+	 *  Auslesen aller Bewerbungen für ein Projekt einer Organisationseinheit.
+	 */
+	@Override
+	public Vector<Application> getApplicationsForProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	/*
+	 * -----------------------
+	 * -- METHODEN für CALL --
+	 * -----------------------
+	 */
+	
+	/**
+	 *  Erstellen einer Ausschreibung.
+	 */
+	@Override
+	public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
+			String description, Date deadline) throws IllegalArgumentException {
+		Call c = new Call();
+		c.setTitle(title);
+		c.setDescription(description);
+		c.setDeadline(deadline);
+		c.setPartnerProfileID(partnerProfile.getID());
+		c.setProjektLeaderID(projectLeaderPerson.getID());
+		c.setProjekt(project.getID()); //@DB-Team: Methode muss noch deklariert werden.
+		return this.callMapper.insert(c); //@DB-Team: Methode muss noch deklariert werden.
+	}
+
+	/**
+	 *  Speichern von Änderungen einer Ausschreibung.
+	 */
+	@Override
+	public void saveCall(Call call) throws IllegalArgumentException {
+		this.callMapper.update(call);
+		
+	}
+
+	/**
+	 *  Löschen einer Ausschreibung.
+	 */
+	@Override
+	public void deleteCall(Call call) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 *  Auslesen aller Ausschreibungen für ein Projekt
+	 */
+	@Override
+	public Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Calls aus der DB für ein Projekt
+		return this.callMapper.findByProjectID(project.getID());
+	}
+	
+	
+	
+	/*
+	 * -----------------------------
+	 * -- METHODEN für ENROLLMENT --
+	 * -----------------------------
+	 */
+	
+	/**
+	 *  Erstellen einer Beteiligung
+	 */
+	@Override
+	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
+			int period) throws IllegalArgumentException {
+		Enrollment e = new Enrollment();
+		//***WICHTIG*** Hier muss noch das BO angepasst werden.
+		//e.setProject(project.getID());
+		//e.setOrgaUnit(orgaUnit.getID());
+		//e.setRating(rating.getID());
+		e.setCreated(startDate);
+		e.setEndDate(endDate);
+		e.setPeriod(period);
+		
+		//Setzen einer vorlauefigen ID
+		e.setID(1);
+		
+		return this.enrollMapper.insert(e);
+		
+	}
+
+	/**
+	 *  Speichern von Änderungen einer Beteiligung.
+	 */
+	@Override
+	public void saveEnrollment(Enrollment enrollment) throws IllegalArgumentException {
+		this.enrollMapper.update(enrollment);
+				
+	}
+
+	/**
+	 *  Löschen einer Beteiligung.
+	 */
+	@Override
+	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+	/*
+	 * ------------------------------
+	 * -- METHODEN für MARKETPLACE --
+	 * ------------------------------
+	 */
+	
+	/**
+	 *  Erstellen eines Marktplatzes
+	 */
+	@Override
+	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
+		// Wir benötigen für den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
+		Marketplace m = new Marketplace();
+		m.setTitle(title);
+		//m.setCreated();
+		
+		//Setzen einer vorlaueufigen ID
+		m.setID(1);
+		
+		//Objekt in der DB speichern
+		return this.marketMapper.insert(m);
+	}
+
+	/**
+	 *  Speichern von Änderungen eines Marktplatzes
+	 */
+	@Override
+	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
+		this.marketMapper.update(marketplace);
+	}
+
+	/**
+	 *  Löschen eines Marktplatzes
+	 */
+	@Override
+	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 *  Auslesen aller Marktplätze
+	 */
+	@Override
+	public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Marktpl�tze aus der DB
+		return this.marketMapper.findAll();
+	}
+
+	/**
+	 *  Auslesen aller Marktplätze für eine Organisations-Einheit
+	 */
+	@Override
+	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.marketMapper.findById(orgaUnit.getID());
+	}
+
+	
+	
+	/*
+	 * -------------------------------
+	 * -- METHODEN für ORGANISATION --
+	 * -------------------------------
+	 */
+	
+	/**
+	 *  Erstellen einer Organisation
+	 */
+	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
+		
+		Organisation o = new Organisation();
+		Date created = new Date();
+		
+		o.setCreated(created);
+		o.setDescription(description);
+		o.setGoogleID(googleID);
+		
+		o.setName(name);
+		o.setStreet(street);
+		o.setZipcode(zipcode);
+		o.setCity(city);
+		
+		/**
+		 *  Siehe createPerson
+		 */
+		o.setID(1);
+		
+		return this.orgaMapper.insert(o);
+	}
+	
+	/**
+	 *  Speichern von Änderungen einer Organisation
+	 */
+	@Override
+	public void saveOrganisation(Organisation organisation) throws IllegalArgumentException {
+		this.orgaMapper.update(organisation);
+		
+	}
+	
+	
+	
+	/*
+	 * ---------------------------------
+	 * -- METHODEN für PARTNERPROFILE --
+	 * ---------------------------------
+	 */
+	
+	/**
+	 *  Erstellen eines PartnerProfils
+	 */
+	@Override
+	public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList)
+			throws IllegalArgumentException {
+		
+		PartnerProfile profile = new PartnerProfile();
+		Date created = new Date();
+		
+		profile.setCreated(created);
+		profile.setLastedit(created);
+	
+		profile.setPropertyList(propertyList);
+		profile.setID(1);
+		
+		profile = this.partnerMapper.insert(profile);
+		call.setPartnerProfileID(profile.getID());
+		this.callMapper.update(call);
+		
+		return profile;
+	}
+
+	/**
+	 *  Erstellen eines PartnerProfils für eine Organisation
+	 */
+	@Override
+	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
+			throws IllegalArgumentException {
+		
+		PartnerProfile profile = new PartnerProfile();
+		Date created = new Date();
+		
+		profile.setCreated(created);
+		profile.setLastedit(created);
+	
+		profile.setPropertyList(propertyList);
+		profile.setID(1);
+		
+		profile = this.partnerMapper.insert(profile);
+		orgaunit.setPartnerProfileID(profile.getID()); 
+		//OrgaUnitMapper
+		//this..update(orgaunit);
+		
+		return profile;
+	}
+
+	/**
+	 *  Auslesen eines PartnerProfils für eine Ausschreibung
+	 */
+	@Override
+	public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(call.getPartnerProfileID());
+	}
+
+	/**
+	 *  Auslesen eines PartnerProfils für eine Organisations-Einheit.
+	 */
+	@Override
+	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
+		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
+	}
+
+	/**
+	 *  Speichern von Änderungen für ein PartnerProfil 
+	 */
+	@Override
+	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
+		this.partnerMapper.update(partnerProfile);
+		
+	}
+	
+	
+	
+	/*
+	 * -------------------------
+	 * -- METHODEN für PERSON --
+	 * -------------------------
+	 */
+	
 	/**
 	 *  Methode zum erstellen einer Person. Es werden alle Attribute bis auf die partnerprofileID 
 	 *  gesetzt. Die Partnerprofile id kann zu einem spätzeren Zeitpunkt über die savePerson Methode
@@ -155,244 +541,23 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Person
 	 */
 	@Override
 	public void savePerson(Person person) throws IllegalArgumentException {
 		this.personMapper.update(person);
 	}
 
-	/**
-	 *  
-	 */
-	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
-		
-		Team t = new Team();
-		Date created = new Date();
-		
-		t.setCreated(created);
-		t.setDescription(description);
-		t.setGoogleID(googleID);
-		
-		t.setName(name);
-		t.setMembercount(membercount);
-		
-		/**
-		 *  Siehe createPerson
-		 */
-		t.setID(1);
-		
-		return this.teamMapper.insert(t);
-	}
-	
-	/**
-	 *  
-	 */
-	@Override
-	public void saveTeam(Team team) throws IllegalArgumentException {
-		this.teamMapper.update(team);
-	}
-
-	/**
-	 *  
-	 */
-	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
-		
-		Organisation o = new Organisation();
-		Date created = new Date();
-		
-		o.setCreated(created);
-		o.setDescription(description);
-		o.setGoogleID(googleID);
-		
-		o.setName(name);
-		o.setStreet(street);
-		o.setZipcode(zipcode);
-		o.setCity(city);
-		
-		/**
-		 *  Siehe createPerson
-		 */
-		o.setID(1);
-		
-		return this.orgaMapper.insert(o);
-	}
-	
-	/**
-	 *  
-	 */
-	@Override
-	public void saveOrganisation(Organisation organisation) throws IllegalArgumentException {
-		this.orgaMapper.update(organisation);
-		
-	}
-	@Override
-	public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList)
-			throws IllegalArgumentException {
-		
-		PartnerProfile profile = new PartnerProfile();
-		Date created = new Date();
-		
-		profile.setCreated(created);
-		profile.setLastedit(created);
-	
-		profile.setPropertyList(propertyList);
-		profile.setID(1);
-		
-		profile = this.partnerMapper.insert(profile);
-		call.setPartnerProfileID(profile.getID());
-		this.callMapper.update(call);
-		
-		return profile;
-	}
-
-	@Override
-	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
-			throws IllegalArgumentException {
-		
-		PartnerProfile profile = new PartnerProfile();
-		Date created = new Date();
-		
-		profile.setCreated(created);
-		profile.setLastedit(created);
-	
-		profile.setPropertyList(propertyList);
-		profile.setID(1);
-		
-		profile = this.partnerMapper.insert(profile);
-		orgaunit.setPartnerProfileID(profile.getID()); 
-		//OrgaUnitMapper
-		//this..update(orgaunit);
-		
-		return profile;
-	}
-
-	@Override
-	public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(call.getPartnerProfileID());
-	}
-
-	@Override
-	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
-	}
-
-
-	@Override
-	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
-		this.partnerMapper.update(partnerProfile);
-		
-	}
 	
 	
-	/**
-	 *  
+	/*
+	 * --------------------------
+	 * -- METHODEN für PROJECT --
+	 * --------------------------
 	 */
-	@Override
-	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	/**
-	 *  
-	 */
-	@Override
-	public void saveProperty(Property property) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Property> getAllProperties() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		//Auslesen aller Marktpl�tze aus der DB
-		return this.marketMapper.findAll();
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.marketMapper.findById(orgaUnit.getID());
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Project> getAllProjects() throws IllegalArgumentException {
-		//Auslesen aller Projekte aus der DB
-		return this.projectMapper.findAll();
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals pr�fen...
-		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
-		int findID = orgaUnit.getID();
-		return this.orgaMapper.findById(findID);
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Call> getAllCalls() throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		//Auslesen aller Calls aus der DB
-		return this.callMapper.findAll();
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Application> getAllApplications() throws IllegalArgumentException {
-		//Auslesen aller Bewerbungen aus der DB
-		return this.appMapper.findAll();
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals pr�fen...
-		//Auslesen aller Bewerbungen f�r eine OrgaUnit aus der DB
-		int findID = orgaUnit.getID();
-		return this.appMapper.findByOrganisationApplicant(findID);
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Vector<Application> getApplicationsForProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 *  
+	 *  Erstellen eines Projekts auf einem Marktplatz
 	 */
 	@Override
 	public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
@@ -414,7 +579,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Speichern eines Projekts.
+	 *  Speichern von Änderungen eines Projekts.
 	 */
 	@Override
 	public void saveProject(Project project) throws IllegalArgumentException {
@@ -423,7 +588,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  
+	 *  Löschen eines Projekts
 	 */
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
@@ -432,172 +597,165 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Erstellen eines Marktplatzes
+	 *  Auslesen aller Projekte.
 	 */
-	// Wir ben�tigen f�r den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
 	@Override
-	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
-		Marketplace m = new Marketplace();
-		m.setTitle(title);
-		//m.setCreated();
-		
-		//Setzen einer vorlaueufigen ID
-		m.setID(1);
-		
-		//Objekt in der DB speichern
-		return this.marketMapper.insert(m);
+	public Vector<Project> getAllProjects() throws IllegalArgumentException {
+		//Auslesen aller Projekte aus der DB
+		return this.projectMapper.findAll();
 	}
 
 	/**
-	 *  
+	 *  Auslesen aller Projekte einer Organisations-Einheit
 	 */
 	@Override
-	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		this.marketMapper.update(marketplace);
+	public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		//***WICHTIG*** Nochmals pr�fen...
+		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
+		int findID = orgaUnit.getID();
+		return this.orgaMapper.findById(findID);
 	}
-
+	
 	/**
-	 *  
+	 *  Auslesen aller Projekte für einen Marktplatz
 	 */
 	@Override
-	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+	public Vector<Project> getProjectsFor(Marketplace marketplace) throws IllegalArgumentException {
+		//***WICHTIG*** Nochmals prüfen! Methode für das Suchen nach Projekten für einen Marktplatz im Mapper anlegen
+		int findID = marketplace.getID();
+		return this.orgaMapper.findByMarketplace(marketplace);
 	}
+	
 
+	
+	/*
+	 * ---------------------------
+	 * -- METHODEN für PROPERTY --
+	 * ---------------------------
+	 */
+	
 	/**
-	 *  
+	 *  Erstellen von Eigenschaften für ein PartnerProfil
 	 */
 	@Override
-	public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
-			String description, Date deadline) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public void saveCall(Call call) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public void deleteCall(Call call) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
+	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
 			throws IllegalArgumentException {
-		Application a = new Application();
-		a.setCreated(created);
-		a.setApplicationText(applicationText);
+		Property p = new Property();
+		p.setName(name);
+		p.setValue(value);
 		
-		//***WICHTIG*** Hier muss noch das BO angepasst werden.
-		//a.setCall(call.getID());
-		//a.setOrgaUnit(applicantOrgaUnit.getID());
+		//Setzen einer vorläufigen ID
+		p.setID(1);
 		
-		//Setzen einer vorlaueufigen ID
-		a.setID(1);
-		
-		//Speichern einer ausgehenden Bewerbung in der Datenbank.
-		return this.appMapper.insert(a);
+		//Objekt in der Datenbank speichern
+		return propertyMapper.insert(p);
 	}
 
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Eigenschaft
 	 */
 	@Override
-	public void saveApplication(Application application) throws IllegalArgumentException {
-		this.appMapper.update(application);
-		
+	public void saveProperty(Property property) throws IllegalArgumentException {
+		this.propertyMapper.update(property);
 	}
 
 	/**
-	 *  
+	 *  Auslesen aller Eigenschaften für ein PartnerProfil
 	 */
 	@Override
-	public void deleteApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+	public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile) throws IllegalArgumentException {
+		//***WICHTIG*** Methode muss im Mapper angelegt werden!
+		return this.propertyMapper.findByPartnerProfile(partnerprofile);
 	}
 
+	
+	
+	/*
+	 * -------------------------
+	 * -- METHODEN für RATING --
+	 * -------------------------
+	 */
+	
 	/**
-	 *  
+	 *  Erstellen einer Bewertung für eine Bewerbung
 	 */
 	@Override
 	public Rating rateApplication(Application application, Double rating, String ratingStatemant)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Rating r = new Rating();
+		r.setRating(rating);
+		r.setRatingStatement(ratingStatement);
+		
+		//***WICHTIG*** Hier fehlt noch die Zuweisung zur Application. Wie realisieren wir das genau?
+		
+		//Setzen einer vorläufigen ID
+		r.setID(1);
+		
+		//Speichern des Objekts in der Datenbank
+		return this.ratingMapper.insert(rating);
 	}
 
 	/**
-	 *  
+	 *  Speichern von Änderungen einer Bewertung
 	 */
 	@Override
 	public void saveRating(Rating rating) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.ratingMapper.update(rating);
 		
 	}
 
 	/**
-	 *  
+	 *  Löschen einer Bewertung
 	 */
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	
+	
+	/*
+	 * -----------------------
+	 * -- METHODEN für TEAM --
+	 * -----------------------
+	 */
+	
 	/**
-	 *  
+	 *  Erstellen eines Teams
+	 */
+	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
+		
+		Team t = new Team();
+		Date created = new Date();
+		
+		t.setCreated(created);
+		t.setDescription(description);
+		t.setGoogleID(googleID);
+		
+		t.setName(name);
+		t.setMembercount(membercount);
+		
+		/**
+		 *  Siehe createPerson
+		 */
+		t.setID(1);
+		
+		return this.teamMapper.insert(t);
+	}
+		
+	/**
+	 *  Speichern von Änderungen an einem Team.
 	 */
 	@Override
-	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
-			int period) throws IllegalArgumentException {
-		Enrollment e = new Enrollment();
-		//***WICHTIG*** Hier muss noch das BO angepasst werden.
-		//e.setProject(project.getID());
-		//e.setOrgaUnit(orgaUnit.getID());
-		//e.setRating(rating.getID());
-		e.setCreated(startDate);
-		e.setEndDate(endDate);
-		e.setPeriod(period);
-		
-		//Setzen einer vorlauefigen ID
-		e.setID(1);
-		
-		return this.enrollMapper.insert(e);
-		
+	public void saveTeam(Team team) throws IllegalArgumentException {
+		this.teamMapper.update(team);
 	}
 
-	/**
-	 *  
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Methoden für Business Objekte
+	 * ***************************************************************************
 	 */
-	@Override
-	public void saveEnrollment(Enrollment enrollment) throws IllegalArgumentException {
-		this.enrollMapper.update(enrollment);
-				
-	}
-
-	/**
-	 *  
-	 */
-	@Override
-	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

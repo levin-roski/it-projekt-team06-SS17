@@ -48,7 +48,7 @@ public class PartnerProfileMapper {
     	}
     	return rs;
     }
-  
+	
     public Vector<PartnerProfile> findAll() {
         Connection con = DBConnection.connection();
         Vector<PartnerProfile> result = new Vector<PartnerProfile>();
@@ -56,13 +56,13 @@ public class PartnerProfileMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, lastEdit, created "
-        	+ "FROM Team ");
-        	
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile ");
+        	//noch vervollständigen 
+ 
         	while (rs.next()){
         		Project part = new Project();
         		part.setID(rs.getInt("id"));
-        		part.setLastEdit(rs.getDate("lastEdit"))
+        		part.setLastEdit(rs.getDate("lastEdit"));
         		part.setCreated(rs.getTimestamp("created"));
         		
         		result.addElement(part);
@@ -90,8 +90,9 @@ public class PartnerProfileMapper {
         	
         	stmt.executeUpdate("INSERT INTO partnerProfile (id, lastEdit, created) " 
         	+ "VALUES (" 
-        	+ part.getID() + ", " 
+        	+ part.getID() + ",'" 
         	+ part.getLastEdit() + "','"
+        	+ part.getCreated() + "','"
         	+ "')");
         	}
         }
@@ -108,8 +109,7 @@ public class PartnerProfileMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE project " 
-        	+ "SET lastEdit=\"" + part.getlastEdit() + "\", "
+        	stmt.executeUpdate("UPDATE project SET lastEdit=\"" + part.getlastEdit() + "\", "
         	+ "WHERE id=" + part.getID());
         }
         
@@ -125,7 +125,8 @@ public class PartnerProfileMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("DELETE FROM partnerProfile " + "WHERE id=" + part.getID());
+        	stmt.executeUpdate("DELETE * FROM partnerProfile " + "WHERE id=" + part.getID());
+        	
         }
         catch (SQLException e){
         	e.printStackTrace();
