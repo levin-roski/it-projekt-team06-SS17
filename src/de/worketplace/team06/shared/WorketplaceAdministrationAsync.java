@@ -25,7 +25,7 @@ public interface WorketplaceAdministrationAsync {
 	void createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
 			String description, Date deadline, AsyncCallback<Call> callback);
 
-	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int period,
+	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload,
 			AsyncCallback<Enrollment> callback);
 
 	void createMarketplace(String title, AsyncCallback<Marketplace> callback);

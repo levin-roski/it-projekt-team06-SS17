@@ -285,26 +285,35 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen einer Beteiligung
 	 */
 	@Override
-	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
-			int period) throws IllegalArgumentException {
+	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload) throws IllegalArgumentException {
 		Enrollment e = new Enrollment();
-		//***WICHTIG*** Hier muss noch das BO angepasst werden.
-		//e.setProject(project.getID());
-		//e.setOrgaUnit(orgaUnit.getID());
-		//e.setRating(rating.getID());
-		e.setCreated(startDate);
+		
+		e.setRatingID(rating.getID());
+		e.setProjectID(project.getID());
+		e.setOrgaUnitID(orgaUnit.getID());
+		
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Date createDate = new Date();
+		e.setCreated(createDate);
+		
+		e.setStartDate(startDate);
 		e.setEndDate(endDate);
-		e.setPeriod(period);
+		e.setWorkload(workload);
+		
+//		//Überprüfung ob Start- und Enddatum bereits gesetzt
+//		if (startDate != null && endDate != null){
+//			e.setPeriod();
+//		}
 		
 		//Setzen einer vorlauefigen ID
 		e.setID(1);
 		
+		//***WICHTIG*** @ DB-Team: Methode muss noch deklariert werden.
 		return this.enrollMapper.insert(e);
-		
 	}
 
 	/**
-	 * Speichern von Änderungen einer Beteiligung.
+	 * Speichern von Änderungen einer Beteiligung
 	 */
 	@Override
 	public void saveEnrollment(Enrollment enrollment) throws IllegalArgumentException {
@@ -313,7 +322,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 * Löschen einer Beteiligung.
+	 * Löschen einer Beteiligung
 	 */
 	@Override
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
@@ -321,6 +330,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 	}
 
+	
+	
 	
 	
 	/*
