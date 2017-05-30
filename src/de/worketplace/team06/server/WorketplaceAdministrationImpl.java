@@ -360,9 +360,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen eines Marktplatzes
 	 */
 	@Override
-	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException {
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
+		m.setDescription(description);
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
 		Date createDate = new Date();
@@ -389,7 +390,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	/**
