@@ -17,7 +17,7 @@ import de.worketplace.team06.shared.bo.*;
 public interface WorketplaceAdministrationAsync {
 	void getTestUnit(AsyncCallback<Person> callback);
 	
-	void applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText,
+	void applyFor(Call call, OrgaUnit applicantOrgaUnit, String applicationText,
 			AsyncCallback<Application> callback);
 
 	void checkExistence(int userID, AsyncCallback<Boolean> callback);
@@ -57,11 +57,9 @@ public interface WorketplaceAdministrationAsync {
 
 	void getAllPropertiesFor(PartnerProfile partnerprofile, AsyncCallback<Vector<Property>> callback);
 
-	void getApplicationsFor(Project project, AsyncCallback<Vector<Application>> callback);
+	void getApplicationsFor(Call call, AsyncCallback<Vector<Application>> callback);
 	
 	void getApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
-
-	void getApplicationsForProjectsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
 
 	void getMarketplacesFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Marketplace>> callback);
 

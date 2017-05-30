@@ -149,12 +149,6 @@ public interface WorketplaceAdministration extends RemoteService {
     public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
     /**
-     * @param orgaUnit 
-     * @return
-     */
-    public Vector<Application> getApplicationsForProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
-
-    /**
      * @param marketplace 
      * @param title 
      * @param description 
@@ -220,7 +214,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param applicationText 
      * @return
      */
-    public Application applyFor(Call call, OrgaUnit applicantOrgaUnit,Date createDate , String applicationText) throws IllegalArgumentException;
+    public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, String applicationText) throws IllegalArgumentException;
 
     /**
      * @param application
@@ -297,6 +291,6 @@ public interface WorketplaceAdministration extends RemoteService {
     /**
      * @return
      */
-	public Vector<Application> getApplicationsFor(Project project) throws IllegalArgumentException;
+	public Vector<Application> getApplicationsFor(Call call) throws IllegalArgumentException;
 
 }

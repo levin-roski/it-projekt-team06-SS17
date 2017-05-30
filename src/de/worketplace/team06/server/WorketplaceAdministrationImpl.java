@@ -152,15 +152,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  Erstellen einer Bewerbung für eine Ausschreibung.
 	 */
 	@Override
-	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
+	public Application applyFor(Call call, OrgaUnit orgaUnit, String applicationText)
 			throws IllegalArgumentException {
 		Application a = new Application();
-		a.setCreated(createDate);
+		
+		a.setCallId(call.getID());
+		a.setOrgaUnitId(orgaUnit.getID());
 		a.setApplicationText(applicationText);
 		
-		//***WICHTIG*** Hier muss noch das BO angepasst werden.
-		//a.setCall(call.getID());
-		//a.setOrgaUnit(applicantOrgaUnit.getID());
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Date createDate = new Date();
+		a.setCreated(createDate);
 		
 		//Setzen einer vorlaueufigen ID
 		a.setID(1);
@@ -193,30 +195,21 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		//Auslesen aller Bewerbungen aus der DB
-		return this.appMapper.findbyOrgaUnit(orgaUnit);
+		//Auslesen aller ausgehenden Bewerbungen für eine OrganisationsEinheit aus der DB
+		return this.appMapper.findByOrgaUnit(orgaUnit);
 	}
 
 	/**
 	 *  Auslesen aller Bewerbungen für ein Projekt.
 	 */
 	@Override
-	public Vector<Application> getApplicationsFor(Project project) throws IllegalArgumentException {
+	public Vector<Application> getApplicationsFor(Call call) throws IllegalArgumentException {
 		//***WICHTIG*** Nochmals pr�fen...
-		//Auslesen aller Bewerbungen f�r eine OrgaUnit aus der DB
-		return this.appMapper.findByProject(project);
+		//Auslesen aller eingehenden Bewerbungen für eine OrganisationsEinheit aus der DB
+		return this.appMapper.findByCall(call);
 	}
 	
-	/**
-	 *  Auslesen aller Bewerbungen für ein Projekt einer Organisationseinheit.
-	 */
-	@Override
-	public Vector<Application> getApplicationsForProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	
 	
 	/*
 	 * -----------------------
