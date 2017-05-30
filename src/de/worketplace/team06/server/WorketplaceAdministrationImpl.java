@@ -149,7 +149,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 * Erstellen einer Bewerbung für eine Ausschreibung.
+	 * Erstellen einer Bewerbung für eine Ausschreibung
 	 */
 	@Override
 	public Application applyFor(Call call, OrgaUnit orgaUnit, String applicationText)
@@ -172,7 +172,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 * Speichern von Änderungen einer Bewerbung.
+	 * Speichern von Änderungen einer Bewerbung
 	 */
 	@Override
 	public void saveApplication(Application application) throws IllegalArgumentException {
@@ -181,7 +181,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 * Löschen einer Bewerbung.
+	 * Löschen einer Bewerbung
 	 */
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
@@ -195,17 +195,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		//Auslesen aller ausgehenden Bewerbungen für eine OrganisationsEinheit aus der DB
+		//Auslesen aller Bewerbungen für eine OrganisationsEinheit aus der DB
 		return this.appMapper.findByOrgaUnit(orgaUnit);
 	}
 
 	/**
-	 * Auslesen aller Bewerbungen für ein Projekt.
+	 * Auslesen aller Bewerbungen für ein Projekt
 	 */
 	@Override
 	public Vector<Application> getApplicationsFor(Call call) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals pr�fen...
-		//Auslesen aller eingehenden Bewerbungen für eine OrganisationsEinheit aus der DB
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Bewerbungen für eine Ausschreibung aus der DB
 		return this.appMapper.findByCall(call);
 	}
 	
@@ -218,7 +218,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 * Erstellen einer Ausschreibung.
+	 * Erstellen einer Ausschreibung
 	 */
 	@Override
 	public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
@@ -231,11 +231,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		c.setProjectLeaderID(projectLeaderPerson.getID());
 		c.setPartnerProfileID(partnerProfile.getID());
 		
-		return this.callMapper.insert(c); //@DB-Team: Methode muss noch deklariert werden.
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.callMapper.insert(c);
 	}
 
 	/**
-	 * Speichern von Änderungen einer Ausschreibung.
+	 * Speichern von Änderungen einer Ausschreibung
 	 */
 	@Override
 	public void saveCall(Call call) throws IllegalArgumentException {
@@ -244,7 +245,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 * Löschen einer Ausschreibung.
+	 * Löschen einer Ausschreibung
 	 */
 	@Override
 	public void deleteCall(Call call) throws IllegalArgumentException {
