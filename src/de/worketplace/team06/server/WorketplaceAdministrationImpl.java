@@ -345,10 +345,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
-		// Wir benötigen für den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
-		//m.setCreated();
+		
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Date createDate = new Date();
+		m.setCreated(createDate);
 		
 		//Setzen einer vorlaueufigen ID
 		m.setID(1);
