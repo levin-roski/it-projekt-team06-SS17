@@ -28,7 +28,7 @@ public interface WorketplaceAdministrationAsync {
 	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload,
 			AsyncCallback<Enrollment> callback);
 
-	void createMarketplace(String title, String description, AsyncCallback<Marketplace> callback);
+
 
 	void createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
 			OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate, AsyncCallback<Project> callback);
@@ -108,6 +108,9 @@ public interface WorketplaceAdministrationAsync {
 	void getEnrollmentFor(Project project, AsyncCallback<Vector<Enrollment>> callback);
 	
 	void getEnrollmentFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Enrollment>> callback);
+
+	void createMarketplace(String title, String description, AsyncCallback<Marketplace> callback);
+
 
 	
 }

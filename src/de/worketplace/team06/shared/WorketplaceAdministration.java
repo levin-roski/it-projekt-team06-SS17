@@ -174,7 +174,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param title 
      * @return
      */
-    public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
+   
 
     /**
      * @param marketplace
@@ -308,5 +308,7 @@ public interface WorketplaceAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
 
 }

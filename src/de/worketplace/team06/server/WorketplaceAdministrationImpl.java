@@ -196,7 +196,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Bewerbungen für eine OrganisationsEinheit aus der DB
-		return this.appMapper.findByOrgaUnit(orgaUnit);
+//		/**
+//		 * Variable für die OrgaUnit ID
+//		 */
+//		int findID = orgaUnit.getID();
+//		return this.appMapper.findByOrgaUnitID(findID);
+		
+		return this.appMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 
 	/**
@@ -206,7 +212,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Vector<Application> getApplicationsFor(Call call) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Bewerbungen für eine Ausschreibung aus der DB
-		return this.appMapper.findByCall(call);
+		return this.appMapper.findByCallID(call.getID());
 	}
 	
 
@@ -270,7 +276,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Vector<Call> getCallsFor(Project project) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Calls aus der DB für ein Projekt
-		return this.callMapper.findByProject(project);
+		return this.callMapper.findByProjectID(project.getID());
 	}
 	
 	
@@ -336,7 +342,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Enrollment> getEnrollmentFor(Project project) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.enrollMapper.findByProject(project);
+		return this.enrollMapper.findByProjectID(project.getID());
 	}
 	
 	/**
@@ -345,7 +351,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.enrollMapper.findByOrgaUnit(orgaUnit);
+		return this.enrollMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 	
 	
@@ -408,7 +414,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.marketMapper.findByOrgaUnit(orgaUnit);
+		return this.marketMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 
 	
@@ -645,8 +651,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** Nochmals pr�fen...
 		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
-		int findID = orgaUnit.getID();
-		return this.orgaMapper.findById(findID);
+	
+		return this.orgaMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 	
 	/**
@@ -655,8 +661,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Project> getProjectsFor(Marketplace marketplace) throws IllegalArgumentException {
 		//***WICHTIG*** Nochmals prüfen! Methode für das Suchen nach Projekten für einen Marktplatz im Mapper anlegen
-		int findID = marketplace.getID();
-		return this.orgaMapper.findByMarketplace(marketplace);
+		return this.orgaMapper.findByMarketplaceID(marketplace.getID());
 	}
 	
 
@@ -698,7 +703,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile) throws IllegalArgumentException {
 		//***WICHTIG*** Methode muss im Mapper angelegt werden!
-		return this.propertyMapper.findByPartnerProfile(partnerprofile);
+		return this.propertyMapper.findByPartnerProfileID(partnerprofile.getID());
 	}
 
 	
