@@ -37,6 +37,11 @@ public class Project extends BusinessObject {
      * Variable für die ID des Projektinhabers
      */
     private int projectOwnerID;
+    
+    /**
+     * Variable für die ID des Marktplatzes
+     */
+    private int marketplaceID;
 
     /**
      * Variable für das Startdatum des Projektes
@@ -97,6 +102,14 @@ public class Project extends BusinessObject {
 	}
 	
 	/**
+	 * Auslesen der ID des Marktplatzes, zu welchem das Projekt gehört
+	 * @return marketplaceID
+	 */
+	public int getMarketplaceID() {
+		return marketplaceID;
+	}
+	
+	/**
 	 * Setzen des Titels für das Projekt
 	 * @param title
 	 */
@@ -142,6 +155,14 @@ public class Project extends BusinessObject {
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	/**
+	 * Setzen der ID des Marktplatzes
+	 * @param marketplaceID
+	 */
+	public void setMarketplaceID(int marketplaceID) {
+		this.marketplaceID = marketplaceID;
 	}
 
     
