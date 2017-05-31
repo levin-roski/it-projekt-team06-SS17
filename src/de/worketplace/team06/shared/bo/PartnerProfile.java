@@ -19,35 +19,39 @@ public class PartnerProfile extends BusinessObject {
     }
 
     /**
-     * Variable für das Datum der letzten Änderung.
+     * Variable für das Datum der letzten Änderung
      */
     private Date lastEdit;
     
     private Vector<Property> propertyList;
 
     /**
-     * Datum der letzten Änderung holen.
+     * Auslesen des Datums der letzten Änderung
+     * @return lastEdit
      */
     public Date getLastedit() {
         return this.lastEdit;
     }
 
     /**
-	 * @return the propertyList
+     * Auslesen der Liste der Eigenschaften
+	 * @return propertyList
 	 */
 	public Vector<Property> getPropertyList() {
 		return propertyList;
 	}  
     
     /**
-     * Datum der letzten Änderung setzen. 
+     * Setzen des Datums der letzten Änderung 
+     * @param lastEdit
      */
     public void setLastedit(Date lastEdit) {
         this.lastEdit = lastEdit;
     }
 
     /**
-	 * @param propertyList the propertyList to set
+     * Setzen der Eigenschaften in einer Liste
+	 * @param propertyList
 	 */
 	public void setPropertyList(Vector<Property> propertyList) {
 		this.propertyList = propertyList;

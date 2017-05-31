@@ -47,14 +47,16 @@ public abstract class BusinessObject implements Serializable {
     private int id;
 
     /**
-     * Auslesen der id;
+     * Auslesen der ID;
+     * @return Iid
      */
     public int getID() {
         return this.id;
     }
 
     /**
-     * Datum zurückgeben.
+     * Auslesen des Erstellungsdatums
+     * @return created
      */
     public Date getCreated() {
         return this.created;
@@ -89,7 +91,8 @@ public abstract class BusinessObject implements Serializable {
     }
 
     /**
-     * Datum setzen
+     * Setzen des Erstellungdatums
+     * @param created
      */
     public void setCreated(Date created) {
         this.created = created;
@@ -97,6 +100,7 @@ public abstract class BusinessObject implements Serializable {
 
     /**
      * Setzen der ID
+     * @param ID
      */
     public void setID(int id) {
         this.id = id;

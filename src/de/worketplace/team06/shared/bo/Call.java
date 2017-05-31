@@ -50,6 +50,7 @@ public class Call extends BusinessObject {
 
     /**
      * Auslesen der ID für den Projektleiter
+     * @return projectLeaderID
      */
     public int getProjectLeaderID() {
         return this.projectLeaderID;
@@ -57,6 +58,7 @@ public class Call extends BusinessObject {
 
     /**
      * Auslesen des Titels für die Ausschreibung
+     * @return title
      */
     public String getTitle() {
         return this.title;
@@ -64,6 +66,7 @@ public class Call extends BusinessObject {
 
     /**
      * Auslesen der Beschreibung für die Ausschreibung
+     * @return description
      */
     public String getDescription() {
         return this.description;
@@ -71,6 +74,7 @@ public class Call extends BusinessObject {
 
     /**
      * Auslesen des Datums für die Deadline
+     * @return deadline
      */
     public Date getDeadline() {
         return this.deadline;
@@ -94,6 +98,7 @@ public class Call extends BusinessObject {
 
     /**
      * Setzen der ID für den Projektleiter
+     * @param projectLeaderID
      */
     public void setProjectLeaderID(int projectLeaderID) {
         this.projectLeaderID = projectLeaderID;
@@ -101,6 +106,7 @@ public class Call extends BusinessObject {
 
     /**
      * Setzen des Titels für die Ausschreibung
+     * @param title
      */
     public void setTitle(String title) {
         this.title = title;
@@ -108,6 +114,7 @@ public class Call extends BusinessObject {
 
     /**
      * Setzen der Beschreibung für die Ausschreibung
+     * @param description
      */
     public void setDescription(String description) {
         this.description = description;
@@ -115,6 +122,7 @@ public class Call extends BusinessObject {
 
     /**
      * Setzen des Datums für die Deadline
+     * @param deadline
      */
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
@@ -130,7 +138,7 @@ public class Call extends BusinessObject {
     
 	/**
 	 * Setzen der ID für das PartnerProfil
-	 * @param partnerProfileID the partnerProfileID to set
+	 * @param partnerProfileID
 	 */
 	public void setPartnerProfileID(int partnerProfileID) {
 		this.partnerProfileID = partnerProfileID;

@@ -19,43 +19,45 @@ public class Rating extends BusinessObject {
     }
 
     /**
-     * 
+     * Variable für den Wert der Bewertung
      */
-    private Double rating;
+    private Float rating;
 
     /**
-     * 
+     * Variable für das Statement der Bewertung
      */
     private String ratingStatement;
 
     /**
+     * Auslesen des Wertes der Bewertung
      * @return
      */
-    public Double getRating() {
-        // TODO implement here
-        return null;
+    public Float getRating() {
+        return this.rating;
     }
 
     /**
-     * @return
+     * Auslesen des Statements der Bewertung
+     * @return ratingStatement
      */
     public String getRatingStatement() {
-        // TODO implement here
-        return "";
+        return ratingStatement;
     }
 
     /**
+     * Setzen des Wertes der Bewertung
      * @param rating
      */
-    public void setRating(Double rating) {
-        // TODO implement here
+    public void setRating(Float value) {
+        this.rating = value;
     }
 
     /**
+     * Setzen des Statements der Bewertung
      * @param ratingStatement
      */
-    public void setRatingStatement(String ratingStatement) {
-        // TODO implement here
+    public void setRatingStatement(String statement) {
+        this.ratingStatement = statement;
     }
 
 }

@@ -29,7 +29,8 @@ public class Marketplace extends BusinessObject {
     private String description;
 
     /**
-     * Auslesen des Titel von dem Marktplatz
+     * Auslesen des Titels des Marktplatzes
+     * @return title
      */
     public String getTitle() {
         return this.title;
@@ -37,14 +38,14 @@ public class Marketplace extends BusinessObject {
     
     /**
      * Auslesen der Beschreibung des Marktplatzes
-     * @return
+     * @return description
      */
     public String getDescription() {
 		return description;
 	}
 
     /**
-     * Setzen des Titel von dem Marktplatz
+     * Setzen des Titel des Marktplatzes
      * @param title
      */
     public void setTitle(String title) {
@@ -52,7 +53,7 @@ public class Marketplace extends BusinessObject {
     }
     
     /**
-     * Setzen der Beschreibung von dem Marktplatz
+     * Setzen der Beschreibung des Marktplatzes
      * @param description
      */
 	public void setDescription(String description) {

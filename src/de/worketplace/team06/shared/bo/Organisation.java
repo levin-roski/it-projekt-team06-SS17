@@ -13,14 +13,23 @@ public class Organisation extends OrgaUnit {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-     * Deklaration der Attribute.
+     * Variable für den Namen der Organisation
      */
     private String name;
     
+    /**
+     * Variable für die Straße der Organisation
+     */
     private String street;
     
+    /**
+     * Variable für die Postleitzahl der Organisation
+     */
     private int zipcode;
     
+    /**
+     * Variable für die Stadt der Organisation
+     */
     private String city;
 
 	/**
@@ -31,39 +40,64 @@ public class Organisation extends OrgaUnit {
     }
     
     /**
-     * Getter Methoden für die einzelnen Attribute. 
+     * Auslesen des Namens der Organisations 
      */
     public String getName() {
 		return name;
 	}
     
+    /**
+     * Auslesen der Straße der Organisation
+     * @return street
+     */
     public String getStreet() {
         return this.street;
     }
-
+    
+    /**
+     * Auslesen der Postleitzahl der Organisation
+     * @return zipcode
+     */
     public int getZipcode() {
         return this.zipcode;
     }
 
+    /**
+     * Auslesen der Stadt der Organisation
+     * @return
+     */
     public String getCity() {
         return this.city;
     }
     
     /**
-     * Setter Methoden für die einzelnen Attribute. 
+     * Setzen des Namens der Organisations
+     * @param name
      */
     public void setName(String name) {
 		this.name = name;
 	}
     
+    /**
+     * Setzen der Straße der Organisation
+     * @param street
+     */
     public void setStreet(String street) {
         this.street = street;
     }
 
+    /**
+     * Setzen der Postleitzahl der Organisation
+     * @param zipcode
+     */
     public void setZipcode(int zipcode) {
         this.zipcode = zipcode;
     }
 
+    /**
+     * Setzen der Stadt der Organisation
+     * @param city
+     */
     public void setCity(String city) {
         this.city = city;
     }

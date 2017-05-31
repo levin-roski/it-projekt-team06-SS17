@@ -13,36 +13,49 @@ public class Team extends OrgaUnit {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-     * Deklaration der Attribute.
-     */
-    private String teamName;
-    
-    private int membercount;
-    
-	/**
      * Default constructor
      */
     public Team() {
     }
+	
+	/**
+     * Variable für den Namen des Teams
+     */
+    private String teamName;
+    
+    /**
+     * Variable für die Anzahl der Mitglieder eines Teams
+     */
+    private int membercount;
 
 	/**
-	 * Getter Methoden für die einzelnen Attribute. 
+	 * Auslesen des Namens für das Team
+	 * @return teamName
 	 */
 	public String getName() {
 		return teamName;
 	}
 	
+	/**
+	 * Auslesen der Mitgliederzahl für das Team
+	 * @return membercount
+	 */
 	public int getMembercount() {
 		return membercount;
 	}
 	
 	/**
-	 * Setter Methoden für die einzelnen Attribute. 
+	 * Setzen des Namens für das Team
+	 * @param name
 	 */
 	public void setName(String name) {
 		this.teamName = name;
 	}
 
+	/**
+	 * Setzen der Mitgliederzahl für das Team
+	 * @param membercount
+	 */
 	public void setMembercount(int membercount) {
 		this.membercount = membercount;
 	}

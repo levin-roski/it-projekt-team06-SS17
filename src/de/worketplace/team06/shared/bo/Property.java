@@ -19,46 +19,45 @@ public class Property extends BusinessObject {
     }
 
 	/**
-     *  Variable für den Namen. 
+     * Variable für den Namen der Eigenschaft 
      */
     private String name;
 
     /**
-     *  Variable für den Wert.
+     * Variable für den Wert der Eigenschaft
      */
     private String value;
     
     /**
-   	 * Namen holen.
+   	 * Auslesen des Namens der Eigenschaft
+   	 * @return name
    	 */
    	public String getName() {
    		return name;
    	}
-
+   	
    	/**
-   	 * Namen setzen. 
+   	 * Auslesen des Wertes der Eigenschaft
+   	 * @return value
+   	 */
+   	public String getValue() {
+   		return value;
+   	}
+   	
+   	/**
+   	 * Setzen des Namens der Eigenschaft
+   	 * @param name
    	 */
    	public void setName(String name) {
    		this.name = name;
    	}
 
-
    	/**
-   	 * Wert holen. 
-   	 */
-   	public String getValue() {
-   		return value;
-   	}
-
-
-   	/**
-   	 * Wert setzen.
+   	 * Setzen des Werts der Eigenschaft
+   	 * @param value
    	 */
    	public void setValue(String value) {
    		this.value = value;
    	}
-
-
-  
 
 }

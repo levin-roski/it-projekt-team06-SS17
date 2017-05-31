@@ -56,6 +56,7 @@ public class Enrollment extends BusinessObject {
 
     /**
      * Auslesen des Startdatums
+     * @return startDate
      */
     public Date getStartDate() {
        return this.startDate;
@@ -63,6 +64,7 @@ public class Enrollment extends BusinessObject {
 
     /**
      * Auslesen des Enddatums
+     * @return endDate
      */
     public Date getEndDate() {
         return this.endDate;
@@ -85,7 +87,7 @@ public class Enrollment extends BusinessObject {
     
     /**
      * Auslesen der ID für die Organisationseinheit
-     * @return
+     * @return ratingID
      */
 	public int getRatingID() {
 		return this.ratingID;
@@ -93,7 +95,7 @@ public class Enrollment extends BusinessObject {
 	
 	/**
 	 * Auslesen der ID für das Projekt
-	 * @return
+	 * @return projectID
 	 */
 	public int getProjectID() {
 		return this.projectID;
@@ -101,7 +103,7 @@ public class Enrollment extends BusinessObject {
 	
 	/**
 	 * Auslesen der ID für die OrganisationsEinheit
-	 * @return
+	 * @return orgaUnitID
 	 */
 	public int getOrgaUnitID() {
 		return this.orgaUnitID;
@@ -109,6 +111,7 @@ public class Enrollment extends BusinessObject {
 
     /**
      * Setzen des Startdatums
+     * @param startDate
      */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
@@ -116,6 +119,7 @@ public class Enrollment extends BusinessObject {
 
     /**
      * Setzen des Enddatums
+     * @param endDate
      */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
