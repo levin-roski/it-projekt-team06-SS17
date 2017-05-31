@@ -3,11 +3,16 @@ package de.worketplace.team06.server;
 import java.util.Date;
 import java.util.Vector;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.worketplace.team06.shared.*;
 //import de.worketplace.team06.shared.WorketplaceAdministration;
 import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.client.NotLoggedInException;
+import de.worketplace.team06.client.UserChangedException;
 import de.worketplace.team06.server.db.*;
 
 
@@ -795,5 +800,31 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * ABSCHNITT, Ende: Methoden für Business Objekte
 	 * ***************************************************************************
 	 */
+	
+	/*
+	 * ---------------------------
+	 * -- USER LOGIN Überprüfen --
+	 * ---------------------------
+	 */
+	
+	private void checkLoggedIn(User user) throws NotLoggedInException, UserChangedException {
+	    User temp = getUser();
+		if (temp == null) {
+	      throw new NotLoggedInException("Not logged in.");
+	    }
+	    else
+	    {
+	    if (!temp.equals(user)){
+	    	throw new UserChangedException("User has changed");
+	    }
+	    }
+	  }
+	
+	private User getUser() {
+	    UserService userService = UserServiceFactory.getUserService();
+	    return userService.getCurrentUser();
+	  }
+	
+	
 
 }
