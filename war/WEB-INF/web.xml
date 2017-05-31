@@ -22,7 +22,7 @@
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/worketplace/greet</url-pattern>
   </servlet-mapping>
-  
+  <!--  Funktioniert bisher noch nicht ??? 
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>worketplaceAdministration</web-resource-name>
@@ -32,6 +32,7 @@
             <role-name>*</role-name>
         </auth-constraint>
     </security-constraint>
+  -->
   
   <!-- Default page to serve -->
   <welcome-file-list>
