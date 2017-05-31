@@ -119,11 +119,7 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public Vector<Project> getAllProjects() throws IllegalArgumentException;
 
-    /**
-     * @param orgaUnit 
-     * @return
-     */
-    public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+ 
 
     /**
      * @param Marketplace
@@ -310,5 +306,9 @@ public interface WorketplaceAdministration extends RemoteService {
 	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
 	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
+
+	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException;
+
+	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
 }
