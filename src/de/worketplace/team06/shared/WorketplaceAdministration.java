@@ -232,7 +232,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param ratingStatemant 
      * @return
      */
-    public Rating rateApplication(Application application, Double rating, String ratingStatemant) throws IllegalArgumentException;
+    public Rating rateApplication(Application application, Float rating, String ratingStatemant) throws IllegalArgumentException;
 
     /**
      * @param rating

@@ -686,7 +686,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setID(1);
 		
 		//Objekt in der Datenbank speichern
-		return propertyMapper.insert(p);
+		return this.propertyMapper.insert(p);
 	}
 
 	/**
@@ -718,7 +718,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen einer Bewertung für eine Bewerbung
 	 */
 	@Override
-	public Rating rateApplication(Application application, Double rating, String ratingStatemant)
+	public Rating rateApplication(Application application, Float rating, String ratingStatement)
 			throws IllegalArgumentException {
 		Rating r = new Rating();
 		r.setRating(rating);
@@ -730,7 +730,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		r.setID(1);
 		
 		//Speichern des Objekts in der Datenbank
-		return this.ratingMapper.insert(rating);
+		return this.ratingMapper.insert(r);
 	}
 
 	/**

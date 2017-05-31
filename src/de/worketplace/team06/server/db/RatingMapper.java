@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.db;
 
 import java.util.*;
+
+import de.worketplace.team06.shared.bo.Rating;
 /**
  * 
  */
@@ -8,7 +10,7 @@ public class RatingMapper {
 
 	private static RatingMapper ratingMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected RatingMapper(){
@@ -56,7 +58,8 @@ public class RatingMapper {
     }
     
     public Rating findById(int id){
-    	
+    	// TODO implement here
+    	return null;
     }
 	
 }
