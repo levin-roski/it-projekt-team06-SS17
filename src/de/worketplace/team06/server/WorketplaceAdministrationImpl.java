@@ -614,6 +614,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setProjectOwnerID(projectOwnerOrgaUnit.getID());
 		p.setStartDate(startDate);
 		p.setEndDate(endDate);
+		p.setMarketplaceID(marketplace.getID());
 		
 		//Setzen einer vorlaueufigen ID
 		p.setID(1);
