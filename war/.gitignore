@@ -1,3 +1,6 @@
 /editor/
 /index/
 /worketplace/
+
+*.js
+*.txt
