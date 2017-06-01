@@ -133,9 +133,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  
 	 */
 	@Override
-	public boolean checkExistence(int userID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean checkExistence(int googleID) throws IllegalArgumentException {
+		OrgaUnit temp;
+		temp = orgaUnitMapper.findByGoogleID(googleID);
+		if (temp != null){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	
