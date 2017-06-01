@@ -117,6 +117,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void getProjectByID(int projectID, AsyncCallback<Project> callback);
 
+	void getCallByID(int callID, AsyncCallback<Call> callback);
+
 
 	
 }

@@ -312,5 +312,7 @@ public interface WorketplaceAdministration extends RemoteService {
 	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException;
 	
 	public Project getProjectByID(int projectID) throws IllegalArgumentException;
+	
+	public Call getCallByID(int callID) throws IllegalArgumentException;
 
 }

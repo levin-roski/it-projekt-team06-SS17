@@ -284,6 +284,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.callMapper.findByProjectID(project.getID());
 	}
 	
+	/**
+	 * Auslesen einer Ausschreibung mit einer CallID
+	 */
+	public Call getCallByID(int callID) throws IllegalArgumentException {
+		return this.callMapper.findByID(callID);
+	}
 	
 	
 	/*
