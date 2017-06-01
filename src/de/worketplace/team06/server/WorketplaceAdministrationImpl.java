@@ -441,6 +441,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		o.setCreated(created);
 		o.setDescription(description);
 		o.setGoogleID(googleID);
+		o.setType("Organisation");
 		
 		o.setName(name);
 		o.setStreet(street);
@@ -565,6 +566,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setCreated(created);
 		p.setDescription(description);
 		p.setGoogleID(googleID);
+		p.setType("Person");
 		
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
@@ -794,6 +796,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		t.setCreated(created);
 		t.setDescription(description);
 		t.setGoogleID(googleID);
+		t.setType("Team");
 		
 		t.setName(name);
 		t.setMembercount(membercount);
