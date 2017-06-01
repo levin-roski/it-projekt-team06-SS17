@@ -34,6 +34,11 @@ public abstract class OrgaUnit extends BusinessObject {
     private int partnerprofileID;
     
     /**
+     * Variable für den OrgaUnit Typ (Organisation, Team oder Person)
+     */
+    private String type;
+    
+    /**
      * Auslesen der GoogleID für die OrganisationsEinheit
      * @return googleID
      */
@@ -56,6 +61,14 @@ public abstract class OrgaUnit extends BusinessObject {
     public int getPartnerProfileID() {
         return this.partnerprofileID;
     }
+    
+    /**
+     * Auslesen des OrgaUnit Typs (Organisation, Team oder Person)
+     * @return
+     */
+	public String getType() {
+		return type;
+	}
 
     /**
      * Setzen der GoogleID für die OrganisationsEinheit 
@@ -80,5 +93,13 @@ public abstract class OrgaUnit extends BusinessObject {
     public void setPartnerProfileID(int partnerProfileID) {
         this.partnerprofileID = partnerProfileID;
     }
+	
+	/**
+	 * Setzen des Typs von OrgaUnit (Organisation, Team oder Person)
+	 * @param type
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }
