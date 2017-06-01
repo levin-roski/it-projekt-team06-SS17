@@ -651,7 +651,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 * Auslesen aller Projekte einer Organisations-Einheit
+	 * Auslesen aller Projekte, die eine bestimmte Organisationseinheit leitet. 
 	 */
 	@Override
 	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException {
@@ -661,12 +661,22 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.projectMapper.findByProjectLeaderID(orgaUnit.getID());
 	}
 	
+	/**
+	 * Auslesen aller Projekte, die eine bestimmte Organisationseinheit besitzt.
+	 */
 	@Override
 	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** Nochmals pr�fen...
 		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
 	
 		return this.projectMapper.findByProjectOwnerID(orgaUnit.getID());
+	}
+	
+	/**
+	 * Auslesen eines Projektes mit einer projectID
+	 */
+	public Project getProjectByID(int projectID) throws IllegalArgumentException{
+	return this.projectMapper.findByID(projectID);	
 	}
 	
 	/**

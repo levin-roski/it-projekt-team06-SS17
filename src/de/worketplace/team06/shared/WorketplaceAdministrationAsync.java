@@ -115,6 +115,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void getProjectsForOwner(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
 
+	void getProjectByID(int projectID, AsyncCallback<Project> callback);
+
 
 	
 }
