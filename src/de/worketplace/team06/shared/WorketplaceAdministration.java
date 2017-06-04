@@ -314,5 +314,7 @@ public interface WorketplaceAdministration extends RemoteService {
 	public Project getProjectByID(int projectID) throws IllegalArgumentException;
 	
 	public Call getCallByID(int callID) throws IllegalArgumentException;
+	
+	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
 
 }
