@@ -13,15 +13,6 @@
 		<servlet-name>worketplaceAdministration</servlet-name>
 		<url-pattern>/editor/worketplaceAdmin</url-pattern>
 	</servlet-mapping>
-	<servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>de.worketplace.team06.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/worketplace/greet</url-pattern>
-  </servlet-mapping>
  
     <security-constraint>
         <web-resource-collection>
