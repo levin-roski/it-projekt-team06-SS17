@@ -392,6 +392,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Date createDate = new Date();
 		m.setCreated(createDate);
 		
+		
 		//Setzen einer vorlaueufigen ID
 		m.setID(1);
 		
@@ -476,7 +477,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.orgaMapper.update(organisation);
 		
 	}
-	
+	/*
+	 * ---------------------------------
+	 * -- METHODEN für OrgaUnit --
+	 * ---------------------------------
+	 */
+	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
+	}
 	
 	
 	/*
@@ -841,17 +850,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * ---------------------------
 	 */
 	
-	private void checkLoggedIn(User user) throws NotLoggedInException, UserChangedException {
+	private void checkLoggedIn() throws NotLoggedInException, UserChangedException {
 	    User temp = getUser();
 		if (temp == null) {
 	      throw new NotLoggedInException("Not logged in.");
 	    }
-	    else
-	    {
-	    if (!temp.equals(user)){
-	    	throw new UserChangedException("User has changed");
-	    }
-	    }
+//	    else
+//	    {
+//	    if (!temp.equals(user)){
+//	    	throw new UserChangedException("User has changed");
+//	    }
+//	    }
 	  }
 	
 	private User getUser() {

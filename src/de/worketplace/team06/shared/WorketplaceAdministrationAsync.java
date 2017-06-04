@@ -119,6 +119,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void getCallByID(int callID, AsyncCallback<Call> callback);
 
+	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
+
 
 	
 }
