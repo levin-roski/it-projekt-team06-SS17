@@ -15,7 +15,7 @@ public class Test {
 		admin.init();
 		
 //		testOfCreateMarketplace(admin);
-		testOfGetAllMarketplaces(admin);
+//		testOfGetAllMarketplaces(admin);
 		
 		
 	}
