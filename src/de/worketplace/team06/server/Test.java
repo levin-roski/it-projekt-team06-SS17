@@ -17,7 +17,8 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-		testOfCreateTeam(admin);
+		testOfCreateOrganisation(admin);
+//		testOfCreateTeam(admin);
 //		testOfCreatePerson(admin);
 //		testOfCreateMarketplace(admin);
 //		testOfGetAllMarketplaces(admin);
@@ -53,6 +54,10 @@ public class Test {
 		//admin.createTeam("Ist wohl ein Team", "G2349jf", "Spermateam", 1000);
 		admin.createTeam("ahjooo", "Gagasdg234", "SSchluckteam", 500);
 		
+	}
+	
+	public static void testOfCreateOrganisation(WorketplaceAdministrationImpl admin) {
+		admin.createOrganisation("1 Nice Unternehmen vong Niceigkeit her", "rofliksdeh1337lol", "1Unternehmen", "Stadtstrand 1", 13337, "Stutututtgart");	
 	}
 
 	public static void testOfGetAllMarketplaces(WorketplaceAdministrationImpl admin) {
