@@ -32,26 +32,39 @@ import de.worketplace.team06.shared.bo.*;
 	    /**
 	     * @param orgaUnit 
 	     * @return
+	     * @throws  
 	     */
 	    public Team insert (Team t) {
 	    	Connection con = DBConnection.connection();
 			
+			
 			try {
+				
 				Statement stmt = con.createStatement();
-				
-				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");
-				
+				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");			
 				if (rs.next()) {
 					
 					t.setID(rs.getInt("maxid") + 1);
 			
+					con.setAutoCommit(false);
 					stmt = con.createStatement();
 					stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getGoogleID() +  "','" + t.getDescription() +  "','" + t.getType() + "')");
 					stmt.executeUpdate("INSERT INTO team (id, created, teamName, membercount) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getName() + "','" + t.getMembercount() + "')");
+					con.commit();
 				}
 			}
+			
 			catch (SQLException e2) {
-				e2.printStackTrace();
+				try {
+					con.rollback();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				  finally {
+					  e2.printStackTrace();
+				}	
 			}
 			return t;
 	    }
