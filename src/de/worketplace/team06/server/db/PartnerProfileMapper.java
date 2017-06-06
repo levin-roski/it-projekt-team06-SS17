@@ -34,19 +34,24 @@ public class PartnerProfileMapper {
     	
     	try{
     		Statement stmt= con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT id, created FROM Team " + "WHERE id= " + id);
+    		ResultSet rs = stmt.executeQuery("SELECT id, created, lastEdit, teamID, personID "
+    				+ "FROM Partnerprofile WHERE id= " + id);
     		
     		if (rs.next()) {
     			PartnerProfile part = new PartnerProfile();
     			part.setID(rs.getInt("id"));
     			part.setLastEdit(rs.getDate("lastEdit"));
     			part.setCreated(rs.getTimestamp("created"));
+    			part.setTeamID(rs.getInt("teamID"));
+    			part.setPersonID(rs.getInt("personID"));
+    			
+    			return part;
     		}	
     	}
-    	catch (SQLExpetion e){
+    	catch (SQLException e){
     		e.printStackTrace();
     	}
-    	return rs;
+    	return null;
     }
 	
     public Vector<PartnerProfile> findAll() {
@@ -56,14 +61,16 @@ public class PartnerProfileMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile ");
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile ORDER BY id");
         	//noch vervollständigen 
  
-        	while (rs.next()){
-        		Project part = new Project();
+        	if (rs.next()){
+        		PartnerProfile part = new PartnerProfile();
         		part.setID(rs.getInt("id"));
         		part.setLastEdit(rs.getDate("lastEdit"));
         		part.setCreated(rs.getTimestamp("created"));
+        		part.setTeamID(rs.getInt("teamID"));
+        		part.setPersonID(rs.getInt("personID"));
         		
         		result.addElement(part);
         	}
@@ -73,7 +80,6 @@ public class PartnerProfileMapper {
         }
         return result ;
     }
-    
     
     
     public PartnerProfile insert (PartnerProfile part) {
@@ -96,7 +102,7 @@ public class PartnerProfileMapper {
         	+ "')");
         	}
         }
-       catch (SQLExpetion e){
+       catch (SQLException e){
     	e.printStackTrace();
     }
     
