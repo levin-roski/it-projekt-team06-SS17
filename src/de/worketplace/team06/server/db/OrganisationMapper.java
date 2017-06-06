@@ -15,7 +15,7 @@ public class OrganisationMapper {
      */
 	private static OrganisationMapper organisationMapper = null;
 	 /**
-	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected OrganisationMapper(){
@@ -45,10 +45,10 @@ public class OrganisationMapper {
     			o.setCreated(rs.getTimestamp("created"));
     		}	
     	}
-    	catch (SQLExpetion e){
+    	catch (SQLException e){
     		e.printStackTrace();
     	}
-    	return rs;
+    	return null;
     }
   
     public Vector<Organisation> findAll() {
@@ -101,7 +101,7 @@ public class OrganisationMapper {
         	+ "')");
         	}
         }
-       catch (SQLExpetion e){
+       catch (SQLException e){
     	e.printStackTrace();
     }
     
@@ -127,7 +127,6 @@ public class OrganisationMapper {
         return o;
     }
 
-<<<<<<< HEAD
     public void delete(Organisation o) {
         Connection con = DBConnection.connection();
         
@@ -140,13 +139,4 @@ public class OrganisationMapper {
         	e.printStackTrace();
         }
     }
-=======
-
-
-    /**
-     * @param orgaUnit 
-     * @return
-     */
->>>>>>> refs/heads/master
-
 }
