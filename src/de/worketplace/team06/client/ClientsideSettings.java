@@ -1,6 +1,5 @@
 package de.worketplace.team06.client;
 
-import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 
 import de.worketplace.team06.shared.*;
@@ -25,23 +24,6 @@ public class ClientsideSettings {
 	 * 
 	 */
 //	private static ReportGeneratorAsync reportGenerator = null;
-	
-	/**
-	 * 
-	 */
-	private static final String LOGGER_NAME = "worketplace Web Client";
-	
-	/**
-	 * 
-	 */
-	private static final Logger log = Logger.getLogger(LOGGER_NAME);
-	
-	/**
-	 * 
-	 */
-	public static Logger getLogger() {
-		return log;
-	}
 	
 	/**
 	 * 
