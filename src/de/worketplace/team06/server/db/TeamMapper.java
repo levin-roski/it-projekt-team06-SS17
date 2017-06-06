@@ -14,7 +14,7 @@ import de.worketplace.team06.shared.bo.*;
 	     */
 		private static TeamMapper teamMapper = null;
 		 /**
-		   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+		   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 		   * neue Instanzen dieser Klasse zu erzeugen.
 		   */
 		protected TeamMapper(){
@@ -63,6 +63,11 @@ import de.worketplace.team06.shared.bo.*;
 	        // TODO implement here
 	        return null;
 	    }
+
+		public Team findByGoogleID(String googleId) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 	    /**
 	     * @param orgaUnit 

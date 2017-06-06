@@ -62,6 +62,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	private OrganisationMapper orgaMapper = null;
 	
 	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "OrganisationUnit" mit der Datenbank
+	 * abgleicht.
+	 */
+	private OrgaUnitMapper orgaUnitMapper = null;
+	
+	/**
 	 * Referenz auf den DatenbankMapper, der das BusinessObject "Partner" mit der Datenbank
 	 * abgleicht.
 	 */
@@ -113,6 +119,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.enrollMapper = EnrollmentMapper.enrollmentMapper();
 		this.marketMapper = MarketplaceMapper.marketplaceMapper();
 		this.orgaMapper = OrganisationMapper.organisationMapper();
+		this.orgaUnitMapper = OrgaUnitMapper.orgaUnitMapper();
 		this.partnerMapper = PartnerProfileMapper.partnerProfileMapper();
 		this.personMapper = PersonMapper.personMapper();
 		this.projectMapper = ProjectMapper.projecteMapper();
@@ -484,7 +491,23 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
+		
+		String type = orgaUnitMapper.findTypeByGoogleID(loginInfo.getGoogleId());
+        
+        switch(type){ 
+        case "Person": 
+        	Person p = this.personMapper.findByGoogleID(loginInfo.getGoogleId());
+        	return p;
+		case "Team": 
+        	Team t = this.teamMapper.findByGoogleID(loginInfo.getGoogleId());
+            return t;
+		case "Organisation": 
+        	Organisation o = this.orgaMapper.findByGoogleID(loginInfo.getGoogleId());
+        	return o; 
+        }
+		return null;
+			
+		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
 	}
 	
 	

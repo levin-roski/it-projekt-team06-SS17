@@ -44,4 +44,9 @@ public class PersonMapper {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Person findByGoogleID(String googleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

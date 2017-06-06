@@ -70,6 +70,11 @@ public class OrganisationMapper {
         return null;
     }
 
+	public Organisation findByGoogleID(String googleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
     /**
