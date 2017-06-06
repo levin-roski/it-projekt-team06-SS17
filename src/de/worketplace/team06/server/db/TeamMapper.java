@@ -43,10 +43,10 @@ import de.worketplace.team06.shared.bo.*;
 	    			t.setCreated(rs.getTimestamp("created"));
 	    		}	
 	    	}
-	    	catch (SQLExpetion e){
+	    	catch (SQLException e){
 	    		e.printStackTrace();
 	    	}
-	    	return rs;
+	    	return null ;
 	    }
 	  
 	    public Vector<Team> findAll() {
@@ -89,7 +89,7 @@ import de.worketplace.team06.shared.bo.*;
 	        	stmt.executeUpdate("INSERT INTO team (id, teamName) " + "VALUES (" + t.getID() + ", " + t.getTeamName() + "','" + "')");
 	        	}
 	        }
-	       catch (SQLExpetion e){
+	       catch (SQLException e){
 	    	e.printStackTrace();
 	    }
 	    
@@ -123,6 +123,31 @@ import de.worketplace.team06.shared.bo.*;
 	        	e.printStackTrace();
 	        }
 	    }
+	    
+	    public Vector<Team> findByTeamName(String teamName) {
+			Connection con = DBConnection.connection();
+			
+			Vector<Team> result = new Vector<Team>();
+			
+			try {
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT id, name "
+						+ " FROM team WHERE teamName ='" + teamName + "'ORDER BY id");
+				
+				while (rs.next()){
+					Team t = new Team();
+					t.setID(rs.getInt("id"));
+					t.setTeamName(rs.getString("teamName"));
+	        	
+	        		result.add(t);	
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			
+			return result;
+		}
+	    
 
 }
 	
