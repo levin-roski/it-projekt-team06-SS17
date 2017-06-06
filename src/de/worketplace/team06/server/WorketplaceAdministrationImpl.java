@@ -638,6 +638,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void savePerson(Person person) throws IllegalArgumentException {
 		this.personMapper.update(person);
 	}
+	
+	/**
+	 * Auslesen einer Person aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public <Vector> Person getPersonByGoogleID(String googleID){
+
+		return this.personMapper.findByGoogleID(googleID);
+	}
 
 	
 	

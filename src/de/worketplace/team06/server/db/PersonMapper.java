@@ -65,20 +65,24 @@ public class PersonMapper {
 		
 	}
 
+	
+	/*
+	 * TODO: Methode funktioniert noch nicht 100%, muss nochmals überprüft werden --> SQL Error. (Toby)
+	 */
 	public Person findByGoogleID(String googleID) {
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE googleID = " + googleID);		
-			Integer id = rs.getInt("id");
+			ResultSet rs = stmt.executeQuery("SELECT id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE googleID = " + googleID );		
+			Integer personid = rs.getInt("id");
 			
 			Statement stmt2 = con.createStatement();
-			ResultSet rs2 = stmt2.executeQuery("Select id, created, firstName, lastName, street, zipcode, city FROM person " + "WHERE id = " + id);
+			ResultSet rs2 = stmt2.executeQuery("SELECT id, created, firstName, lastName, street, zipcode, city FROM person " + "WHERE id = " + personid);
 			
 			if (rs2.next()){
 				Person p = new Person();
-				p.setID(id);
+				p.setID(personid);
 				p.setCreated(rs2.getTimestamp("created"));
 				p.setFirstName(rs2.getString("firstName"));
 				p.setLastName(rs2.getString("lastName"));

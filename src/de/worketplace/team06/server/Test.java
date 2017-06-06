@@ -16,8 +16,9 @@ public class Test {
 		
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
-		
-		testOfCreateOrganisation(admin);
+	
+		testOfGetPerson(admin);
+//		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);
 //		testOfCreatePerson(admin);
 //		testOfCreateMarketplace(admin);
@@ -43,9 +44,20 @@ public class Test {
 		
 	}
 	
+	public static void testOfGetPerson(WorketplaceAdministrationImpl admin) {
+		Person p = admin.getPersonByGoogleID("G1337");
+		
+		System.out.println("ID: " + p.getID());
+		System.out.println("Vorname: " + p.getFirstName());
+		System.out.println("Nachname: " + p.getLastName());
+		System.out.println("Straße: " + p.getStreet());
+		System.out.println("PLZ: " + p.getZipcode());
+		System.out.println("Stadt: " + p.getCity());
+	}
+	
 	public static void testOfCreatePerson(WorketplaceAdministrationImpl admin) {
 	
-		admin.createPerson("Hans", "Mayer", "lagistraße 6", 86637, "Augsburg", "Ein Mensch", "G193490");
+		admin.createPerson("Hans", "Mayer", "lagistraße 6", 86637, "Augsburg", "Ein Mensch", "G1337");
 		//admin.createPerson("Thomas", "Mueller", "schuttstr 6", 86637, "Langweid", "Auch Ein Mensch", "G256060");
 		
 	}
