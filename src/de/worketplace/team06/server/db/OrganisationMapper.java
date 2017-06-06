@@ -44,13 +44,24 @@ public class OrganisationMapper {
 				
 				o.setID(rs.getInt("maxid") + 1);
 		
+				con.setAutoCommit(false);
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getGoogleID() +  "','" + o.getDescription() +  "','" + o.getType() + "')");
 				stmt.executeUpdate("INSERT INTO organisation (id, created, name, street, zipcode, city) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getName() + "','" + o.getStreet() + "','" + o.getZipcode() + "','" + o.getCity() + "')");
+				con.commit();
 			}
 		}
 		catch (SQLException e2) {
-			e2.printStackTrace();
+			try {
+				con.rollback();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			  finally {
+				  e2.printStackTrace();
+			}	
 		}
 		return o;
     }
