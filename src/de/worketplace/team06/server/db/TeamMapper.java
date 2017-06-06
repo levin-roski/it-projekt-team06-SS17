@@ -98,6 +98,11 @@ import de.worketplace.team06.shared.bo.*;
 	        return null;
 	    }
 
+		public Team findByGoogleID(String googleId) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	    /**
 	     * @param orgaUnit 
 	     * @return
