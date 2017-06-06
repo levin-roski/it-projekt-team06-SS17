@@ -506,7 +506,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
         	return o; 
         }
 		return null;
-			
 		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
 	}
 	
