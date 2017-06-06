@@ -404,8 +404,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Speichern von Änderungen eines Marktplatzes
 	 */
 	@Override
-	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		this.marketMapper.update(marketplace);
+	public void saveMarketplace(Marketplace m) throws IllegalArgumentException {
+		this.marketMapper.update(m);
 	}
 
 	/**
