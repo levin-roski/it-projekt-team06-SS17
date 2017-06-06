@@ -157,7 +157,7 @@ import de.worketplace.team06.shared.bo.Team;
         }
     }
      
-	public Vector<Project> findByMarketplaceID(int id) {
+	public Vector<Project> findByMarketplaceID(int marketplaceID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -191,7 +191,7 @@ import de.worketplace.team06.shared.bo.Team;
 	}
 	
 	
-	public Vector<Project> findByProjectOwnerID(int id) {
+	public Vector<Project> findByProjectOwnerID(int projectOwnerID) {
 		Connection con = DBConnection.connection();
 		
 		Vector<Project> result = new Vector<Project>();
@@ -224,7 +224,7 @@ import de.worketplace.team06.shared.bo.Team;
 	}
 
 	
-	public Vector<Project> findByProjectLeaderID(int id) {
+	public Vector<Project> findByProjectLeaderID(int projectLeaderID) {
 		Connection con = DBConnection.connection();
 		
 		Vector<Project> result = new Vector<Project>();
