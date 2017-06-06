@@ -21,22 +21,66 @@ public class Application extends BusinessObject {
     }
 
     /**
-     * Variable für das Speichern des Bewerbungstextes.
+     * Variable für das Speichern des Bewerbungstextes
      */
     private String applicationText;
 
     /**
-     *  Bewerbungstext holen.
+     * ID der dazgehörigen Ausschreibung
+     */
+    private int callID;
+    
+    /**
+     * ID der dazgehörigen OrganisationsEinheit
+     */
+    private int orgaUnitID;
+    
+    /**
+     * Auslesen des Bewerbungstextes
+     * @return applicationText
      */
     public String getApplicationText() {
         return applicationText;
     }
 
     /**
-     * Bewerbungstext setzen.
+     *  Auslesen der ID der Ausschreibung
+     *  @return callID
+     */
+	public int getCallId() {
+		return callID;
+	}
+	
+    /**
+     *  Auslesen der ID der OrganisationsEinheit
+     *  @return orgaUnitID
+     */
+	public int getOrgaUnitId() {
+		return orgaUnitID;
+	}
+    
+    /**
+     * Setzen des Bewerbungstextes
+     * @param applicationText
      */
     public void setApplicationText(String applicationText) {
         this.applicationText = applicationText;
     }
+    
+    /**
+     *  Setzen der ID der Ausschreibung
+     *  @param callID
+     */
+	public void setCallId(int id) {
+		this.callID = id;
+	}
+
+    /**
+     *  Setzen der ID der OrganisationsEinheit
+     *  @param orgaUnitID
+     */
+	public void setOrgaUnitId(int id) {
+		this.orgaUnitID = id;
+	}
 
 }

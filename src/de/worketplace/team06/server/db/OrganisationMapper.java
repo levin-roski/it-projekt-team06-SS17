@@ -127,6 +127,7 @@ public class OrganisationMapper {
         return o;
     }
 
+<<<<<<< HEAD
     public void delete(Organisation o) {
         Connection con = DBConnection.connection();
         
@@ -139,5 +140,13 @@ public class OrganisationMapper {
         	e.printStackTrace();
         }
     }
+=======
+
+
+    /**
+     * @param orgaUnit 
+     * @return
+     */
+>>>>>>> refs/heads/master
 
 }

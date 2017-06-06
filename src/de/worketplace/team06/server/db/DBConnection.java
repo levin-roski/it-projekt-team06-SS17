@@ -42,11 +42,13 @@ public class DBConnection {
      * professionellen Applikation würde diese Zeichenkette aus einer
      * Konfigurationsdatei eingelesen oder über einen Parameter von außen
      * mitgegeben, um bei einer Veränderung dieser URL nicht die gesamte
-     * Software neu komilieren zu müssen.
+     * Software neu kompilieren zu müssen.
      */
-    private static String googleUrl = "jdbc:google:mysql://173.194.243.13:it-projekt-team06-ss17-v1:it-projekt-team-06/projektmarktplatz?user=jdbc&password=Uvawevusa675";
-    /** private static String localUrl = "jdbc:mysql://127.0.0.1:3306/bankproject?user=demo&password=demo"; */
-
+    
+      private static String googleUrl = "jdbc:google:mysql://173.194.243.13:it-projekt-team06-ss17-v1:it-projekt-team-06/projektmarktplatz?user=jdbc&password=Uvawevusa675";
+  //  private static String localUrl = "jdbc:mysql://127.0.0.1:3306/bankproject?user=demo&password=demo"; */
+      private static String localUrl = "jdbc:mysql://173.194.243.13:3306/projektmarktplatz?user=jdbc&password=Uvawevusa675";
+    
     /**
      * Diese statische Methode kann aufgrufen werden durch
      * <code>DBConnection.connection()</code>. Sie stellt die
@@ -76,16 +78,16 @@ public class DBConnection {
         if (con == null) {
             String url = null;
             try {
-                // if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
+                 if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                     // Load the class that provides the new
                     // "jdbc:google:mysql://" prefix.
-                    Class.forName("com.mysql.jdbc.GoogleDriver");
-                    url = googleUrl;
-                /* } else {
+            	     Class.forName("com.mysql.jdbc.GoogleDriver");
+                      url = googleUrl;	
+                 } else {
                     // Local MySQL instance to use during development.
-                    Class.forName("com.mysql.jdbc.Driver");
-                    url = localUrl;
-                } */
+                	 Class.forName("com.mysql.jdbc.Driver");
+                	 url = localUrl; 
+                } 
                 /*
                  * Dann erst kann uns der DriverManager eine Verbindung mit den
                  * oben in der Variable url angegebenen Verbindungsinformationen

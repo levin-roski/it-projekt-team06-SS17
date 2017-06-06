@@ -18,119 +18,151 @@ public class Project extends BusinessObject {
     public Project() {
     }
 
-
 	/**
-     * 
+     * Variable für den Titel des Projektes
      */
     private String title;
 
     /**
-     * 
+     * Variable für die Beschreibung des Projektes
      */
     private String description;
 
     /**
-     * 
+     * Variable für die ID des Projektleiters
      */
     private int projectLeaderID;
 
     /**
-     * 
+     * Variable für die ID des Projektinhabers
      */
     private int projectOwnerID;
+    
+    /**
+     * Variable für die ID des Marktplatzes
+     */
+    private int marketplaceID;
 
     /**
-     * 
+     * Variable für das Startdatum des Projektes
      */
     private Date startDate;
 
     /**
-     * 
+     * Variable für das Enddatum des Projektes
      */
     private Date endDate;
     
     /**
-	 * Projekttitel holen.
+	 * Auslesen des Titels für das Projekt
+	 * @return title
 	 */
 	public String getTitle() {
 		return title;
 	}
 
 	/**
-	 * Projekttitel setzen.
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	/**
-	 * Projektbeschreibung holen.
+	 * Auslesen der Beschreibung für das Projekt
+	 * @return description
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Projektbeschreibung setzen.
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
-	 * ID des Projektleiter holen. 
+	 * Auslesen der ID des Projektleiters
+	 * @return projectLeaderID
 	 */
 	public int getProjectLeaderID() {
 		return projectLeaderID;
 	}
 
 	/**
-	 * Id des Projektleiters setzen.
-	 */
-	public void setProjectLeaderID(int projectLeaderID) {
-		this.projectLeaderID = projectLeaderID;
-	}
-
-	/**
-	 * Id des Projektbesitzers holen.
+	 * Auslesen der ID des Projektleiters
+	 * @return projectOwnerID
 	 */
 	public int getProjectOwnerID() {
 		return projectOwnerID;
 	}
 
 	/**
-	 * Id des Projektbesitzers setzen. 
+	 * Auslesen des Startdatums für das Projekt
+	 * @return startDate
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+	
+	/**
+	 * Auslesen des Enddatums für das Projekt
+	 * @return endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+	
+	/**
+	 * Auslesen der ID des Marktplatzes, zu welchem das Projekt gehört
+	 * @return marketplaceID
+	 */
+	public int getMarketplaceID() {
+		return marketplaceID;
+	}
+	
+	/**
+	 * Setzen des Titels für das Projekt
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * Setzen der Beschreibung für das Projekt
+	 * @param description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * Setzen der ID des Projektleiters
+	 * @param projectLeaderID
+	 */
+	public void setProjectLeaderID(int projectLeaderID) {
+		this.projectLeaderID = projectLeaderID;
+	}
+
+	/**
+	 * Setzen der ID des Projektinhabers
+	 * @param projetOwnerID 
 	 */
 	public void setProjectOwnerID(int projectOwnerID) {
 		this.projectOwnerID = projectOwnerID;
 	}
 
 	/**
-	 * Startdatum des Projekts holen.
-	 */
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	/**
-	 * Startdatum des Projekts setzen. 
+	 * Sezen des Startdatums für das Projekt
+	 * @param startDate
 	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
 	/**
-	 * Enddatum des Projekts holen. 
-	 */
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	/**
-	 * Enddatum des Projekts setzen. 
+	 * Setzen des Enddatums für das Projekt
+	 * @param endDate 
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	/**
+	 * Setzen der ID des Marktplatzes
+	 * @param marketplaceID
+	 */
+	public void setMarketplaceID(int marketplaceID) {
+		this.marketplaceID = marketplaceID;
 	}
 
     

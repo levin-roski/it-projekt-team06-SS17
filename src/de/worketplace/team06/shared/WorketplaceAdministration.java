@@ -46,10 +46,10 @@ public interface WorketplaceAdministration extends RemoteService {
     /**
      * Abfragen ob der User existiert.
      * 
-     * @param userID die zu abfragende ID eines Users
+     * @param googleID die zu abfragende ID eines Users
      * @return
      */
-    public boolean checkExistence(int userID) throws IllegalArgumentException;
+    public boolean checkExistence(String googleID) throws IllegalArgumentException;
 
     /**
      * Speichern eines Objekts vom Typ Person (Subklasse von OrgaUnit)
@@ -119,11 +119,7 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public Vector<Project> getAllProjects() throws IllegalArgumentException;
 
-    /**
-     * @param orgaUnit 
-     * @return
-     */
-    public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+ 
 
     /**
      * @param Marketplace
@@ -134,7 +130,7 @@ public interface WorketplaceAdministration extends RemoteService {
     /**
      * @return
      */
-    //public Vector<Call> getAllCalls() throws IllegalArgumentException;
+    public Vector<Call> getAllCalls() throws IllegalArgumentException;
 
     /**
      * @return
@@ -147,12 +143,6 @@ public interface WorketplaceAdministration extends RemoteService {
      * @return
      */
     public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
-
-    /**
-     * @param orgaUnit 
-     * @return
-     */
-    public Vector<Application> getApplicationsForProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
     /**
      * @param marketplace 
@@ -180,7 +170,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param title 
      * @return
      */
-    public Marketplace createMarketplace(String title) throws IllegalArgumentException;
+   
 
     /**
      * @param marketplace
@@ -220,7 +210,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param applicationText 
      * @return
      */
-    public Application applyFor(Call call, OrgaUnit applicantOrgaUnit,Date createDate , String applicationText) throws IllegalArgumentException;
+    public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, String applicationText) throws IllegalArgumentException;
 
     /**
      * @param application
@@ -238,7 +228,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param ratingStatemant 
      * @return
      */
-    public Rating rateApplication(Application application, Double rating, String ratingStatemant) throws IllegalArgumentException;
+    public Rating rateApplication(Application application, Float rating, String ratingStatemant) throws IllegalArgumentException;
 
     /**
      * @param rating
@@ -259,7 +249,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param period 
      * @return
      */
-    public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int period) throws IllegalArgumentException;
+    public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload) throws IllegalArgumentException;
 
     /**
      * @param enrollment
@@ -289,7 +279,42 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile);
 
-	Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException;
+    /**
+     * @return
+     */
+	public Vector<Call> getCallsFor(Project project) throws IllegalArgumentException;
 
-	Vector<Application> getAllApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+    /**
+     * @return
+     */
+	public Vector<Application> getApplicationsFor(Call call) throws IllegalArgumentException;
+
+	/**
+	 * 
+	 * @param project
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Vector<Enrollment> getEnrollmentFor(Project project) throws IllegalArgumentException;
+
+	/**
+	 * 
+	 * @param orgaUnit
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
+
+	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException;
+
+	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException;
+	
+	public Project getProjectByID(int projectID) throws IllegalArgumentException;
+	
+	public Call getCallByID(int callID) throws IllegalArgumentException;
+	
+	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
+
 }

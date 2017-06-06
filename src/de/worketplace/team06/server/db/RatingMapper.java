@@ -7,7 +7,10 @@ import java.sql.Statement;
 import java.util.*;
 
 import de.worketplace.team06.shared.bo.Rating;
+<<<<<<< HEAD
 import de.worketplace.team06.shared.bo.Team;
+=======
+>>>>>>> refs/heads/master
 /**
  * 
  */
@@ -15,7 +18,7 @@ public class RatingMapper {
 
 	private static RatingMapper ratingMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected RatingMapper(){
@@ -77,6 +80,7 @@ public class RatingMapper {
         return result ;
     }
     
+<<<<<<< HEAD
     
     
     public Rating insert (Rating r) {
@@ -137,6 +141,11 @@ public class RatingMapper {
         catch (SQLException e){
         	e.printStackTrace();
         }
+=======
+    public Rating findById(int id){
+    	// TODO implement here
+    	return null;
+>>>>>>> refs/heads/master
     }
 	
 }

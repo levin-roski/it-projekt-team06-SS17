@@ -17,18 +17,18 @@ import de.worketplace.team06.shared.bo.*;
 public interface WorketplaceAdministrationAsync {
 	void getTestUnit(AsyncCallback<Person> callback);
 	
-	void applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText,
+	void applyFor(Call call, OrgaUnit applicantOrgaUnit, String applicationText,
 			AsyncCallback<Application> callback);
 
-	void checkExistence(int userID, AsyncCallback<Boolean> callback);
+	void checkExistence(String googleID, AsyncCallback<Boolean> callback);
 
 	void createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
 			String description, Date deadline, AsyncCallback<Call> callback);
 
-	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int period,
+	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload,
 			AsyncCallback<Enrollment> callback);
 
-	void createMarketplace(String title, AsyncCallback<Marketplace> callback);
+
 
 	void createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
 			OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate, AsyncCallback<Project> callback);
@@ -49,7 +49,7 @@ public interface WorketplaceAdministrationAsync {
 
 	//void getAllApplications(AsyncCallback<Vector<Application>> callback);
 
-	//void getAllCalls(AsyncCallback<Vector<Call>> callback);
+	void getAllCalls(AsyncCallback<Vector<Call>> callback);
 
 	void getAllMarketplaces(AsyncCallback<Vector<Marketplace>> callback);
 
@@ -57,17 +57,17 @@ public interface WorketplaceAdministrationAsync {
 
 	void getAllPropertiesFor(PartnerProfile partnerprofile, AsyncCallback<Vector<Property>> callback);
 
+	void getApplicationsFor(Call call, AsyncCallback<Vector<Application>> callback);
+	
 	void getApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
-
-	void getApplicationsForProjectsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
 
 	void getMarketplacesFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Marketplace>> callback);
 
-	void getProjectsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
+
 
 	void init(AsyncCallback<Void> callback);
 
-	void rateApplication(Application application, Double rating, String ratingStatemant,
+	void rateApplication(Application application, Float rating, String ratingStatemant,
 			AsyncCallback<Rating> callback);
 
 	void saveApplication(Application application, AsyncCallback<Void> callback);
@@ -103,11 +103,24 @@ public interface WorketplaceAdministrationAsync {
 
 	void getProjectsFor(Marketplace marketplace, AsyncCallback<Vector<Project>> callback);
 
-	void getAllCallsFor(Project project, AsyncCallback<Vector<Call>> callback);
+	void getCallsFor(Project project, AsyncCallback<Vector<Call>> callback);
 
-	void getAllApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
-
+	void getEnrollmentFor(Project project, AsyncCallback<Vector<Enrollment>> callback);
 	
+	void getEnrollmentFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Enrollment>> callback);
+
+	void createMarketplace(String title, String description, AsyncCallback<Marketplace> callback);
+
+	void getProjectsForLeader(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
+
+	void getProjectsForOwner(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
+
+	void getProjectByID(int projectID, AsyncCallback<Project> callback);
+
+	void getCallByID(int callID, AsyncCallback<Call> callback);
+
+	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
+
 
 	
 }

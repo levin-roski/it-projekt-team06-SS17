@@ -3,11 +3,16 @@ package de.worketplace.team06.server;
 import java.util.Date;
 import java.util.Vector;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.worketplace.team06.shared.*;
 //import de.worketplace.team06.shared.WorketplaceAdministration;
 import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.client.NotLoggedInException;
+import de.worketplace.team06.client.UserChangedException;
 import de.worketplace.team06.server.db.*;
 
 
@@ -128,9 +133,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 *  
 	 */
 	@Override
-	public boolean checkExistence(int userID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean checkExistence(String googleID) throws IllegalArgumentException {
+		OrgaUnit temp;
+		temp = orgaUnitMapper.findByGoogleID(googleID);
+		if (temp != null){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	
@@ -149,18 +160,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen einer Bewerbung für eine Ausschreibung.
+	 * Erstellen einer Bewerbung für eine Ausschreibung
 	 */
 	@Override
-	public Application applyFor(Call call, OrgaUnit applicantOrgaUnit, Date createDate, String applicationText)
+	public Application applyFor(Call call, OrgaUnit orgaUnit, String applicationText)
 			throws IllegalArgumentException {
 		Application a = new Application();
-		a.setCreated(createDate);
+		
+		a.setCallId(call.getID());
+		a.setOrgaUnitId(orgaUnit.getID());
 		a.setApplicationText(applicationText);
 		
-		//***WICHTIG*** Hier muss noch das BO angepasst werden.
-		//a.setCall(call.getID());
-		//a.setOrgaUnit(applicantOrgaUnit.getID());
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Date createDate = new Date();
+		a.setCreated(createDate);
 		
 		//Setzen einer vorlaueufigen ID
 		a.setID(1);
@@ -170,7 +183,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  Speichern von Änderungen einer Bewerbung.
+	 * Speichern von Änderungen einer Bewerbung
 	 */
 	@Override
 	public void saveApplication(Application application) throws IllegalArgumentException {
@@ -179,7 +192,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Löschen einer Bewerbung.
+	 * Löschen einer Bewerbung
 	 */
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
@@ -188,36 +201,32 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  Auslesen aller Bewerbungen für eine Organisationseinheit
-	 */
-	@Override
-	public Vector<Application> getAllApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		//Auslesen aller Bewerbungen aus der DB
-		return this.appMapper.findbyOrgaUnit(orgaUnit);
-	}
-
-	/**
-	 *  Auslesen aller Bewerbungen für eine Organisationseinheit.
+	 * Auslesen aller Bewerbungen für eine Organisationseinheit
 	 */
 	@Override
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals pr�fen...
-		//Auslesen aller Bewerbungen f�r eine OrgaUnit aus der DB
-		int findID = orgaUnit.getID();
-		return this.appMapper.findByOrganisationApplicant(findID);
-	}
-	
-	/**
-	 *  Auslesen aller Bewerbungen für ein Projekt einer Organisationseinheit.
-	 */
-	@Override
-	public Vector<Application> getApplicationsForProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Bewerbungen für eine OrganisationsEinheit aus der DB
+//		/**
+//		 * Variable für die OrgaUnit ID
+//		 */
+//		int findID = orgaUnit.getID();
+//		return this.appMapper.findByOrgaUnitID(findID);
+		
+		return this.appMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 
+	/**
+	 * Auslesen aller Bewerbungen für ein Projekt
+	 */
+	@Override
+	public Vector<Application> getApplicationsFor(Call call) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Bewerbungen für eine Ausschreibung aus der DB
+		return this.appMapper.findByCallID(call.getID());
+	}
 	
+
 	
 	/*
 	 * -----------------------
@@ -226,7 +235,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen einer Ausschreibung.
+	 * Erstellen einer Ausschreibung
 	 */
 	@Override
 	public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
@@ -235,14 +244,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		c.setTitle(title);
 		c.setDescription(description);
 		c.setDeadline(deadline);
+		c.setProjectID(project.getID());
+		c.setProjectLeaderID(projectLeaderPerson.getID());
 		c.setPartnerProfileID(partnerProfile.getID());
-		c.setProjektLeaderID(projectLeaderPerson.getID());
-		c.setProjekt(project.getID()); //@DB-Team: Methode muss noch deklariert werden.
-		return this.callMapper.insert(c); //@DB-Team: Methode muss noch deklariert werden.
+		
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.callMapper.insert(c);
 	}
 
 	/**
-	 *  Speichern von Änderungen einer Ausschreibung.
+	 * Speichern von Änderungen einer Ausschreibung
 	 */
 	@Override
 	public void saveCall(Call call) throws IllegalArgumentException {
@@ -251,7 +262,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Löschen einer Ausschreibung.
+	 * Löschen einer Ausschreibung
 	 */
 	@Override
 	public void deleteCall(Call call) throws IllegalArgumentException {
@@ -260,15 +271,31 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Auslesen aller Ausschreibungen für ein Projekt
+	 * Auslesen aller Ausschreibungen
 	 */
 	@Override
-	public Vector<Call> getAllCallsFor(Project project) throws IllegalArgumentException {
+	public Vector<Call> getAllCalls() throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//Auslesen aller Calls aus der DB für ein Projekt
+		return this.callMapper.findAll();
+	}
+	
+	/**
+	 * Auslesen aller Ausschreibungen für ein Projekt
+	 */
+	@Override
+	public Vector<Call> getCallsFor(Project project) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Calls aus der DB für ein Projekt
 		return this.callMapper.findByProjectID(project.getID());
 	}
 	
+	/**
+	 * Auslesen einer Ausschreibung mit einer CallID
+	 */
+	public Call getCallByID(int callID) throws IllegalArgumentException {
+		return this.callMapper.findByID(callID);
+	}
 	
 	
 	/*
@@ -278,29 +305,38 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen einer Beteiligung
+	 * Erstellen einer Beteiligung
 	 */
 	@Override
-	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
-			int period) throws IllegalArgumentException {
+	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload) throws IllegalArgumentException {
 		Enrollment e = new Enrollment();
-		//***WICHTIG*** Hier muss noch das BO angepasst werden.
-		//e.setProject(project.getID());
-		//e.setOrgaUnit(orgaUnit.getID());
-		//e.setRating(rating.getID());
-		e.setCreated(startDate);
+		
+		e.setRatingID(rating.getID());
+		e.setProjectID(project.getID());
+		e.setOrgaUnitID(orgaUnit.getID());
+		
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Date createDate = new Date();
+		e.setCreated(createDate);
+		
+		e.setStartDate(startDate);
 		e.setEndDate(endDate);
-		e.setPeriod(period);
+		e.setWorkload(workload);
+		
+//		//Überprüfung ob Start- und Enddatum bereits gesetzt
+//		if (startDate != null && endDate != null){
+//			e.setPeriod();
+//		}
 		
 		//Setzen einer vorlauefigen ID
 		e.setID(1);
 		
+		//***WICHTIG*** @ DB-Team: Methode muss noch deklariert werden.
 		return this.enrollMapper.insert(e);
-		
 	}
 
 	/**
-	 *  Speichern von Änderungen einer Beteiligung.
+	 * Speichern von Änderungen einer Beteiligung
 	 */
 	@Override
 	public void saveEnrollment(Enrollment enrollment) throws IllegalArgumentException {
@@ -309,14 +345,32 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Löschen einer Beteiligung.
+	 * Löschen einer Beteiligung
 	 */
 	@Override
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	/**
+	 * Auslesen aller Beteiligungen für ein Projekt
+	 */
+	@Override
+	public Vector<Enrollment> getEnrollmentFor(Project project) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.enrollMapper.findByProjectID(project.getID());
+	}
+	
+	/**
+	 * Auslesen aller Beteiligungen für eine OrganisationsEinheit
+	 */
+	@Override
+	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.enrollMapper.findByOrgaUnitID(orgaUnit.getID());
+	}
+	
 	
 	
 	/*
@@ -326,14 +380,18 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen eines Marktplatzes
+	 * Erstellen eines Marktplatzes
 	 */
 	@Override
-	public Marketplace createMarketplace(String title) throws IllegalArgumentException {
-		// Wir benötigen für den Marktplatz ein CreateDate oder nicht? Ggf. beim speichern in der Datenbank erst eintragen...
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException {
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
-		//m.setCreated();
+		m.setDescription(description);
+		
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Date createDate = new Date();
+		m.setCreated(createDate);
+		
 		
 		//Setzen einer vorlaueufigen ID
 		m.setID(1);
@@ -343,7 +401,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Speichern von Änderungen eines Marktplatzes
+	 * Speichern von Änderungen eines Marktplatzes
 	 */
 	@Override
 	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
@@ -351,16 +409,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Löschen eines Marktplatzes
+	 * Löschen eines Marktplatzes
 	 */
 	@Override
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	/**
-	 *  Auslesen aller Marktplätze
+	 * Auslesen aller Marktplätze
 	 */
 	@Override
 	public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException {
@@ -370,12 +427,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Auslesen aller Marktplätze für eine Organisations-Einheit
+	 * Auslesen aller Marktplätze für eine Organisations-Einheit
 	 */
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.marketMapper.findById(orgaUnit.getID());
+		return this.marketMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 
 	
@@ -387,7 +444,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen einer Organisation
+	 * Erstellen einer Organisation
 	 */
 	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
 		
@@ -397,6 +454,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		o.setCreated(created);
 		o.setDescription(description);
 		o.setGoogleID(googleID);
+		o.setType("Organisation");
 		
 		o.setName(name);
 		o.setStreet(street);
@@ -404,7 +462,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		o.setCity(city);
 		
 		/**
-		 *  Siehe createPerson
+		 * Siehe createPerson
 		 */
 		o.setID(1);
 		
@@ -412,14 +470,22 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  Speichern von Änderungen einer Organisation
+	 * Speichern von Änderungen einer Organisation
 	 */
 	@Override
 	public void saveOrganisation(Organisation organisation) throws IllegalArgumentException {
 		this.orgaMapper.update(organisation);
 		
 	}
-	
+	/*
+	 * ---------------------------------
+	 * -- METHODEN für OrgaUnit --
+	 * ---------------------------------
+	 */
+	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
+	}
 	
 	
 	/*
@@ -429,7 +495,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen eines PartnerProfils
+	 * Erstellen eines PartnerProfils
 	 */
 	@Override
 	public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList)
@@ -452,7 +518,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Erstellen eines PartnerProfils für eine Organisation
+	 * Erstellen eines PartnerProfils für eine Organisation
 	 */
 	@Override
 	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
@@ -476,7 +542,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Auslesen eines PartnerProfils für eine Ausschreibung
+	 * Speichern von Änderungen für ein PartnerProfil 
+	 */
+	@Override
+	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
+		this.partnerMapper.update(partnerProfile);
+		
+	}
+	
+	/**
+	 * Auslesen eines PartnerProfils für eine Ausschreibung
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException {
@@ -484,20 +559,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Auslesen eines PartnerProfils für eine Organisations-Einheit.
+	 * Auslesen eines PartnerProfils für eine Organisations-Einheit.
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
 		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
-	}
-
-	/**
-	 *  Speichern von Änderungen für ein PartnerProfil 
-	 */
-	@Override
-	public void savePartnerProfileFor(PartnerProfile partnerProfile) throws IllegalArgumentException {
-		this.partnerMapper.update(partnerProfile);
-		
 	}
 	
 	
@@ -509,7 +575,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Methode zum erstellen einer Person. Es werden alle Attribute bis auf die partnerprofileID 
+	 * Methode zum erstellen einer Person. Es werden alle Attribute bis auf die partnerprofileID 
 	 *  gesetzt. Die Partnerprofile id kann zu einem spätzeren Zeitpunkt über die savePerson Methode
 	 *  gespeichert werden. 
 	 *  
@@ -521,6 +587,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setCreated(created);
 		p.setDescription(description);
 		p.setGoogleID(googleID);
+		p.setType("Person");
 		
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
@@ -530,10 +597,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		
 		/**
-		 *  Setzen einer vorläufigen ID. 
-		 *  Der korrekte bzw vortlaufende Primärschlüssel (=id) wird über eine Datenbankabfrage in der
-		 *  personMapper.insert Methode generiert. (Die Id muss mit den Datensätzen in der Datenbank
-		 *  konsistent sein) 
+		 * Setzen einer vorläufigen ID. 
+		 * Der korrekte bzw vortlaufende Primärschlüssel (=id) wird über eine Datenbankabfrage in der
+		 * personMapper.insert Methode generiert. (Die Id muss mit den Datensätzen in der Datenbank
+		 * konsistent sein) 
 		 */
 		p.setID(1);
 		
@@ -541,7 +608,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 *  Speichern von Änderungen einer Person
+	 * Speichern von Änderungen einer Person
 	 */
 	@Override
 	public void savePerson(Person person) throws IllegalArgumentException {
@@ -557,7 +624,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen eines Projekts auf einem Marktplatz
+	 * Erstellen eines Projekts auf einem Marktplatz
 	 */
 	@Override
 	public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
@@ -570,6 +637,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setProjectOwnerID(projectOwnerOrgaUnit.getID());
 		p.setStartDate(startDate);
 		p.setEndDate(endDate);
+		p.setMarketplaceID(marketplace.getID());
 		
 		//Setzen einer vorlaueufigen ID
 		p.setID(1);
@@ -579,7 +647,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Speichern von Änderungen eines Projekts.
+	 * Speichern von Änderungen eines Projekts.
 	 */
 	@Override
 	public void saveProject(Project project) throws IllegalArgumentException {
@@ -588,7 +656,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Löschen eines Projekts
+	 * Löschen eines Projekts
 	 */
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
@@ -597,7 +665,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Auslesen aller Projekte.
+	 * Auslesen aller Projekte.
 	 */
 	@Override
 	public Vector<Project> getAllProjects() throws IllegalArgumentException {
@@ -606,24 +674,41 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Auslesen aller Projekte einer Organisations-Einheit
+	 * Auslesen aller Projekte, die eine bestimmte Organisationseinheit leitet. 
 	 */
 	@Override
-	public Vector<Project> getProjectsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
+	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** Nochmals pr�fen...
 		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
-		int findID = orgaUnit.getID();
-		return this.orgaMapper.findById(findID);
+	
+		return this.projectMapper.findByProjectLeaderID(orgaUnit.getID());
 	}
 	
 	/**
-	 *  Auslesen aller Projekte für einen Marktplatz
+	 * Auslesen aller Projekte, die eine bestimmte Organisationseinheit besitzt.
+	 */
+	@Override
+	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException {
+		//***WICHTIG*** Nochmals pr�fen...
+		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
+	
+		return this.projectMapper.findByProjectOwnerID(orgaUnit.getID());
+	}
+	
+	/**
+	 * Auslesen eines Projektes mit einer projectID
+	 */
+	public Project getProjectByID(int projectID) throws IllegalArgumentException{
+	return this.projectMapper.findByID(projectID);	
+	}
+	
+	/**
+	 * Auslesen aller Projekte für einen Marktplatz
 	 */
 	@Override
 	public Vector<Project> getProjectsFor(Marketplace marketplace) throws IllegalArgumentException {
 		//***WICHTIG*** Nochmals prüfen! Methode für das Suchen nach Projekten für einen Marktplatz im Mapper anlegen
-		int findID = marketplace.getID();
-		return this.orgaMapper.findByMarketplace(marketplace);
+		return this.projectMapper.findByMarketplaceID(marketplace.getID());
 	}
 	
 
@@ -635,7 +720,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen von Eigenschaften für ein PartnerProfil
+	 * Erstellen von Eigenschaften für ein PartnerProfil
 	 */
 	@Override
 	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
@@ -648,11 +733,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setID(1);
 		
 		//Objekt in der Datenbank speichern
-		return propertyMapper.insert(p);
+		return this.propertyMapper.insert(p);
 	}
 
 	/**
-	 *  Speichern von Änderungen einer Eigenschaft
+	 * Speichern von Änderungen einer Eigenschaft
 	 */
 	@Override
 	public void saveProperty(Property property) throws IllegalArgumentException {
@@ -660,12 +745,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Auslesen aller Eigenschaften für ein PartnerProfil
+	 * Auslesen aller Eigenschaften für ein PartnerProfil
 	 */
 	@Override
 	public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile) throws IllegalArgumentException {
 		//***WICHTIG*** Methode muss im Mapper angelegt werden!
-		return this.propertyMapper.findByPartnerProfile(partnerprofile);
+		return this.propertyMapper.findByPartnerProfileID(partnerprofile.getID());
 	}
 
 	
@@ -677,10 +762,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen einer Bewertung für eine Bewerbung
+	 * Erstellen einer Bewertung für eine Bewerbung
 	 */
 	@Override
-	public Rating rateApplication(Application application, Double rating, String ratingStatemant)
+	public Rating rateApplication(Application application, Float rating, String ratingStatement)
 			throws IllegalArgumentException {
 		Rating r = new Rating();
 		r.setRating(rating);
@@ -692,11 +777,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		r.setID(1);
 		
 		//Speichern des Objekts in der Datenbank
-		return this.ratingMapper.insert(rating);
+		return this.ratingMapper.insert(r);
 	}
 
 	/**
-	 *  Speichern von Änderungen einer Bewertung
+	 * Speichern von Änderungen einer Bewertung
 	 */
 	@Override
 	public void saveRating(Rating rating) throws IllegalArgumentException {
@@ -705,7 +790,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 *  Löschen einer Bewertung
+	 * Löschen einer Bewertung
 	 */
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
@@ -722,7 +807,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 *  Erstellen eines Teams
+	 * Erstellen eines Teams
 	 */
 	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
 		
@@ -732,12 +817,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		t.setCreated(created);
 		t.setDescription(description);
 		t.setGoogleID(googleID);
+		t.setType("Team");
 		
 		t.setName(name);
 		t.setMembercount(membercount);
 		
 		/**
-		 *  Siehe createPerson
+		 * Siehe createPerson
 		 */
 		t.setID(1);
 		
@@ -745,7 +831,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 		
 	/**
-	 *  Speichern von Änderungen an einem Team.
+	 * Speichern von Änderungen an einem Team.
 	 */
 	@Override
 	public void saveTeam(Team team) throws IllegalArgumentException {
@@ -757,5 +843,31 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * ABSCHNITT, Ende: Methoden für Business Objekte
 	 * ***************************************************************************
 	 */
+	
+	/*
+	 * ---------------------------
+	 * -- USER LOGIN Überprüfen --
+	 * ---------------------------
+	 */
+	
+	private void checkLoggedIn() throws NotLoggedInException, UserChangedException {
+	    User temp = getUser();
+		if (temp == null) {
+	      throw new NotLoggedInException("Not logged in.");
+	    }
+//	    else
+//	    {
+//	    if (!temp.equals(user)){
+//	    	throw new UserChangedException("User has changed");
+//	    }
+//	    }
+	  }
+	
+	private User getUser() {
+	    UserService userService = UserServiceFactory.getUserService();
+	    return userService.getCurrentUser();
+	  }
+	
+	
 
 }
