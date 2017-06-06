@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Index implements EntryPoint {
+public class Home implements EntryPoint {
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -31,7 +31,7 @@ public class Index implements EntryPoint {
 		final Button editorButton = new Button("Editor");
 		editorButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Window.Location.assign("Editor.html");
+				Window.Location.assign("Worketplace.html");
 			}
 		});
 		RootPanel.get("editorButton").add(editorButton);

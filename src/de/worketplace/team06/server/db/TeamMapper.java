@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.db;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
@@ -32,7 +34,26 @@ import de.worketplace.team06.shared.bo.*;
 	     * @return
 	     */
 	    public Team insert (Team t) {
-	        return null;
+	    	Connection con = DBConnection.connection();
+			
+			try {
+				Statement stmt = con.createStatement();
+				
+				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");
+				
+				if (rs.next()) {
+					
+					t.setID(rs.getInt("maxid") + 1);
+			
+					stmt = con.createStatement();
+					stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getGoogleID() +  "','" + t.getDescription() +  "','" + t.getType() + "')");
+					stmt.executeUpdate("INSERT INTO team (id, created, teamName, membercount) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getName() + "','" + t.getMembercount() + "')");
+				}
+			}
+			catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			return t;
 	    }
 
 	    /**
@@ -48,7 +69,7 @@ import de.worketplace.team06.shared.bo.*;
 	     * @param orgaUnit
 	     */
 	    public Team findById (int id){
-	    	
+	    	return null;
 	    }
 	    
 	    

@@ -64,7 +64,7 @@ public abstract class OrgaUnit extends BusinessObject {
     
     /**
      * Auslesen des OrgaUnit Typs (Organisation, Team oder Person)
-     * @return
+    g * @return
      */
 	public String getType() {
 		return type;

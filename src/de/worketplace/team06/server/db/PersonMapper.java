@@ -19,7 +19,32 @@ public class PersonMapper {
 		}
 		
 		return personMapper;
+	}		
+	
+	public Person insert(Person p) {
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");
+			
+			if (rs.next()) {
+				
+				p.setID(rs.getInt("maxid") + 1);
+		
+				stmt = con.createStatement();
+				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" + p.getGoogleID() +  "','" + p.getDescription() +  "','" + p.getType() + "')");
+				stmt.executeUpdate("INSERT INTO person (id, created, firstName, lastName, street, zipcode, city) " + "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" + p.getFirstName() + "','" + p.getLastName() + "','" + p.getStreet() + "'," + p.getZipcode() + ",'" + p.getCity() + "')");
+			}
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return p;
 	}
+	
+	
 /*	
  * 
  * PATRICK
@@ -40,13 +65,5 @@ public class PersonMapper {
 		
 	}
 
-	public Person insert(Person p) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Person findByGoogleID(String googleId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }
