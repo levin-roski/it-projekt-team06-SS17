@@ -17,7 +17,8 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-		testOfCreatePerson(admin);
+		testOfCreateTeam(admin);
+//		testOfCreatePerson(admin);
 //		testOfCreateMarketplace(admin);
 //		testOfGetAllMarketplaces(admin);
 		
@@ -42,10 +43,15 @@ public class Test {
 	}
 	
 	public static void testOfCreatePerson(WorketplaceAdministrationImpl admin) {
-		Person p = new Person();
 	
 		admin.createPerson("Hans", "Mayer", "lagistraße 6", 86637, "Augsburg", "Ein Mensch", "G193490");
+		//admin.createPerson("Thomas", "Mueller", "schuttstr 6", 86637, "Langweid", "Auch Ein Mensch", "G256060");
 		
+	}
+	
+	public static void testOfCreateTeam(WorketplaceAdministrationImpl admin) {
+		//admin.createTeam("Ist wohl ein Team", "G2349jf", "Spermateam", 1000);
+		admin.createTeam("ahjooo", "Gagasdg234", "SSchluckteam", 500);
 		
 	}
 
