@@ -11,10 +11,11 @@
 </servlet>
 	<servlet-mapping>
 		<servlet-name>worketplaceAdministration</servlet-name>
-		<url-pattern>/editor/worketplaceAdmin</url-pattern>
+		<url-pattern>/worketplace/worketplaceAdmin</url-pattern>
 	</servlet-mapping>
  
-    <security-constraint>
+    <!-- Für lokale Tests auskommentieren -->
+    <!-- <security-constraint>
         <web-resource-collection>
             <web-resource-name>*</web-resource-name>
             <url-pattern>*</url-pattern>
@@ -22,14 +23,23 @@
         <auth-constraint>
             <role-name>*</role-name>
         </auth-constraint>
-    </security-constraint>
+    </security-constraint> -->
+    
+	<servlet>
+		<servlet-name>loginService</servlet-name>
+		<servlet-class>de.worketplace.team06.server.LoginServiceImpl</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>loginService</servlet-name>
+		<url-pattern>/worketplace/login</url-pattern>
+		<url-pattern>/home/login</url-pattern>
+	</servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>Worketplace.html</welcome-file>
-    <welcome-file>Editor.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

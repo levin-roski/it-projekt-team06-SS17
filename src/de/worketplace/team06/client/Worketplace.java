@@ -1,5 +1,8 @@
 package de.worketplace.team06.client;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Label;
@@ -18,18 +21,19 @@ import de.worketplace.team06.shared.bo.LoginInfo;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Editor implements EntryPoint {
-	WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings.getWorketplaceAdministration();
-	
+public class Worketplace implements EntryPoint {
+	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings.getWorketplaceAdministration();
 	private LoginInfo loginInfo = null;
-	
+	private Logger console = Logger.getLogger("");
+
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL() + "Editor.html", new AsyncCallback<LoginInfo>() {
+		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
+				console.log(Level.SEVERE, "Login Anfrage konnte nicht ausgeführt werden");
 			}
 
 			public void onSuccess(LoginInfo result) {
@@ -38,6 +42,7 @@ public class Editor implements EntryPoint {
 					worketplaceAdministration.checkExistence(loginInfo.getGoogleId(), new CheckExistenceLoginInfoCallback());
 				} else {
 //					TODO Login aufrufen (nicht eingeloggt)
+					Window.alert("Login aufrufen");
 				}
 			}
 		});
