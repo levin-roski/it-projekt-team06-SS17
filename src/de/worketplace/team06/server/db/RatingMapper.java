@@ -9,16 +9,13 @@ import java.util.*;
 import de.worketplace.team06.shared.bo.Rating;
 <<<<<<< HEAD
 import de.worketplace.team06.shared.bo.Team;
-=======
->>>>>>> refs/heads/master
-/**
- * 
- */
+
+
 public class RatingMapper {
 
 	private static RatingMapper ratingMapper = null;
 	 /**
-	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected RatingMapper(){
@@ -39,7 +36,7 @@ public class RatingMapper {
     	try{
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery
-    				("SELECT id, statement, created, rating FROM Rating " + "WHERE id= " + id);
+    				("SELECT id, statement, created, rating, applicationID FROM Rating " + "WHERE id= " + id);
     		
     		if (rs.next()) {
     			Rating r = new Rating();
@@ -47,12 +44,13 @@ public class RatingMapper {
     			r.setRatingStatement(rs.getString("statement"));
     			r.setCreated(rs.getTimestamp("created"));
     			r.setRating(rs.getDouble("rating"));
+    			r.setApplicationID(rs.getInt("ApplicationID"));
     		}	
     	}
-    	catch (SQLExpetion e){
+    	catch (SQLException e){
     		e.printStackTrace();
     	}
-    	return null;
+    	return r;
     }
   
     public Vector<Rating> findAll() {
@@ -62,14 +60,15 @@ public class RatingMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, statement, created, rating "+ "FROM Team ");
+        	ResultSet rs = stmt.executeQuery("SELECT id, statement, created, rating, applicationID "+ "FROM Team ");
         	
         	while (rs.next()){
         		Rating r = new Rating();
         		r.setID(rs.getInt("id"));
         		r.setRatingStatement(rs.getString("statement"));
         		r.setCreated(rs.getTimestamp("created"));
-        		r.setRating(rs.getInt("rating"));
+        		r.setRating(rs.getDouble("rating"));
+        		r.setApplicationID(rs.getInt("ApplicationID"));
         		
         		result.addElement(r);
         	}
@@ -79,8 +78,6 @@ public class RatingMapper {
         }
         return result ;
     }
-    
-<<<<<<< HEAD
     
     
     public Rating insert (Rating r) {
@@ -95,16 +92,17 @@ public class RatingMapper {
         	r.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
         	
-        	stmt.executeUpdate("INSERT INTO rating (id, statement, created, rating) " 
+        	stmt.executeUpdate("INSERT INTO rating (id, statement, created, rating, applicationID) " 
         	+ "VALUES (" 
         		+ r.getID() + ", "
         		+ r.getCreated() + ", " 
         		+ r.getRating() + ", " 
+        		+ r.getApplicationID() + ", "
         		+ r.getRatingStatement() 
         		+ "','" +"')");
         	}
         }
-       catch (SQLExpetion e){
+       catch (SQLException e){
     	e.printStackTrace();
     }
     
@@ -141,11 +139,6 @@ public class RatingMapper {
         catch (SQLException e){
         	e.printStackTrace();
         }
-=======
-    public Rating findById(int id){
-    	// TODO implement here
-    	return null;
->>>>>>> refs/heads/master
     }
 	
 }
