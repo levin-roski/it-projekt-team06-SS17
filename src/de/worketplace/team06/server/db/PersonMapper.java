@@ -65,5 +65,10 @@ public class PersonMapper {
 		
 	}
 
+	public Person findByGoogleID(String googleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
