@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.db;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
@@ -13,7 +15,7 @@ public class OrganisationMapper {
      */
 	private static OrganisationMapper organisationMapper = null;
 	 /**
-	   * Gesch�tzter Konstruktor - verhindert die M�glichkeit, mit <code>new</code>
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected OrganisationMapper(){
@@ -31,13 +33,26 @@ public class OrganisationMapper {
      * @return
      */
     public Organisation insert (Organisation o) {
-        // TODO implement here
     	Connection con = DBConnection.connection();
-    	
-    	try{
-    		Statement stmt = con.createStatement();
-    	}
-        return null;
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");
+			
+			if (rs.next()) {
+				
+				o.setID(rs.getInt("maxid") + 1);
+		
+				stmt = con.createStatement();
+				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getGoogleID() +  "','" + o.getDescription() +  "','" + o.getType() + "')");
+				stmt.executeUpdate("INSERT INTO organisation (id, created, name, street, zipcode, city) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getName() + "','" + o.getStreet() + "','" + o.getZipcode() + "','" + o.getCity() + "')");
+			}
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return o;
     }
 
     /**
