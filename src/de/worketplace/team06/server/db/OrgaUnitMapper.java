@@ -75,7 +75,7 @@ public class OrgaUnitMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE id = " + googleID);		
+			ResultSet rs = stmt.executeQuery("Select id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE googleID = " + googleID);		
 			String type = rs.getString("type");
 		
 			return type;
