@@ -78,7 +78,7 @@ public class PropertyMapper {
         return result ;
     }
     
-	public Vector<Property> findByPartnerProfileID(int id) {
+	public Vector<Property> findByPartnerProfileID(int partnerProfileID) {
 		
 		Connection con = DBConnection.connection();
         
@@ -88,7 +88,6 @@ public class PropertyMapper {
         	Vector<Property> result = new Vector<Property>();
     		
     		try {
-    			Statement stmt = con.createStatement();
     			ResultSet rs = stmt.executeQuery("SELECT id, created, name, value, partnerProfileID "
     					+ " FROM property WHERE partnerProfileID ='" + partnerProfileID + "'ORDER BY id");
     			
