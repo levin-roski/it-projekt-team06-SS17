@@ -1,5 +1,6 @@
 package de.worketplace.team06.server;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Vector;
 
@@ -172,8 +173,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		a.setApplicationText(applicationText);
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
-		Date createDate = new Date();
-		a.setCreated(createDate);
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		a.setCreated(created);
 		
 		//Setzen einer vorlaueufigen ID
 		a.setID(1);
@@ -316,8 +317,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		e.setOrgaUnitID(orgaUnit.getID());
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
-		Date createDate = new Date();
-		e.setCreated(createDate);
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		e.setCreated(created);
 		
 		e.setStartDate(startDate);
 		e.setEndDate(endDate);
@@ -383,14 +384,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen eines Marktplatzes
 	 */
 	@Override
-	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException {
+	public Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException {
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
 		m.setDescription(description);
+		m.setOrgaUnitID(o.getID());
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
-		Date createDate = new Date();
-		m.setCreated(createDate);
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		m.setCreated(created);
 		
 		
 		//Setzen einer vorlaueufigen ID
@@ -404,8 +406,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Speichern von Änderungen eines Marktplatzes
 	 */
 	@Override
-	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		this.marketMapper.update(marketplace);
+	public void saveMarketplace(Marketplace m) throws IllegalArgumentException {
+		this.marketMapper.update(m);
 	}
 
 	/**
@@ -449,7 +451,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
 		
 		Organisation o = new Organisation();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		o.setCreated(created);
 		o.setDescription(description);
@@ -502,7 +504,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			throws IllegalArgumentException {
 		
 		PartnerProfile profile = new PartnerProfile();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		profile.setCreated(created);
 		profile.setLastedit(created);
@@ -525,7 +527,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			throws IllegalArgumentException {
 		
 		PartnerProfile profile = new PartnerProfile();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		profile.setCreated(created);
 		profile.setLastedit(created);
@@ -582,7 +584,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException {
 		Person p = new Person();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		p.setCreated(created);
 		p.setDescription(description);
@@ -812,7 +814,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
 		
 		Team t = new Team();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		t.setCreated(created);
 		t.setDescription(description);
