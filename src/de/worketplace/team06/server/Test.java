@@ -17,16 +17,20 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 	
-//		testOfDeletePerson(admin);
-//		testOfGetPerson(admin);
+
 //		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);
+		
+		
 //		testOfCreatePerson(admin);
+		testOfSavePerson(admin);
+//		testOfDeletePerson(admin);
+//		testOfGetPerson(admin);
 		
 //		testOfCreateMarketplace(admin);
 //		testOfGetAllMarketplaces(admin);
 //		testOfGetMarketplaceFor(admin);
-		testOfSaveMarketplace(admin);
+//		testOfSaveMarketplace(admin);
 		
 //		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 //		
@@ -48,6 +52,21 @@ public class Test {
 		
 	}
 	
+
+	private static void testOfSavePerson(WorketplaceAdministrationImpl admin) {
+		Person p = admin.getPersonByGoogleID("G1337");
+		p.setCity("Blub");
+		p.setDescription("Blub");
+		p.setFirstName("Blub");
+		p.setLastName("Blub");
+		p.setStreet("Blub");
+		p.setPartnerProfileID(999);
+		p.setZipcode(97898);
+		
+		admin.savePerson(p);
+		
+	}
+
 
 	public static void testOfDeletePerson(WorketplaceAdministrationImpl admin) {
 		Person p = admin.getPersonByGoogleID("G256061");

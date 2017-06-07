@@ -34,14 +34,21 @@ public class PersonMapper {
 				
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" + p.getGoogleID() +  "','" + p.getDescription() +  "','" + p.getType() + "')");
-				stmt.executeUpdate("INSERT INTO person (id, created, firstName, lastName, street, zipcode, city) " + "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" + p.getFirstName() + "','" + p.getLastName() + "','" + p.getStreet() + "'," + p.getZipcode() + ",'" + p.getCity() + "')");
+				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) "
+									+ "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" 
+									+ p.getGoogleID() +  "','" + p.getDescription() +  "','"
+									+ p.getType() + "')");
+				stmt.executeUpdate("INSERT INTO person (id, created, firstName, lastName, street, zipcode, city) "
+									+ "VALUES (" + p.getID() + ",'" + p.getCreated() + "','"
+									+ p.getFirstName() + "','" + p.getLastName() + "','" + p.getStreet() + "'," 
+									+ p.getZipcode() + ",'" + p.getCity() + "')");
 				con.commit();
 			}
 		}
 		catch (SQLException e2) {
 			try {
-				System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
+				System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. "
+						+ "Es wird versucht die Transaktion rückgängig zu machen!");
 				con.rollback();
 				
 			} catch (SQLException e) {
@@ -64,7 +71,9 @@ public class PersonMapper {
 		
 		try {						
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person ON orgaunit.id = person.id WHERE orgaunit.googleID = '" + googleID + "'");		
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
+											+ "ON orgaunit.id = person.id "
+											+ "WHERE orgaunit.googleID = '" + googleID + "'");		
 			
 			if (rs.next()) {
 				Person p = new Person();
@@ -106,10 +115,30 @@ public class PersonMapper {
 	public void delete(Person a)
 */
 
-	public void update(Person person) {
-		// TODO Auto-generated method stub
+	public void update(Person p) {
+		Connection con = DBConnection.connection();
+
+	    try {
+	    	Statement stmt = con.createStatement();
+	    	//Updaten einer Person :) 
+	    	stmt.executeUpdate("UPDATE orgaunit, person SET"
+	    						+ " orgaunit.description='" + p.getDescription() +
+	    						"', orgaunit.partnerprofileID= " + p.getPartnerProfileID() +
+	    						", person.firstName= '" + p.getFirstName() +
+	    						"', person.lastName= '" + p.getLastName() + 
+	    						"', person.street= '" + p.getStreet() + 
+	    						"', person.city= '" + p.getCity() + 
+	    						"', person.zipcode= " + p.getZipcode() + 
+	    						" WHERE orgaunit.id= " + p.getID() + 
+	    						" AND person.id= " + p.getID()); 
+	    			
+	    }
+	    catch (SQLException e2) {
+				  e2.printStackTrace();		
+	    }
 		
-	}
+	}	
+	
 	
 	
 	public void delete(Person p) {
@@ -118,7 +147,8 @@ public class PersonMapper {
 	    try {
 	    	Statement stmt = con.createStatement();
 	    	//Löschen der Person aus der Tabelle orgaunit und person.
-	    	stmt.executeUpdate("DELETE orgaunit, person FROM orgaunit INNER JOIN person ON orgaunit.id = person.id WHERE orgaunit.id= " + p.getID());
+	    	stmt.executeUpdate("DELETE orgaunit, person FROM orgaunit INNER JOIN person "
+	    			+ "ON orgaunit.id = person.id WHERE orgaunit.id= " + p.getID());
 	    	
 	    }
 	    catch (SQLException e2) {
