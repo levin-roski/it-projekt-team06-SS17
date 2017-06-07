@@ -17,13 +17,14 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 	
-		testOfDeletePerson(admin);
+//		testOfDeletePerson(admin);
 //		testOfGetPerson(admin);
 //		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);
 //		testOfCreatePerson(admin);
 //		testOfCreateMarketplace(admin);
 //		testOfGetAllMarketplaces(admin);
+		testOfGetMarketplaceFor(admin);
 		
 //		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 //		
@@ -45,6 +46,38 @@ public class Test {
 		
 	}
 	
+	private static void testOfGetMarketplaceFor(WorketplaceAdministrationImpl admin) {
+		Person p = admin.getPersonByGoogleID("G1337");
+		
+		System.out.println("Hier kommt die Person für welche die Marktplätze ermittelt werden sollen ! ");
+		System.out.println("ID: " + p.getID());
+		System.out.println("Created: " + p.getCreated());
+		System.out.println("GoogleID: " + p.getGoogleID());
+		System.out.println("Description: " + p.getDescription());
+		System.out.println("PartnerProfileID: " + p.getPartnerProfileID());
+		System.out.println("Type: " + p.getType());
+		
+		System.out.println("Vorname: " + p.getFirstName());
+		System.out.println("Nachname: " + p.getLastName());
+		System.out.println("Straße: " + p.getStreet());
+		System.out.println("PLZ: " + p.getZipcode());
+		System.out.println("Stadt: " + p.getCity());
+		
+		Vector<Marketplace> myVector = admin.getMarketplacesFor(p);
+		
+		for (Marketplace laufvariable : myVector)
+		{
+		    System.out.println("Titel: " + laufvariable.getTitle());
+		    System.out.println("Beschreibung : " + laufvariable.getDescription());
+		    System.out.println("ID : " + laufvariable.getID());
+		    System.out.println("Erstellungszeitstempel: " + laufvariable.getCreated());
+		    System.out.println("OrgaUnitID: " + laufvariable.getOrgaUnitID());
+		    System.out.println();
+		}
+		
+		
+	}
+
 	public static void testOfDeletePerson(WorketplaceAdministrationImpl admin) {
 		Person p = admin.getPersonByGoogleID("G256061");
 		admin.deletePerson(p);
@@ -70,7 +103,7 @@ public class Test {
 	public static void testOfCreatePerson(WorketplaceAdministrationImpl admin) {
 	
 		admin.createPerson("Hans", "Mayer", "lagistraße 6", 86637, "Augsburg", "Ein Mensch", "G1337");
-		//admin.createPerson("Thomas", "Mueller", "schuttstr 6", 86637, "Langweid", "Auch Ein Mensch", "G256060");
+		admin.createPerson("Thomas", "Mueller", "schuttstr 6", 86637, "Langweid", "Auch Ein Mensch", "G256060");
 		
 	}
 	
@@ -101,8 +134,10 @@ public class Test {
 	
 	
 	public static void testOfCreateMarketplace(WorketplaceAdministrationImpl admin) {
-		Person p = new Person();
-		p.setID(1);
+		Person p = admin.getPersonByGoogleID("G1337");
+		
+		
+		
 		
 		Marketplace m = null;
 		m = admin.createMarketplace("Metallmarkt", "Alles mit Metall", p);

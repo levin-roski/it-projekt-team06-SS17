@@ -436,11 +436,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 * Auslesen aller Marktplätze für eine Organisations-Einheit
+	 * Auslesen aller Marktplätze einer Organisations-Einheit
 	 */
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		return this.marketMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 
