@@ -22,9 +22,11 @@ public class Test {
 //		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);
 //		testOfCreatePerson(admin);
+		
 //		testOfCreateMarketplace(admin);
 //		testOfGetAllMarketplaces(admin);
-		testOfGetMarketplaceFor(admin);
+//		testOfGetMarketplaceFor(admin);
+		testOfSaveMarketplace(admin);
 		
 //		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 //		
@@ -46,37 +48,6 @@ public class Test {
 		
 	}
 	
-	private static void testOfGetMarketplaceFor(WorketplaceAdministrationImpl admin) {
-		Person p = admin.getPersonByGoogleID("G1337");
-		
-		System.out.println("Hier kommt die Person für welche die Marktplätze ermittelt werden sollen ! ");
-		System.out.println("ID: " + p.getID());
-		System.out.println("Created: " + p.getCreated());
-		System.out.println("GoogleID: " + p.getGoogleID());
-		System.out.println("Description: " + p.getDescription());
-		System.out.println("PartnerProfileID: " + p.getPartnerProfileID());
-		System.out.println("Type: " + p.getType());
-		
-		System.out.println("Vorname: " + p.getFirstName());
-		System.out.println("Nachname: " + p.getLastName());
-		System.out.println("Straße: " + p.getStreet());
-		System.out.println("PLZ: " + p.getZipcode());
-		System.out.println("Stadt: " + p.getCity());
-		
-		Vector<Marketplace> myVector = admin.getMarketplacesFor(p);
-		
-		for (Marketplace laufvariable : myVector)
-		{
-		    System.out.println("Titel: " + laufvariable.getTitle());
-		    System.out.println("Beschreibung : " + laufvariable.getDescription());
-		    System.out.println("ID : " + laufvariable.getID());
-		    System.out.println("Erstellungszeitstempel: " + laufvariable.getCreated());
-		    System.out.println("OrgaUnitID: " + laufvariable.getOrgaUnitID());
-		    System.out.println();
-		}
-		
-		
-	}
 
 	public static void testOfDeletePerson(WorketplaceAdministrationImpl admin) {
 		Person p = admin.getPersonByGoogleID("G256061");
@@ -117,6 +88,12 @@ public class Test {
 		admin.createOrganisation("1 Nice Unternehmen vong Niceigkeit her", "rofliksdeh1337lol", "1Unternehmen", "Stadtstrand 1", 13337, "Stutututtgart");	
 	}
 
+	
+	/*
+	 * Marketplacemethoden
+	 */
+	
+	
 	public static void testOfGetAllMarketplaces(WorketplaceAdministrationImpl admin) {
 		
 		Vector<Marketplace> myVector = admin.getAllMarketplaces();
@@ -149,5 +126,64 @@ public class Test {
 		
 		t = admin.createMarketplace("Baumarkt", "Alles mit Bauen", p);
 		}
+	
+	private static void testOfGetMarketplaceFor(WorketplaceAdministrationImpl admin) {
+		Person p = admin.getPersonByGoogleID("G1337");
+		
+		System.out.println("Hier kommt die Person für welche die Marktplätze ermittelt werden sollen ! ");
+		System.out.println("ID: " + p.getID());
+		System.out.println("Created: " + p.getCreated());
+		System.out.println("GoogleID: " + p.getGoogleID());
+		System.out.println("Description: " + p.getDescription());
+		System.out.println("PartnerProfileID: " + p.getPartnerProfileID());
+		System.out.println("Type: " + p.getType());
+		
+		System.out.println("Vorname: " + p.getFirstName());
+		System.out.println("Nachname: " + p.getLastName());
+		System.out.println("Straße: " + p.getStreet());
+		System.out.println("PLZ: " + p.getZipcode());
+		System.out.println("Stadt: " + p.getCity());
+		
+		Vector<Marketplace> myVector = admin.getMarketplacesFor(p);
+		
+		for (Marketplace laufvariable : myVector)
+		{
+		    System.out.println("Titel: " + laufvariable.getTitle());
+		    System.out.println("Beschreibung : " + laufvariable.getDescription());
+		    System.out.println("ID : " + laufvariable.getID());
+		    System.out.println("Erstellungszeitstempel: " + laufvariable.getCreated());
+		    System.out.println("OrgaUnitID: " + laufvariable.getOrgaUnitID());
+		    System.out.println();
+		}
+		
+	}
+	
+	private static void testOfSaveMarketplace(WorketplaceAdministrationImpl admin) {
+Person p = admin.getPersonByGoogleID("G1337");
+		
+		System.out.println("Hier kommt die Person für welche die Marktplätze ermittelt werden sollen ! ");
+		System.out.println("ID: " + p.getID());
+		System.out.println("Created: " + p.getCreated());
+		System.out.println("GoogleID: " + p.getGoogleID());
+		System.out.println("Description: " + p.getDescription());
+		System.out.println("PartnerProfileID: " + p.getPartnerProfileID());
+		System.out.println("Type: " + p.getType());
+		
+		System.out.println("Vorname: " + p.getFirstName());
+		System.out.println("Nachname: " + p.getLastName());
+		System.out.println("Straße: " + p.getStreet());
+		System.out.println("PLZ: " + p.getZipcode());
+		System.out.println("Stadt: " + p.getCity());
+		
+		Vector<Marketplace> myVector = admin.getMarketplacesFor(p);
+		Marketplace m = myVector.elementAt(0);
+		
+		m.setDescription("Ich habe ein Update verführt.");
+		m.setTitle("Ich auch ändern Titel");
+		admin.saveMarketplace(m);
+		
+	}
+	
+	
 
 }
