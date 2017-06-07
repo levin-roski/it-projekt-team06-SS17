@@ -122,32 +122,17 @@ public class OrganisationMapper {
      * Löschen einer Organisation aus der Datenbank.
      * @param orga
      */
-	public void delete(Organisation orga) {
+    public void delete(Organisation o) {
 		Connection con = DBConnection.connection();
-
 	    try {
 	    	Statement stmt = con.createStatement();
-	    	//Löschen der Organisation aus der Tabelle organisation.
-	    	stmt.executeUpdate("DELETE FROM person " + "WHERE id=" + orga.getID());
-	    	//Löschen der damit verbundenen OrgaUnit aus der Tabelle orgaunit.
-	    	stmt.executeUpdate("DELETE FROM orgaunit " + "WHERE id=" + orga.getID());
-
+	    	//Löschen der Organisation aus der Tabelle orgaunit und organisation
+	    	stmt.executeUpdate("DELETE orgaunit, organisation FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.id= " + o.getID());	
 	    }
 	    catch (SQLException e2) {
-	    	//TODO: @HANNES --> Passt das so mit der Überprüfung der Transaktion?
-	    	try {
-	    		System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
-	    		con.rollback();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				
-			} finally {
-				  e2.printStackTrace();
-			}
+				  e2.printStackTrace();		
 	    }
-		
-	}
+	}	
 
     /**
      * @return

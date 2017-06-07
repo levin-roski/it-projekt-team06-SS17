@@ -2,8 +2,6 @@ package de.worketplace.team06.server.db;
 
 import java.sql.*;
 import java.util.Vector;
-
-import de.hdm.thies.bankProjekt.server.db.DBConnection;
 import de.worketplace.team06.shared.bo.*;
 
 public class PersonMapper {
@@ -114,13 +112,13 @@ public class PersonMapper {
 	}
 	
 	
-	public void delete(Person person) {
+	public void delete(Person p) {
 		Connection con = DBConnection.connection();
 
 	    try {
 	    	Statement stmt = con.createStatement();
-	    	//Löschen der Person aus der Tabelle person.
-	    	stmt.executeUpdate("DELETE orgaunit, person FROM orgaunit INNER JOIN person ON orgaunit.id = person.id WHERE orgaunit.id= " + person.getID());
+	    	//Löschen der Person aus der Tabelle orgaunit und person.
+	    	stmt.executeUpdate("DELETE orgaunit, person FROM orgaunit INNER JOIN person ON orgaunit.id = person.id WHERE orgaunit.id= " + p.getID());
 	    	
 	    }
 	    catch (SQLException e2) {
