@@ -421,8 +421,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Löschen eines Marktplatzes
 	 */
 	@Override
-	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void deleteMarketplace(Marketplace m) throws IllegalArgumentException {
+		this.marketMapper.delete(m);
 	}
 	
 	/**

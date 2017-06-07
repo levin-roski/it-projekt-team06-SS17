@@ -142,6 +142,21 @@ public class MarketplaceMapper {
 		// Ergebnisvektor zurückgeben
 		return result;
 		}
+		
+		public void delete(Marketplace m) {
+			Connection con = DBConnection.connection();
+
+		    try {
+		    	Statement stmt = con.createStatement();
+		    	//Löschen der Person aus der Tabelle orgaunit und person.
+		    	stmt.executeUpdate("DELETE FROM marketplace WHERE marketplace.id= " + m.getID());
+		    	
+		    }
+		    catch (SQLException e2) {
+					  e2.printStackTrace();		
+		    }
+			
+		}	
 	
 
 	
