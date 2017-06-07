@@ -650,6 +650,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
+	 * Löschen einer Person aus der Datenbank
+	 */
+	@Override
+	public void deletePerson(Person person) throws IllegalArgumentException {
+		this.personMapper.delete(person);
+	}
+	
+	/**
 	 * Auslesen einer Person aus der Datenbank
 	 * @param googleID
 	 * @return
@@ -880,6 +888,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void saveTeam(Team team) throws IllegalArgumentException {
 		this.teamMapper.update(team);
+	}
+	
+	/**
+	 * Löschen eines Teams aus der Datenbank
+	 */
+	@Override
+	public void deleteTeam(Team team) throws IllegalArgumentException {
+		this.teamMapper.delete(team);
 	}
 	
 	/**

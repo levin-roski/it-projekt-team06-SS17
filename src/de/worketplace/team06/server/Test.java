@@ -17,7 +17,8 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 	
-		testOfGetPerson(admin);
+		testOfDeletePerson(admin);
+//		testOfGetPerson(admin);
 //		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);
 //		testOfCreatePerson(admin);
@@ -44,6 +45,11 @@ public class Test {
 		
 	}
 	
+	public static void testOfDeletePerson(WorketplaceAdministrationImpl admin) {
+		Person p = admin.getPersonByGoogleID("G1337");
+		admin.deletePerson(p);
+	}
+	
 	public static void testOfGetPerson(WorketplaceAdministrationImpl admin) {
 		Person p = admin.getPersonByGoogleID("G1337");
 		
@@ -63,8 +69,8 @@ public class Test {
 	
 	public static void testOfCreatePerson(WorketplaceAdministrationImpl admin) {
 	
-		//admin.createPerson("Hans", "Mayer", "lagistraße 6", 86637, "Augsburg", "Ein Mensch", "G1337");
-		admin.createPerson("Thomas", "Mueller", "schuttstr 6", 86637, "Langweid", "Auch Ein Mensch", "G256060");
+		admin.createPerson("Hans", "Mayer", "lagistraße 6", 86637, "Augsburg", "Ein Mensch", "G1337");
+		//admin.createPerson("Thomas", "Mueller", "schuttstr 6", 86637, "Langweid", "Auch Ein Mensch", "G256060");
 		
 	}
 	

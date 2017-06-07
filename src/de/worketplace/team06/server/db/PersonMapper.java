@@ -3,6 +3,7 @@ package de.worketplace.team06.server.db;
 import java.sql.*;
 import java.util.Vector;
 
+import de.hdm.thies.bankProjekt.server.db.DBConnection;
 import de.worketplace.team06.shared.bo.*;
 
 public class PersonMapper {
@@ -111,7 +112,33 @@ public class PersonMapper {
 		// TODO Auto-generated method stub
 		
 	}
-
 	
+	
+	public void delete(Person person) {
+		Connection con = DBConnection.connection();
+
+	    try {
+	    	Statement stmt = con.createStatement();
+	    	//Löschen der Person aus der Tabelle person.
+	    	stmt.executeUpdate("DELETE FROM person " + "WHERE id=" + person.getID());
+	    	//Löschen der damit verbundenen OrgaUnit aus der Tabelle orgaunit.
+	    	stmt.executeUpdate("DELETE FROM orgaunit " + "WHERE id=" + person.getID());
+
+	    }
+	    catch (SQLException e2) {
+	    	//TODO: @HANNES --> Passt das so mit der Überprüfung der Transaktion?
+	    	try {
+	    		System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
+	    		con.rollback();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				
+			} finally {
+				  e2.printStackTrace();
+			}
+	    }
+		
+	}	
 
 }

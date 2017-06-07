@@ -120,9 +120,36 @@ import de.worketplace.team06.shared.bo.*;
 	    }
 	    
 	    
-	    public void delete(Team t) {
-	        // TODO implement here
-	    }
+	    /**
+	     * Löschen eines Teams aus der Datenbank
+	     * @param team
+	     */
+		public void delete(Team team) {
+			Connection con = DBConnection.connection();
+
+		    try {
+		    	Statement stmt = con.createStatement();
+		    	//Löschen des Teams aus der Tabelle team.
+		    	stmt.executeUpdate("DELETE FROM team " + "WHERE id=" + team.getID());
+		    	//Löschen der damit verbundenen OrgaUnit aus der Tabelle orgaunit.
+		    	stmt.executeUpdate("DELETE FROM orgaunit " + "WHERE id=" + team.getID());
+
+		    }
+		    catch (SQLException e2) {
+		    	//TODO: @HANNES --> Passt das so mit der Überprüfung der Transaktion?
+		    	try {
+		    		System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
+		    		con.rollback();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+					
+				} finally {
+					  e2.printStackTrace();
+				}
+		    }
+			
+		}
 
 	    /**
 	     * @return

@@ -318,4 +318,8 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
 
+	void deletePerson(Person person) throws IllegalArgumentException;
+
+	void deleteTeam(Team team) throws IllegalArgumentException;
+
 }
