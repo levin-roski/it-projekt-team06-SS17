@@ -56,8 +56,8 @@ import de.worketplace.team06.shared.bo.*;
 			
 			catch (SQLException e2) {
 				try {
+					System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
 					con.rollback();
-					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

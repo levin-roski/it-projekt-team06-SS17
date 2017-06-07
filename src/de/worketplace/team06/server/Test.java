@@ -48,6 +48,12 @@ public class Test {
 		Person p = admin.getPersonByGoogleID("G1337");
 		
 		System.out.println("ID: " + p.getID());
+		System.out.println("Created: " + p.getCreated());
+		System.out.println("GoogleID: " + p.getGoogleID());
+		System.out.println("Description: " + p.getDescription());
+		System.out.println("PartnerProfileID: " + p.getPartnerProfileID());
+		System.out.println("Type: " + p.getType());
+		
 		System.out.println("Vorname: " + p.getFirstName());
 		System.out.println("Nachname: " + p.getLastName());
 		System.out.println("Straße: " + p.getStreet());
@@ -57,14 +63,14 @@ public class Test {
 	
 	public static void testOfCreatePerson(WorketplaceAdministrationImpl admin) {
 	
-		admin.createPerson("Hans", "Mayer", "lagistraße 6", 86637, "Augsburg", "Ein Mensch", "G1337");
-		//admin.createPerson("Thomas", "Mueller", "schuttstr 6", 86637, "Langweid", "Auch Ein Mensch", "G256060");
+		//admin.createPerson("Hans", "Mayer", "lagistraße 6", 86637, "Augsburg", "Ein Mensch", "G1337");
+		admin.createPerson("Thomas", "Mueller", "schuttstr 6", 86637, "Langweid", "Auch Ein Mensch", "G256060");
 		
 	}
 	
 	public static void testOfCreateTeam(WorketplaceAdministrationImpl admin) {
-		//admin.createTeam("Ist wohl ein Team", "G2349jf", "Spermateam", 1000);
-		admin.createTeam("ahjooo", "Gagasdg234", "SSchluckteam", 500);
+		//admin.createTeam("Ist wohl ein Team", "G2349jf", "Superknechte", 1000);
+		admin.createTeam("ahjooo", "Gagasdg234", "Glücksspechte", 500);
 		
 	}
 	

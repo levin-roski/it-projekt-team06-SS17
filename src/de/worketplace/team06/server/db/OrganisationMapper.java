@@ -53,6 +53,7 @@ public class OrganisationMapper {
 		}
 		catch (SQLException e2) {
 			try {
+				System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
 				con.rollback();
 				
 			} catch (SQLException e) {
@@ -60,6 +61,7 @@ public class OrganisationMapper {
 				e.printStackTrace();
 			}
 			  finally {
+				 
 				  e2.printStackTrace();
 			}	
 		}

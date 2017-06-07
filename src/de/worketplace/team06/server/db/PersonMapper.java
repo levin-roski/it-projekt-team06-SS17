@@ -32,17 +32,64 @@ public class PersonMapper {
 			if (rs.next()) {
 				
 				p.setID(rs.getInt("maxid") + 1);
-		
+				
+				con.setAutoCommit(false);
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" + p.getGoogleID() +  "','" + p.getDescription() +  "','" + p.getType() + "')");
 				stmt.executeUpdate("INSERT INTO person (id, created, firstName, lastName, street, zipcode, city) " + "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" + p.getFirstName() + "','" + p.getLastName() + "','" + p.getStreet() + "'," + p.getZipcode() + ",'" + p.getCity() + "')");
+				con.commit();
 			}
 		}
 		catch (SQLException e2) {
-			e2.printStackTrace();
+			try {
+				System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
+				con.rollback();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			  finally {
+				 
+				  e2.printStackTrace();
+			}	
 		}
 		return p;
 	}
+	
+	/**
+	 * Auslesen einer Person mithilfe einer GoogleID.
+	 */
+	public Person findByGoogleID(String googleID) {
+		Connection con = DBConnection.connection();
+		
+		try {						
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person ON orgaunit.id = person.id WHERE orgaunit.googleID = '" + googleID + "'");		
+			
+			if (rs.next()) {
+				Person p = new Person();
+				p.setID(rs.getInt("id"));
+				p.setCreated(rs.getTimestamp("created"));
+				p.setGoogleID(googleID);
+				p.setDescription(rs.getString("description"));
+				p.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				p.setType(rs.getString("type"));
+				
+				p.setFirstName(rs.getString("firstName"));
+				p.setLastName(rs.getString("lastName"));
+				p.setStreet(rs.getString("street"));
+				p.setZipcode(rs.getInt("zipcode"));
+				p.setCity(rs.getString("city"));
+				return p;
+			}			
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}	
 	
 	
 /*	
@@ -66,40 +113,5 @@ public class PersonMapper {
 	}
 
 	
-	/*
-	 * TODO: Methode funktioniert noch nicht 100%, muss nochmals überprüft werden --> SQL Error. (Toby)
-	 */
-	public Person findByGoogleID(String googleID) {
-		Connection con = DBConnection.connection();
-		
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE googleID = " + googleID );		
-			Integer personid = rs.getInt("id");
-			
-			Statement stmt2 = con.createStatement();
-			ResultSet rs2 = stmt2.executeQuery("SELECT id, created, firstName, lastName, street, zipcode, city FROM person " + "WHERE id = " + personid);
-			
-			if (rs2.next()){
-				Person p = new Person();
-				p.setID(personid);
-				p.setCreated(rs2.getTimestamp("created"));
-				p.setFirstName(rs2.getString("firstName"));
-				p.setLastName(rs2.getString("lastName"));
-				p.setStreet(rs2.getString("street"));
-				p.setZipcode(rs2.getInt("zipcode"));
-				p.setCity(rs2.getString("city"));
-				return p;
-			}
-		
-			
-		}
-		catch (SQLException e2) {
-			e2.printStackTrace();
-			return null;
-		}
-		return null;
-	}
 
-	
 }
