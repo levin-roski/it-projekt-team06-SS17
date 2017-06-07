@@ -47,7 +47,7 @@ public class OrganisationMapper {
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getGoogleID() +  "','" + o.getDescription() +  "','" + o.getType() + "')");
-				stmt.executeUpdate("INSERT INTO organisation (id, created, name, street, zipcode, city) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getName() + "','" + o.getStreet() + "','" + o.getZipcode() + "','" + o.getCity() + "')");
+				stmt.executeUpdate("INSERT INTO organisation (id, created, name, street, zipcode, city) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getName() + "','" + o.getStreet() + "'," + o.getZipcode() + ",'" + o.getCity() + "')");
 				con.commit();
 			}
 		}
@@ -67,6 +67,39 @@ public class OrganisationMapper {
 		}
 		return o;
     }
+    
+	/**
+	 * Auslesen einer Organisation mithilfe einer GoogleID.
+	 */
+	public Organisation findByGoogleID(String googleID) {
+		Connection con = DBConnection.connection();
+		
+		try {						
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.googleID = '" + googleID + "'");		
+			
+			if (rs.next()) {
+				Organisation o = new Organisation();
+				o.setID(rs.getInt("id"));
+				o.setCreated(rs.getTimestamp("created"));
+				o.setGoogleID(googleID);
+				o.setDescription(rs.getString("description"));
+				o.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				o.setType(rs.getString("type"));
+				
+				o.setName(rs.getString("name"));
+				o.setStreet(rs.getString("street"));
+				o.setZipcode(rs.getInt("zipcode"));
+				o.setCity("city");
+				return o;
+			}			
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}	
 
     /**
      * @param orgaUnit 
@@ -97,12 +130,6 @@ public class OrganisationMapper {
         // TODO implement here
         return null;
     }
-
-	public Organisation findByGoogleID(String googleId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 
     /**

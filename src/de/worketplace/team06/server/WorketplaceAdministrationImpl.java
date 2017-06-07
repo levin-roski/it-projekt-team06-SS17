@@ -486,6 +486,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.orgaMapper.update(organisation);
 		
 	}
+	/**
+	 * Auslesen einer Organisation aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public Organisation getOrganisationByGoogleID(String googleID){
+
+		return this.orgaMapper.findByGoogleID(googleID);
+	}
+	
 	/*
 	 * ---------------------------------
 	 * -- METHODEN für OrgaUnit --
@@ -644,7 +654,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
-	public <Vector> Person getPersonByGoogleID(String googleID){
+	public Person getPersonByGoogleID(String googleID){
 
 		return this.personMapper.findByGoogleID(googleID);
 	}
@@ -871,6 +881,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void saveTeam(Team team) throws IllegalArgumentException {
 		this.teamMapper.update(team);
 	}
+	
+	/**
+	 * Auslesen eines Teams aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public Team getTeamByGoogleID(String googleID){
+
+		return this.teamMapper.findByGoogleID(googleID);
+	}
+	
 
 	/*
 	 * ***************************************************************************
