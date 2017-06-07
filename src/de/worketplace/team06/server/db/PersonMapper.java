@@ -120,23 +120,11 @@ public class PersonMapper {
 	    try {
 	    	Statement stmt = con.createStatement();
 	    	//Löschen der Person aus der Tabelle person.
-	    	stmt.executeUpdate("DELETE FROM person " + "WHERE id=" + person.getID());
-	    	//Löschen der damit verbundenen OrgaUnit aus der Tabelle orgaunit.
-	    	stmt.executeUpdate("DELETE FROM orgaunit " + "WHERE id=" + person.getID());
-
+	    	stmt.executeUpdate("DELETE orgaunit, person FROM orgaunit INNER JOIN person ON orgaunit.id = person.id WHERE orgaunit.id= " + person.getID());
+	    	
 	    }
 	    catch (SQLException e2) {
-	    	//TODO: @HANNES --> Passt das so mit der Überprüfung der Transaktion?
-	    	try {
-	    		System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
-	    		con.rollback();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				
-			} finally {
-				  e2.printStackTrace();
-			}
+				  e2.printStackTrace();		
 	    }
 		
 	}	

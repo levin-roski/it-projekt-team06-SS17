@@ -46,7 +46,7 @@ public class Test {
 	}
 	
 	public static void testOfDeletePerson(WorketplaceAdministrationImpl admin) {
-		Person p = admin.getPersonByGoogleID("G1337");
+		Person p = admin.getPersonByGoogleID("G256061");
 		admin.deletePerson(p);
 	}
 	
