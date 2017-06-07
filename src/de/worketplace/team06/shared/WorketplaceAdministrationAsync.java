@@ -127,6 +127,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void deleteTeam(Team team, AsyncCallback<Void> callback);
 
+	void deleteOrganisation(Organisation organisation, AsyncCallback<Void> callback);
+
 
 	
 }

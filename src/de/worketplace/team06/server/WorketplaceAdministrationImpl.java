@@ -486,6 +486,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.orgaMapper.update(organisation);
 		
 	}
+	
+	/**
+	 * Löschen einer Organisation aus der Datenbank
+	 */
+	@Override
+	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException {
+		this.orgaMapper.delete(organisation);
+	}
+	
 	/**
 	 * Auslesen einer Organisation aus der Datenbank
 	 * @param googleID

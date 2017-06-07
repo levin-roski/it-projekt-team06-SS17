@@ -322,4 +322,6 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	void deleteTeam(Team team) throws IllegalArgumentException;
 
+	void deleteOrganisation(Organisation organisation) throws IllegalArgumentException;
+
 }
