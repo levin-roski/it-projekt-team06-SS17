@@ -140,6 +140,39 @@ public class PersonMapper {
 				  e2.printStackTrace();		
 	    }
 		
+	}
+
+	public Person findByID(int ouid) {
+		Connection con = DBConnection.connection();
+		
+		try {						
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
+											+ "ON orgaunit.id = person.id "
+											+ "WHERE orgaunit.id = " + ouid);		
+			
+			if (rs.next()) {
+				Person p = new Person();
+				p.setID(rs.getInt("id"));
+				p.setCreated(rs.getTimestamp("created"));
+				p.setGoogleID(rs.getString("googleID"));
+				p.setDescription(rs.getString("description"));
+				p.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				p.setType(rs.getString("type"));
+				
+				p.setFirstName(rs.getString("firstName"));
+				p.setLastName(rs.getString("lastName"));
+				p.setStreet(rs.getString("street"));
+				p.setZipcode(rs.getInt("zipcode"));
+				p.setCity(rs.getString("city"));
+				return p;
+			}			
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
 	}	
 
 }

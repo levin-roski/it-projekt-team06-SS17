@@ -86,5 +86,22 @@ public class OrgaUnitMapper {
 		}
 		
 	}
+
+	public String findTypeByID(int ouid) {
+		
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("Select type FROM orgaunit " + "WHERE id = " + ouid);		
+			String type = rs.getString("type");
+		
+			return type;
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+	}
 	
 }

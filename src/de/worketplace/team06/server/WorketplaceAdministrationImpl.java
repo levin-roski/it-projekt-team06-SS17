@@ -510,7 +510,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * ---------------------------------
 	 */
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		
 		String type = orgaUnitMapper.findTypeByGoogleID(loginInfo.getGoogleId());
         
@@ -523,6 +522,25 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
             return t;
 		case "Organisation": 
         	Organisation o = this.orgaMapper.findByGoogleID(loginInfo.getGoogleId());
+        	return o; 
+        }
+		return null;
+		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
+	}
+	
+	public OrgaUnit getOrgaUnitById(int ouid) throws IllegalArgumentException {
+		
+		String type = orgaUnitMapper.findTypeByID(ouid);
+        
+        switch(type){ 
+        case "Person": 
+        	Person p = this.personMapper.findByID(ouid);
+        	return p;
+		case "Team": 
+        	Team t = this.teamMapper.findByID(ouid);
+            return t;
+		case "Organisation": 
+        	Organisation o = this.orgaMapper.findByID(ouid);
         	return o; 
         }
 		return null;

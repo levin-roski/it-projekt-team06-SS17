@@ -130,10 +130,35 @@ import de.worketplace.team06.shared.bo.*;
 			
 		}
 		
-		/*
-		 * Wird findbyID benötigt ?  Klären! 
-		 */
+		public Team findByID(int ouid) {
+			Connection con = DBConnection.connection();
+			
+			try {						
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN team ON orgaunit.id = team.id WHERE orgaunit.id = " + ouid);		
+				
+				if (rs.next()) {
+					Team t = new Team();
+					t.setID(rs.getInt("id"));
+					t.setCreated(rs.getTimestamp("created"));
+					t.setGoogleID(rs.getString("googleID"));
+					t.setDescription(rs.getString("description"));
+					t.setPartnerProfileID(rs.getInt("partnerprofileID"));
+					t.setType(rs.getString("type"));
+					
+					t.setName(rs.getString("teamName"));
+					t.setMembercount(rs.getInt("membercount"));
+					return t;
+				}			
+			}
+			catch (SQLException e2) {
+				e2.printStackTrace();
+				return null;
+			}
+			return null;
+		}
 
+<<<<<<< HEAD
 	    /**
 	     * @param orgaUnit
 	     */
@@ -157,6 +182,10 @@ import de.worketplace.team06.shared.bo.*;
 	    	}
 	    	return null ;
 	    
+=======
+		
+		
+>>>>>>> refs/remotes/origin/master
 	    
 	    /**
 	     * Löschen eines Teams aus der Datenbank
@@ -188,6 +217,7 @@ import de.worketplace.team06.shared.bo.*;
 	        return null;
 	    }
 
+		
 
 
 	    /**

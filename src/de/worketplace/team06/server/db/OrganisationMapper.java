@@ -153,14 +153,6 @@ public class OrganisationMapper {
 	    }
 		
 	}
-
-    /**
-     * @param orgaUnit
-     */
-    public Vector<Project> findById (int id){
-    	// TODO implement here
-    	return null; 
-    }
     
     /**
      * Löschen einer Organisation aus der Datenbank.
@@ -176,7 +168,38 @@ public class OrganisationMapper {
 	    catch (SQLException e2) {
 				  e2.printStackTrace();		
 	    }
-	}	
+	}
+    
+    public Organisation findByID(int ouid) {
+    	Connection con = DBConnection.connection();
+		
+		try {						
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.id = " + ouid);		
+			
+			if (rs.next()) {
+				Organisation o = new Organisation();
+				o.setID(rs.getInt("id"));
+				o.setCreated(rs.getTimestamp("created"));
+				o.setGoogleID(rs.getString("googleID"));
+				o.setDescription(rs.getString("description"));
+				o.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				o.setType(rs.getString("type"));
+				
+				o.setName(rs.getString("name"));
+				o.setStreet(rs.getString("street"));
+				o.setZipcode(rs.getInt("zipcode"));
+				o.setCity("city");
+				return o;
+			}			
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+
 
     
     /*
@@ -213,6 +236,7 @@ public class OrganisationMapper {
         return result ;
     }
 
+<<<<<<< HEAD
     
     
     /**public Organisation insert (Organisation o) {
@@ -277,6 +301,9 @@ public class OrganisationMapper {
         }
     }
     */
+=======
+	
+>>>>>>> refs/remotes/origin/master
 
     /**
      * @param orgaUnit 
