@@ -32,19 +32,18 @@ public class OrganisationMapper {
 		}
 		return organisationMapper; 
 	}
-<<<<<<< HEAD
+
     
-	public Organisation findById (int id){
-=======
+	/**public Organisation findById (int id){
     /**
      * @param orgaUnit 
      * @return
      */
+	
     public Organisation insert (Organisation o) {
->>>>>>> refs/remotes/origin/master
+
     	Connection con = DBConnection.connection();
-<<<<<<< HEAD
-    	
+
     	try{
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery("SELECT id, street, zipcode, city, created FROM Organisation " + "WHERE id= " + id);
@@ -62,7 +61,6 @@ public class OrganisationMapper {
     		e.printStackTrace();
     	}
     	return null;
-=======
 		
 		try {
 			Statement stmt = con.createStatement();
@@ -95,11 +93,7 @@ public class OrganisationMapper {
 			}	
 		}
 		return o;
->>>>>>> refs/remotes/origin/master
     }
-<<<<<<< HEAD
-  
-=======
     
 	/**
 	 * Auslesen einer Organisation mithilfe einer GoogleID.
@@ -191,7 +185,7 @@ public class OrganisationMapper {
     /**
      * @return
      */
->>>>>>> refs/remotes/origin/master
+
     public Vector<Organisation> findAll() {
         Connection con = DBConnection.connection();
         Vector<Organisation> result = new Vector<Organisation>();
@@ -218,11 +212,10 @@ public class OrganisationMapper {
         }
         return result ;
     }
-<<<<<<< HEAD
+
     
     
-    
-    public Organisation insert (Organisation o) {
+    /**public Organisation insert (Organisation o) {
         Connection con = DBConnection.connection();
         
         try {
@@ -249,8 +242,9 @@ public class OrganisationMapper {
     
     return o;
     } 
+    */
     
-    public Organisation update(Organisation o) {
+    /**public Organisation update(Organisation o) {
         Connection con = DBConnection.connection();
         
         try{
@@ -268,8 +262,9 @@ public class OrganisationMapper {
         } 
         return o;
     }
+    */
 
-    public void delete(Organisation o) {
+    /**public void delete(Organisation o) {
         Connection con = DBConnection.connection();
         
         try {
@@ -281,13 +276,10 @@ public class OrganisationMapper {
         	e.printStackTrace();
         }
     }
-=======
-
+    */
 
     /**
      * @param orgaUnit 
      * @return
      */
-
->>>>>>> refs/remotes/origin/master
 }
