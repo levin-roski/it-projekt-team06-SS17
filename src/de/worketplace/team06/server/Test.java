@@ -6,7 +6,9 @@ import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
+import de.worketplace.team06.shared.bo.Organisation;
 import de.worketplace.team06.shared.bo.Person;
+import de.worketplace.team06.shared.bo.Team;
 
 public class Test {
 
@@ -19,11 +21,13 @@ public class Test {
 	
 
 //		testOfCreateOrganisation(admin);
-//		testOfCreateTeam(admin);
+      testOfSaveOrganisation(admin);		
 		
+//		testOfCreateTeam(admin);
+//		testOfSaveTeam(admin);
 		
 //		testOfCreatePerson(admin);
-		testOfSavePerson(admin);
+//		testOfSavePerson(admin);
 //		testOfDeletePerson(admin);
 //		testOfGetPerson(admin);
 		
@@ -52,6 +56,65 @@ public class Test {
 		
 	}
 	
+	
+
+	/*
+	 * Organisation
+	 *
+	 */
+	
+	public static void testOfCreateOrganisation(WorketplaceAdministrationImpl admin) {
+		admin.createOrganisation("1 Nice Unternehmen vong Niceigkeit her", "rofliksdeh1337lol", "1Unternehmen", "Stadtstrand 1", 13337, "Stutututtgart");
+		admin.createOrganisation("Malerei", "Gmal234", "CoolStrich", "Hansestraße 4", 87765, "Hamburg");
+	}
+	
+	private static void testOfSaveOrganisation(WorketplaceAdministrationImpl admin) {
+		Organisation o = admin.getOrganisationByGoogleID("Gmal234");
+		System.out.println("Hier kommt der Organisationsname: " + o.getName());
+		
+		o.setDescription("Blub");
+		o.setPartnerProfileID(999);
+		
+		o.setName("Blub");
+		o.setStreet("Blub");
+		o.setCity("Blub");
+		o.setZipcode(999);
+		
+		admin.saveOrganisation(o);
+		
+	}
+	
+	
+	/*
+	 * TEAM
+	 * 
+	 */
+	
+	public static void testOfCreateTeam(WorketplaceAdministrationImpl admin) {
+		admin.createTeam("Ist wohl ein Team", "G2349jf", "Superknechte", 1000);
+		admin.createTeam("ahjooo", "Gagasdg234", "Glücksspechte", 500);
+		
+	}
+
+	private static void testOfSaveTeam(WorketplaceAdministrationImpl admin) {
+		Team t = admin.getTeamByGoogleID("G2349jf");
+		System.out.println("Hier kommt der Teamname: " + t.getName());
+		
+		t.setDescription("Blub");
+		t.setPartnerProfileID(999);
+		t.setMembercount(999);
+		t.setName("Blub");
+		
+		admin.saveTeam(t);
+		
+	}
+
+	
+	/*
+	 * 
+	 * Person
+	 * 
+	 */
 
 	private static void testOfSavePerson(WorketplaceAdministrationImpl admin) {
 		Person p = admin.getPersonByGoogleID("G1337");
@@ -97,15 +160,9 @@ public class Test {
 		
 	}
 	
-	public static void testOfCreateTeam(WorketplaceAdministrationImpl admin) {
-		//admin.createTeam("Ist wohl ein Team", "G2349jf", "Superknechte", 1000);
-		admin.createTeam("ahjooo", "Gagasdg234", "Glücksspechte", 500);
-		
-	}
 	
-	public static void testOfCreateOrganisation(WorketplaceAdministrationImpl admin) {
-		admin.createOrganisation("1 Nice Unternehmen vong Niceigkeit her", "rofliksdeh1337lol", "1Unternehmen", "Stadtstrand 1", 13337, "Stutututtgart");	
-	}
+	
+	
 
 	
 	/*

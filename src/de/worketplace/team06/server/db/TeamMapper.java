@@ -99,18 +99,34 @@ import de.worketplace.team06.shared.bo.*;
 			}
 			return null;
 		}	
-		
-	    
-	    
 
 	    /**
 	     * @param orgaUnit 
 	     * @return
 	     */
-	    public Team update(Team t) {
-	        // TODO implement here
-	        return null;
-	    }
+		public void update(Team t) {
+			Connection con = DBConnection.connection();
+
+		    try {
+		    	Statement stmt = con.createStatement();
+		    	//Updaten eines Teams
+		    	stmt.executeUpdate("UPDATE orgaunit, team SET"
+		    						+ " orgaunit.description='" + t.getDescription() +
+		    						"', orgaunit.partnerprofileID= " + t.getPartnerProfileID() +
+		    						", team.teamName= '" + t.getName() +
+		    						"', team.membercount= " + t.getMembercount() + 
+		    						" WHERE orgaunit.id= " + t.getID() + 
+		    						" AND team.id= " + t.getID()); 	
+		    }
+		    catch (SQLException e2) {
+					  e2.printStackTrace();		
+		    }
+			
+		}
+		
+		/*
+		 * Wird findbyID benötigt ?  Klären! 
+		 */
 
 	    /**
 	     * @param orgaUnit
@@ -139,6 +155,9 @@ import de.worketplace.team06.shared.bo.*;
 			
 		}	
 
+	    /*
+	     * Wird findAll benötigt ? Klären ! 
+	     */
 	    /**
 	     * @return
 	     */

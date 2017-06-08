@@ -105,10 +105,27 @@ public class OrganisationMapper {
      * @param orgaUnit 
      * @return
      */
-    public Organisation update(Organisation o) {
-        // TODO implement here
-        return null;
-    }
+	public void update(Organisation o) {
+		Connection con = DBConnection.connection();
+
+	    try {
+	    	Statement stmt = con.createStatement();
+	    	//Updaten einer Person :) 
+	    	stmt.executeUpdate("UPDATE orgaunit, organisation SET"
+	    						+ " orgaunit.description='" + o.getDescription() +
+	    						"', orgaunit.partnerprofileID= " + o.getPartnerProfileID() +
+	    						", organisation.name= '" + o.getName() +
+	    						"', organisation.street= '" + o.getStreet() + 
+	    						"', organisation.zipcode= " + o.getZipcode() + 
+	    						", organisation.city= '" + o.getCity() + 
+	    						"' WHERE orgaunit.id= " + o.getID() + 
+	    						" AND organisation.id= " + o.getID()); 
+	    }
+	    catch (SQLException e2) {
+				  e2.printStackTrace();		
+	    }
+		
+	}
 
     /**
      * @param orgaUnit
@@ -134,6 +151,10 @@ public class OrganisationMapper {
 	    }
 	}	
 
+    
+    /*
+     * Wird findAll überhaupt benötigt ? Klären ! 
+     */
     /**
      * @return
      */

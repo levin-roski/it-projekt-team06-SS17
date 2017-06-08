@@ -99,21 +99,6 @@ public class PersonMapper {
 		return null;
 	}	
 	
-	
-/*	
- * 
- * PATRICK
- * 
-	public Person findByKey(int id)
-
-	public Person findBy schauen 
-	
-	public Person insert(Person a)
-	
-	public Person update(Person a)
-	
-	public void delete(Person a)
-*/
 
 	public void update(Person p) {
 		Connection con = DBConnection.connection();
