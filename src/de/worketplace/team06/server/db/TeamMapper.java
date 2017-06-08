@@ -23,7 +23,7 @@ import de.worketplace.team06.shared.bo.*;
 		
 		protected TeamMapper(){
 			 /**
-			   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+			   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 			   * neue Instanzen dieser Klasse zu erzeugen.
 			   */
 		}
@@ -156,37 +156,8 @@ import de.worketplace.team06.shared.bo.*;
 				return null;
 			}
 			return null;
-		}
+		}	    
 
-<<<<<<< HEAD
-	    /**
-	     * @param orgaUnit
-	     */
-
-	    public Team findById (int id){
-
-	    	Connection con = DBConnection.connection();
-	    	
-	    	try{
-	    		Statement stmt= con.createStatement();
-	    		ResultSet rs = stmt.executeQuery("SELECT id, created FROM Team " + "WHERE id= " + id);
-	    		
-	    		if (rs.next()) {
-	    			Team t = new Team();
-	    			t.setID(rs.getInt("id"));
-	    			t.setCreated(rs.getTimestamp("created"));
-	    		}	
-	    	}
-	    	catch (SQLException e){
-	    		e.printStackTrace();
-	    	}
-	    	return null ;
-	    
-=======
-		
-		
->>>>>>> refs/remotes/origin/master
-	    
 	    /**
 	     * LÃ¶schen eines Teams aus der Datenbank
 	     * @param team
@@ -206,26 +177,13 @@ import de.worketplace.team06.shared.bo.*;
 			
 		}	
 
-	    /*
-	     * Wird findAll benÃ¶tigt ? KlÃ¤ren ! 
-	     */
-	    /**
-	     * @return
-	     */
-	    public Vector<Team> findAll() {
-	        // TODO implement here
-	        return null;
-	    }
 
 		
 
 
-	    /**
-	     * @param orgaUnit 
-	     * @return
-	     */
+	 
 
-	  
+	/*
 	    public Vector<Team> findAll() {
 	        Connection con = DBConnection.connection();
 	        Vector<Team> result = new Vector<Team>();
@@ -251,7 +209,7 @@ import de.worketplace.team06.shared.bo.*;
 	    
 	    
 	    
-	   /** public Team insert (Team t) {
+	    public Team insert (Team t) {
 	        Connection con = DBConnection.connection();
 	        
 	        try {
@@ -272,9 +230,9 @@ import de.worketplace.team06.shared.bo.*;
 	    
 	    return t;
 	    } 
-	    */ 
 	    
-	   /** public Team update(Team t) {
+	    
+	    public Team update(Team t) {
 	        Connection con = DBConnection.connection();
 	        
 	        try{
@@ -288,9 +246,9 @@ import de.worketplace.team06.shared.bo.*;
 	        } 
 	        return t;
 	    }
-	    */
+	    
 
-	    /**public void delete(Team t) {
+	     public void delete(Team t) {
 	        Connection con = DBConnection.connection();
 	        
 	        try {
@@ -302,7 +260,7 @@ import de.worketplace.team06.shared.bo.*;
 	        	e.printStackTrace();
 	        }
 	    }
-	    */
+	    
 	    
 	    public Vector<Team> findByTeamName(String teamName) {
 			Connection con = DBConnection.connection();
@@ -317,7 +275,7 @@ import de.worketplace.team06.shared.bo.*;
 				while (rs.next()){
 					Team t = new Team();
 					t.setID(rs.getInt("id"));
-					t.setTeamName(rs.getString("teamName"));
+					t.setName(rs.getString("teamName"));
 	        	
 	        		result.add(t);	
 				}
@@ -327,7 +285,7 @@ import de.worketplace.team06.shared.bo.*;
 			
 			return result;
 		}
-	    
+	    */
 
 }
 	
