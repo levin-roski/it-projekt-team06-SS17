@@ -15,14 +15,12 @@ import de.worketplace.team06.shared.bo.*;
 	     * Default constructor
 	     */
 		private static TeamMapper teamMapper = null;
-<<<<<<< HEAD
-		
-=======
+
 		 /**
 		   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 		   * neue Instanzen dieser Klasse zu erzeugen.
 		   */
->>>>>>> refs/remotes/origin/master
+		
 		protected TeamMapper(){
 			 /**
 			   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
@@ -36,9 +34,7 @@ import de.worketplace.team06.shared.bo.*;
 			}
 			return teamMapper; 
 		}
-<<<<<<< HEAD
-	   
-=======
+
 	    /**
 	     * @param orgaUnit 
 	     * @return
@@ -141,9 +137,9 @@ import de.worketplace.team06.shared.bo.*;
 	    /**
 	     * @param orgaUnit
 	     */
->>>>>>> refs/remotes/origin/master
+
 	    public Team findById (int id){
-<<<<<<< HEAD
+
 	    	Connection con = DBConnection.connection();
 	    	
 	    	try{
@@ -160,12 +156,6 @@ import de.worketplace.team06.shared.bo.*;
 	    		e.printStackTrace();
 	    	}
 	    	return null ;
-=======
-	    	return null;
->>>>>>> refs/remotes/origin/master
-	    }
-<<<<<<< HEAD
-=======
 	    
 	    
 	    /**
@@ -204,7 +194,7 @@ import de.worketplace.team06.shared.bo.*;
 	     * @param orgaUnit 
 	     * @return
 	     */
->>>>>>> refs/remotes/origin/master
+
 	  
 	    public Vector<Team> findAll() {
 	        Connection con = DBConnection.connection();
@@ -231,7 +221,7 @@ import de.worketplace.team06.shared.bo.*;
 	    
 	    
 	    
-	    public Team insert (Team t) {
+	   /** public Team insert (Team t) {
 	        Connection con = DBConnection.connection();
 	        
 	        try {
@@ -252,8 +242,9 @@ import de.worketplace.team06.shared.bo.*;
 	    
 	    return t;
 	    } 
+	    */ 
 	    
-	    public Team update(Team t) {
+	   /** public Team update(Team t) {
 	        Connection con = DBConnection.connection();
 	        
 	        try{
@@ -267,8 +258,9 @@ import de.worketplace.team06.shared.bo.*;
 	        } 
 	        return t;
 	    }
+	    */
 
-	    public void delete(Team t) {
+	    /**public void delete(Team t) {
 	        Connection con = DBConnection.connection();
 	        
 	        try {
@@ -280,6 +272,7 @@ import de.worketplace.team06.shared.bo.*;
 	        	e.printStackTrace();
 	        }
 	    }
+	    */
 	    
 	    public Vector<Team> findByTeamName(String teamName) {
 			Connection con = DBConnection.connection();
