@@ -15,13 +15,11 @@ public class OrganisationMapper {
      */
 	private static OrganisationMapper organisationMapper = null;
 	 /**
-<<<<<<< HEAD
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
-=======
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
->>>>>>> refs/remotes/origin/master
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
+	
 	protected OrganisationMapper(){
 		
 	}
@@ -34,7 +32,7 @@ public class OrganisationMapper {
 	}
 
     
-	/**public Organisation findById (int id){
+	
     /**
      * @param orgaUnit 
      * @return
@@ -43,25 +41,6 @@ public class OrganisationMapper {
     public Organisation insert (Organisation o) {
 
     	Connection con = DBConnection.connection();
-
-    	try{
-    		Statement stmt= con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT id, street, zipcode, city, created FROM Organisation " + "WHERE id= " + id);
-    		
-    		if (rs.next()) {
-    			Organisation o = new Organisation();
-    			o.setID(rs.getInt("id"));
-    			o.setStreet(rs.getString("street"));
-    			o.setZipcode(rs.getInt("zipcode"));
-    			o.setCity(rs.getString("city"));
-    			o.setCreated(rs.getTimestamp("created"));
-    		}	
-    	}
-    	catch (SQLException e){
-    		e.printStackTrace();
-    	}
-    	return null;
-		
 		try {
 			Statement stmt = con.createStatement();
 			
@@ -201,14 +180,7 @@ public class OrganisationMapper {
 	}
 
 
-    
-    /*
-     * Wird findAll Ã¼berhaupt benÃ¶tigt ? KlÃ¤ren ! 
-     */
-    /**
-     * @return
-     */
-
+   /*
     public Vector<Organisation> findAll() {
         Connection con = DBConnection.connection();
         Vector<Organisation> result = new Vector<Organisation>();
@@ -236,10 +208,9 @@ public class OrganisationMapper {
         return result ;
     }
 
-<<<<<<< HEAD
     
     
-    /**public Organisation insert (Organisation o) {
+    public Organisation insert (Organisation o) {
         Connection con = DBConnection.connection();
         
         try {
@@ -266,9 +237,9 @@ public class OrganisationMapper {
     
     return o;
     } 
-    */
     
-    /**public Organisation update(Organisation o) {
+    
+    public Organisation update(Organisation o) {
         Connection con = DBConnection.connection();
         
         try{
@@ -286,9 +257,9 @@ public class OrganisationMapper {
         } 
         return o;
     }
-    */
+    
 
-    /**public void delete(Organisation o) {
+    public void delete(Organisation o) {
         Connection con = DBConnection.connection();
         
         try {
@@ -301,12 +272,7 @@ public class OrganisationMapper {
         }
     }
     */
-=======
-	
->>>>>>> refs/remotes/origin/master
 
-    /**
-     * @param orgaUnit 
-     * @return
-     */
+
+   
 }
