@@ -1,5 +1,6 @@
 package de.worketplace.team06.server;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Vector;
 
@@ -62,6 +63,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	private OrganisationMapper orgaMapper = null;
 	
 	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "OrganisationUnit" mit der Datenbank
+	 * abgleicht.
+	 */
+	private OrgaUnitMapper orgaUnitMapper = null;
+	
+	/**
 	 * Referenz auf den DatenbankMapper, der das BusinessObject "Partner" mit der Datenbank
 	 * abgleicht.
 	 */
@@ -113,6 +120,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.enrollMapper = EnrollmentMapper.enrollmentMapper();
 		this.marketMapper = MarketplaceMapper.marketplaceMapper();
 		this.orgaMapper = OrganisationMapper.organisationMapper();
+		this.orgaUnitMapper = OrgaUnitMapper.orgaUnitMapper();
 		this.partnerMapper = PartnerProfileMapper.partnerProfileMapper();
 		this.personMapper = PersonMapper.personMapper();
 		this.projectMapper = ProjectMapper.projecteMapper();
@@ -172,8 +180,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		a.setApplicationText(applicationText);
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
-		Date createDate = new Date();
-		a.setCreated(createDate);
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		a.setCreated(created);
 		
 		//Setzen einer vorlaueufigen ID
 		a.setID(1);
@@ -316,8 +324,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		e.setOrgaUnitID(orgaUnit.getID());
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
-		Date createDate = new Date();
-		e.setCreated(createDate);
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		e.setCreated(created);
 		
 		e.setStartDate(startDate);
 		e.setEndDate(endDate);
@@ -383,14 +391,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen eines Marktplatzes
 	 */
 	@Override
-	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException {
+	public Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException {
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
 		m.setDescription(description);
+		m.setOrgaUnitID(o.getID());
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
-		Date createDate = new Date();
-		m.setCreated(createDate);
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		m.setCreated(created);
 		
 		
 		//Setzen einer vorlaueufigen ID
@@ -404,16 +413,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Speichern von Änderungen eines Marktplatzes
 	 */
 	@Override
-	public void saveMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		this.marketMapper.update(marketplace);
+	public void saveMarketplace(Marketplace m) throws IllegalArgumentException {
+		this.marketMapper.update(m);
 	}
 
 	/**
 	 * Löschen eines Marktplatzes
 	 */
 	@Override
-	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void deleteMarketplace(Marketplace m) throws IllegalArgumentException {
+		this.marketMapper.delete(m);
 	}
 	
 	/**
@@ -427,11 +436,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 * Auslesen aller Marktplätze für eine Organisations-Einheit
+	 * Auslesen aller Marktplätze einer Organisations-Einheit
 	 */
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		return this.marketMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 
@@ -449,7 +457,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
 		
 		Organisation o = new Organisation();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		o.setCreated(created);
 		o.setDescription(description);
@@ -477,6 +485,25 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.orgaMapper.update(organisation);
 		
 	}
+	
+	/**
+	 * Löschen einer Organisation aus der Datenbank
+	 */
+	@Override
+	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException {
+		this.orgaMapper.delete(organisation);
+	}
+	
+	/**
+	 * Auslesen einer Organisation aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public Organisation getOrganisationByGoogleID(String googleID){
+
+		return this.orgaMapper.findByGoogleID(googleID);
+	}
+	
 	/*
 	 * ---------------------------------
 	 * -- METHODEN für OrgaUnit --
@@ -484,7 +511,22 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
+		
+		String type = orgaUnitMapper.findTypeByGoogleID(loginInfo.getGoogleId());
+        
+        switch(type){ 
+        case "Person": 
+        	Person p = this.personMapper.findByGoogleID(loginInfo.getGoogleId());
+        	return p;
+		case "Team": 
+        	Team t = this.teamMapper.findByGoogleID(loginInfo.getGoogleId());
+            return t;
+		case "Organisation": 
+        	Organisation o = this.orgaMapper.findByGoogleID(loginInfo.getGoogleId());
+        	return o; 
+        }
+		return null;
+		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
 	}
 	
 	
@@ -502,7 +544,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			throws IllegalArgumentException {
 		
 		PartnerProfile profile = new PartnerProfile();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		profile.setCreated(created);
 		profile.setLastedit(created);
@@ -525,7 +567,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			throws IllegalArgumentException {
 		
 		PartnerProfile profile = new PartnerProfile();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		profile.setCreated(created);
 		profile.setLastedit(created);
@@ -582,7 +624,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException {
 		Person p = new Person();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		p.setCreated(created);
 		p.setDescription(description);
@@ -613,6 +655,24 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void savePerson(Person person) throws IllegalArgumentException {
 		this.personMapper.update(person);
+	}
+	
+	/**
+	 * Löschen einer Person aus der Datenbank
+	 */
+	@Override
+	public void deletePerson(Person person) throws IllegalArgumentException {
+		this.personMapper.delete(person);
+	}
+	
+	/**
+	 * Auslesen einer Person aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public Person getPersonByGoogleID(String googleID){
+
+		return this.personMapper.findByGoogleID(googleID);
 	}
 
 	
@@ -812,7 +872,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
 		
 		Team t = new Team();
-		Date created = new Date();
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		t.setCreated(created);
 		t.setDescription(description);
@@ -837,6 +897,25 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void saveTeam(Team team) throws IllegalArgumentException {
 		this.teamMapper.update(team);
 	}
+	
+	/**
+	 * Löschen eines Teams aus der Datenbank
+	 */
+	@Override
+	public void deleteTeam(Team team) throws IllegalArgumentException {
+		this.teamMapper.delete(team);
+	}
+	
+	/**
+	 * Auslesen eines Teams aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public Team getTeamByGoogleID(String googleID){
+
+		return this.teamMapper.findByGoogleID(googleID);
+	}
+	
 
 	/*
 	 * ***************************************************************************

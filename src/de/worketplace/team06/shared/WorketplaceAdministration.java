@@ -305,7 +305,6 @@ public interface WorketplaceAdministration extends RemoteService {
 	 */
 	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
-	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
 
 	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
@@ -316,5 +315,13 @@ public interface WorketplaceAdministration extends RemoteService {
 	public Call getCallByID(int callID) throws IllegalArgumentException;
 	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
+
+	Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
+
+	void deletePerson(Person person) throws IllegalArgumentException;
+
+	void deleteTeam(Team team) throws IllegalArgumentException;
+
+	void deleteOrganisation(Organisation organisation) throws IllegalArgumentException;
 
 }

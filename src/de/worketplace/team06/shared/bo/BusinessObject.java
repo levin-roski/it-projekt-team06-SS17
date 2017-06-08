@@ -1,6 +1,7 @@
 package de.worketplace.team06.shared.bo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -39,7 +40,7 @@ public abstract class BusinessObject implements Serializable {
     /**
      * Datum zum festhalten, des Genierierungszeitpunkts einer Instanz 
      */
-    private Date created;
+    private Timestamp created;
     
     /**
      * Die eindeutige Identifikationsnummer einer Instanz dieser Klasse.
@@ -58,7 +59,7 @@ public abstract class BusinessObject implements Serializable {
      * Auslesen des Erstellungsdatums
      * @return created
      */
-    public Date getCreated() {
+    public Timestamp getCreated() {
         return this.created;
     }
 
@@ -94,7 +95,7 @@ public abstract class BusinessObject implements Serializable {
      * Setzen des Erstellungdatums
      * @param created
      */
-    public void setCreated(Date created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 

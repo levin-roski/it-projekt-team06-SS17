@@ -109,7 +109,7 @@ public interface WorketplaceAdministrationAsync {
 	
 	void getEnrollmentFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Enrollment>> callback);
 
-	void createMarketplace(String title, String description, AsyncCallback<Marketplace> callback);
+	
 
 	void getProjectsForLeader(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
 
@@ -120,6 +120,14 @@ public interface WorketplaceAdministrationAsync {
 	void getCallByID(int callID, AsyncCallback<Call> callback);
 
 	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
+
+	void createMarketplace(String title, String description, OrgaUnit o, AsyncCallback<Marketplace> callback);
+
+	void deletePerson(Person person, AsyncCallback<Void> callback);
+
+	void deleteTeam(Team team, AsyncCallback<Void> callback);
+
+	void deleteOrganisation(Organisation organisation, AsyncCallback<Void> callback);
 
 
 	

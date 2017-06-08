@@ -15,7 +15,14 @@ import de.worketplace.team06.shared.bo.*;
 	     * Default constructor
 	     */
 		private static TeamMapper teamMapper = null;
+<<<<<<< HEAD
 		
+=======
+		 /**
+		   * Gesch�tzter Konstruktor - verhindert die M�glichkeit, mit <code>new</code>
+		   * neue Instanzen dieser Klasse zu erzeugen.
+		   */
+>>>>>>> refs/remotes/origin/master
 		protected TeamMapper(){
 			 /**
 			   * Gesch�tzter Konstruktor - verhindert die M�glichkeit, mit <code>new</code>
@@ -29,8 +36,114 @@ import de.worketplace.team06.shared.bo.*;
 			}
 			return teamMapper; 
 		}
+<<<<<<< HEAD
 	   
+=======
+	    /**
+	     * @param orgaUnit 
+	     * @return
+	     * @throws  
+	     */
+	    public Team insert (Team t) {
+	    	Connection con = DBConnection.connection();
+			
+			
+			try {
+				
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");			
+				if (rs.next()) {
+					
+					t.setID(rs.getInt("maxid") + 1);
+			
+					con.setAutoCommit(false);
+					stmt = con.createStatement();
+					stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getGoogleID() +  "','" + t.getDescription() +  "','" + t.getType() + "')");
+					stmt.executeUpdate("INSERT INTO team (id, created, teamName, membercount) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getName() + "','" + t.getMembercount() + "')");
+					con.commit();
+				}
+			}
+			
+			catch (SQLException e2) {
+				try {
+					System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
+					con.rollback();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				  finally {
+					  e2.printStackTrace();
+				}	
+			}
+			return t;
+	    }
+	    
+		/**
+		 * Auslesen eines Teams mithilfe einer GoogleID.
+		 */
+		public Team findByGoogleID(String googleID) {
+			Connection con = DBConnection.connection();
+			
+			try {						
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN team ON orgaunit.id = team.id WHERE orgaunit.googleID = '" + googleID + "'");		
+				
+				if (rs.next()) {
+					Team t = new Team();
+					t.setID(rs.getInt("id"));
+					t.setCreated(rs.getTimestamp("created"));
+					t.setGoogleID(googleID);
+					t.setDescription(rs.getString("description"));
+					t.setPartnerProfileID(rs.getInt("partnerprofileID"));
+					t.setType(rs.getString("type"));
+					
+					t.setName(rs.getString("teamName"));
+					t.setMembercount(rs.getInt("membercount"));
+					return t;
+				}			
+			}
+			catch (SQLException e2) {
+				e2.printStackTrace();
+				return null;
+			}
+			return null;
+		}	
+
+	    /**
+	     * @param orgaUnit 
+	     * @return
+	     */
+		public void update(Team t) {
+			Connection con = DBConnection.connection();
+
+		    try {
+		    	Statement stmt = con.createStatement();
+		    	//Updaten eines Teams
+		    	stmt.executeUpdate("UPDATE orgaunit, team SET"
+		    						+ " orgaunit.description='" + t.getDescription() +
+		    						"', orgaunit.partnerprofileID= " + t.getPartnerProfileID() +
+		    						", team.teamName= '" + t.getName() +
+		    						"', team.membercount= " + t.getMembercount() + 
+		    						" WHERE orgaunit.id= " + t.getID() + 
+		    						" AND team.id= " + t.getID()); 	
+		    }
+		    catch (SQLException e2) {
+					  e2.printStackTrace();		
+		    }
+			
+		}
+		
+		/*
+		 * Wird findbyID benötigt ?  Klären! 
+		 */
+
+	    /**
+	     * @param orgaUnit
+	     */
+>>>>>>> refs/remotes/origin/master
 	    public Team findById (int id){
+<<<<<<< HEAD
 	    	Connection con = DBConnection.connection();
 	    	
 	    	try{
@@ -47,7 +160,51 @@ import de.worketplace.team06.shared.bo.*;
 	    		e.printStackTrace();
 	    	}
 	    	return null ;
+=======
+	    	return null;
+>>>>>>> refs/remotes/origin/master
 	    }
+<<<<<<< HEAD
+=======
+	    
+	    
+	    /**
+	     * Löschen eines Teams aus der Datenbank
+	     * @param team
+	     */
+	    public void delete(Team t) {
+			Connection con = DBConnection.connection();
+
+		    try {
+		    	Statement stmt = con.createStatement();
+		    	//Löschen des Teams aus der Tabelle orgaunit und Team
+		    	stmt.executeUpdate("DELETE orgaunit, team FROM orgaunit INNER JOIN team ON orgaunit.id = team.id WHERE orgaunit.id= " + t.getID());
+		    	
+		    }
+		    catch (SQLException e2) {
+					  e2.printStackTrace();		
+		    }
+			
+		}	
+
+	    /*
+	     * Wird findAll benötigt ? Klären ! 
+	     */
+	    /**
+	     * @return
+	     */
+	    public Vector<Team> findAll() {
+	        // TODO implement here
+	        return null;
+	    }
+
+
+
+	    /**
+	     * @param orgaUnit 
+	     * @return
+	     */
+>>>>>>> refs/remotes/origin/master
 	  
 	    public Vector<Team> findAll() {
 	        Connection con = DBConnection.connection();
