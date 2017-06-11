@@ -191,7 +191,7 @@ public class RatingMapper {
         }
     }
     
-    public findRatingByApplicationID(int applicationID){
+    public Rating findRatingByApplicationID(int applicationID){
     	/**
          * Verbindung zur Datenbank herstellen
          */
