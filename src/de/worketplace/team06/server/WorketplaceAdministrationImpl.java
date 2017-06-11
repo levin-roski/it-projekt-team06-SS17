@@ -773,7 +773,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 					for (int j = 0; allApps.capacity()>j; j++){
 						
 						//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
-						Rating rating = ratingMapper.findByAppID(allApps.get(i).getID());
+						Rating rating = ratingMapper.findRatingByApplicationID(allApps.get(i).getID());
 						if (rating != null){
 							
 							//Löschen der Bewertung
