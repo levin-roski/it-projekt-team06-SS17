@@ -103,5 +103,22 @@ public class OrgaUnitMapper {
 			return null;
 		}
 	}
+
+	public Integer findID(String googleID) {
+		
+		Connection con = DBConnection.connection();
+		int checkID;
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("Select id FROM orgaunit " + "WHERE googleid = " + googleID);
+			checkID = rs.getInt("id");
+			return checkID;
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+	}
 	
 }
