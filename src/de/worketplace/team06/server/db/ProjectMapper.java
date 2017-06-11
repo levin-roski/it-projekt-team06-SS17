@@ -9,11 +9,11 @@ import java.util.*;
 import de.worketplace.team06.shared.bo.Project;
 import de.worketplace.team06.shared.bo.Team;
 
- class ProjectMapper {
+ public class ProjectMapper {
 
 	private static ProjectMapper projectMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected ProjectMapper(){
@@ -111,7 +111,7 @@ import de.worketplace.team06.shared.bo.Team;
         	+ proj.getProjectOwnerID() + "','"
         	+ proj.getStartDate() + "','"
         	+ proj.getEndDate() + "','"
-        	+ proj.getMarketplaceID() + "','"         // noch hinzugefügt, damit das Projekt einem Marktplatz zugewiesen werden kann 
+        	+ proj.getMarketplaceID() + "','"         // noch hinzugefï¿½gt, damit das Projekt einem Marktplatz zugewiesen werden kann 
         	+ "')");
         	}
         }
