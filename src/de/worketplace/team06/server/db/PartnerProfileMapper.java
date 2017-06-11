@@ -62,7 +62,7 @@ public class PartnerProfileMapper {
         	Statement stmt = con.createStatement();
         	
         	ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile ORDER BY id");
-        	//noch vervollständigen 
+        	//noch vervollstï¿½ndigen 
  
         	if (rs.next()){
         		PartnerProfile part = new PartnerProfile();
@@ -138,5 +138,10 @@ public class PartnerProfileMapper {
         	e.printStackTrace();
         }
     }
+
+	public PartnerProfile findPartnerProfileByID(int partnerProfileID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
