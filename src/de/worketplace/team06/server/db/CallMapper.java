@@ -9,6 +9,11 @@ public class CallMapper {
 	
 	private static CallMapper callMapper = null;
 	
+	 /**
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
+	
 	protected CallMapper() {
 		
 	}
@@ -22,16 +27,24 @@ public class CallMapper {
 	}
 
 
+	/**
+	 * Ausschreibung aktualisieren
+	 * @param c
+	 * @return
+	 */
+	
 	public Call update(Call c) {
     	Connection con = DBConnection.connection();
     	
     	try {
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("UPDATE call SET"
-					+ " call.description='" + c.getDescription() +
-					"', call.title= " + c.getPartnerProfileID() +
+					+ " call.title='" + c.getTitle() +
+					"', call.description= " + c.getDescription() +
 					", call.deadline= '" + c.getDeadline() +
-					"', call.created= " + c.getCreated() + 
+					"', call.projectID= " + c.getProjectID() + 
+					"', call.projectLeaderID= " + c.getProjectLeaderID() +
+					"', call.partnerProfileID= " + c.getPartnerProfileID() +
 					" WHERE call.id= " + c.getID());
     	}
     	catch (SQLException e2) {
@@ -41,6 +54,11 @@ public class CallMapper {
 		
 	}
 
+	/**
+	 * Ausschreibung in der Datenbank anlegen 
+	 * @param c
+	 * @return
+	 */
 	
 	public Call insert(Call c) {
 		Connection con = DBConnection.connection();
@@ -55,9 +73,11 @@ public class CallMapper {
 		
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO call (id, created, deadline, description, title) " + "VALUES (" + c.getID() + ",'" 
-				+ c.getCreated() + "','" + c.getDeadline() +  "','" 
-				+ c.getDescription() +  "','" + c.getTitle() + "')");
+				stmt.executeUpdate("INSERT INTO call (id, title, description, deadline, projectID, projectLeaderID, partnerProfileID) " 
+				+ "VALUES (" + c.getID() + ",'" 
+				+ c.getTitle() + "','" + c.getDescription() +  "','" 
+				+ c.getDeadline() + "','" + c.getProjectID() +  "','" 
+				+ c.getProjectLeaderID() +  "','" + c.getPartnerProfileID() + "')");
 			}
 		}
 		
@@ -75,12 +95,47 @@ public class CallMapper {
 		return c;
 	}
 
+	/**
+	 * Auslesen aller Ausschreibungen, die in der Datenbank gespeichert sind
+	 * @return
+	 */
 	
-	public Vector<Call> findAll() {
+	public Call findAll() {
 		
-		return null;
+		Connection con = DBConnection.connection();
+        Vector<Call> result = new Vector<Call>();
+        
+        try{
+        	Statement stmt = con.createStatement();
+        	
+        	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
+        			+ "deadline, projectID, projectLeaderID, partnerProfileID,  "
+        	+ "FROM Call ");
+        	
+        	while (rs.next()){
+        		Call c = new Call();
+        		c.setID(rs.getInt("id"));
+        		c.setTitle(rs.getString("title"));
+        		c.setDescription(rs.getString("description"));
+        		c.setDeadline(rs.getDate("deadline"));
+        		c.setProjectID(rs.getInt("projectID"));
+        		c.setProjectLeaderID(rs.getInt("projectLeaderID"));
+        		c.setPartnerProfileID(rs.getInt("endPartnerProfileID"));
+        		
+        		result.addElement(c);
+        	}
+        }
+        catch (SQLException e){
+        	e.printStackTrace();
+        }
+        return null;
 	}
 
+	/**
+	 * Auslesen einer Ausschreibung mithilfe der ProjectID
+	 * @param id
+	 * @return
+	 */
 	
 	public Call findByProjectID(int id) {
 		Connection con = DBConnection.connection();
@@ -92,11 +147,12 @@ public class CallMapper {
 			if (rs.next()) {
 				Call c = new Call();
 				c.setID(rs.getInt("id"));
-				c.setCreated(rs.getTimestamp("created"));
-				c.setDeadline(rs.getDate("deadline"));
-				c.setDescription(rs.getString("description"));
-				c.setProjectID(rs.getInt("projectID"));
 				c.setTitle(rs.getString("title"));
+				c.setDescription(rs.getString("description"));
+				c.setDeadline(rs.getDate("deadline"));
+				c.setProjectID(rs.getInt("projectID"));
+				c.setProjectLeaderID(rs.getInt("ProjectLeaderID"));
+				c.setPartnerProfileID(rs.getInt("PartnerProfileID"));
 				
 				return c;
 			}			
@@ -108,6 +164,11 @@ public class CallMapper {
 		return null;
 	}
 	
+	/**
+	 * bestimmte Ausschreibung auslesen mithilfe CallID
+	 * @param callID
+	 * @return
+	 */
 	
 	public Call findByID(int callID) {
 		Connection con = DBConnection.connection();
@@ -119,10 +180,12 @@ public class CallMapper {
 			if (rs.next()) {
 				Call c = new Call();
 				c.setID(rs.getInt("id"));
-				c.setCreated(rs.getTimestamp("created"));
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(rs.getDate("deadline"));
+				c.setProjectID(rs.getInt("ProjectID"));
+				c.setProjectLeaderID(rs.getInt("ProjectLeaderID"));
+				c.setPartnerProfileID(rs.getInt("PartnerProfileID"));
 				
 				return c;
 			}			
@@ -134,6 +197,10 @@ public class CallMapper {
 		return null;
 	}
 
+	/**
+	 * löschen einer Ausschreibung aus der Datenbank 
+	 * @param c
+	 */
 	
 	public void delete(Call c) {
 		Connection con = DBConnection.connection();
