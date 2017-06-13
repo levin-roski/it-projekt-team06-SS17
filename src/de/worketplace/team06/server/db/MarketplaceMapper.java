@@ -156,6 +156,30 @@ public class MarketplaceMapper {
 					  e2.printStackTrace();		
 		    }
 			
+		}
+
+		public Marketplace findByID(int marketplaceID) {
+	    	Connection con = DBConnection.connection();
+			
+			try {						
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM marketplace WHERE id = " + marketplaceID);		
+				
+				if (rs.next()) {
+					Marketplace m = new Marketplace();
+					m.setID(rs.getInt("id"));
+					m.setCreated(rs.getTimestamp("created"));
+					m.setTitle(rs.getString("title"));
+					m.setDescription(rs.getString("description"));
+					
+					return m;
+				}			
+			}
+			catch (SQLException e2) {
+				e2.printStackTrace();
+				return null;
+			}
+			return null;
 		}	
 	
 

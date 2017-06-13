@@ -1,6 +1,8 @@
 package de.worketplace.team06.server;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
@@ -304,6 +306,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			}
 		}
 		
+		PartnerProfile pp = getPartnerProfileFor(call);
+		if (pp != null){
+			this.partnerMapper.delete(pp);
+		} else {
+			//TODO: Fehlermeldung
+		}
+			
 		//Löschen der jeweiligen Ausschreibung
 		this.callMapper.delete(call);
 		
@@ -333,6 +342,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Call getCallByID(int callID) throws IllegalArgumentException {
 		return this.callMapper.findByID(callID);
 	}
+	
 	
 	
 	/*
@@ -385,7 +395,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.enrollMapper.delete(enrollment);
 		
 	}
 	
@@ -467,6 +477,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		return this.marketMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
+	
+	/**
+	 * Auslesen eines Marktplatzes anhand der ID
+	 */
+	@Override
+	public Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException {
+		return this.marketMapper.findByID(marketplaceID);
+	}
 
 	
 	
@@ -478,21 +496,30 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Erstellen einer Organisation
+	 * 
+	 * @param name
+	 * @param description
+	 * @param street
+	 * @param zipcode
+	 * @param city
+	 * @param googleID
+	 * @return
+	 * @throws IllegalArgumentException
 	 */
-	public Organisation createOrganisation(String description, String googleID, String name, String street, int zipcode, String city) throws IllegalArgumentException {
+	public Organisation createOrganisation(String name, String description, String street, int zipcode, String city, String googleID) throws IllegalArgumentException {
 		
 		Organisation o = new Organisation();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		o.setCreated(created);
-		o.setDescription(description);
-		o.setGoogleID(googleID);
 		o.setType("Organisation");
 		
 		o.setName(name);
+		o.setDescription(description);
 		o.setStreet(street);
 		o.setZipcode(zipcode);
 		o.setCity(city);
+		o.setGoogleID(googleID);
 		
 		/**
 		 * Siehe createPerson
@@ -528,6 +555,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 
 		return this.orgaMapper.findByGoogleID(googleID);
 	}
+	
+	
 	
 	/*
 	 * ---------------------------------
@@ -571,6 +600,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return null;
 		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
 	}
+	
 	
 	
 	/*
@@ -659,19 +689,27 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * -------------------------
 	 */
 	
+	
 	/**
 	 * Methode zum erstellen einer Person. Es werden alle Attribute bis auf die partnerprofileID 
-	 *  gesetzt. Die Partnerprofile id kann zu einem spätzeren Zeitpunkt über die savePerson Methode
-	 *  gespeichert werden. 
+	 * gesetzt. Die Partnerprofile id kann zu einem spätzeren Zeitpunkt über die savePerson Methode
+	 * gespeichert werden. 
 	 *  
+	 * @param firstName
+	 * @param lastName
+	 * @param street
+	 * @param zipcode
+	 * @param city
+	 * @param description
+	 * @param googleID
+	 * @return
+	 * @throws IllegalArgumentException
 	 */
 	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException {
 		Person p = new Person();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		p.setCreated(created);
-		p.setDescription(description);
-		p.setGoogleID(googleID);
 		p.setType("Person");
 		
 		p.setFirstName(firstName);
@@ -679,6 +717,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setStreet(street);
 		p.setZipcode(zipcode);
 		p.setCity(city);
+		p.setGoogleID(googleID);
+		p.setDescription(description);
 		
 		
 		/**
@@ -809,6 +849,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 					}
 				}
 				
+				//Für den jeweiligen Call wird auch das PartnerProfile gelöscht
+				PartnerProfile pp = getPartnerProfileFor(c);
+				if (pp != null){
+					this.partnerMapper.delete(pp);
+				} else {
+					//TODO: Fehlermeldung
+				}
+				
 				//Löschen der jeweiligen Ausschreibung
 				this.callMapper.delete(c);
 				
@@ -844,6 +892,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 //						this.appMapper.delete(allApps.get(j));
 //													
 //					}
+//				}
+//		
+//				PartnerProfile pp = getPartnerProfileFor(call);
+//				if (pp != null){
+//					this.partnerMapper.delete(pp);
+//				} else {
+//					//TODO: Fehlermeldung
 //				}
 //				
 //				//Löschen der jeweiligen Ausschreibung
@@ -996,19 +1051,26 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Erstellen eines Teams
+	 * 
+	 * @param name
+	 * @param description
+	 * @param membercount
+	 * @param googleID
+	 * @return
+	 * @throws IllegalArgumentException
 	 */
-	public Team createTeam(String description, String googleID, String name, int membercount) throws IllegalArgumentException {
+	public Team createTeam(String name, String description, int membercount, String googleID) throws IllegalArgumentException {
 		
 		Team t = new Team();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		t.setCreated(created);
-		t.setDescription(description);
-		t.setGoogleID(googleID);
 		t.setType("Team");
 		
 		t.setName(name);
+		t.setDescription(description);
 		t.setMembercount(membercount);
+		t.setGoogleID(googleID);
 		
 		/**
 		 * Siehe createPerson
