@@ -33,20 +33,20 @@ import de.worketplace.team06.shared.bo.Team;
 		
 		try {
 			Statement stmt= con.createStatement();
-		  	ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectLeaderID, "
-		  			+ "projectOwnerID, startDate, endDate, marketplaceID "
-		  			+ "FROM project Where ID=" + id);
+		  	ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, "
+		  			+ "projectowner_id, start_date, end_date, marketplace_id "
+		  			+ "FROM project WHERE ID=" + projectID);
 		  	
 		  	if (rs.next()){
 		  		Project proj = new Project();
 		  		proj.setID(rs.getInt("id"));
 		  		proj.setTitle(rs.getString("title"));
 		  		proj.setDescription(rs.getString("description"));
-		  		proj.setProjectLeaderID(rs.getInt("projectLeaderID"));
-		  		proj.setProjectOwnerID(rs.getInt("projectOwner"));
-		  		proj.setStartDate(rs.getTimestamp("startDate"));
-		  		proj.setEndDate(rs.getTimestamp("endDate"));
-		  		proj.setMarketplaceID(rs.getInt("marketplaceID"));
+		  		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
+		  		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+		  		proj.setStartDate(rs.getTimestamp("start_date"));
+		  		proj.setEndDate(rs.getTimestamp("end_date"));
+		  		proj.setMarketplaceID(rs.getInt("marketplace_id"));
 		  		
 		  		return proj;
 		  	}
@@ -66,18 +66,18 @@ import de.worketplace.team06.shared.bo.Team;
         	Statement stmt = con.createStatement();
         	
         	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
-        			+ "projectLeaderID, projectOwnerID, startDate, endDate, created,  "
-        	+ "FROM Team ");
+        			+ "projectleader_id, projectowner_id, start_date, end_date, created,  "
+        	+ "FROM team ");
         	
         	while (rs.next()){
         		Project proj = new Project();
         		proj.setID(rs.getInt("id"));
         		proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
-        		proj.setProjectLeaderID(rs.getInt("projectLeaderID"));
-        		proj.setProjectOwnerID(rs.getInt("projectOwnerID"));
-        		proj.setStartDate(rs.getDate("startDate"));
-        		proj.setEndDate(rs.getDate("endDate"));
+        		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
+        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+        		proj.setStartDate(rs.getDate("start_date"));
+        		proj.setEndDate(rs.getDate("end_date"));
         		proj.setCreated(rs.getTimestamp("created"));
         		
         		result.addElement(proj);
@@ -102,7 +102,7 @@ import de.worketplace.team06.shared.bo.Team;
         	proj.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
         	
-        	stmt.executeUpdate("INSERT INTO project (id, title, description, projectLeaderID, projectOwnerID, startDate, endDate, marketplaceID) " 
+        	stmt.executeUpdate("INSERT INTO project (id, title, description, projectleader_id, projectowner_id, start_date, end_date, marketplace_id) " 
         	+ "VALUES (" 
         	+ proj.getID() + ", " 
         	+ proj.getTitle() + "','" 
@@ -131,10 +131,10 @@ import de.worketplace.team06.shared.bo.Team;
         	stmt.executeUpdate("UPDATE project " 
         	+ "SET title=\"" + proj.getTitle() + "\", " 
         	+ "SET description=\"" + proj.getDescription() + "\", "
-        	+ "SET projectLeaderID=\"" + proj.getProjectLeaderID() + "\", "
-        	+ "SET projectOwnerID=\"" + proj.getProjectOwnerID() + "\", "
-        	+ "SET startDate=\"" + proj.getStartDate() + "\", "
-        	+ "SET endDate=\"" + proj.getEndDate() + "\", "
+        	+ "SET projectleader_id=\"" + proj.getProjectLeaderID() + "\", "
+        	+ "SET projectowner_id=\"" + proj.getProjectOwnerID() + "\", "
+        	+ "SET start_date=\"" + proj.getStartDate() + "\", "
+        	+ "SET end_date=\"" + proj.getEndDate() + "\", "
         	+ "WHERE id=" + proj.getID());
         }
         
@@ -165,21 +165,21 @@ import de.worketplace.team06.shared.bo.Team;
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectLeaderID, projectOwnerID, "
-					+ "startDate, endDate, marketplaceID "
-					+ " FROM project WHERE marketplaceID ='" + marketplaceID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, projectowner_id, "
+					+ "start_date, end_date, marketplace_id "
+					+ " FROM project WHERE marketplace_id ='" + marketplaceID + "'ORDER BY id");
 			
 			while (rs.next()){
 				Project proj = new Project();
 				proj.setID(rs.getInt("id"));
 				proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
-        		proj.setProjectLeaderID(rs.getInt("projectLeaderID"));
-        		proj.setProjectOwnerID(rs.getInt("projectOwnerID"));
-        		proj.setStartDate(rs.getDate("startDate"));
-        		proj.setEndDate(rs.getDate("endDate"));
+        		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
+        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+        		proj.setStartDate(rs.getDate("start_date"));
+        		proj.setEndDate(rs.getDate("end_date"));
         		proj.setCreated(rs.getTimestamp("created"));
-        		proj.setMarketplaceID(rs.getInt("marektplaceID"));
+        		proj.setMarketplaceID(rs.getInt("marektplace_id"));
         		
         		result.add(proj);	
 			}
@@ -198,21 +198,21 @@ import de.worketplace.team06.shared.bo.Team;
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectLeaderID, projectOwnerID, "
-					+ "startDate, endDate, marketplaceID "
-					+ " FROM project WHERE projectOwnerID ='" + projectOwnerID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, projectowner_id, "
+					+ "start_date, end_date, marketplace_id "
+					+ " FROM project WHERE projectowner_id ='" + projectOwnerID + "'ORDER BY id");
 			
 			while (rs.next()){
 				Project proj = new Project();
 				proj.setID(rs.getInt("id"));
 				proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
-        		proj.setProjectLeaderID(rs.getInt("projectLeaderID"));
-        		proj.setProjectOwnerID(rs.getInt("projectOwnerID"));
-        		proj.setStartDate(rs.getDate("startDate"));
-        		proj.setEndDate(rs.getDate("endDate"));
+        		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
+        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+        		proj.setStartDate(rs.getDate("start_date"));
+        		proj.setEndDate(rs.getDate("end_date"));
         		proj.setCreated(rs.getTimestamp("created"));
-        		proj.setMarketplaceID(rs.getInt("marektplaceID"));
+        		proj.setMarketplaceID(rs.getInt("marektplace_id"));
         		
         		result.add(proj);	
 			}
@@ -231,21 +231,21 @@ import de.worketplace.team06.shared.bo.Team;
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectLeaderID, projectOwnerID, "
-					+ "startDate, endDate, marketplaceID "
-					+ " FROM project WHERE projectLeaderID ='" + projectLeaderID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, projectowner_id, "
+					+ "start_date, end_date, marketplace_id "
+					+ " FROM project WHERE projectleader_id ='" + projectLeaderID + "'ORDER BY id");
 			
 			while (rs.next()){
 				Project proj = new Project();
 				proj.setID(rs.getInt("id"));
 				proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
-        		proj.setProjectLeaderID(rs.getInt("projectLeaderID"));
-        		proj.setProjectOwnerID(rs.getInt("projectOwnerID"));
-        		proj.setStartDate(rs.getDate("startDate"));
-        		proj.setEndDate(rs.getDate("endDate"));
+        		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
+        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+        		proj.setStartDate(rs.getDate("start_date"));
+        		proj.setEndDate(rs.getDate("end_date"));
         		proj.setCreated(rs.getTimestamp("created"));
-        		proj.setMarketplaceID(rs.getInt("marektplaceID"));
+        		proj.setMarketplaceID(rs.getInt("marektplace_id"));
         		
         		result.add(proj);	
 			}
