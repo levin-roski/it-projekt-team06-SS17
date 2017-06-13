@@ -139,6 +139,7 @@ public class CallMapper {
 	
 	public Vector<Call> findByProjectID(int projectID) {
 		Connection con = DBConnection.connection();
+		Vector<Call> result = new Vector<Call>();
 		
 		try {						
 			Statement stmt = con.createStatement();
@@ -154,7 +155,7 @@ public class CallMapper {
 				c.setProjectLeaderID(rs.getInt("ProjectLeaderID"));
 				c.setPartnerProfileID(rs.getInt("PartnerProfileID"));
 				
-				return c;
+				result.addElement(c); ;
 			}			
 		}
 		catch (SQLException e2) {
