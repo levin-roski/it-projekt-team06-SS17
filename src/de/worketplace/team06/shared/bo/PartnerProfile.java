@@ -1,6 +1,7 @@
 package de.worketplace.team06.shared.bo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -22,40 +23,25 @@ public class PartnerProfile extends BusinessObject {
     /**
      * Variable für das Datum der letzten Änderung
      */
-    private Date lastEdit;
+    private Timestamp lastEdit;
     
-    private Vector<Property> propertyList;
     
     /**
      * Auslesen des Datums der letzten Änderung
      * @return lastEdit
      */
-    public Date getLastEdit() {
+    public Timestamp getLastEdit() {
         return this.lastEdit;
     }
 
-    /**
-     * Auslesen der Liste der Eigenschaften
-	 * @return propertyList
-	 */
-	public Vector<Property> getPropertyList() {
-		return propertyList;
-	}  
 	
     /**
      * Setzen des Datums der letzten Änderung 
      * @param lastEdit
      */
-    public void setLastEdit(Date lastEdit) {
+    public void setLastEdit(Timestamp lastEdit) {
         this.lastEdit = lastEdit;
     }
 
-    /**
-     * Setzen der Eigenschaften in einer Liste
-	 * @param propertyList
-	 */
-	public void setPropertyList(Vector<Property> propertyList) {
-		this.propertyList = propertyList;
-	}
   
 }
