@@ -6,12 +6,41 @@ import de.worketplace.team06.shared.bo.*;
 
 public class PersonMapper {
 	
+	/**
+     * Die Klasse PersonMapper wird nur einmal instantiiert. Man spricht hierbei
+     * von einem sogenannten <b>Singleton</b>.
+     * <p>
+     * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+     * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+     * einzige Instanz dieser Klasse.
+     * 
+     * @author Thies
+     * @author Theresa
+     */
+	
 	private static PersonMapper personMapper = null;
+	
+	/**
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   * 
+	   * @author Thies 
+	   */
 	
 	protected PersonMapper() {
 		
 	}
 
+	/**
+	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
+	 * dafür, dass nur eine einzige Instanz der PersonMapper-Klasse existiert. 
+	 * PersonMapper sollte nicht über den New-Operator, sondern über den 
+	 * Aufruf dieser statischen Methode.
+	 * 
+	 * @return PersonMapper
+	 * @author Thies
+	 * @author Theresa
+	 */
 	public static PersonMapper personMapper() {
 		if (personMapper == null) {
 			personMapper = new PersonMapper();
@@ -20,12 +49,26 @@ public class PersonMapper {
 		return personMapper;
 	}		
 	
+	/**
+	 * Einfuegen eines Team-Objektes in die Datenbank. Dabei wird auch der Primaerschluessel
+	 * des uebergebenen Objektes geprueft und ggf. berichtigt.
+	 * 
+	 * @param p
+	 * @return person
+	 * @author Thies
+	 * @author Theresa
+	 */
+	
 	public Person insert(Person p) {
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 			
+			/** 
+			 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
+			 *wird dann um 1 erhoet und an an p vergeben
+			*/
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");
 			
 			if (rs.next()) {
@@ -34,6 +77,9 @@ public class PersonMapper {
 				
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
+				/**
+				 * Einfuegeoption, damit das neue Person-Tupel in die Datenbank eingefuegt werden kann
+				 */
 				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) "
 									+ "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" 
 									+ p.getGoogleID() +  "','" + p.getDescription() +  "','"
@@ -64,7 +110,9 @@ public class PersonMapper {
 	}
 	
 	/**
-	 * Auslesen einer Person mithilfe einer GoogleID.
+	 * Diese Methode findet ein Person-Objekt, anhand der übergebenen Google-ID 
+	 * @param googleID
+	 * @return Person-Objekt 
 	 */
 	public Person findByGoogleID(String googleID) {
 		Connection con = DBConnection.connection();
@@ -99,7 +147,12 @@ public class PersonMapper {
 		return null;
 	}	
 	
-
+	/**
+     * Methode ermoeglicht, dass ein Person-Objekt in der Datenbank aktualisiert werden kann.
+     * 
+     * @param orgaUnit 
+     * @return Person
+     */
 	public void update(Person p) {
 		Connection con = DBConnection.connection();
 
@@ -124,7 +177,10 @@ public class PersonMapper {
 		
 	}	
 	
-	
+	/**
+     * Loeschen eines Person-Objektes aus der Datenbank
+     * @param person
+     */
 	
 	public void delete(Person p) {
 		Connection con = DBConnection.connection();
@@ -142,6 +198,13 @@ public class PersonMapper {
 		
 	}
 
+	/**
+	 * Suchen einer Person mit vorgegebener PersonID. Duch die Eindeutigkeit der ID, 
+	 * wird genau ein Objekt zurück gegeben. 
+	 * 
+	 * @param ouid
+	 * @return Person-Objekt, das der übergebenen ID entspricht
+	 */
 	public Person findByID(int ouid) {
 		Connection con = DBConnection.connection();
 		
@@ -149,7 +212,12 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
 											+ "ON orgaunit.id = person.id "
-											+ "WHERE orgaunit.id = " + ouid);		
+											+ "WHERE orgaunit.id = " + ouid);	
+			/**
+			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
+			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
+			 */
+			
 			
 			if (rs.next()) {
 				Person p = new Person();
