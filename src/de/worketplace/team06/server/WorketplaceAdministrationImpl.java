@@ -984,6 +984,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//Objekt in der Datenbank speichern
 		p = this.propertyMapper.insert(p);
 		
+		/*
+		 * Wenn ein Objekt vom Typ Property erzeugt wird muss auch der Timestamp lastEdit
+		 * im zugehörigen PartnerProfile aktualisiert werden. Da Partnerprofile aus mehreren 
+		 * Property Objekten besteht und sich somit auch der Zustand des Partnerprofils 
+		 * ändert. 
+		 */
 		Timestamp lastEdit = new Timestamp(System.currentTimeMillis());
 		partnerProfile.setLastEdit(lastEdit);
 		this.partnerMapper.update(partnerProfile);
@@ -996,6 +1002,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void saveProperty(Property property) throws IllegalArgumentException {
 		this.propertyMapper.update(property);
+		
+		/*
+		 * Wenn ein Objekt vom Typ Property geändert wird muss auch der Timestamp lastEdit
+		 * im zugehörigen PartnerProfile aktualisiert werden. Da Partnerprofile aus mehreren 
+		 * Property Objekten besteht und sich somit auch der Zustand des Partnerprofils
+		 * ändert. 
+		 */
 		Timestamp lastEdit = new Timestamp(System.currentTimeMillis());
 		PartnerProfile p = partnerMapper.findById(property.getPartnerProfileID());
 		p.setLastEdit(lastEdit);
