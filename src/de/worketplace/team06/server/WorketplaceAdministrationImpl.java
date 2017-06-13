@@ -612,7 +612,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen eines PartnerProfils
 	 */
 	@Override
-	public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList)
+	public PartnerProfile createPartnerProfileFor(Call call)
 			throws IllegalArgumentException {
 		
 		PartnerProfile profile = new PartnerProfile();
@@ -622,7 +622,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//TODO: *** WICHTIG *** created ist vom Typ TimeStamp, lastEdit jedoch Date. Hier muss eine Lösung gefunden werden.
 		//profile.setLastEdit(created);
 	
-		profile.setPropertyList(propertyList);
+		
 		profile.setID(1);
 		
 		profile = this.partnerMapper.insert(profile);
@@ -636,7 +636,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen eines PartnerProfils für eine Organisation
 	 */
 	@Override
-	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
+	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit)
 			throws IllegalArgumentException {
 		
 		PartnerProfile profile = new PartnerProfile();
@@ -646,13 +646,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//TODO: *** WICHTIG *** created ist vom Typ TimeStamp, lastEdit jedoch Date. Hier muss eine Lösung gefunden werden.
 		//profile.setLastEdit(created);
 	
-		profile.setPropertyList(propertyList);
 		profile.setID(1);
 		
 		profile = this.partnerMapper.insert(profile);
 		orgaunit.setPartnerProfileID(profile.getID()); 
-		//OrgaUnitMapper
-		//this..update(orgaunit);
+		this.orgaUnitMapper.update(orgaunit);
 		
 		return profile;
 	}

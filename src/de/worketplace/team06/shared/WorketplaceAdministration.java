@@ -79,9 +79,9 @@ public interface WorketplaceAdministration extends RemoteService {
      * eine Create-Methode erstellt werden. 
      * 
      */
-    public PartnerProfile createPartnerProfileFor(Call call, Vector<Property> propertyList) throws IllegalArgumentException;
+    public PartnerProfile createPartnerProfileFor(Call call) throws IllegalArgumentException;
     
-    public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
+    public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit)
 			throws IllegalArgumentException;
     
     /**

@@ -92,9 +92,9 @@ public interface WorketplaceAdministrationAsync {
 
 	void saveTeam(Team team, AsyncCallback<Void> callback);
 
-	void createPartnerProfileFor(Call call, Vector<Property> propertyList, AsyncCallback<PartnerProfile> callback);
+	void createPartnerProfileFor(Call call, AsyncCallback<PartnerProfile> callback);
 
-	void createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList,
+	void createPartnerProfileFor(OrgaUnit orgaunit,
 			AsyncCallback<PartnerProfile> callback);
 
 	void getPartnerProfileFor(Call call, AsyncCallback<PartnerProfile> callback);

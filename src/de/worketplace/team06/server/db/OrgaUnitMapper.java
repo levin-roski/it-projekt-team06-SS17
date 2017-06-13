@@ -121,4 +121,21 @@ public class OrgaUnitMapper {
 		}
 	}
 	
+	public void update(OrgaUnit ou) {
+		Connection con = DBConnection.connection();
+
+	    try {
+	    	Statement stmt = con.createStatement();
+	    	stmt.executeUpdate("UPDATE orgaunit, person SET"
+	    						+ " orgaunit.description='" + ou.getDescription() +
+	    						"', orgaunit.partnerprofileID= " + ou.getPartnerProfileID() +
+	    						" WHERE orgaunit.id= " + ou.getID()); 
+	    						
+	    }
+	    catch (SQLException e2) {
+				  e2.printStackTrace();		
+	    }
+		
+	}	
+	
 }
