@@ -205,8 +205,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
+		Rating rating = ratingMapper.findRatingByApplicationID(application.getID());
+		if (rating != null){
+			
+			//Löschen der Bewertung
+			this.ratingMapper.delete(rating);
+		}
 		
+		//Löschen der jeweiligen Bewerbung
+		this.appMapper.delete(application);
+
 	}
 	
 	/**
@@ -214,7 +223,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Application> getApplicationsFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Bewerbungen für eine OrganisationsEinheit aus der DB
 //		/**
 //		 * Variable für die OrgaUnit ID
@@ -230,7 +238,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Application> getApplicationsFor(Call call) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Bewerbungen für eine Ausschreibung aus der DB
 		return this.appMapper.findByCallID(call.getID());
 	}
@@ -257,7 +264,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		c.setProjectLeaderID(projectLeaderPerson.getID());
 		c.setPartnerProfileID(partnerProfile.getID());
 		
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		return this.callMapper.insert(c);
 	}
 
@@ -275,7 +281,31 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteCall(Call call) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		/*
+		 * Das Löschen der Objekte, welche in Beziehung zum zu löschenden Projekt stehen,
+		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
+		 */	
+		//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
+		Vector<Application> allApps = appMapper.findByCallID(call.getID());
+		if (allApps != null){
+			for (Application a : allApps){
+				
+				//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
+				Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
+				if (rating != null){
+					
+					//Löschen der Bewertung
+					this.ratingMapper.delete(rating);
+				}
+				
+				//Löschen der jeweiligen Bewerbung
+				this.appMapper.delete(a);
+											
+			}
+		}
+		
+		//Löschen der jeweiligen Ausschreibung
+		this.callMapper.delete(call);
 		
 	}
 
@@ -284,7 +314,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Call> getAllCalls() throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Calls aus der DB für ein Projekt
 		return this.callMapper.findAll();
 	}
@@ -294,7 +323,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Call> getCallsFor(Project project) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Calls aus der DB für ein Projekt
 		return this.callMapper.findByProjectID(project.getID());
 	}
@@ -340,7 +368,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//Setzen einer vorlauefigen ID
 		e.setID(1);
 		
-		//***WICHTIG*** @ DB-Team: Methode muss noch deklariert werden.
 		return this.enrollMapper.insert(e);
 	}
 
@@ -367,7 +394,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Enrollment> getEnrollmentFor(Project project) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		return this.enrollMapper.findByProjectID(project.getID());
 	}
 	
@@ -376,7 +402,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Enrollment> getEnrollmentFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		return this.enrollMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 	
@@ -431,8 +456,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		//Auslesen aller Marktpl�tze aus der DB
+		//Auslesen aller Marktplätze aus der DB
 		return this.marketMapper.findAll();
 	}
 
@@ -760,9 +784,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		/*
 		 * Das Löschen der Objekte, welche in Beziehung zum zu löschenden Projekt stehen,
 		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
-		 */
-		
-		
+		 */	
 		//Auslesen aller Ausschreibungen in einen Vektor anhand der ProjectID
 		Vector<Call> allCalls = callMapper.findByProjectID(pID);
 		if (allCalls != null){
@@ -849,9 +871,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals pr�fen...
-		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
-	
+		//Auslesen aller Projekte für eine OrgaUnit aus der DB
 		return this.projectMapper.findByProjectLeaderID(orgaUnit.getID());
 	}
 	
@@ -860,9 +880,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals pr�fen...
-		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
-	
+		//Auslesen aller Projekte für eine OrgaUnit aus der DB	
 		return this.projectMapper.findByProjectOwnerID(orgaUnit.getID());
 	}
 	
@@ -920,7 +938,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Property> getAllPropertiesFor(PartnerProfile partnerprofile) throws IllegalArgumentException {
-		//***WICHTIG*** Methode muss im Mapper angelegt werden!
 		return this.propertyMapper.findByPartnerProfileID(partnerprofile.getID());
 	}
 
@@ -965,7 +982,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.ratingMapper.delete(rating);
 		
 	}
 	
@@ -1033,6 +1050,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * ABSCHNITT, Ende: Methoden für Business Objekte
 	 * ***************************************************************************
 	 */
+	
 	
 	/*
 	 * ---------------------------
