@@ -123,6 +123,12 @@ public interface WorketplaceAdministrationAsync {
 
 	void createMarketplace(String title, String description, OrgaUnit o, AsyncCallback<Marketplace> callback);
 
+	void deletePerson(Person person, AsyncCallback<Void> callback);
+
+	void deleteTeam(Team team, AsyncCallback<Void> callback);
+
+	void deleteOrganisation(Organisation organisation, AsyncCallback<Void> callback);
+
 
 	
 }

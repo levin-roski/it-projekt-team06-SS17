@@ -63,6 +63,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	private OrganisationMapper orgaMapper = null;
 	
 	/**
+	 * Referenz auf den DatenbankMapper, der das BusinessObject "OrganisationUnit" mit der Datenbank
+	 * abgleicht.
+	 */
+	private OrgaUnitMapper orgaUnitMapper = null;
+	
+	/**
 	 * Referenz auf den DatenbankMapper, der das BusinessObject "Partner" mit der Datenbank
 	 * abgleicht.
 	 */
@@ -114,6 +120,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.enrollMapper = EnrollmentMapper.enrollmentMapper();
 		this.marketMapper = MarketplaceMapper.marketplaceMapper();
 		this.orgaMapper = OrganisationMapper.organisationMapper();
+		this.orgaUnitMapper = OrgaUnitMapper.orgaUnitMapper();
 		this.partnerMapper = PartnerProfileMapper.partnerProfileMapper();
 		this.personMapper = PersonMapper.personMapper();
 		this.projectMapper = ProjectMapper.projecteMapper();
@@ -135,12 +142,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public boolean checkExistence(String googleID) throws IllegalArgumentException {
-		OrgaUnit temp;
-		temp = orgaUnitMapper.findByGoogleID(googleID);
-		if (temp != null){
+		int temp = 0;
+		if (orgaUnitMapper.findID(googleID) != 0){
+			temp = orgaUnitMapper.findID(googleID);
 			return true;
 		}
 		else{
+			temp = -1;
 			return false;
 		}
 	}
@@ -414,8 +422,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Löschen eines Marktplatzes
 	 */
 	@Override
-	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void deleteMarketplace(Marketplace m) throws IllegalArgumentException {
+		this.marketMapper.delete(m);
 	}
 	
 	/**
@@ -429,11 +437,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 * Auslesen aller Marktplätze für eine Organisations-Einheit
+	 * Auslesen aller Marktplätze einer Organisations-Einheit
 	 */
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		return this.marketMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 
@@ -479,14 +486,66 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.orgaMapper.update(organisation);
 		
 	}
+	
+	/**
+	 * Löschen einer Organisation aus der Datenbank
+	 */
+	@Override
+	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException {
+		this.orgaMapper.delete(organisation);
+	}
+	
+	/**
+	 * Auslesen einer Organisation aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public Organisation getOrganisationByGoogleID(String googleID){
+
+		return this.orgaMapper.findByGoogleID(googleID);
+	}
+	
 	/*
 	 * ---------------------------------
 	 * -- METHODEN für OrgaUnit --
 	 * ---------------------------------
 	 */
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
+		
+		String type = orgaUnitMapper.findTypeByGoogleID(loginInfo.getGoogleId());
+        
+        switch(type){ 
+        case "Person": 
+        	Person p = this.personMapper.findByGoogleID(loginInfo.getGoogleId());
+        	return p;
+		case "Team": 
+        	Team t = this.teamMapper.findByGoogleID(loginInfo.getGoogleId());
+            return t;
+		case "Organisation": 
+        	Organisation o = this.orgaMapper.findByGoogleID(loginInfo.getGoogleId());
+        	return o; 
+        }
+		return null;
+		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
+	}
+	
+	public OrgaUnit getOrgaUnitById(int ouid) throws IllegalArgumentException {
+		
+		String type = orgaUnitMapper.findTypeByID(ouid);
+        
+        switch(type){ 
+        case "Person": 
+        	Person p = this.personMapper.findByID(ouid);
+        	return p;
+		case "Team": 
+        	Team t = this.teamMapper.findByID(ouid);
+            return t;
+		case "Organisation": 
+        	Organisation o = this.orgaMapper.findByID(ouid);
+        	return o; 
+        }
+		return null;
+		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
 	}
 	
 	
@@ -616,6 +675,24 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void savePerson(Person person) throws IllegalArgumentException {
 		this.personMapper.update(person);
 	}
+	
+	/**
+	 * Löschen einer Person aus der Datenbank
+	 */
+	@Override
+	public void deletePerson(Person person) throws IllegalArgumentException {
+		this.personMapper.delete(person);
+	}
+	
+	/**
+	 * Auslesen einer Person aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public Person getPersonByGoogleID(String googleID){
+
+		return this.personMapper.findByGoogleID(googleID);
+	}
 
 	
 	
@@ -662,7 +739,61 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		//TODO: Die Funkion muss definitiv nochmals überprüft werden.
+		
+		/*
+		 * Wir deklarieren die Variable pID und setzen die ProjectID als Value.
+		 * So muss die Methode getID nicht mehrfach aufgerufen werden.
+		 */
+		int pID = project.getID();
+		
+		/*
+		 * Löschen aller Beteiligungen anhand der Projekt ID.
+		 */
+		Vector<Enrollment> allEnrolls = enrollMapper.findByProjectID(pID);
+		if (allEnrolls != null){
+			for (int i = 0; allEnrolls.capacity()>i; i++){
+				this.enrollMapper.delete(allEnrolls.get(i));
+			}
+		}
+		
+		/*
+		 * Das Löschen der Objekte, welche in Beziehung zum zu löschenden Projekt stehen,
+		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
+		 */
+		
+		//Auslesen aller Ausschreibungen in einen Vektor anhand der ProjectID
+		Vector<Call> allCalls = callMapper.findByProjectID(pID);
+		if (allCalls != null){
+			for (int i = 0; allCalls.capacity()>i; i++){
+				
+				//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
+				Vector<Application> allApps = appMapper.findByCallID(allCalls.get(i).getID());
+				if (allApps != null){
+					for (int j = 0; allApps.capacity()>j; j++){
+						
+						//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
+						Rating rating = ratingMapper.findRatingByApplicationID(allApps.get(i).getID());
+						if (rating != null){
+							
+							//Löschen der Bewertung
+							this.ratingMapper.delete(rating);
+						}
+						
+						//Löschen der jeweiligen Bewerbung
+						this.appMapper.delete(allApps.get(j));
+													
+					}
+				}
+				
+				//Löschen der jeweiligen Ausschreibung
+				this.callMapper.delete(allCalls.get(i));
+				
+			}
+		}
+		
+		//Löschen des Projekts
+		this.projectMapper.delete(project);		
 		
 	}
 
@@ -839,6 +970,25 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void saveTeam(Team team) throws IllegalArgumentException {
 		this.teamMapper.update(team);
 	}
+	
+	/**
+	 * Löschen eines Teams aus der Datenbank
+	 */
+	@Override
+	public void deleteTeam(Team team) throws IllegalArgumentException {
+		this.teamMapper.delete(team);
+	}
+	
+	/**
+	 * Auslesen eines Teams aus der Datenbank
+	 * @param googleID
+	 * @return
+	 */
+	public Team getTeamByGoogleID(String googleID){
+
+		return this.teamMapper.findByGoogleID(googleID);
+	}
+	
 
 	/*
 	 * ***************************************************************************
