@@ -102,6 +102,7 @@ public class EditorNavigation extends VerticalPanel {
 			}
 		}));
 		menu.addItem(new MenuItem("Mehr", optionenMenu));
+		menu.addSeparator();
 
 
 		RootPanel.get("navigation").add(menu);
