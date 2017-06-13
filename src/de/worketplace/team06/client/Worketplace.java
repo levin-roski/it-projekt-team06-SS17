@@ -5,19 +5,16 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.gui.EditorNavigation;
+import de.worketplace.team06.client.gui.MarketplaceForm;
 import de.worketplace.team06.client.gui.SearchMarketplace;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
-import de.worketplace.team06.shared.bo.OrgaUnit;
-import de.worketplace.team06.shared.bo.Person;
 import de.worketplace.team06.shared.bo.LoginInfo;
 
 /**
@@ -33,10 +30,12 @@ public class Worketplace implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		final EditorNavigation navigationMenu = new EditorNavigation();
-		navigationMenu.loadNavigation();
+		navigationMenu.load();
+		final MarketplaceForm form = new MarketplaceForm();
+		form.load(null);
 
-		final SearchMarketplace searchMarketplace = new SearchMarketplace();
-		searchMarketplace.load();
+//		final SearchMarketplace searchMarketplace = new SearchMarketplace();
+//		searchMarketplace.load();
 		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
