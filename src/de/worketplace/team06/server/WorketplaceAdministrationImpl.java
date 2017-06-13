@@ -128,6 +128,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.ratingMapper = RatingMapper.ratingMapper();
 		this.teamMapper = TeamMapper.teamMapper();
 		
+		
 	}
 	
 	public Person getTestUnit() throws IllegalArgumentException {
@@ -293,7 +294,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Call> getCallsFor(Project project) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		//Auslesen aller Calls aus der DB für ein Projekt
 		return this.callMapper.findByProjectID(project.getID());
 	}
@@ -810,8 +811,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals prüfen...
-		//Auslesen aller Projekte für eine OrgaUnit aus der DB
+		//***WICHTIG*** Nochmals pr�fen...
+		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
 	
 		return this.projectMapper.findByProjectLeaderID(orgaUnit.getID());
 	}
@@ -821,8 +822,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals prüfen...
-		//Auslesen aller Projekte für eine OrgaUnit aus der DB
+		//***WICHTIG*** Nochmals pr�fen...
+		//Auslesen aller Projekte f�r eine OrgaUnit aus der DB
 	
 		return this.projectMapper.findByProjectOwnerID(orgaUnit.getID());
 	}
