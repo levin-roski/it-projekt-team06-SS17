@@ -293,7 +293,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Call> getCallsFor(Project project) throws IllegalArgumentException {
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
+		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden
 		//Auslesen aller Calls aus der DB für ein Projekt
 		return this.callMapper.findByProjectID(project.getID());
 	}
