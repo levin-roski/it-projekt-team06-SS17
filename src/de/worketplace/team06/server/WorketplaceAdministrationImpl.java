@@ -762,18 +762,19 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
 		 */
 		
+		
 		//Auslesen aller Ausschreibungen in einen Vektor anhand der ProjectID
 		Vector<Call> allCalls = callMapper.findByProjectID(pID);
 		if (allCalls != null){
-			for (int i = 0; allCalls.capacity()>i; i++){
+			for (Call c : allCalls){
 				
 				//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
-				Vector<Application> allApps = appMapper.findByCallID(allCalls.get(i).getID());
+				Vector<Application> allApps = appMapper.findByCallID(c.getID());
 				if (allApps != null){
-					for (int j = 0; allApps.capacity()>j; j++){
+					for (Application a : allApps){
 						
 						//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
-						Rating rating = ratingMapper.findRatingByApplicationID(allApps.get(i).getID());
+						Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
 						if (rating != null){
 							
 							//Löschen der Bewertung
@@ -781,19 +782,56 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 						}
 						
 						//Löschen der jeweiligen Bewerbung
-						this.appMapper.delete(allApps.get(j));
+						this.appMapper.delete(a);
 													
 					}
 				}
 				
 				//Löschen der jeweiligen Ausschreibung
-				this.callMapper.delete(allCalls.get(i));
+				this.callMapper.delete(c);
 				
 			}
 		}
 		
 		//Löschen des Projekts
-		this.projectMapper.delete(project);		
+		this.projectMapper.delete(project);	
+		
+		
+//		/*
+//		 * ALTE VARIANTE
+//		 */
+//		//Auslesen aller Ausschreibungen in einen Vektor anhand der ProjectID
+//		Vector<Call> allCalls = callMapper.findByProjectID(pID);
+//		if (allCalls != null){
+//			for (int i = 0; allCalls.capacity()>i; i++){
+//				
+//				//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
+//				Vector<Application> allApps = appMapper.findByCallID(allCalls.get(i).getID());
+//				if (allApps != null){
+//					for (int j = 0; allApps.capacity()>j; j++){
+//						
+//						//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
+//						Rating rating = ratingMapper.findRatingByApplicationID(allApps.get(i).getID());
+//						if (rating != null){
+//							
+//							//Löschen der Bewertung
+//							this.ratingMapper.delete(rating);
+//						}
+//						
+//						//Löschen der jeweiligen Bewerbung
+//						this.appMapper.delete(allApps.get(j));
+//													
+//					}
+//				}
+//				
+//				//Löschen der jeweiligen Ausschreibung
+//				this.callMapper.delete(allCalls.get(i));
+//				
+//			}
+//		}
+//		
+//		//Löschen des Projekts
+//		this.projectMapper.delete(project);		
 		
 	}
 
