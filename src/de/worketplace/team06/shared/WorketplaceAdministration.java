@@ -324,4 +324,6 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	void deleteOrganisation(Organisation organisation) throws IllegalArgumentException;
 
+	Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException;
+
 }
