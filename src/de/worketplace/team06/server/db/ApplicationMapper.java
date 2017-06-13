@@ -21,6 +21,7 @@ public class ApplicationMapper {
 		return applicationMapper;
 	}
 
+	// kommentare einfügen
 	
 	public Application findByID(int id) {
 		Connection con = DBConnection.connection();
