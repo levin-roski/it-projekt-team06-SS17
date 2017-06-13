@@ -15,7 +15,7 @@ public class RatingMapper {
 
 	private static RatingMapper ratingMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected RatingMapper(){
@@ -105,7 +105,7 @@ public class RatingMapper {
     }
     
     /**
-     * Hinzufügen eines Rating-Objektes in der Datenbank
+     * Hinzufï¿½gen eines Rating-Objektes in der Datenbank
      * @param r
      * @return
      */
@@ -171,7 +171,7 @@ public class RatingMapper {
     }
     
     /**
-     * Löschen eines Rating-Objektes in der Datenbank 
+     * Lï¿½schen eines Rating-Objektes in der Datenbank 
      * @param r
      */
 

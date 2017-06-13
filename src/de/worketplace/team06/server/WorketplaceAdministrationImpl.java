@@ -739,7 +739,61 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		//TODO: Die Funkion muss definitiv nochmals überprüft werden.
+		
+		/*
+		 * Wir deklarieren die Variable pID und setzen die ProjectID als Value.
+		 * So muss die Methode getID nicht mehrfach aufgerufen werden.
+		 */
+		int pID = project.getID();
+		
+		/*
+		 * Löschen aller Beteiligungen anhand der Projekt ID.
+		 */
+		Vector<Enrollment> allEnrolls = enrollMapper.findByProjectID(pID);
+		if (allEnrolls != null){
+			for (int i = 0; allEnrolls.capacity()>i; i++){
+				this.enrollMapper.delete(allEnrolls.get(i));
+			}
+		}
+		
+		/*
+		 * Das Löschen der Objekte, welche in Beziehung zum zu löschenden Projekt stehen,
+		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
+		 */
+		
+		//Auslesen aller Ausschreibungen in einen Vektor anhand der ProjectID
+		Vector<Call> allCalls = callMapper.findByProjectID(pID);
+		if (allCalls != null){
+			for (int i = 0; allCalls.capacity()>i; i++){
+				
+				//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
+				Vector<Application> allApps = appMapper.findByCallID(allCalls.get(i).getID());
+				if (allApps != null){
+					for (int j = 0; allApps.capacity()>j; j++){
+						
+						//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
+						Rating rating = ratingMapper.findRatingByApplicationID(allApps.get(i).getID());
+						if (rating != null){
+							
+							//Löschen der Bewertung
+							this.ratingMapper.delete(rating);
+						}
+						
+						//Löschen der jeweiligen Bewerbung
+						this.appMapper.delete(allApps.get(j));
+													
+					}
+				}
+				
+				//Löschen der jeweiligen Ausschreibung
+				this.callMapper.delete(allCalls.get(i));
+				
+			}
+		}
+		
+		//Löschen des Projekts
+		this.projectMapper.delete(project);		
 		
 	}
 
