@@ -20,7 +20,7 @@ import de.worketplace.team06.shared.bo.Team;
 		
 	}
 	
-	public static ProjectMapper projecteMapper(){
+	public static ProjectMapper projectMapper(){
 		if (projectMapper == null){
 			projectMapper = new ProjectMapper();
 		}
