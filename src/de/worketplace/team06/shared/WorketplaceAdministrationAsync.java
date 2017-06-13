@@ -129,6 +129,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void deleteOrganisation(Organisation organisation, AsyncCallback<Void> callback);
 
+	void getMarketplaceByID(int marketplaceID, AsyncCallback<Marketplace> callback);
+
 
 	
 }

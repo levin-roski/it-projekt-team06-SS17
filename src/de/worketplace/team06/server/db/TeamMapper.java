@@ -12,21 +12,39 @@ import de.worketplace.team06.shared.bo.*;
 	 */
 	public class TeamMapper {
 	    /**
-	     * Default constructor
+	     * Die Klasse TeamMapper wird nur einmal instantiiert. Man spricht hierbei
+	     * von einem sogenannten <b>Singleton</b>.
+	     * <p>
+	     * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	     * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	     * einzige Instanz dieser Klasse.
+	     * 
+	     * @author Thies
+	     * @author Theresa
 	     */
 		private static TeamMapper teamMapper = null;
 
 		 /**
-		   * Gesch�tzter Konstruktor - verhindert die M�glichkeit, mit <code>new</code>
+		   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 		   * neue Instanzen dieser Klasse zu erzeugen.
+		   * 
+		   * @author Thies 
 		   */
 		
 		protected TeamMapper(){
-			 /**
-			   * Gesch�tzter Konstruktor - verhindert die M�glichkeit, mit <code>new</code>
-			   * neue Instanzen dieser Klasse zu erzeugen.
-			   */
+
 		}
+		
+		/**
+		 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
+		 * dafür, dass nur eine einzige Instanz der TeamMapper-Klasse existiert. 
+		 * TeamMapper sollte nicht über den New-Operator, sondern über den 
+		 * Aufruf dieser statischen Methode.
+		 * 
+		 * @return TeamMapper
+		 * @author Thies
+		 * @author Theresa
+		 */
 		
 		public static TeamMapper teamMapper(){
 			if (teamMapper == null){
@@ -36,9 +54,14 @@ import de.worketplace.team06.shared.bo.*;
 		}
 
 	    /**
-	     * @param orgaUnit 
-	     * @return
+	     * Einfuegen eines Team-Objektes in die Datenbank. Dabei wird auch der Primaerschluessel
+	     * des uebergebenen Objektes geprueft und ggf. berichtigt.
+	     * 
+	     * @param orgaUnit
+	     * @return Team 
 	     * @throws  
+	     * @author Thies 
+	     * @author Theresa
 	     */
 	    public Team insert (Team t) {
 	    	Connection con = DBConnection.connection();
@@ -47,6 +70,11 @@ import de.worketplace.team06.shared.bo.*;
 			try {
 				
 				Statement stmt = con.createStatement();
+				
+				/** 
+				 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
+				 *wird dann um 1 erhoet und an an t vergeben
+				*/
 				ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");			
 				if (rs.next()) {
 					
@@ -54,6 +82,10 @@ import de.worketplace.team06.shared.bo.*;
 			
 					con.setAutoCommit(false);
 					stmt = con.createStatement();
+					
+					/**
+					 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
+					 */
 					stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getGoogleID() +  "','" + t.getDescription() +  "','" + t.getType() + "')");
 					stmt.executeUpdate("INSERT INTO team (id, created, teamName, membercount) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getName() + "','" + t.getMembercount() + "')");
 					con.commit();
@@ -76,8 +108,12 @@ import de.worketplace.team06.shared.bo.*;
 	    }
 	    
 		/**
-		 * Auslesen eines Teams mithilfe einer GoogleID.
+		 * Diese Methode findet ein Team-Objekt, anhand der übergebenen Google-ID 
+		 * 
+		 * @param googleID 
+		 * @return Team-Objekt 
 		 */
+	    
 		public Team findByGoogleID(String googleID) {
 			Connection con = DBConnection.connection();
 			
@@ -107,8 +143,10 @@ import de.worketplace.team06.shared.bo.*;
 		}	
 
 	    /**
+	     * Methode ermoeglicht, dass ein Team-Objekt in der Datenbank aktualisiert werden kann.
+	     * 
 	     * @param orgaUnit 
-	     * @return
+	     * @return Team
 	     */
 		public void update(Team t) {
 			Connection con = DBConnection.connection();
@@ -129,13 +167,29 @@ import de.worketplace.team06.shared.bo.*;
 		    }
 			
 		}
+	
+		/**
+		 * Suchen eines Teams mit vorgegebener TeamID. Duch die Eindeutigkeit der ID, 
+		 * wird genau ein Objekt zurück gegeben. 
+		 * 
+		 * @param ouid
+		 * @return Team-Objekt, das der übergebenen ID entspricht
+		 */
 		
 		public Team findByID(int ouid) {
 			Connection con = DBConnection.connection();
 			
 			try {						
+				// leeres SQL-Statement anlegen 
 				Statement stmt = con.createStatement();
+				
+				// Statement ausuellen und als Query an die DB schicken
 				ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN team ON orgaunit.id = team.id WHERE orgaunit.id = " + ouid);		
+				
+				/**
+				 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
+				 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
+				 */
 				
 				if (rs.next()) {
 					Team t = new Team();
@@ -159,7 +213,7 @@ import de.worketplace.team06.shared.bo.*;
 		}	    
 
 	    /**
-	     * Löschen eines Teams aus der Datenbank
+	     * Loeschen eines Team-Objektes aus der Datenbank
 	     * @param team
 	     */
 	    public void delete(Team t) {
@@ -167,7 +221,7 @@ import de.worketplace.team06.shared.bo.*;
 
 		    try {
 		    	Statement stmt = con.createStatement();
-		    	//Löschen des Teams aus der Tabelle orgaunit und Team
+		    	//Loeschen des Teams aus der Tabelle orgaunit und Team
 		    	stmt.executeUpdate("DELETE orgaunit, team FROM orgaunit INNER JOIN team ON orgaunit.id = team.id WHERE orgaunit.id= " + t.getID());
 		    	
 		    }

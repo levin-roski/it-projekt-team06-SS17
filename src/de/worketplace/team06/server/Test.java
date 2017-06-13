@@ -1,14 +1,12 @@
 package de.worketplace.team06.server;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-import de.worketplace.team06.shared.bo.Marketplace;
-import de.worketplace.team06.shared.bo.OrgaUnit;
-import de.worketplace.team06.shared.bo.Organisation;
-import de.worketplace.team06.shared.bo.Person;
-import de.worketplace.team06.shared.bo.Team;
+import de.worketplace.team06.shared.bo.*;
 
 public class Test {
 
@@ -19,19 +17,21 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 	
+		
+		
+		
 
 //		testOfCreateOrganisation(admin);
-      testOfSaveOrganisation(admin);		
-		
 //		testOfCreateTeam(admin);
-//		testOfSaveTeam(admin);
+//		testOfCreatePerson(admin);	
+//		testOfCreateMarketplace(admin);
 		
-//		testOfCreatePerson(admin);
+//      testOfSaveOrganisation(admin);		
+//		testOfSaveTeam(admin);
 //		testOfSavePerson(admin);
 //		testOfDeletePerson(admin);
 //		testOfGetPerson(admin);
 		
-//		testOfCreateMarketplace(admin);
 //		testOfGetAllMarketplaces(admin);
 //		testOfGetMarketplaceFor(admin);
 //		testOfSaveMarketplace(admin);
@@ -57,6 +57,89 @@ public class Test {
 	}
 	
 	
+	public static void fillDatabaseWithExamples (WorketplaceAdministrationImpl admin) {
+		
+		/*
+		 * Unternehmen generieren
+		 * Name, Beschreibung, Straße, PLZ, Stadt, GoogleID
+		 */
+		admin.createOrganisation("1Unternehmen", "1 Nice Unternehmen vong Niceigkeit her", "Stadtstrand 1", 13337, "Stutututtgart", "G1000");
+		admin.createOrganisation("CoolStrich", "Malerei", "Hansestraße 4", 87765, "Hamburg", "G1001");
+		admin.createOrganisation("Mediakram", "Medienagentur", "Friedrich-Schiller-Straße 34a", 70174, "Stuttgart", "G1003");
+		
+		/*
+		 * Teams generieren
+		 * Name, Beschreibung, Mitgliederzahl, GoogleID
+		 */
+		admin.createTeam("Superknechte", "Ist wohl ein Team", 1000, "G2000");
+		admin.createTeam("Glücksspechte", "Mehrfaches Glück bedeutet Können", 500, "G2001");
+		admin.createTeam("Team Alpha", "Alphasaurier", 30, "G2002");
+		
+		/*
+		 * Personen generieren
+		 * Vorname, Nachname, Straße, PLZ, Stadt, Beschreibung, GoogleID
+		 */
+		admin.createPerson("Hans", "Mayer", "Lagistraße 5", 86637, "Augsburg", "Ein Mensch", "G3000");
+		admin.createPerson("Thomas", "Mueller", "Schuttstr 6", 38299, "Langweid", "Auch ein Mensch", "G3001");
+		admin.createPerson("Jesus", "Christus", "Wüstenweg 4", 12345, "Jerusalem", "Kein Mensch, Gott.", "G3002");
+		
+		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		OrgaUnit p1 = admin.getPersonByGoogleID("G3000");
+		admin.createMarketplace("Marktplatz Blau", "Dieser Marktplatz ist für Blaue", p1);
+		OrgaUnit u1 = admin.getOrganisationByGoogleID("G1001");
+		admin.createMarketplace("Marktplatz Rot", "Dieser Marktplatz ist für Rote", u1);
+		
+		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		Marketplace m1 = admin.getMarketplaceByID(1);
+		Person p2 = admin.getPersonByGoogleID("G3001");
+		Date startdate = new Date();
+		Date enddate = new Date();
+		
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		String date = sdf.format("yyyy-MM-dd");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			startdate = sdf.parse("2017-06-11");
+			enddate = sdf.parse("2017-08-02");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		/*
+		 * Projekte generieren
+		 */
+		admin.createProject(m1, "Testprojekt", "Ein Projekt zu Testzwecken", p2, u1, startdate, enddate);
+		admin.createProject(m1, "Testprojekt 2", "Ein neues Projekt", p2, u1, startdate, enddate);
+		
+		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		Project pro1 = admin.getProjectByID(1);
+		Project pro2 = admin.getProjectByID(2);
+		//admin.createCall(pro1, p2, , title, description, deadline)
+		
+		
+		
+		
+	}
+	
 
 	/*
 	 * Organisation
@@ -64,8 +147,8 @@ public class Test {
 	 */
 	
 	public static void testOfCreateOrganisation(WorketplaceAdministrationImpl admin) {
-		admin.createOrganisation("1 Nice Unternehmen vong Niceigkeit her", "rofliksdeh1337lol", "1Unternehmen", "Stadtstrand 1", 13337, "Stutututtgart");
-		admin.createOrganisation("Malerei", "Gmal234", "CoolStrich", "Hansestraße 4", 87765, "Hamburg");
+		admin.createOrganisation("1Unternehmen", "1 Nice Unternehmen vong Niceigkeit her", "Stadtstrand 1", 13337, "Stutututtgart", "rofliksdeh1337lol");
+		admin.createOrganisation("CoolStrich", "Malerei", "Hansestraße 4", 87765, "Hamburg", "Gmal234");
 	}
 	
 	private static void testOfSaveOrganisation(WorketplaceAdministrationImpl admin) {
@@ -91,8 +174,8 @@ public class Test {
 	 */
 	
 	public static void testOfCreateTeam(WorketplaceAdministrationImpl admin) {
-		admin.createTeam("Ist wohl ein Team", "G2349jf", "Superknechte", 1000);
-		admin.createTeam("ahjooo", "Gagasdg234", "Glücksspechte", 500);
+		admin.createTeam("Superknechte", "Ist wohl ein Team", 1000, "G2349jf");
+		admin.createTeam("Glücksspechte", "ahjooo", 500, "Gagasdg234");
 		
 	}
 

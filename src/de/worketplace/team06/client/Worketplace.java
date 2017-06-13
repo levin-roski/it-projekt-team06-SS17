@@ -10,9 +10,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.client.ClientsideSettings;
+<<<<<<< HEAD
 import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MarketplaceForm;
 import de.worketplace.team06.client.gui.SearchMarketplace;
+=======
+>>>>>>> refs/heads/master
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.bo.LoginInfo;
@@ -29,6 +32,7 @@ public class Worketplace implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+<<<<<<< HEAD
 		final EditorNavigation navigationMenu = new EditorNavigation();
 		navigationMenu.load();
 		final MarketplaceForm form = new MarketplaceForm();
@@ -37,19 +41,21 @@ public class Worketplace implements EntryPoint {
 //		final SearchMarketplace searchMarketplace = new SearchMarketplace();
 //		searchMarketplace.load();
 		
+=======
+>>>>>>> refs/heads/master
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
-				console.log(Level.SEVERE, "Login Anfrage konnte nicht ausgefï¿½hrt werden");
-			}			
-			
+				console.log(Level.SEVERE, "Login Anfrage konnte nicht ausgeführt werden");
+			}
+
 			public void onSuccess(LoginInfo result) {
 				loginInfo = result;
 				if (loginInfo.isLoggedIn()) {
 					worketplaceAdministration.checkExistence(loginInfo.getGoogleId(), new CheckExistenceLoginInfoCallback());
 				} else {
 //					TODO Login aufrufen (nicht eingeloggt)
-//					Window.alert("Login aufrufen");
+					Window.alert("Login aufrufen");
 				}
 			}
 		});
@@ -58,16 +64,16 @@ public class Worketplace implements EntryPoint {
 	
 	class CheckExistenceLoginInfoCallback implements AsyncCallback<Boolean> {
 		public void onFailure(Throwable caught) {
-//			TODO Fehlermeldung ï¿½berlegen
+//			TODO Fehlermeldung überlegen
 		}
 		
 		public void onSuccess(Boolean userStatus) {
 			if (userStatus) {
 //				TODO Editor initialisieren mit z.B. loadEditor
 			} else {
-				Window.alert( "Fï¿½r diese Email existiert kein Nutzer." + " Bitte erstelle ein neues Nutzerporofil");
+				Window.alert( "Für diese Email existiert kein Nutzer." + " Bitte erstelle ein neues Nutzerporofil");
 
-//				TODO Usererstellung hier ausfï¿½hren, bzw. Formular fï¿½r Usereinstellungen aufrufen
+//				TODO Usererstellung hier ausführen, bzw. Formular für Usereinstellungen aufrufen
 			}
 		}
 	}
