@@ -980,9 +980,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		//Setzen einer vorläufigen ID
 		p.setID(1);
-		
+	
 		//Objekt in der Datenbank speichern
-		return this.propertyMapper.insert(p);
+		p = this.propertyMapper.insert(p);
+		
+		Timestamp lastEdit = new Timestamp(System.currentTimeMillis());
+		partnerProfile.setLastEdit(lastEdit);
+		this.partnerMapper.update(partnerProfile);
+		return p;
 	}
 
 	/**
@@ -991,6 +996,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void saveProperty(Property property) throws IllegalArgumentException {
 		this.propertyMapper.update(property);
+		Timestamp lastEdit = new Timestamp(System.currentTimeMillis());
+		PartnerProfile p = partnerMapper.findById(property.getPartnerProfileID());
+		p.setLastEdit(lastEdit);
+		this.partnerMapper.update(p);
+		
 	}
 
 	/**
