@@ -108,6 +108,37 @@ public class ApplicationMapper {
 		return result;
 	}
 	
+	public Vector<Application> findByCallID (int callID) {
+		
+		Connection con = DBConnection.connection();
+		
+		Vector<Application> result = new Vector<Application>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id "
+					+ " FROM call WHERE call_id ='" + callID + "'ORDER BY id");
+			
+				while (rs.next()) {
+				
+				Application a = new Application();
+				a.setID(rs.getInt("id"));
+				a.setCreated(rs.getTimestamp("created"));
+				a.setText(rs.getString("text"));
+				a.setCallID(rs.getCallID("call_id"));
+				a.setOrganisationID(rs.getOrgaUnitID("organisation_id"));
+				
+				result.addElement(a);
+			}
+		}
+		
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	
 	
 	public Application insert(Application a) {
