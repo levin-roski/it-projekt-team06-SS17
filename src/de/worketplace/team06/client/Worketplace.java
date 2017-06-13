@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.client.ClientsideSettings;
+import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.bo.OrgaUnit;
@@ -30,12 +31,15 @@ public class Worketplace implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		final EditorNavigation navigationMenu = new EditorNavigation();
+		navigationMenu.loadNavigation();
+
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
 				console.log(Level.SEVERE, "Login Anfrage konnte nicht ausgeführt werden");
-			}
-
+			}			
+			
 			public void onSuccess(LoginInfo result) {
 				loginInfo = result;
 				if (loginInfo.isLoggedIn()) {

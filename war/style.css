@@ -1,7 +1,20 @@
+body {
+	margin: 0 !important;
+}
 .center {
 	text-align: center;
 }
 .center-block {
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.gwt-MenuBar-horizontal {
+	background: none !important;
+}
+.gwt-MenuBar-horizontal .gwt-MenuItem {
+	vertical-align: middle !important;
+}
+.gwt-MenuItem-selected {
+	background-color: #F5F5F5 !important;
 }
