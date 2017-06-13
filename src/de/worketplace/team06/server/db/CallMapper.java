@@ -100,7 +100,7 @@ public class CallMapper {
 	 * @return
 	 */
 	
-	public Call findAll() {
+	public Vector<Call> findAll() {
 		
 		Connection con = DBConnection.connection();
         Vector<Call> result = new Vector<Call>();
@@ -128,7 +128,7 @@ public class CallMapper {
         catch (SQLException e){
         	e.printStackTrace();
         }
-        return null;
+        return result;
 	}
 
 	/**
@@ -155,14 +155,14 @@ public class CallMapper {
 				c.setProjectLeaderID(rs.getInt("ProjectLeaderID"));
 				c.setPartnerProfileID(rs.getInt("PartnerProfileID"));
 				
-				result.addElement(c); ;
+				result.addElement(c);
 			}			
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();
 			return null;
 		}
-		return null;
+		return result;
 	}
 	
 	/**
