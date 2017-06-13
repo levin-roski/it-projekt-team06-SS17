@@ -262,14 +262,6 @@ public interface WorketplaceAdministration extends RemoteService {
     public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException;
 
     /**
-     * @param partnerProfile 
-     * @param name 
-     * @param value 
-     * @return
-     */
-    public Property createProperty(PartnerProfile partnerProfile, String name, String value) throws IllegalArgumentException;
-
-    /**
      * @param property
      */
     public void saveProperty(Property property) throws IllegalArgumentException;
@@ -325,5 +317,7 @@ public interface WorketplaceAdministration extends RemoteService {
 	void deleteOrganisation(Organisation organisation) throws IllegalArgumentException;
 
 	Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException;
+
+	Property createProperty(PartnerProfile partnerProfile, String name, double value) throws IllegalArgumentException;
 
 }
