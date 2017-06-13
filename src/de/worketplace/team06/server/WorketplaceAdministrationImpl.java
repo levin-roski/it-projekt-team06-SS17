@@ -125,7 +125,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.orgaUnitMapper = OrgaUnitMapper.orgaUnitMapper();
 		this.partnerMapper = PartnerProfileMapper.partnerProfileMapper();
 		this.personMapper = PersonMapper.personMapper();
-		this.projectMapper = ProjectMapper.projecteMapper();
+		this.projectMapper = ProjectMapper.projectMapper();
 		this.propertyMapper = PropertyMapper.propertyMapper();
 		this.ratingMapper = RatingMapper.ratingMapper();
 		this.teamMapper = TeamMapper.teamMapper();
