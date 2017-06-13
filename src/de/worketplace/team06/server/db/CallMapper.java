@@ -198,7 +198,7 @@ public class CallMapper {
 	}
 
 	/**
-	 * löschen einer Ausschreibung aus der Datenbank 
+	 * loeschen einer Ausschreibung aus der Datenbank 
 	 * @param c
 	 */
 	
