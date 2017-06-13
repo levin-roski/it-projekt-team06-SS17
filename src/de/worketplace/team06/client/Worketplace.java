@@ -13,6 +13,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.gui.EditorNavigation;
+import de.worketplace.team06.client.gui.SearchMarketplace;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.bo.OrgaUnit;
@@ -34,10 +35,13 @@ public class Worketplace implements EntryPoint {
 		final EditorNavigation navigationMenu = new EditorNavigation();
 		navigationMenu.loadNavigation();
 
+		final SearchMarketplace searchMarketplace = new SearchMarketplace();
+		searchMarketplace.load();
+		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
-				console.log(Level.SEVERE, "Login Anfrage konnte nicht ausgeführt werden");
+				console.log(Level.SEVERE, "Login Anfrage konnte nicht ausgefï¿½hrt werden");
 			}			
 			
 			public void onSuccess(LoginInfo result) {
@@ -46,7 +50,7 @@ public class Worketplace implements EntryPoint {
 					worketplaceAdministration.checkExistence(loginInfo.getGoogleId(), new CheckExistenceLoginInfoCallback());
 				} else {
 //					TODO Login aufrufen (nicht eingeloggt)
-					Window.alert("Login aufrufen");
+//					Window.alert("Login aufrufen");
 				}
 			}
 		});
@@ -55,16 +59,16 @@ public class Worketplace implements EntryPoint {
 	
 	class CheckExistenceLoginInfoCallback implements AsyncCallback<Boolean> {
 		public void onFailure(Throwable caught) {
-//			TODO Fehlermeldung überlegen
+//			TODO Fehlermeldung ï¿½berlegen
 		}
 		
 		public void onSuccess(Boolean userStatus) {
 			if (userStatus) {
 //				TODO Editor initialisieren mit z.B. loadEditor
 			} else {
-				Window.alert( "Für diese Email existiert kein Nutzer." + " Bitte erstelle ein neues Nutzerporofil");
+				Window.alert( "Fï¿½r diese Email existiert kein Nutzer." + " Bitte erstelle ein neues Nutzerporofil");
 
-//				TODO Usererstellung hier ausführen, bzw. Formular für Usereinstellungen aufrufen
+//				TODO Usererstellung hier ausfï¿½hren, bzw. Formular fï¿½r Usereinstellungen aufrufen
 			}
 		}
 	}
