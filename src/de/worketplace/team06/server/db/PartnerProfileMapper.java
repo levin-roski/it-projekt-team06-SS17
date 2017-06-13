@@ -34,17 +34,15 @@ public class PartnerProfileMapper {
     	
     	try{
     		Statement stmt= con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT id, created, lastEdit, teamID, personID "
+    		ResultSet rs = stmt.executeQuery("SELECT id, created, last_edit, teamID, personID "
     				+ "FROM Partnerprofile WHERE id= " + id);
     		
     		if (rs.next()) {
     			PartnerProfile part = new PartnerProfile();
     			part.setID(rs.getInt("id"));
-    			part.setLastEdit(rs.getDate("lastEdit"));
+    			part.setLastEdit(rs.getTimestamp("last_edit"));
     			part.setCreated(rs.getTimestamp("created"));
-    			//part.setTeamID(rs.getInt("teamID"));
-    			//part.setPersonID(rs.getInt("personID"));
-    			
+    	
     			return part;
     		}	
     	}
@@ -67,10 +65,9 @@ public class PartnerProfileMapper {
         	if (rs.next()){
         		PartnerProfile part = new PartnerProfile();
         		part.setID(rs.getInt("id"));
-        		part.setLastEdit(rs.getDate("lastEdit"));
+        		part.setLastEdit(rs.getTimestamp("last_edit"));
         		part.setCreated(rs.getTimestamp("created"));
-        		//part.setTeamID(rs.getInt("teamID"));
-        		//part.setPersonID(rs.getInt("personID"));
+        		
         		
         		result.addElement(part);
         	}
@@ -94,11 +91,11 @@ public class PartnerProfileMapper {
         	part.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
         	
-        	stmt.executeUpdate("INSERT INTO partnerProfile (id, lastEdit, created) " 
+        	stmt.executeUpdate("INSERT INTO partnerProfile (id, last_edit, created) " 
         	+ "VALUES (" 
         	+ part.getID() + ",'" 
-        	+ part.getLastEdit() + "','"
-        	+ part.getCreated() + "','"
+        	+ part.getLastEdit() + "',"
+        	+ part.getCreated() + ",'"
         	+ "')");
         	}
         }
@@ -115,7 +112,7 @@ public class PartnerProfileMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE project SET lastEdit=\"" + part.getLastEdit() + "\", "
+        	stmt.executeUpdate("UPDATE project SET last_edit=\"" + part.getLastEdit() + "\", "
         	+ "WHERE id=" + part.getID());
         }
         
