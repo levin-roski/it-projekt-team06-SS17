@@ -46,7 +46,7 @@ public class MarketplaceMapper {
 				m.setID(rs.getInt("maxid") + 1);
 		
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO marketplace (id, created, title, description, orgaUnitID) " + "VALUES (" + m.getID() + ",'" + m.getCreated() + "','" + m.getTitle() + "','" + m.getDescription() + "','" + m.getOrgaUnitID() + "')");
+				stmt.executeUpdate("INSERT INTO marketplace (id, created, title, description, orgaunit_id) " + "VALUES (" + m.getID() + ",'" + m.getCreated() + "','" + m.getTitle() + "','" + m.getDescription() + "','" + m.getOrgaUnitID() + "')");
 			}
 		}
 		catch (SQLException e2) {
@@ -64,7 +64,7 @@ public class MarketplaceMapper {
 			try {
 				Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("Select id, created, title, description, orgaUnitID FROM marketplace " + "ORDER BY id");
+				ResultSet rs = stmt.executeQuery("Select id, created, title, description, orgaunit_id FROM marketplace " + "ORDER BY id");
 				
 				
 				while (rs.next()) {
@@ -74,7 +74,7 @@ public class MarketplaceMapper {
 					m.setCreated(rs.getTimestamp("created"));	
 					m.setTitle(rs.getString("title"));
 					m.setDescription(rs.getString("description"));
-					m.setOrgaUnitID(rs.getInt("orgaUnitID"));
+					m.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					
 					result.addElement(m);
 				}
@@ -119,8 +119,8 @@ public class MarketplaceMapper {
 			Vector<Marketplace> result = new Vector<Marketplace>();
 			try {
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT id, created, title, description, orgaUnitID FROM marketplace "
-				          + "WHERE orgaUnitID=" + ouid + " ORDER BY id");
+				ResultSet rs = stmt.executeQuery("SELECT id, created, title, description, orgaunit_id FROM marketplace "
+				          + "WHERE orgaunit_id=" + ouid + " ORDER BY id");
 
 				      // Für jeden Eintrag im Suchergebnis wird nun ein Marketplace Objekt erstellt.
 				      while (rs.next()) {
@@ -129,7 +129,7 @@ public class MarketplaceMapper {
 				        m.setCreated(rs.getTimestamp("created"));
 				        m.setTitle(rs.getString("title"));
 				        m.setDescription(rs.getString("description"));
-				        m.setOrgaUnitID(rs.getInt("orgaUnitID"));
+				        m.setOrgaUnitID(rs.getInt("orgaunit_id"));
 
 				        // Hinzufügen des neuen Objekts zum Ergebnisvektor
 				        result.addElement(m);
