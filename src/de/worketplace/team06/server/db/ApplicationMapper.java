@@ -35,8 +35,8 @@ public class ApplicationMapper {
 				a.setID(rs.getInt("id"));
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
-				a.setCallID(rs.getCallID("call_id"));
-				a.setOrganisationID(rs.getOrgaUnitID("orgaunit_id"));
+				a.setCallID(rs.getInt("call_id"));
+				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				return a;
 			}
 		}
@@ -64,8 +64,8 @@ public class ApplicationMapper {
 				a.setID(rs.getInt("id"));
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
-				a.setCallID(rs.getCallID("call_id"));
-				a.setOrganisationID(rs.getOrgaUnitID("organisation_id"));
+				a.setCallID(rs.getInt("call_id"));
+				a.setOrgaUnitID(rs.getInt("organisation_id"));
 				
 				result.addElement(a);
 			}
@@ -94,8 +94,8 @@ public class ApplicationMapper {
 				a.setID(rs.getInt("id"));
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
-				a.setCallID(rs.getCallID("call_id"));
-				a.setOrganisationID(rs.getOrgaUnitID("organisation_id"));
+				a.setCallID(rs.getInt("call_id"));
+				a.setOrgaUnitID(rs.getInt("organisation_id"));
 				
 				result.addElement(a);
 			}
@@ -125,8 +125,8 @@ public class ApplicationMapper {
 				a.setID(rs.getInt("id"));
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
-				a.setCallID(rs.getCallID("call_id"));
-				a.setOrganisationID(rs.getOrgaUnitID("organisation_id"));
+				a.setCallID(rs.getInt("call_id"));
+				a.setOrgaUnitID(rs.getInt("organisation_id"));
 				
 				result.addElement(a);
 			}
@@ -195,12 +195,20 @@ public class ApplicationMapper {
 	}
 	
 	
-	public Organisation getSourceOrgaUnit(Application a) {
-		return OrgaUnitMapper.orgaUnitMapper().findByID(a.getOrgaUnitID());
+	public Person getSourcePerson(Application a) {
+		return PersonMapper.personMapper().findByID(a.getOrgaUnitID());
+	}
+
+	public Organisation getSourceOrganisation(Application a) {
+		return OrganisationMapper.organisationMapper().findByID(a.getOrgaUnitID());
+	}
+	
+	public Team getSourceTeam(Application a) {
+		return TeamMapper.teamMapper().findByID(a.getOrgaUnitID());
 	}
 
 	public Call getSourceCall(Application a) {
-		return CallMapper.callMapper().findbyID(a.getCallID());
+		return CallMapper.callMapper().findByID(a.getCallID());
 	}
 	
 	
