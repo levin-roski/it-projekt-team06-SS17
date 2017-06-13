@@ -277,9 +277,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteCall(Call call) throws IllegalArgumentException {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-=======
 		/*
 		 * Das Löschen der Objekte, welche in Beziehung zum zu löschenden Projekt stehen,
 		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
@@ -312,8 +309,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			
 		//Löschen der jeweiligen Ausschreibung
 		this.callMapper.delete(call);
->>>>>>> refs/heads/master
-		
 	}
 
 	/**
