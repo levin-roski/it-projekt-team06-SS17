@@ -29,7 +29,7 @@ public class OrgaUnitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE id = " + googleID);
+			ResultSet rs = stmt.executeQuery("Select id, created, google_id, description, partnerprofile_id, type FROM orgaunit " + "WHERE id = " + google_id);
 			
 			String type = rs.getType(); 
 	        
@@ -75,7 +75,7 @@ public class OrgaUnitMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE googleID = " + googleID);		
+			ResultSet rs = stmt.executeQuery("Select id, created, google_id, description, partnerprofile_id, type FROM orgaunit " + "WHERE google_id = " + googleID);		
 			String type = rs.getString("type");
 		
 			return type;
@@ -111,7 +111,7 @@ public class OrgaUnitMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id FROM orgaunit " + "WHERE googleid = " + googleID);
+			ResultSet rs = stmt.executeQuery("Select id FROM orgaunit " + "WHERE google_id = " + googleID);
 			checkID = rs.getInt("id");
 			return checkID;
 		}
@@ -120,5 +120,22 @@ public class OrgaUnitMapper {
 			return null;
 		}
 	}
+	
+	public void update(OrgaUnit ou) {
+		Connection con = DBConnection.connection();
+
+	    try {
+	    	Statement stmt = con.createStatement();
+	    	stmt.executeUpdate("UPDATE orgaunit, person SET"
+	    						+ " orgaunit.description='" + ou.getDescription() +
+	    						"', orgaunit.partnerprofile_id= " + ou.getPartnerProfileID() +
+	    						" WHERE orgaunit.id= " + ou.getID());
+	    			
+	    }
+	    catch (SQLException e2) {
+				  e2.printStackTrace();		
+	    }
+		
+	}	
 	
 }

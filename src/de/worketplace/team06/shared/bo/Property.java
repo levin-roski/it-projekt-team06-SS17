@@ -28,6 +28,8 @@ public class Property extends BusinessObject {
      */
     private String value;
     
+    private int partnerProfileID;
+    
     /**
    	 * Auslesen des Namens der Eigenschaft
    	 * @return name
@@ -45,6 +47,14 @@ public class Property extends BusinessObject {
    	}
    	
    	/**
+   	 * Auslesen des Wertes der partnerProfileID
+   	 * @return partnerProfileID;
+   	 */
+   	public int getPartnerProfileID() {
+		return partnerProfileID;
+	}
+   	
+   	/**
    	 * Setzen des Namens der Eigenschaft
    	 * @param name
    	 */
@@ -59,5 +69,13 @@ public class Property extends BusinessObject {
    	public void setValue(String value) {
    		this.value = value;
    	}
+   	
+   	/**
+   	 * Setzen des Werts der partnerProfileID
+   	 * @param partnerProfileID
+   	 */
+	public void setPartnerProfileID(int partnerProfileID) {
+		this.partnerProfileID = partnerProfileID;
+	}
 
 }

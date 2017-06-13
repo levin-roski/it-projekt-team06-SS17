@@ -579,7 +579,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 
 	/**
-	 * Erstellen eines PartnerProfils für eine Organisation
+	 * Erstellen eines PartnerProfils für eine OrgaUnit
 	 */
 	@Override
 	public PartnerProfile createPartnerProfileFor(OrgaUnit orgaunit, Vector<Property> propertyList)
@@ -595,9 +595,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		profile.setID(1);
 		
 		profile = this.partnerMapper.insert(profile);
+		
 		orgaunit.setPartnerProfileID(profile.getID()); 
-		//OrgaUnitMapper
-		//this..update(orgaunit);
+		this.orgaUnitMapper.update(orgaunit);	
+		
 		
 		return profile;
 	}

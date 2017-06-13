@@ -38,14 +38,11 @@ public class PartnerProfileMapper {
     				+ "FROM Partnerprofile WHERE id= " + id);
     		
     		if (rs.next()) {
-    			PartnerProfile part = new PartnerProfile();
-    			part.setID(rs.getInt("id"));
-    			part.setLastEdit(rs.getDate("lastEdit"));
-    			part.setCreated(rs.getTimestamp("created"));
-    			part.setTeamID(rs.getInt("teamID"));
-    			part.setPersonID(rs.getInt("personID"));
-    			
-    			return part;
+    			PartnerProfile p = new PartnerProfile();
+    			p.setID(rs.getInt("id"));
+    			p.setLastedit(rs.getDate("lastEdit"));
+    			p.setCreated(rs.getTimestamp("created"));
+    			return p;
     		}	
     	}
     	catch (SQLException e){
@@ -54,6 +51,10 @@ public class PartnerProfileMapper {
     	return null;
     }
 	
+	/*
+	 * Fraglich ob wir alle PartnerProfiles benötigen 
+	 */
+	/*
     public Vector<PartnerProfile> findAll() {
         Connection con = DBConnection.connection();
         Vector<PartnerProfile> result = new Vector<PartnerProfile>();
@@ -80,9 +81,9 @@ public class PartnerProfileMapper {
         }
         return result ;
     }
+    */
     
-    
-    public PartnerProfile insert (PartnerProfile part) {
+    public PartnerProfile insert (PartnerProfile p) {
         Connection con = DBConnection.connection();
         
         try {
@@ -91,14 +92,14 @@ public class PartnerProfileMapper {
         	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM partnerProfile ");
         	
         	if (rs.next()){
-        	part.setID(rs.getInt("maxid") + 1);
+        	p.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
         	
         	stmt.executeUpdate("INSERT INTO partnerProfile (id, lastEdit, created) " 
         	+ "VALUES (" 
-        	+ part.getID() + ",'" 
-        	+ part.getLastEdit() + "','"
-        	+ part.getCreated() + "','"
+        	+ p.getID() + ",'" 
+        	+ p.getLastedit() + "','"
+        	+ p.getCreated() + "','"
         	+ "')");
         	}
         }
@@ -106,7 +107,7 @@ public class PartnerProfileMapper {
     	e.printStackTrace();
     }
     
-    return part;
+    return p;
     } 
     
     public PartnerProfile update(PartnerProfile part) {
@@ -115,7 +116,7 @@ public class PartnerProfileMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE project SET lastEdit=\"" + part.getlastEdit() + "\", "
+        	stmt.executeUpdate("UPDATE project SET lastEdit=\"" + part.getLastedit() + "\", "
         	+ "WHERE id=" + part.getID());
         }
         
