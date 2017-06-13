@@ -16,6 +16,7 @@ import de.worketplace.team06.shared.*;
 import de.worketplace.team06.shared.bo.*;
 import de.worketplace.team06.client.NotLoggedInException;
 import de.worketplace.team06.client.UserChangedException;
+import de.worketplace.team06.client.WindowAlertException;
 import de.worketplace.team06.server.db.*;
 
 
@@ -1119,10 +1120,28 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Löschen eines Teams aus der Datenbank
+	 * @throws WindowAlertException 
 	 */
 	@Override
-	public void deleteTeam(Team team) throws IllegalArgumentException {
+	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException {		
+		Vector<Marketplace> markets = getMarketplacesFor(team);
+		Vector<Project> projects = getProjectsForOwner(team);
+		
+		if ((markets != null) && (projects != null)){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze und Projekte"
+					+ "oder ernennen Sie neue Besitzer bevor Sie Ihren Account löschen!");
+		}
+		else if (markets != null){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
+					+ "Sie neue Besitzer für Ihre Marktplätze");
+		}
+		else if (projects != null){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Projekte oder ernennen"
+					+ "Sie neue Besitzer für Ihre Projekte");
+		}
+		else {			
 		this.teamMapper.delete(team);
+		}
 	}
 	
 	/**
