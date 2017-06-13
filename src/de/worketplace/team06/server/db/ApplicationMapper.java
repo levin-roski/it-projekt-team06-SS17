@@ -22,23 +22,21 @@ public class ApplicationMapper {
 	}
 
 	
-	public Application findById(int id) {
+	public Application findByID(int id) {
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, person_id, team_id, organisation_id FROM application " + "WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id FROM application " + "WHERE id = " + id);
 			
 			if (rs.next()) {
 				Application a = new Application();
-				a.setId(rs.getInt("id"));
+				a.setID(rs.getInt("id"));
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
-				a.setCallId(rs.getCallId("call_id"));
-				a.setPersonId(rs.getPersonId("person_id"));
-				a.setTeamId(rs.getTeamId("team_id"));
-				a.setOrganisationId(rs.getOrganisationId("organisation_id"));
+				a.setCallID(rs.getCallID("call_id"));
+				a.setOrganisationID(rs.getOrgaUnitID("orgaunit_id"));
 				return a;
 			}
 		}
@@ -58,18 +56,16 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, person_id, team_id, organisation_id FROM application " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id FROM application " + "ORDER BY id");
 			
 			while (rs.next()) {
 				
 				Application a = new Application();
-				a.setId(rs.getInt("id"));
+				a.setID(rs.getInt("id"));
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
-				a.setCallId(rs.getCallId("call_id"));
-				a.setPersonId(rs.getPersonId("person_id"));
-				a.setTeamId(rs.getTeamId("team_id"));
-				a.setOrganisationId(rs.getOrganisationId("organisation_id"));
+				a.setCallID(rs.getCallID("call_id"));
+				a.setOrganisationID(rs.getOrgaUnitID("organisation_id"));
 				
 				result.addElement(a);
 			}
@@ -81,20 +77,68 @@ public class ApplicationMapper {
 	}
 	
 	
-	public Vector<Application> findByPersonApplicant (Person personApplicant) {
+	public Vector<Application> findByOrgaUnitID (int orgaUnitID) {
 		
-		return findByPersonApplicant (personApplicant.getId());
+		Connection con = DBConnection.connection();
+		
+		Vector<Application> result = new Vector<Application>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id "
+					+ " FROM orgaunit WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
+			
+				while (rs.next()) {
+				
+				Application a = new Application();
+				a.setID(rs.getInt("id"));
+				a.setCreated(rs.getTimestamp("created"));
+				a.setText(rs.getString("text"));
+				a.setCallID(rs.getCallID("call_id"));
+				a.setOrganisationID(rs.getOrgaUnitID("organisation_id"));
+				
+				result.addElement(a);
+			}
+		}
+		
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		
+		return result;
 	}
 	
-	public Vector<Application> findByTeamApplicant (Team teamApplicant) {
+	public Vector<Application> findByCallID (int callID) {
 		
-		return findByTeamApplicant (teamApplicant.getId());
+		Connection con = DBConnection.connection();
+		
+		Vector<Application> result = new Vector<Application>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id "
+					+ " FROM call WHERE call_id ='" + callID + "'ORDER BY id");
+			
+				while (rs.next()) {
+				
+				Application a = new Application();
+				a.setID(rs.getInt("id"));
+				a.setCreated(rs.getTimestamp("created"));
+				a.setText(rs.getString("text"));
+				a.setCallID(rs.getCallID("call_id"));
+				a.setOrganisationID(rs.getOrgaUnitID("organisation_id"));
+				
+				result.addElement(a);
+			}
+		}
+		
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		
+		return result;
 	}
 	
-	public Vector<Application> findByOrganisationApplicant (Team organisationApplicant) {
-		
-		return findByOrganisationApplicant (organisationApplicant.getId());
-	}
 	
 	
 	public Application insert(Application a) {
@@ -111,7 +155,7 @@ public class ApplicationMapper {
 				
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, person_id, team_id, organisation_id) " + "VALUES (" + a.getId() + "," + a.getCreated() + "," + a.getText() + "," + a.getCallId() + "," + a.getPersonId() + "," + a.getTeamId() + "," + a.getOrganisationId()+ ")");
+				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, orgaunit_id) " + "VALUES (" + a.getID() + "," + a.getCreated() + "," + a.getText() + "," + a.getCallID() + "," + a.getOrgaUnitID()+ ")");
 			}
 		}
 		catch (SQLException e2) {
@@ -127,7 +171,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("UPDATE application " + "SET text=\"" + a.getText() + "\" " + "WHERE id=" + a.getId());
+			stmt.executeUpdate("UPDATE application " + "SET text=\"" + a.getText() + "\" " + "WHERE id=" + a.getID());
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();
@@ -142,7 +186,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("DELETE FROM application " + "WHERE id=" + a.getId());
+			stmt.executeUpdate("DELETE FROM application " + "WHERE id=" + a.getID());
 			
 		}
 		catch (SQLException e2) {
@@ -151,31 +195,13 @@ public class ApplicationMapper {
 	}
 	
 	
-	public Person getSourcePerson(Application a) {
-		return PersonMapper.personMapper().findById(a.getPersonId());
-	}
-	
-	public Team getSourceTeam(Application a) {
-		return TeamMapper.teamMapper().findById(a.getTeamId());
-	}
-	
-	public Organisation getSourceOrganisation(Application a) {
-		return OrganisationMapper.organisationMapper().findById(a.getOrganisationId());
+	public Organisation getSourceOrgaUnit(Application a) {
+		return OrgaUnitMapper.orgaUnitMapper().findByID(a.getOrgaUnitID());
 	}
 
 	public Call getSourceCall(Application a) {
-		return CallMapper.callMapper().findbyId(a.getCallId());
-	}
-
-	//AutoGeneratedBy JOHANNES Viel spaß :)
-	public Vector<Application> findByOrgaUnitID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return CallMapper.callMapper().findbyID(a.getCallID());
 	}
 	
-//AutoGeneratedBy JOHANNES
-	public Vector<Application> findByCallID(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }
