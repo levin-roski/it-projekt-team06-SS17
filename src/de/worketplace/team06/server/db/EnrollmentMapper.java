@@ -37,8 +37,8 @@ public class EnrollmentMapper {
 				e.setStartDate(rs.getTimestamp("start_date"));
 				e.setPeriod(rs.getTime("period"));
 				e.setEndDate(rs.getTimestamp("end_date"));
-				e.setOrgaUnitId(rs.getInt("orgaunit_id"));
-				e.setProjectId(rs.getInt("project_id"));
+				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
+				e.setProjectID(rs.getInt("project_id"));
 				
 				return e;
 			}
@@ -69,8 +69,8 @@ public class EnrollmentMapper {
 				e.setStartDate(rs.getTimestamp("start_date"));
 				e.setPeriod(rs.getTime("period"));
 				e.setEndDate(rs.getTimestamp("end_date"));
-				e.setOrgaUnitId(rs.getInt("orgaunit_id"));
-				e.setProjectId(rs.getInt("project_id"));
+				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
+				e.setProjectID(rs.getInt("project_id"));
 				
 				result.addElement(e);
 			}
@@ -100,8 +100,8 @@ public class EnrollmentMapper {
 					e.setStartDate(rs.getTimestamp("start_date"));
 					e.setPeriod(rs.getTime("period"));
 					e.setEndDate(rs.getTimestamp("end_date"));
-					e.setOrgaUnitId(rs.getInt("orgaunit_id"));
-					e.setProjectId(rs.getInt("project_id"));
+					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
+					e.setProjectID(rs.getInt("project_id"));
 				
 				result.addElement(e);
 			}
@@ -133,8 +133,8 @@ public class EnrollmentMapper {
 					e.setStartDate(rs.getTimestamp("start_date"));
 					e.setPeriod(rs.getTime("period"));
 					e.setEndDate(rs.getTimestamp("end_date"));
-					e.setOrgaUnitId(rs.getInt("orgaunit_id"));
-					e.setProjectId(rs.getInt("project_id"));
+					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
+					e.setProjectID(rs.getInt("project_id"));
 				
 				result.addElement(e);
 			}
@@ -158,11 +158,11 @@ public class EnrollmentMapper {
 			
 			if (rs.next()) {
 				
-				a.setID(rs.getInt("maxid") + 1);
+				e.setID(rs.getInt("maxid") + 1);
 				
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO enrollment (id, created, text, project_id, orgaunit_id) " + "VALUES (" + a.getID() + "," + a.getCreated() + "," + a.getText() + "," + a.getProjectID() + "," + a.getOrgaUnitID()+ ")");
+				stmt.executeUpdate("INSERT INTO enrollment (id, created, start_date, period, end_date, orgaunit_id, project_id) " + "VALUES (" + e.getID() + "," + e.getCreated() + "," + e.getStartDate() + "," + e.getPeriod() + "," + e.getEndDate() + "," + e.getOrgaUnitID() + "," + e.getProjectID() + ")");
 			}
 		}
 		catch (SQLException e2) {
@@ -172,28 +172,28 @@ public class EnrollmentMapper {
 	}
 	
 	
-	public Enrollment update(Enrollment a) {
+	public Enrollment update(Enrollment e) {
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("UPDATE enrollment " + "SET text=\"" + a.getText() + "\" " + "WHERE id=" + a.getID());
+			stmt.executeUpdate("UPDATE enrollment " + "SET start_date=\"" + e.getStartDate() + "\" " + "WHERE id=" + e.getID() + "," + "SET end_date=\"" + e.getEndDate() + "\" " + "WHERE id=" + e.getID() + "," + "SET period=\"" + e.getPeriod() + "\" " + "WHERE id=" + e.getID());
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-		return a;
+		return e;
 	}
 	
 	
-	public void delete(Enrollment a) {
+	public void delete(Enrollment e) {
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("DELETE FROM enrollment " + "WHERE id=" + a.getID());
+			stmt.executeUpdate("DELETE FROM enrollment " + "WHERE id=" + e.getID());
 			
 		}
 		catch (SQLException e2) {
@@ -202,10 +202,18 @@ public class EnrollmentMapper {
 	}
 	
 	
-	public Organisation getSourceOrgaUnit(Enrollment e) {
-		return OrgaUnitMapper.orgaUnitMapper().findID(e.getOrgaUnitID());
+	public Person getSourcePerson(Enrollment e) {
+		return PersonMapper.personMapper().findByID(e.getOrgaUnitID());
 	}
 
+	public Organisation getSourceOrganisation(Enrollment e) {
+		return OrganisationMapper.organisationMapper().findByID(e.getOrgaUnitID());
+	}
+	
+	public Team getSourceTeam(Enrollment e) {
+		return TeamMapper.teamMapper().findByID(e.getOrgaUnitID());
+	}
+	
 	public Project getSourceProject(Enrollment e) {
 		return ProjectMapper.projectMapper().findByID(e.getProjectID());
 	}
