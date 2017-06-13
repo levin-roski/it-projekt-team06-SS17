@@ -17,7 +17,7 @@ public class PropertyMapper {
 
 	private static PropertyMapper propertyMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * GeschÃ¼tzter Konstruktor - verhindert die MÃ¶glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected PropertyMapper(){
@@ -81,29 +81,28 @@ public class PropertyMapper {
 	public Vector<Property> findByPartnerProfileID(int partnerProfileID) {
 		
 		Connection con = DBConnection.connection();
-        
+		Vector<Property> result = new Vector<Property>();
+		
         try {
         	Statement stmt = con.createStatement();
-        	
-        	Vector<Property> result = new Vector<Property>();
-    		
-    		try {
-    			ResultSet rs = stmt.executeQuery("SELECT id, created, name, value, partnerProfileID "
-    					+ " FROM property WHERE partnerProfileID ='" + partnerProfileID + "'ORDER BY id");
-    			
-    			while (rs.next()){
-    				Property prop = new Property();
-    				prop.setID(rs.getInt("id"));
-    				prop.setName(rs.getString("name"));
-    				prop.setCreated(rs.getTimestamp("created"));
-            		prop.setValue(rs.getDouble("value"));
-            		prop.setPartnerProfileID(rs.getInt("partnerProfileID"));
-            		
-            		result.add(prop);	
-    			}
-    		} catch (SQLException e2) {
-    			e2.printStackTrace();
-    		}
+
+			ResultSet rs = stmt.executeQuery("SELECT id, created, name, value, partnerProfileID "
+					+ " FROM property WHERE partnerProfileID ='" + partnerProfileID + "'ORDER BY id");
+			
+			while (rs.next()){
+				Property prop = new Property();
+				prop.setID(rs.getInt("id"));
+				prop.setName(rs.getString("name"));
+				prop.setCreated(rs.getTimestamp("created"));
+        		prop.setValue(rs.getDouble("value"));
+        		prop.setPartnerProfileID(rs.getInt("partnerProfileID"));
+        		
+        		result.add(prop);	
+			}
+        }
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
 		
     		return result;
 	}
@@ -129,11 +128,11 @@ public class PropertyMapper {
         		+ "','" +"')");
         	}
         }
-       catch (SQLException e){
+        catch (SQLException e){
     	e.printStackTrace();
-    }
+        }
     
-    return prop;
+        return prop;
     } 
     
     public Property update(Property prop) {

@@ -17,7 +17,7 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 	
-		
+		fillDatabaseWithExamples(admin);
 		
 		
 
