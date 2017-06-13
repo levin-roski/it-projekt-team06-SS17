@@ -31,7 +31,7 @@ import de.worketplace.team06.shared.bo.Team;
 		return projectMapper; 
 	}
    
-	public Project findByID(int projectID) throws ParseException {
+	public Project findByID(int projectID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -55,14 +55,14 @@ import de.worketplace.team06.shared.bo.Team;
 		  		return proj;
 		  	}
 		  	
-		} catch (SQLException e2){
+		} catch (SQLException | ParseException e2){
 			e2.printStackTrace();
 		}
 		
 		return null;
 	}
   
-    public Vector<Project> findAll() throws ParseException {
+    public Vector<Project> findAll() {
         Connection con = DBConnection.connection();
         Vector<Project> result = new Vector<Project>();
         
@@ -87,7 +87,7 @@ import de.worketplace.team06.shared.bo.Team;
         		result.addElement(proj);
         	}
         }
-        catch (SQLException e){
+        catch (SQLException | ParseException e){
         	e.printStackTrace();
         }
         return result ;
@@ -168,7 +168,7 @@ import de.worketplace.team06.shared.bo.Team;
         }
     }
      
-	public Vector<Project> findByMarketplaceID(int marketplaceID) throws ParseException {
+	public Vector<Project> findByMarketplaceID(int marketplaceID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -196,7 +196,7 @@ import de.worketplace.team06.shared.bo.Team;
         		
         		result.add(proj);	
 			}
-		} catch (SQLException e2) {
+		} catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 		}
 		
@@ -204,7 +204,7 @@ import de.worketplace.team06.shared.bo.Team;
 	}
 	
 	
-	public Vector<Project> findByProjectOwnerID(int projectOwnerID) throws ParseException {
+	public Vector<Project> findByProjectOwnerID(int projectOwnerID) {
 		Connection con = DBConnection.connection();
 		
 		Vector<Project> result = new Vector<Project>();
@@ -229,7 +229,7 @@ import de.worketplace.team06.shared.bo.Team;
         		
         		result.add(proj);	
 			}
-		} catch (SQLException e2) {
+		} catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 		}
 		
@@ -237,7 +237,7 @@ import de.worketplace.team06.shared.bo.Team;
 	}
 
 	
-	public Vector<Project> findByProjectLeaderID(int projectLeaderID) throws ParseException {
+	public Vector<Project> findByProjectLeaderID(int projectLeaderID) {
 		Connection con = DBConnection.connection();
 		
 		Vector<Project> result = new Vector<Project>();
@@ -262,7 +262,7 @@ import de.worketplace.team06.shared.bo.Team;
         		
         		result.add(proj);	
 			}
-		} catch (SQLException e2) {
+		} catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 		}
 		
