@@ -62,12 +62,13 @@ public class RatingMapper {
     			r.setCreated(rs.getTimestamp("created"));
     			r.setRating(rs.getDouble("rating"));
     			r.setApplicationID(rs.getInt("ApplicationID"));
+    			return r;
     		}	
     	}
     	catch (SQLException e){
     		e.printStackTrace();
     	}
-    	return r;
+    	return null;
     }
 	
 	/**
