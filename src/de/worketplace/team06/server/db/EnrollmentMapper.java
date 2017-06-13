@@ -35,7 +35,7 @@ public class EnrollmentMapper {
 				e.setID(rs.getInt("id"));
 				e.setCreated(rs.getTimestamp("created"));
 				e.setStartDate(rs.getTimestamp("start_date"));
-				e.setPeriod(rs.getTime("period"));
+				e.setPeriod(rs.getInt("period"));
 				e.setEndDate(rs.getTimestamp("end_date"));
 				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				e.setProjectID(rs.getInt("project_id"));
@@ -67,7 +67,7 @@ public class EnrollmentMapper {
 				e.setID(rs.getInt("id"));
 				e.setCreated(rs.getTimestamp("created"));
 				e.setStartDate(rs.getTimestamp("start_date"));
-				e.setPeriod(rs.getTime("period"));
+				e.setPeriod(rs.getInt("period"));
 				e.setEndDate(rs.getTimestamp("end_date"));
 				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				e.setProjectID(rs.getInt("project_id"));
@@ -98,7 +98,7 @@ public class EnrollmentMapper {
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
 					e.setStartDate(rs.getTimestamp("start_date"));
-					e.setPeriod(rs.getTime("period"));
+					e.setPeriod(rs.getInt("period"));
 					e.setEndDate(rs.getTimestamp("end_date"));
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
@@ -131,7 +131,7 @@ public class EnrollmentMapper {
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
 					e.setStartDate(rs.getTimestamp("start_date"));
-					e.setPeriod(rs.getTime("period"));
+					e.setPeriod(rs.getInt("period"));
 					e.setEndDate(rs.getTimestamp("end_date"));
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));

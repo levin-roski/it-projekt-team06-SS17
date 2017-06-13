@@ -28,11 +28,10 @@ public class Enrollment extends BusinessObject {
      */
     private Date endDate;
 
-//    /**
-//     * Variable für die Dauer der Beteiligung
-//     */
-//    private int period;
-    
+    /**
+     * Variable für die Dauer der Beteiligung
+     */
+    private int period;
     
     /**
      * Variable für den geschätzen Workload in Arbeitstagen
@@ -70,12 +69,12 @@ public class Enrollment extends BusinessObject {
         return this.endDate;
     }
 
-//    /**
-//     * Auslesen der Dauer der Beteiligung
-//     */
-//    public int getPeriod() {
-//        return this.period;
-//    }
+    /**
+     * Auslesen der Dauer der Beteiligung
+     */
+    public int getPeriod() {
+        return this.period;
+    }
     
     /**
      * Auslesen des Workloads in Tagen
@@ -125,6 +124,13 @@ public class Enrollment extends BusinessObject {
         this.endDate = endDate;
     }
 
+	/**
+	 * Setzen der Dauer der Beteiligung. Die Periode wird automatisch anhand des Start- und Enddatums berechnet.
+	 */
+	public void setPeriod(int per) {
+	   this.period = per;
+	 }
+    
 //    /**
 //     * Setzen der Dauer der Beteiligung. Die Periode wird automatisch anhand des Start- und Enddatums berechnet.
 //     */

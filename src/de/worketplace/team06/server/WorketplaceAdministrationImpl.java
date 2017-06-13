@@ -178,9 +178,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			throws IllegalArgumentException {
 		Application a = new Application();
 		
-		a.setCallId(call.getID());
-		a.setOrgaUnitId(orgaUnit.getID());
-		a.setApplicationText(applicationText);
+		a.setCallID(call.getID());
+		a.setOrgaUnitID(orgaUnit.getID());
+		a.setText(applicationText);
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -619,7 +619,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		profile.setCreated(created);
-		profile.setLastedit(created);
+		//TODO: *** WICHTIG *** created ist vom Typ TimeStamp, lastEdit jedoch Date. Hier muss eine Lösung gefunden werden.
+		//profile.setLastEdit(created);
 	
 		profile.setPropertyList(propertyList);
 		profile.setID(1);
@@ -642,7 +643,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		profile.setCreated(created);
-		profile.setLastedit(created);
+		//TODO: *** WICHTIG *** created ist vom Typ TimeStamp, lastEdit jedoch Date. Hier muss eine Lösung gefunden werden.
+		//profile.setLastEdit(created);
 	
 		profile.setPropertyList(propertyList);
 		profile.setID(1);

@@ -39,7 +39,7 @@ public class Application extends BusinessObject {
      * Auslesen des Bewerbungstextes
      * @return applicationText
      */
-    public String getApplicationText() {
+    public String getText() {
         return applicationText;
     }
 
@@ -47,7 +47,7 @@ public class Application extends BusinessObject {
      *  Auslesen der ID der Ausschreibung
      *  @return callID
      */
-	public int getCallId() {
+	public int getCallID() {
 		return callID;
 	}
 	
@@ -55,7 +55,7 @@ public class Application extends BusinessObject {
      *  Auslesen der ID der OrganisationsEinheit
      *  @return orgaUnitID
      */
-	public int getOrgaUnitId() {
+	public int getOrgaUnitID() {
 		return orgaUnitID;
 	}
     
@@ -63,7 +63,7 @@ public class Application extends BusinessObject {
      * Setzen des Bewerbungstextes
      * @param applicationText
      */
-    public void setApplicationText(String applicationText) {
+    public void setText(String applicationText) {
         this.applicationText = applicationText;
     }
     
@@ -71,7 +71,7 @@ public class Application extends BusinessObject {
      *  Setzen der ID der Ausschreibung
      *  @param callID
      */
-	public void setCallId(int id) {
+	public void setCallID(int id) {
 		this.callID = id;
 	}
 
@@ -79,7 +79,7 @@ public class Application extends BusinessObject {
      *  Setzen der ID der OrganisationsEinheit
      *  @param orgaUnitID
      */
-	public void setOrgaUnitId(int id) {
+	public void setOrgaUnitID(int id) {
 		this.orgaUnitID = id;
 	}
 

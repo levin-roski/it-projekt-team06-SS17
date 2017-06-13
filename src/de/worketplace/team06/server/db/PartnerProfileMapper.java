@@ -42,8 +42,8 @@ public class PartnerProfileMapper {
     			part.setID(rs.getInt("id"));
     			part.setLastEdit(rs.getDate("lastEdit"));
     			part.setCreated(rs.getTimestamp("created"));
-    			part.setTeamID(rs.getInt("teamID"));
-    			part.setPersonID(rs.getInt("personID"));
+    			//part.setTeamID(rs.getInt("teamID"));
+    			//part.setPersonID(rs.getInt("personID"));
     			
     			return part;
     		}	
@@ -69,8 +69,8 @@ public class PartnerProfileMapper {
         		part.setID(rs.getInt("id"));
         		part.setLastEdit(rs.getDate("lastEdit"));
         		part.setCreated(rs.getTimestamp("created"));
-        		part.setTeamID(rs.getInt("teamID"));
-        		part.setPersonID(rs.getInt("personID"));
+        		//part.setTeamID(rs.getInt("teamID"));
+        		//part.setPersonID(rs.getInt("personID"));
         		
         		result.addElement(part);
         	}
@@ -115,7 +115,7 @@ public class PartnerProfileMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE project SET lastEdit=\"" + part.getlastEdit() + "\", "
+        	stmt.executeUpdate("UPDATE project SET lastEdit=\"" + part.getLastEdit() + "\", "
         	+ "WHERE id=" + part.getID());
         }
         

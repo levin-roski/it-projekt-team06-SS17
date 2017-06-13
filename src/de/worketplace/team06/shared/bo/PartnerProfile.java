@@ -1,5 +1,6 @@
 package de.worketplace.team06.shared.bo;
 
+import java.sql.Date;
 import java.util.*;
 
 /**
@@ -24,12 +25,12 @@ public class PartnerProfile extends BusinessObject {
     private Date lastEdit;
     
     private Vector<Property> propertyList;
-
+    
     /**
      * Auslesen des Datums der letzten Änderung
      * @return lastEdit
      */
-    public Date getLastedit() {
+    public Date getLastEdit() {
         return this.lastEdit;
     }
 
@@ -40,12 +41,12 @@ public class PartnerProfile extends BusinessObject {
 	public Vector<Property> getPropertyList() {
 		return propertyList;
 	}  
-    
+	
     /**
      * Setzen des Datums der letzten Änderung 
      * @param lastEdit
      */
-    public void setLastedit(Date lastEdit) {
+    public void setLastEdit(Date lastEdit) {
         this.lastEdit = lastEdit;
     }
 
@@ -55,6 +56,6 @@ public class PartnerProfile extends BusinessObject {
 	 */
 	public void setPropertyList(Vector<Property> propertyList) {
 		this.propertyList = propertyList;
-	}      
-
+	}
+  
 }

@@ -7,15 +7,13 @@ import java.sql.Statement;
 import java.util.*;
 
 import de.worketplace.team06.shared.bo.Rating;
-<<<<<<< HEAD
-import de.worketplace.team06.shared.bo.Team;
 
 
 public class RatingMapper {
 
 	private static RatingMapper ratingMapper = null;
 	 /**
-	   * Gesch�tzter Konstruktor - verhindert die M�glichkeit, mit <code>new</code>
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected RatingMapper(){
@@ -60,8 +58,9 @@ public class RatingMapper {
     			r.setID(rs.getInt("id"));
     			r.setRatingStatement(rs.getString("statement"));
     			r.setCreated(rs.getTimestamp("created"));
-    			r.setRating(rs.getDouble("rating"));
-    			r.setApplicationID(rs.getInt("ApplicationID"));
+    			r.setRating(rs.getFloat("rating"));
+    			//TODO: *** WICHTIG *** Setzen wir die AppID im Rating??
+    			//r.setApplicationID(rs.getInt("ApplicationID"));
     			return r;
     		}	
     	}
@@ -93,8 +92,9 @@ public class RatingMapper {
         		r.setID(rs.getInt("id"));
         		r.setRatingStatement(rs.getString("statement"));
         		r.setCreated(rs.getTimestamp("created"));
-        		r.setRating(rs.getDouble("rating"));
-        		r.setApplicationID(rs.getInt("ApplicationID"));
+        		r.setRating(rs.getFloat("rating"));
+        		//TODO: *** WICHTIG *** Setzen wir die AppID im Rating??
+        		//r.setApplicationID(rs.getInt("ApplicationID"));
         		
         		result.addElement(r);
         	}
@@ -106,7 +106,7 @@ public class RatingMapper {
     }
     
     /**
-     * Hinzuf�gen eines Rating-Objektes in der Datenbank
+     * Hinzufügen eines Rating-Objektes in der Datenbank
      * @param r
      * @return
      */
@@ -131,7 +131,8 @@ public class RatingMapper {
         		+ r.getID() + ", "
         		+ r.getCreated() + ", " 
         		+ r.getRating() + ", " 
-        		+ r.getApplicationID() + ", "
+        		//TODO: *** WICHTIG *** Setzen wir die AppID im Rating??
+        		//+ r.getApplicationID() + ", "
         		+ r.getRatingStatement() 
         		+ "','" +"')");
         	}
