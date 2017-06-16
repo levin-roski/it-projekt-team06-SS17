@@ -1115,6 +1115,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//***WICHTIG*** Methode muss im Mapper angelegt werden!
 		return this.propertyMapper.findByPartnerProfileID(partnerprofile.getID());
 	}
+	
+	/**
+	 * Löschen einer Eigenschaft 
+	 */
+	public void deleteProperty(Property p) throws IllegalArgumentException {
+		this.propertyMapper.delete(p);
+	}
 
 	
 	
