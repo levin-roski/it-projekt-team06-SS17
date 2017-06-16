@@ -87,7 +87,7 @@ import de.worketplace.team06.shared.bo.*;
 					 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
 					 */
 					stmt.executeUpdate("INSERT INTO orgaunit (id, created, google_id, description, type) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getGoogleID() +  "','" + t.getDescription() +  "','" + t.getType() + "')");
-					stmt.executeUpdate("INSERT INTO team (id, created, teamName, membercount) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getName() + "','" + t.getMembercount() + "')");
+					stmt.executeUpdate("INSERT INTO team (id, created, team_name, membercount) " + "VALUES (" + t.getID() + ",'" + t.getCreated() + "','" + t.getName() + "','" + t.getMembercount() + "')");
 					con.commit();
 				}
 			}
@@ -130,7 +130,7 @@ import de.worketplace.team06.shared.bo.*;
 					t.setPartnerProfileID(rs.getInt("partnerprofileID"));
 					t.setType(rs.getString("type"));
 					
-					t.setName(rs.getString("teamName"));
+					t.setName(rs.getString("team_name"));
 					t.setMembercount(rs.getInt("membercount"));
 					return t;
 				}			
@@ -157,7 +157,7 @@ import de.worketplace.team06.shared.bo.*;
 		    	stmt.executeUpdate("UPDATE orgaunit, team SET"
 		    						+ " orgaunit.description='" + t.getDescription() +
 		    						"', orgaunit.partnerprofileID= " + t.getPartnerProfileID() +
-		    						", team.teamName= '" + t.getName() +
+		    						", team.team_name= '" + t.getName() +
 		    						"', team.membercount= " + t.getMembercount() + 
 		    						" WHERE orgaunit.id= " + t.getID() + 
 		    						" AND team.id= " + t.getID()); 	
@@ -200,7 +200,7 @@ import de.worketplace.team06.shared.bo.*;
 					t.setPartnerProfileID(rs.getInt("partnerprofileID"));
 					t.setType(rs.getString("type"));
 					
-					t.setName(rs.getString("teamName"));
+					t.setName(rs.getString("team_name"));
 					t.setMembercount(rs.getInt("membercount"));
 					return t;
 				}			
@@ -275,7 +275,7 @@ import de.worketplace.team06.shared.bo.*;
 	        	t.setID(rs.getInt("maxid") + 1);
 	        	stmt = con.createStatement();
 	        	
-	        	stmt.executeUpdate("INSERT INTO team (id, teamName) " + "VALUES (" + t.getID() + ", " + t.getTeamName() + "','" + "')");
+	        	stmt.executeUpdate("INSERT INTO team (id, team_name) " + "VALUES (" + t.getID() + ", " + t.getTeamName() + "','" + "')");
 	        	}
 	        }
 	       catch (SQLException e){
@@ -292,7 +292,7 @@ import de.worketplace.team06.shared.bo.*;
 	        try{
 	        	Statement stmt = con.createStatement();
 	        	
-	        	stmt.executeUpdate("UPDATE team " + "SET teamName=\"" + t.getTeamName() + "\", " + "WHERE id=" + t.getID());
+	        	stmt.executeUpdate("UPDATE team " + "SET team_name=\"" + t.getTeamName() + "\", " + "WHERE id=" + t.getID());
 	        }
 	        
 	        catch (SQLException e){
@@ -324,12 +324,12 @@ import de.worketplace.team06.shared.bo.*;
 			try {
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT id, name "
-						+ " FROM team WHERE teamName ='" + teamName + "'ORDER BY id");
+						+ " FROM team WHERE team_name ='" + teamName + "'ORDER BY id");
 				
 				while (rs.next()){
 					Team t = new Team();
 					t.setID(rs.getInt("id"));
-					t.setName(rs.getString("teamName"));
+					t.setName(rs.getString("team_name"));
 	        	
 	        		result.add(t);	
 				}
