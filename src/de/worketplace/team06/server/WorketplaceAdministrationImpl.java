@@ -708,10 +708,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		profile.setCreated(created);
-		//TODO: *** WICHTIG *** created ist vom Typ TimeStamp, lastEdit jedoch Date. Hier muss eine Lösung gefunden werden.
-		//profile.setLastEdit(created);
-	
-		
+		profile.setLastEdit(created);
 		profile.setID(1);
 		
 		profile = this.partnerMapper.insert(profile);
@@ -732,9 +729,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		profile.setCreated(created);
-		//TODO: *** WICHTIG *** created ist vom Typ TimeStamp, lastEdit jedoch Date. Hier muss eine Lösung gefunden werden.
-		//profile.setLastEdit(created);
-	
+		profile.setLastEdit(created);
 		profile.setID(1);
 		
 		profile = this.partnerMapper.insert(profile);

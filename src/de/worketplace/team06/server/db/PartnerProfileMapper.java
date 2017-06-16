@@ -35,7 +35,7 @@ public class PartnerProfileMapper {
     	try{
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery("SELECT id, created, last_edit, teamID, personID "
-    				+ "FROM Partnerprofile WHERE id= " + id);
+    				+ "FROM partnerprofile WHERE id= " + id);
     		
     		if (rs.next()) {
     			PartnerProfile part = new PartnerProfile();
@@ -59,8 +59,8 @@ public class PartnerProfileMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile ORDER BY id");
-        	//noch vervollst�ndigen 
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM partnerprofile ORDER BY id");
+        	//noch vervollständigen 
  
         	if (rs.next()){
         		PartnerProfile part = new PartnerProfile();
@@ -85,13 +85,13 @@ public class PartnerProfileMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM partnerProfile ");
+        	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM partnerprofile ");
         	
         	if (rs.next()){
         	part.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
         	
-        	stmt.executeUpdate("INSERT INTO partnerProfile (id, last_edit, created) " 
+        	stmt.executeUpdate("INSERT INTO partnerprofile (id, last_edit, created) " 
         	+ "VALUES (" 
         	+ part.getID() + ",'" 
         	+ part.getLastEdit() + "',"
@@ -128,7 +128,7 @@ public class PartnerProfileMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("DELETE * FROM partnerProfile " + "WHERE id=" + part.getID());
+        	stmt.executeUpdate("DELETE * FROM partnerprofile " + "WHERE id=" + part.getID());
         	
         }
         catch (SQLException e){

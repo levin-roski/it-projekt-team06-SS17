@@ -76,8 +76,8 @@ public class CallMapper {
 				stmt.executeUpdate("INSERT INTO call (id, title, description, deadline, project_id, projectleader_id, partnerprofile_id) " 
 				+ "VALUES (" + c.getID() + ",'" 
 				+ c.getTitle() + "','" + c.getDescription() +  "','" 
-				+ c.getDeadline() + "','" + c.getProjectID() +  "','" 
-				+ c.getProjectLeaderID() +  "','" + c.getPartnerProfileID() + "')");
+				+ c.getDeadline() + "'," + c.getProjectID() +  "," 
+				+ c.getProjectLeaderID() +  "," + c.getPartnerProfileID() + ")");
 			}
 		}
 		
