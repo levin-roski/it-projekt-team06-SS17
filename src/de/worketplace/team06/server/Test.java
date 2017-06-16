@@ -83,24 +83,24 @@ public class Test {
 		admin.createPerson("Thomas", "Mueller", "Schuttstr 6", 38299, "Langweid", "Auch ein Mensch", "G3001");
 		admin.createPerson("Jesus", "Christus", "Wüstenweg 4", 12345, "Jerusalem", "Kein Mensch, Gott.", "G3002");
 		
-		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		
 		OrgaUnit p1 = admin.getPersonByGoogleID("G3000");
 		admin.createMarketplace("Marktplatz Blau", "Dieser Marktplatz ist für Blaue", p1);
 		OrgaUnit u1 = admin.getOrganisationByGoogleID("G1001");
 		admin.createMarketplace("Marktplatz Rot", "Dieser Marktplatz ist für Rote", u1);
 		
-		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		
 		Marketplace m1 = admin.getMarketplaceByID(1);
 		Person p2 = admin.getPersonByGoogleID("G3001");

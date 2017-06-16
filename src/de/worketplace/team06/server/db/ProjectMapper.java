@@ -104,7 +104,7 @@ import de.worketplace.team06.shared.bo.Team;
         	
         	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
         			+ "projectleader_id, projectowner_id, start_date, end_date, created,  "
-        	+ "FROM team ");
+        	+ "FROM project ");
         	
         	while (rs.next()){
         		Project proj = new Project();
@@ -157,17 +157,17 @@ import de.worketplace.team06.shared.bo.Team;
         	/**
 			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
 			 */
-        	stmt.executeUpdate("INSERT INTO project (id, title, description, projectleader_id, projectowner_id, start_date, end_date, marketplace_id) " 
+        	stmt.executeUpdate("INSERT INTO project (id, created, title, description, projectleader_id, projectowner_id, start_date, end_date, marketplace_id) " 
         	+ "VALUES (" 
-        	+ proj.getID() + ", " 
+        	+ proj.getID() + ",'" 
+        	+ proj.getCreated() + "','" 
         	+ proj.getTitle() + "','" 
         	+ proj.getDescription() + "','"
         	+ proj.getProjectLeaderID() + "','"
         	+ proj.getProjectOwnerID() + "','"
         	+ startdate + "','"
         	+ enddate + "','"
-        	+ proj.getMarketplaceID() + "','"         // noch hinzugefügt, damit das Projekt einem Marktplatz zugewiesen werden kann 
-        	+ "')");
+        	+ proj.getMarketplaceID() + "')");
         	}
         }
        catch (SQLException e){
