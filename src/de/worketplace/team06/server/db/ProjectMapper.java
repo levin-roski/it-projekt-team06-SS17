@@ -32,7 +32,7 @@ import de.worketplace.team06.shared.bo.Team;
 	   */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	 /**
-	   * Gesch�tzter Konstruktor - verhindert die M�glichkeit, mit <code>new</code>
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected ProjectMapper(){
@@ -166,7 +166,7 @@ import de.worketplace.team06.shared.bo.Team;
         	+ proj.getProjectOwnerID() + "','"
         	+ startdate + "','"
         	+ enddate + "','"
-        	+ proj.getMarketplaceID() + "','"         // noch hinzugef�gt, damit das Projekt einem Marktplatz zugewiesen werden kann 
+        	+ proj.getMarketplaceID() + "','"         // noch hinzugefügt, damit das Projekt einem Marktplatz zugewiesen werden kann 
         	+ "')");
         	}
         }

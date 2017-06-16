@@ -119,8 +119,8 @@ public class PropertyMapper {
         try {
         	Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, created, name, value, partnerProfileID "
-					+ " FROM property WHERE partnerProfileID ='" + partnerProfileID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, created, name, value, partnerprofile_id "
+					+ " FROM property WHERE partnerprofile_id ='" + partnerProfileID + "'ORDER BY id");
 			
 			while (rs.next()){
 				Property prop = new Property();
@@ -128,7 +128,7 @@ public class PropertyMapper {
 				prop.setName(rs.getString("name"));
 				prop.setCreated(rs.getTimestamp("created"));
         		prop.setValue(rs.getDouble("value"));
-        		prop.setPartnerProfileID(rs.getInt("partnerProfileID"));
+        		prop.setPartnerProfileID(rs.getInt("partnerprofile_id"));
         		
         		result.add(prop);	
 			}
