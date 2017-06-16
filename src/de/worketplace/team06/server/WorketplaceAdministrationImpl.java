@@ -298,14 +298,18 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 				
 				//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
 				Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
-				if (rating != null){
 					
-					//Löschen der Bewertung
-					this.ratingMapper.delete(rating);
-				}
-				
-				//Löschen der jeweiligen Bewerbung
-				this.appMapper.delete(a);
+				//Es wird überprüft ob die Bewertung auch mit einer Enrollment Instanz verbunden ist
+				//Wenn ja wird der Rating Mapper nicht gelöscht, Wenn nein wird er gelöscht. 
+					if (this.enrollMapper.findByRatingID(rating.getID()) == null){
+						this.ratingMapper.delete(rating);
+						this.appMapper.delete(a);
+					}
+					
+					else{
+						this.appMapper.delete(a);
+					}
+					
 											
 			}
 		}
