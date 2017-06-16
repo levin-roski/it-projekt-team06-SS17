@@ -73,7 +73,7 @@ public class RatingMapper {
     		
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery
-    				("SELECT id, statement, created, rating, applicationID FROM Rating " + "WHERE id= " + id);
+    				("SELECT id, statement, created, rating, application_id FROM Rating " + "WHERE id= " + id);
     		/**
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
@@ -110,7 +110,7 @@ public class RatingMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, statement, created, rating, applicationID "+ "FROM Team ");
+        	ResultSet rs = stmt.executeQuery("SELECT id, statement, created, rating, application_id "+ "FROM Team ");
         	
         	while (rs.next()){
         		Rating r = new Rating();
@@ -162,7 +162,7 @@ public class RatingMapper {
         	/**
 			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
 			 */
-        	stmt.executeUpdate("INSERT INTO rating (id, statement, created, rating, applicationID) " 
+        	stmt.executeUpdate("INSERT INTO rating (id, statement, created, rating, application_id) " 
         	+ "VALUES (" 
         		+ r.getID() + ", "
         		+ r.getCreated() + ", " 
