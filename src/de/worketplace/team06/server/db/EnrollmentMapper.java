@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.db;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.*;
@@ -8,6 +10,7 @@ import de.worketplace.team06.shared.bo.*;
 public class EnrollmentMapper {
 	
 	private static EnrollmentMapper enrollmentMapper = null;
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	protected EnrollmentMapper() {
 		
@@ -28,22 +31,23 @@ public class EnrollmentMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id FROM enrollment " + "WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE id = " + id);
 			
 			if (rs.next()) {
 				Enrollment e = new Enrollment();
 				e.setID(rs.getInt("id"));
 				e.setCreated(rs.getTimestamp("created"));
-				e.setStartDate(rs.getTimestamp("start_date"));
+				e.setStartDate(sdf.parse(rs.getString("start_date")));
 				e.setPeriod(rs.getInt("period"));
-				e.setEndDate(rs.getTimestamp("end_date"));
+				e.setEndDate(sdf.parse(rs.getString("end_date")));
 				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				e.setProjectID(rs.getInt("project_id"));
+				e.setRatingID(rs.getInt("rating_id"));
 				
 				return e;
 			}
 		}
-		catch (SQLException e2) {
+		catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 			return null;
 		}
@@ -59,23 +63,24 @@ public class EnrollmentMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id FROM enrollment " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "ORDER BY id");
 			
 			while (rs.next()) {
 				
 				Enrollment e = new Enrollment();
 				e.setID(rs.getInt("id"));
 				e.setCreated(rs.getTimestamp("created"));
-				e.setStartDate(rs.getTimestamp("start_date"));
+				e.setStartDate(sdf.parse(rs.getString("start_date")));
 				e.setPeriod(rs.getInt("period"));
-				e.setEndDate(rs.getTimestamp("end_date"));
+				e.setEndDate(sdf.parse(rs.getString("end_date")));
 				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				e.setProjectID(rs.getInt("project_id"));
+				e.setRatingID(rs.getInt("rating_id"));
 				
 				result.addElement(e);
 			}
 		}
-		catch (SQLException e2) {
+		catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 		}
 		return result;
@@ -90,24 +95,25 @@ public class EnrollmentMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id FROM enrollment " + "WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
 			
 				while (rs.next()) {
 				
 					Enrollment e = new Enrollment();
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
-					e.setStartDate(rs.getTimestamp("start_date"));
+					e.setStartDate(sdf.parse(rs.getString("start_date")));
 					e.setPeriod(rs.getInt("period"));
-					e.setEndDate(rs.getTimestamp("end_date"));
+					e.setEndDate(sdf.parse(rs.getString("end_date")));
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
+					e.setRatingID(rs.getInt("rating_id"));
 				
 				result.addElement(e);
 			}
 		}
 		
-		catch (SQLException e2) {
+		catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 		}
 		
@@ -123,28 +129,61 @@ public class EnrollmentMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id FROM enrollment " + "WHERE project_id ='" + projectID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE project_id ='" + projectID + "'ORDER BY id");
 			
 				while (rs.next()) {
 				
 					Enrollment e = new Enrollment();
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
-					e.setStartDate(rs.getTimestamp("start_date"));
+					e.setStartDate(sdf.parse(rs.getString("start_date")));
 					e.setPeriod(rs.getInt("period"));
-					e.setEndDate(rs.getTimestamp("end_date"));
+					e.setEndDate(sdf.parse(rs.getString("start_date")));
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
+					e.setRatingID(rs.getInt("rating_id"));
 				
 				result.addElement(e);
 			}
 		}
 		
-		catch (SQLException e2) {
+		catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 		}
 		
 		return result;
+	}
+	
+public Enrollment findByRatingID (int rID) {
+		
+		Connection con = DBConnection.connection();
+		
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE rating_id ='" + rID + "'ORDER BY id");
+			
+				if (rs.next()) {
+				
+					Enrollment e = new Enrollment();
+					e.setID(rs.getInt("id"));
+					e.setCreated(rs.getTimestamp("created"));
+					e.setStartDate(sdf.parse(rs.getString("start_date")));
+					e.setPeriod(rs.getInt("period"));
+					e.setEndDate(sdf.parse(rs.getString("start_date")));
+					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
+					e.setProjectID(rs.getInt("project_id"));
+					e.setRatingID(rs.getInt("rating_id"));
+				
+				return e;
+			}
+		}
+		
+		catch (SQLException | ParseException e2) {
+			e2.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	
@@ -152,6 +191,9 @@ public class EnrollmentMapper {
 		Connection con = DBConnection.connection();
 		
 		try {
+			String startdate = sdf.format(e.getStartDate());
+        	String enddate = sdf.format(e.getEndDate());
+        	
 			Statement stmt = con.createStatement();
 			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxis " + "FROM enrollment ");
@@ -162,7 +204,11 @@ public class EnrollmentMapper {
 				
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO enrollment (id, created, start_date, period, end_date, orgaunit_id, project_id) " + "VALUES (" + e.getID() + "," + e.getCreated() + "," + e.getStartDate() + "," + e.getPeriod() + "," + e.getEndDate() + "," + e.getOrgaUnitID() + "," + e.getProjectID() + ")");
+				stmt.executeUpdate("INSERT INTO enrollment (id, created, start_date, period, end_date,"
+						+ " orgaunit_id, project_id, rating_id) " + "VALUES (" + e.getID() + ","
+						+ e.getCreated() + ",'" + startdate + "'," + e.getPeriod() + ",'"
+						+ enddate + "'," + e.getOrgaUnitID() + "," + e.getProjectID() + ","
+						+ e.getRatingID()+ ")");
 			}
 		}
 		catch (SQLException e2) {
@@ -176,9 +222,16 @@ public class EnrollmentMapper {
 		Connection con = DBConnection.connection();
 		
 		try {
+			String startdate = sdf.format(e.getStartDate());
+        	String enddate = sdf.format(e.getEndDate());
+        	
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("UPDATE enrollment " + "SET start_date=\"" + e.getStartDate() + "\" " + "WHERE id=" + e.getID() + "," + "SET end_date=\"" + e.getEndDate() + "\" " + "WHERE id=" + e.getID() + "," + "SET period=\"" + e.getPeriod() + "\" " + "WHERE id=" + e.getID());
+			stmt.executeUpdate("UPDATE enrollment " + "SET start_date='" + startdate +
+					"', SET end_date='" + enddate + "', SET orgaunit_id=" + e.getOrgaUnitID() + 
+					", SET project_id=" + e.getProjectID() + "SET period=" + e.getPeriod() +
+					"WHERE id=" + e.getID());
+			
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();

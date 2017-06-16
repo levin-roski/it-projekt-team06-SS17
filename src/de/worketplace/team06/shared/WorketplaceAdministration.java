@@ -6,6 +6,8 @@ import java.util.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
+import de.worketplace.team06.client.WindowAlertException;
 import de.worketplace.team06.shared.bo.*;
 
 /**
@@ -312,7 +314,7 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	void deletePerson(Person person) throws IllegalArgumentException;
 
-	void deleteTeam(Team team) throws IllegalArgumentException;
+	void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException;
 
 	void deleteOrganisation(Organisation organisation) throws IllegalArgumentException;
 
