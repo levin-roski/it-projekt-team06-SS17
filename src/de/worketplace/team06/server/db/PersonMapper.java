@@ -107,6 +107,15 @@ public class PersonMapper {
 				  e2.printStackTrace();
 			}	
 		}
+		finally{
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		return p;
 	}
 	

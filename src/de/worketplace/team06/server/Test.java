@@ -86,12 +86,12 @@ public class Test {
 		admin.createPerson("Thomas", "Mueller", "Schuttstr 6", 38299, "Langweid", "Auch ein Mensch", "G3001");
 		admin.createPerson("Jesus", "Christus", "Wüstenweg 4", 12345, "Jerusalem", "Kein Mensch, Gott.", "G3002");
 		
-//		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 		Person p1 = admin.getPersonByGoogleID("G3000");
 		System.out.println(p1.getGoogleID());

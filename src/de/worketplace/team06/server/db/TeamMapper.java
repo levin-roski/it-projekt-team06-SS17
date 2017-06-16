@@ -104,6 +104,17 @@ import de.worketplace.team06.shared.bo.*;
 					  e2.printStackTrace();
 				}	
 			}
+			
+			finally{
+				try {
+					con.setAutoCommit(true);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
 			return t;
 	    }
 	    
