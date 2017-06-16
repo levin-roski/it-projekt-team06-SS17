@@ -228,8 +228,8 @@ public Enrollment findByRatingID (int rID) {
 			Statement stmt = con.createStatement();
 			
 			stmt.executeUpdate("UPDATE enrollment " + "SET start_date='" + startdate +
-					"', SET end_date='" + enddate + "', SET orgaunit_id=" + e.getOrgaUnitID() + 
-					", SET project_id=" + e.getProjectID() + "SET period=" + e.getPeriod() +
+					"', end_date='" + enddate + "', orgaunit_id=" + e.getOrgaUnitID() + 
+					", project_id=" + e.getProjectID() + ", rating_id=" + e.getRatingID() + ", period=" + e.getPeriod() +
 					"WHERE id=" + e.getID());
 			
 		}
