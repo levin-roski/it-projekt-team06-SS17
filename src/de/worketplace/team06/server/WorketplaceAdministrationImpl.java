@@ -1164,7 +1164,18 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		Application a = appMapper.findByRatingID(rating.getID());
+		Enrollment e = enrollMapper.findByRatingID(rating.getID());
+		
+		if (a != null){
+		a.setRatingID(-1);
+		this.appMapper.update(a);
+		}
+		if (e != null){
+		e.setRatingID(-1);
+		this.enrollMapper.update(e);
+		}
+		this.ratingMapper.delete(rating);
 		
 	}
 	
