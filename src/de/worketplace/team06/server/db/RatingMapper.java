@@ -10,19 +10,39 @@ import de.worketplace.team06.shared.bo.Rating;
 
 
 public class RatingMapper {
+	
+	/**
+     * Die Klasse RatingMapper wird nur einmal instantiiert. Man spricht hierbei
+     * von einem sogenannten <b>Singleton</b>.
+     * <p>
+     * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+     * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+     * einzige Instanz dieser Klasse.
+     * 
+     * @author Thies
+     * @author Theresa
+     */
 
 	private static RatingMapper ratingMapper = null;
-	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	/**
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
+	   * 
+	   * @author Thies 
 	   */
 	protected RatingMapper(){
 		
 	}
 	
 	/**
-	 * Sicherstellen der Singleton-Eigenschaft
-	 * @return
+	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
+	 * dafür, dass nur eine einzige Instanz der RatingMapper-Klasse existiert. 
+	 * RatingMapper sollte nicht über den New-Operator, sondern über den 
+	 * Aufruf dieser statischen Methode.
+	 * 
+	 * @return TeamMapper
+	 * @author Thies
+	 * @author Theresa
 	 */
 	
 	public static RatingMapper ratingMapper(){
@@ -33,9 +53,11 @@ public class RatingMapper {
 	}
 	
 	/**
-	 * Auslesen eines bestimmten Rating-Objektes in der Datenbank 
-	 * @param id
-	 * @return
+	 * Suchen einer Bewertung mit vorgegebener RatiingID. Duch die Eindeutigkeit der ID, 
+	 * wird genau ein Objekt zurück gegeben. 
+	 * 
+	 * @param ratingID
+	 * @return Rating-Objekt, das der übergebenen ID entspricht
 	 */
 
 	public Rating findById (int id){
@@ -52,7 +74,10 @@ public class RatingMapper {
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery
     				("SELECT id, statement, created, rating, applicationID FROM Rating " + "WHERE id= " + id);
-    		
+    		/**
+			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
+			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
+			 */
     		if (rs.next()) {
     			Rating r = new Rating();
     			r.setID(rs.getInt("id"));
@@ -106,9 +131,14 @@ public class RatingMapper {
     }
     
     /**
-     * Hinzufügen eines Rating-Objektes in der Datenbank
+     * Einfuegen eines Rating-Objektes in die Datenbank. Dabei wird auch der Primaerschluessel
+     * des uebergebenen Objektes geprueft und ggf. berichtigt.
+     * 
      * @param r
-     * @return
+     * @return Rating
+     * @throws  
+     * @author Thies 
+     * @author Theresa
      */
     
     public Rating insert (Rating r) {
@@ -120,12 +150,18 @@ public class RatingMapper {
         try {
         	Statement stmt = con.createStatement();
         	
+        	/** 
+			 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
+			 *wird dann um 1 erhoet und an an t vergeben
+			*/
         	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM rating ");
         	
         	if (rs.next()){
         	r.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
-        	
+        	/**
+			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
+			 */
         	stmt.executeUpdate("INSERT INTO rating (id, statement, created, rating, applicationID) " 
         	+ "VALUES (" 
         		+ r.getID() + ", "
@@ -145,9 +181,10 @@ public class RatingMapper {
     } 
     
     /**
-     * Aktualisieren eines Rating-Objektes in der Datenbank 
-     * @param r
-     * @return
+     * Methode ermoeglicht, dass ein Rating-Objekt in der Datenbank aktualisiert werden kann.
+     * 
+     * @param r 
+     * @return Rating
      */
     
     public Rating update(Rating r) {
@@ -173,8 +210,8 @@ public class RatingMapper {
     }
     
     /**
-     * L�schen eines Rating-Objektes in der Datenbank 
-     * @param r
+     * Loeschen eines Rating-Objektes aus der Datenbank
+     * @param rating
      */
 
     public void delete(Rating r) {
@@ -192,6 +229,14 @@ public class RatingMapper {
         	e.printStackTrace();
         }
     }
+    
+    
+    /**
+	 * Diese Methode findet ein Rating-Objekt, anhand der übergebenen Application-ID 
+	 * 
+	 * @param ApplicationID
+	 * @return Rating-Objekt 
+	 */
     
     public Rating findRatingByApplicationID(int applicationID){
     	/**
