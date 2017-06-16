@@ -130,7 +130,7 @@ public class OrganisationMapper {
 				o.setCreated(rs.getTimestamp("created"));
 				o.setGoogleID(googleID);
 				o.setDescription(rs.getString("description"));
-				o.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				o.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				o.setType(rs.getString("type"));
 				
 				o.setName(rs.getString("name"));
@@ -161,7 +161,7 @@ public class OrganisationMapper {
 	    	//Updaten einer Person :) 
 	    	stmt.executeUpdate("UPDATE orgaunit, organisation SET"
 	    						+ " orgaunit.description='" + o.getDescription() +
-	    						"', orgaunit.partnerprofileID= " + o.getPartnerProfileID() +
+	    						"', orgaunit.partnerprofile_id= " + o.getPartnerProfileID() +
 	    						", organisation.name= '" + o.getName() +
 	    						"', organisation.street= '" + o.getStreet() + 
 	    						"', organisation.zipcode= " + o.getZipcode() + 
@@ -216,7 +216,7 @@ public class OrganisationMapper {
 				o.setCreated(rs.getTimestamp("created"));
 				o.setGoogleID(rs.getString("google_id"));
 				o.setDescription(rs.getString("description"));
-				o.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				o.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				o.setType(rs.getString("type"));
 				
 				o.setName(rs.getString("name"));
