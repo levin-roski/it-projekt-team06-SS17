@@ -16,6 +16,7 @@ import de.worketplace.team06.shared.*;
 import de.worketplace.team06.shared.bo.*;
 import de.worketplace.team06.client.NotLoggedInException;
 import de.worketplace.team06.client.UserChangedException;
+import de.worketplace.team06.client.WindowAlertException;
 import de.worketplace.team06.server.db.*;
 
 
@@ -207,7 +208,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		Rating r = this.ratingMapper.findById(application.getRatingID());
+		
+		if (this.enrollMapper.findByRatingID(r.getID()) == null){
+			this.ratingMapper.delete(r);
+			this.appMapper.delete(application);
+		}
+		
+		else{
+			this.appMapper.delete(application);
+		}
 		
 	}
 	
@@ -288,13 +298,19 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 				
 				//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
 				Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
-				if (rating != null){
 					
-					//Löschen der Bewertung
-					this.ratingMapper.delete(rating);
+				if (rating != null){
+				//Es wird überprüft ob die Bewertung auch mit einer Enrollment Instanz verbunden ist
+				//Wenn ja wird der Rating Mapper nicht gelöscht, Wenn nein wird er gelöscht. 
+					if (this.enrollMapper.findByRatingID(rating.getID()) == null){
+						this.ratingMapper.delete(rating);
+					}
+					
+					
+				}	
+				else {
+					//TO Do: Fehlermeldung
 				}
-				
-				//Löschen der jeweiligen Bewerbung
 				this.appMapper.delete(a);
 											
 			}
@@ -302,6 +318,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		PartnerProfile pp = getPartnerProfileFor(call);
 		if (pp != null){
+			
+			this.propertyMapper.deleteByPartnerProfileID(pp.getID());
 			this.partnerMapper.delete(pp);
 		} else {
 			//TODO: Fehlermeldung
@@ -391,6 +409,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
+		Rating r = this.ratingMapper.findById(enrollment.getRatingID());
+		
+		if (r != null && this.appMapper.findByRatingID(r.getID()) == null){
+			this.ratingMapper.delete(r);
+		}
+		
 		this.enrollMapper.delete(enrollment);
 		
 	}
@@ -986,6 +1010,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//Objekt in der Datenbank speichern
 		p = this.propertyMapper.insert(p);
 		
+		/*
+		 * Wenn ein Objekt vom Typ Property erzeugt wird muss auch der Timestamp lastEdit
+		 * im zugehörigen PartnerProfile aktualisiert werden. Da Partnerprofile aus mehreren 
+		 * Property Objekten besteht und sich somit auch der Zustand des Partnerprofils 
+		 * ändert. 
+		 */
 		Timestamp lastEdit = new Timestamp(System.currentTimeMillis());
 		partnerProfile.setLastEdit(lastEdit);
 		this.partnerMapper.update(partnerProfile);
@@ -998,6 +1028,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void saveProperty(Property property) throws IllegalArgumentException {
 		this.propertyMapper.update(property);
+		
+		/*
+		 * Wenn ein Objekt vom Typ Property geändert wird muss auch der Timestamp lastEdit
+		 * im zugehörigen PartnerProfile aktualisiert werden. Da Partnerprofile aus mehreren 
+		 * Property Objekten besteht und sich somit auch der Zustand des Partnerprofils
+		 * ändert. 
+		 */
 		Timestamp lastEdit = new Timestamp(System.currentTimeMillis());
 		PartnerProfile p = partnerMapper.findById(property.getPartnerProfileID());
 		p.setLastEdit(lastEdit);
@@ -1108,9 +1145,30 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Löschen eines Teams aus der Datenbank
+	 * @throws WindowAlertException 
 	 */
+	
+	
 	@Override
-	public void deleteTeam(Team team) throws IllegalArgumentException {
+	public void deleteTeam(Team team) throws IllegalArgumentException{		
+		
+		/* 
+		if ((markets != null) && (projects != null)){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze und Projekte"
+					+ "oder ernennen Sie neue Besitzer bevor Sie Ihren Account löschen!");
+		}
+		else if (markets != null){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
+					+ "Sie neue Besitzer für Ihre Marktplätze");
+		}
+		else if (projects != null){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Projekte oder ernennen"
+					+ "Sie neue Besitzer für Ihre Projekte");
+		}
+		else {			
+		this.teamMapper.delete(team);
+		}
+		*/
 		this.teamMapper.delete(team);
 	}
 	

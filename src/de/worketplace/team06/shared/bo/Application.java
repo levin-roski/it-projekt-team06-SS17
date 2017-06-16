@@ -36,6 +36,11 @@ public class Application extends BusinessObject {
     private int orgaUnitID;
     
     /**
+     * ID der zugehörigen ratingID
+     */
+    private int ratingID;
+    
+    /**
      * Auslesen des Bewerbungstextes
      * @return applicationText
      */
@@ -57,6 +62,14 @@ public class Application extends BusinessObject {
      */
 	public int getOrgaUnitID() {
 		return orgaUnitID;
+	}
+	
+	/**
+	 * Auslesen der ID der zugehörigen Rating Instanz
+	 * @return ratingID;
+	 */
+	public int getRatingID() {
+		return ratingID;
 	}
     
     /**
@@ -81,6 +94,14 @@ public class Application extends BusinessObject {
      */
 	public void setOrgaUnitID(int id) {
 		this.orgaUnitID = id;
+	}
+
+	/**
+	 * Setzen der ID der zugehörigen Rating Instanz
+	 * @param ratingID
+	 */
+	public void setRatingID(int ratingID) {
+		this.ratingID = ratingID;
 	}
 
 }

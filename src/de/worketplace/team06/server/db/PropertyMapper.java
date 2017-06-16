@@ -223,4 +223,18 @@ public class PropertyMapper {
         	e.printStackTrace();
         }
     }
+    
+    public void deleteByPartnerProfileID(int id) {
+    	 Connection con = DBConnection.connection();
+    	 
+    	 try{
+    		Statement stmt = con.createStatement();
+         	
+         	stmt.executeUpdate("DELETE FROM property " + "WHERE partnerprofile_id=" + id);
+    	 }
+    	 catch (SQLException e){
+         	e.printStackTrace();
+         }
+    	
+    }
 }
