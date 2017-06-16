@@ -146,7 +146,7 @@ import de.worketplace.team06.shared.bo.Team;
         	Statement stmt = con.createStatement();
         	/** 
 			 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
-			 *wird dann um 1 erhoet und an an proj vergeben
+			 * wird dann um 1 erhoet und an an proj vergeben
 			*/
         	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM project ");
         	
