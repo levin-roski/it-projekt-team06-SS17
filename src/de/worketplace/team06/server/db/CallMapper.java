@@ -42,9 +42,9 @@ public class CallMapper {
 					+ " call.title='" + c.getTitle() +
 					"', call.description= " + c.getDescription() +
 					", call.deadline= '" + c.getDeadline() +
-					"', call.projectID= " + c.getProjectID() + 
-					"', call.projectLeaderID= " + c.getProjectLeaderID() +
-					"', call.partnerProfileID= " + c.getPartnerProfileID() +
+					"', call.project_id= " + c.getProjectID() + 
+					"', call.projectleader_id= " + c.getProjectLeaderID() +
+					"', call.partnerProfile_id= " + c.getPartnerProfileID() +
 					" WHERE call.id= " + c.getID());
     	}
     	catch (SQLException e2) {
@@ -73,7 +73,7 @@ public class CallMapper {
 		
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO call (id, title, description, deadline, projectID, projectLeaderID, partnerProfileID) " 
+				stmt.executeUpdate("INSERT INTO call (id, title, description, deadline, project_id, projectleader_id, partnerprofile_id) " 
 				+ "VALUES (" + c.getID() + ",'" 
 				+ c.getTitle() + "','" + c.getDescription() +  "','" 
 				+ c.getDeadline() + "','" + c.getProjectID() +  "','" 
@@ -109,7 +109,7 @@ public class CallMapper {
         	Statement stmt = con.createStatement();
         	
         	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
-        			+ "deadline, projectID, projectLeaderID, partnerProfileID,  "
+        			+ "deadline, project_id, projectleader_id, partnerprofile_id,  "
         	+ "FROM Call ");
         	
         	while (rs.next()){
@@ -119,8 +119,8 @@ public class CallMapper {
         		c.setDescription(rs.getString("description"));
         		c.setDeadline(rs.getDate("deadline"));
         		c.setProjectID(rs.getInt("projectID"));
-        		c.setProjectLeaderID(rs.getInt("projectLeaderID"));
-        		c.setPartnerProfileID(rs.getInt("endPartnerProfileID"));
+        		c.setProjectLeaderID(rs.getInt("projectleader_id"));
+        		c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
         		
         		result.addElement(c);
         	}
@@ -143,7 +143,7 @@ public class CallMapper {
 		
 		try {						
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM call WHERE call.ProjectID = '" + projectID + "'");		
+			ResultSet rs = stmt.executeQuery("SELECT * FROM call WHERE call.project_id = '" + projectID + "'");		
 			
 			if (rs.next()) {
 				Call c = new Call();
@@ -152,8 +152,8 @@ public class CallMapper {
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(rs.getDate("deadline"));
 				c.setProjectID(rs.getInt("projectID"));
-				c.setProjectLeaderID(rs.getInt("ProjectLeaderID"));
-				c.setPartnerProfileID(rs.getInt("PartnerProfileID"));
+				c.setProjectLeaderID(rs.getInt("projectleader_id"));
+				c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				
 				result.addElement(c);
 			}			
@@ -185,8 +185,8 @@ public class CallMapper {
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(rs.getDate("deadline"));
 				c.setProjectID(rs.getInt("ProjectID"));
-				c.setProjectLeaderID(rs.getInt("ProjectLeaderID"));
-				c.setPartnerProfileID(rs.getInt("PartnerProfileID"));
+				c.setProjectLeaderID(rs.getInt("projectleader_id"));
+				c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				
 				return c;
 			}			
