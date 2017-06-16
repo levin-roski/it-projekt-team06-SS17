@@ -127,7 +127,7 @@ import de.worketplace.team06.shared.bo.*;
 					t.setCreated(rs.getTimestamp("created"));
 					t.setGoogleID(googleID);
 					t.setDescription(rs.getString("description"));
-					t.setPartnerProfileID(rs.getInt("partnerprofileID"));
+					t.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 					t.setType(rs.getString("type"));
 					
 					t.setName(rs.getString("team_name"));
@@ -156,7 +156,7 @@ import de.worketplace.team06.shared.bo.*;
 		    	//Updaten eines Teams
 		    	stmt.executeUpdate("UPDATE orgaunit, team SET"
 		    						+ " orgaunit.description='" + t.getDescription() +
-		    						"', orgaunit.partnerprofileID= " + t.getPartnerProfileID() +
+		    						"', orgaunit.partnerprofile_id= " + t.getPartnerProfileID() +
 		    						", team.team_name= '" + t.getName() +
 		    						"', team.membercount= " + t.getMembercount() + 
 		    						" WHERE orgaunit.id= " + t.getID() + 
@@ -197,7 +197,7 @@ import de.worketplace.team06.shared.bo.*;
 					t.setCreated(rs.getTimestamp("created"));
 					t.setGoogleID(rs.getString("google_id"));
 					t.setDescription(rs.getString("description"));
-					t.setPartnerProfileID(rs.getInt("partnerprofileID"));
+					t.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 					t.setType(rs.getString("type"));
 					
 					t.setName(rs.getString("team_name"));
