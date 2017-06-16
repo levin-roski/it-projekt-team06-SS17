@@ -210,14 +210,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void deleteApplication(Application application) throws IllegalArgumentException {
 		Rating r = this.ratingMapper.findById(application.getRatingID());
 		
-		if (this.enrollMapper.findByRatingID(r.getID()) == null){
+		if (r != null && this.enrollMapper.findByRatingID(r.getID()) == null){
 			this.ratingMapper.delete(r);
-			this.appMapper.delete(application);
 		}
 		
-		else{
-			this.appMapper.delete(application);
-		}
+		
+		this.appMapper.delete(application);
+		
 		
 	}
 	
@@ -480,6 +479,72 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteMarketplace(Marketplace m) throws IllegalArgumentException {
+		Vector<Project> allProjects = projectMapper.findByMarketplaceID(m.getID());
+		
+		if (allProjects != null){
+			
+			//Für Jedes Projekt werden die zugehörigen Ausschreibungen und Beteiligungen ausgelesen und gelöscht
+			for(Project p : allProjects){
+				Vector<Call> allCalls = callMapper.findByProjectID(p.getID());
+				if (allCalls != null){
+					for(Call c : allCalls){
+					deleteCall(c);
+					}
+				}
+				Vector<Enrollment> allEnrollments = enrollMapper.findByProjectID(p.getID());
+				if (allEnrollments != null){
+					for(Enrollment e : allEnrollments){
+					deleteEnrollment(e);
+					}
+				}
+				this.projectMapper.delete(p);
+			}
+			this.marketMapper.delete(m);
+		}
+		
+		
+		
+		
+		/*
+		 * Vector<Application> allApps = appMapper.findByCallID(call.getID());
+		if (allApps != null){
+			for (Application a : allApps){
+				
+				//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
+				Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
+					
+				if (rating != null){
+				//Es wird überprüft ob die Bewertung auch mit einer Enrollment Instanz verbunden ist
+				//Wenn ja wird der Rating Mapper nicht gelöscht, Wenn nein wird er gelöscht. 
+					if (this.enrollMapper.findByRatingID(rating.getID()) == null){
+						this.ratingMapper.delete(rating);
+					}
+					
+					
+				}	
+				else {
+					//TO Do: Fehlermeldung
+				}
+				this.appMapper.delete(a);
+											
+			}
+		}
+		
+		PartnerProfile pp = getPartnerProfileFor(call);
+		if (pp != null){
+			
+			this.propertyMapper.deleteByPartnerProfileID(pp.getID());
+			this.partnerMapper.delete(pp);
+		} else {
+			//TODO: Fehlermeldung
+		}
+			
+		//Löschen der jeweiligen Ausschreibung
+		this.callMapper.delete(call);
+		 */
+		
+		
+		
 		this.marketMapper.delete(m);
 	}
 	
