@@ -133,7 +133,16 @@ public class Test {
 		
 		Project pro1 = admin.getProjectByID(1);
 		Project pro2 = admin.getProjectByID(2);
-		//admin.createCall(pro1, p2, , title, description, deadline)
+		Date deadline = new Date();
+		PartnerProfile pp1 = new PartnerProfile();
+		admin.createPartnerProfileFor(p2);
+		pp1 = admin.getPartnerProfileFor(p2);
+		try {
+			deadline = sdf.parse("2017-04-11");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		admin.createCall(pro1, p2, pp1, "Testcall 1", "", deadline);
 		
 		
 		
