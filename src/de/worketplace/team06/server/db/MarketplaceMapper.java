@@ -46,7 +46,7 @@ public class MarketplaceMapper {
 				m.setID(rs.getInt("maxid") + 1);
 		
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO marketplace (id, created, title, description, orgaunit_id) " + "VALUES (" + m.getID() + ",'" + m.getCreated() + "','" + m.getTitle() + "','" + m.getDescription() + "','" + m.getOrgaUnitID() + "')");
+				stmt.executeUpdate("INSERT INTO marketplace (id, created, title, description, orgaunit_id) " + "VALUES (" + m.getID() + ",'" + m.getCreated() + "','" + m.getTitle() + "','" + m.getDescription() + "'," + m.getOrgaUnitID() + ")");
 			}
 		}
 		catch (SQLException e2) {
