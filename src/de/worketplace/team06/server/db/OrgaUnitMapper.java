@@ -75,7 +75,7 @@ public class OrgaUnitMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, google_id, description, partnerprofileID, type FROM orgaunit " + "WHERE google_id = " + googleID);		
+			ResultSet rs = stmt.executeQuery("Select id, created, google_id, description, partnerprofile_id, type FROM orgaunit " + "WHERE google_id = " + googleID);		
 			String type = rs.getString("type");
 		
 			return type;
@@ -128,7 +128,7 @@ public class OrgaUnitMapper {
 	    	Statement stmt = con.createStatement();
 	    	stmt.executeUpdate("UPDATE orgaunit, person SET"
 	    						+ " orgaunit.description='" + ou.getDescription() +
-	    						"', orgaunit.partnerprofileID= " + ou.getPartnerProfileID() +
+	    						"', orgaunit.partnerprofile_id= " + ou.getPartnerProfileID() +
 	    						" WHERE orgaunit.id= " + ou.getID()); 
 	    						
 	    }
