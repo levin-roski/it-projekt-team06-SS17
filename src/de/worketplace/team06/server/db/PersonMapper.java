@@ -122,7 +122,7 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
 											+ "ON orgaunit.id = person.id "
-											+ "WHERE orgaunit.google_id = '" + googleID + "'");		
+											+ "WHERE orgaunit.google_id='" + googleID + "'");		
 			
 			if (rs.next()) {
 				Person p = new Person();

@@ -122,7 +122,8 @@ public class OrganisationMapper {
 		
 		try {						
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.google_id = '" + googleID + "'");		
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN organisation ON"
+					+ " orgaunit.id = organisation.id WHERE orgaunit.google_id ='" + googleID + "'");		
 			
 			if (rs.next()) {
 				Organisation o = new Organisation();

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
+
 import de.worketplace.team06.shared.bo.*;
 
 public class Test {
@@ -67,6 +68,8 @@ public class Test {
 		admin.createOrganisation("CoolStrich", "Malerei", "Hansestraße 4", 87765, "Hamburg", "G1001");
 		admin.createOrganisation("Mediakram", "Medienagentur", "Friedrich-Schiller-Straße 34a", 70174, "Stuttgart", "G1003");
 		
+		
+		
 		/*
 		 * Teams generieren
 		 * Name, Beschreibung, Mitgliederzahl, GoogleID
@@ -90,8 +93,11 @@ public class Test {
 //			e.printStackTrace();
 //		}
 		
-		OrgaUnit p1 = admin.getPersonByGoogleID("G3000");
+		Person p1 = admin.getPersonByGoogleID("G3000");
+		System.out.println(p1.getGoogleID());
+		
 		admin.createMarketplace("Marktplatz Blau", "Dieser Marktplatz ist für Blaue", p1);
+		
 		OrgaUnit u1 = admin.getOrganisationByGoogleID("G1001");
 		admin.createMarketplace("Marktplatz Rot", "Dieser Marktplatz ist für Rote", u1);
 		
@@ -102,47 +108,47 @@ public class Test {
 //			e.printStackTrace();
 //		}
 		
-		Marketplace m1 = admin.getMarketplaceByID(1);
-		Person p2 = admin.getPersonByGoogleID("G3001");
-		Date startdate = new Date();
-		Date enddate = new Date();
-		
+//		Marketplace m1 = admin.getMarketplaceByID(1);
+//		Person p2 = admin.getPersonByGoogleID("G3001");
+//		Date startdate = new Date();
+//		Date enddate = new Date();
+//		
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //		String date = sdf.format("yyyy-MM-dd");
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			startdate = sdf.parse("2017-06-11");
-			enddate = sdf.parse("2017-08-02");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		/*
-		 * Projekte generieren
-		 */
-		admin.createProject(m1, "Testprojekt", "Ein Projekt zu Testzwecken", p2, u1, startdate, enddate);
-		admin.createProject(m1, "Testprojekt 2", "Ein neues Projekt", p2, u1, startdate, enddate);
-		
-		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		Project pro1 = admin.getProjectByID(1);
-		Project pro2 = admin.getProjectByID(2);
-		Date deadline = new Date();
-		PartnerProfile pp1 = new PartnerProfile();
-		admin.createPartnerProfileFor(p2);
-		pp1 = admin.getPartnerProfileFor(p2);
-		try {
-			deadline = sdf.parse("2017-04-11");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		admin.createCall(pro1, p2, pp1, "Testcall 1", "", deadline);
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		try {
+//		startdate = sdf.parse("2017-06-11");
+//		enddate = sdf.parse("2017-08-02");
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		/*
+//		 * Projekte generieren
+//		 */
+//		admin.createProject(m1, "Testprojekt", "Ein Projekt zu Testzwecken", p2, u1, startdate, enddate);
+//		admin.createProject(m1, "Testprojekt 2", "Ein neues Projekt", p2, u1, startdate, enddate);
+//		
+//		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		Project pro1 = admin.getProjectByID(1);
+//		Project pro2 = admin.getProjectByID(2);
+//		Date deadline = new Date();
+//		PartnerProfile pp1 = new PartnerProfile();
+//		admin.createPartnerProfileFor(p2);
+//		pp1 = admin.getPartnerProfileFor(p2);
+//		try {
+//			deadline = sdf.parse("2017-04-11");
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		admin.createCall(pro1, p2, pp1, "Testcall 1", "", deadline);
 		
 		
 		
@@ -279,8 +285,9 @@ public class Test {
 	
 	
 	public static void testOfCreateMarketplace(WorketplaceAdministrationImpl admin) {
-		Person p = admin.getPersonByGoogleID("G1337");
-		
+		Person p = admin.getPersonByGoogleID("G3000");
+		System.out.println("Vorname"+ p.getFirstName());
+	
 		
 		
 		
@@ -293,7 +300,7 @@ public class Test {
 		Marketplace t = null;
 		
 		t = admin.createMarketplace("Baumarkt", "Alles mit Bauen", p);
-		}
+	}
 	
 	private static void testOfGetMarketplaceFor(WorketplaceAdministrationImpl admin) {
 		Person p = admin.getPersonByGoogleID("G1337");
