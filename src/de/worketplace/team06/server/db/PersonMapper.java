@@ -81,7 +81,7 @@ public class PersonMapper {
 				/**
 				 * Einfuegeoption, damit das neue Person-Tupel in die Datenbank eingefuegt werden kann
 				 */
-				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) "
+				stmt.executeUpdate("INSERT INTO orgaunit (id, created, google_id, description, type) "
 									+ "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" 
 									+ p.getGoogleID() +  "','" + p.getDescription() +  "','"
 									+ p.getType() + "')");
@@ -122,7 +122,7 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
 											+ "ON orgaunit.id = person.id "
-											+ "WHERE orgaunit.googleID = '" + googleID + "'");		
+											+ "WHERE orgaunit.google_id = '" + googleID + "'");		
 			
 			if (rs.next()) {
 				Person p = new Person();
@@ -224,7 +224,7 @@ public class PersonMapper {
 				Person p = new Person();
 				p.setID(rs.getInt("id"));
 				p.setCreated(rs.getTimestamp("created"));
-				p.setGoogleID(rs.getString("googleID"));
+				p.setGoogleID(rs.getString("google_id"));
 				p.setDescription(rs.getString("description"));
 				p.setPartnerProfileID(rs.getInt("partnerprofileID"));
 				p.setType(rs.getString("type"));

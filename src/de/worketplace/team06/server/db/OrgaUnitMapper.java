@@ -29,7 +29,7 @@ public class OrgaUnitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE id = " + googleID);
+			ResultSet rs = stmt.executeQuery("Select id, created, google_id, description, partnerprofileID, type FROM orgaunit " + "WHERE id = " + googleID);
 			
 			String type = rs.getType(); 
 	        
@@ -75,7 +75,7 @@ public class OrgaUnitMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, googleID, description, partnerprofileID, type FROM orgaunit " + "WHERE googleID = " + googleID);		
+			ResultSet rs = stmt.executeQuery("Select id, created, google_id, description, partnerprofileID, type FROM orgaunit " + "WHERE google_id = " + googleID);		
 			String type = rs.getString("type");
 		
 			return type;
@@ -111,7 +111,7 @@ public class OrgaUnitMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id FROM orgaunit " + "WHERE googleid = " + googleID);
+			ResultSet rs = stmt.executeQuery("Select id FROM orgaunit " + "WHERE google_id = " + googleID);
 			checkID = rs.getInt("id");
 			return checkID;
 		}
