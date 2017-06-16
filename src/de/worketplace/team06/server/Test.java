@@ -83,24 +83,24 @@ public class Test {
 		admin.createPerson("Thomas", "Mueller", "Schuttstr 6", 38299, "Langweid", "Auch ein Mensch", "G3001");
 		admin.createPerson("Jesus", "Christus", "Wüstenweg 4", 12345, "Jerusalem", "Kein Mensch, Gott.", "G3002");
 		
-		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		
 		OrgaUnit p1 = admin.getPersonByGoogleID("G3000");
 		admin.createMarketplace("Marktplatz Blau", "Dieser Marktplatz ist für Blaue", p1);
 		OrgaUnit u1 = admin.getOrganisationByGoogleID("G1001");
 		admin.createMarketplace("Marktplatz Rot", "Dieser Marktplatz ist für Rote", u1);
 		
-		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		
 		Marketplace m1 = admin.getMarketplaceByID(1);
 		Person p2 = admin.getPersonByGoogleID("G3001");
@@ -133,7 +133,16 @@ public class Test {
 		
 		Project pro1 = admin.getProjectByID(1);
 		Project pro2 = admin.getProjectByID(2);
-		//admin.createCall(pro1, p2, , title, description, deadline)
+		Date deadline = new Date();
+		PartnerProfile pp1 = new PartnerProfile();
+		admin.createPartnerProfileFor(p2);
+		pp1 = admin.getPartnerProfileFor(p2);
+		try {
+			deadline = sdf.parse("2017-04-11");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		admin.createCall(pro1, p2, pp1, "Testcall 1", "", deadline);
 		
 		
 		

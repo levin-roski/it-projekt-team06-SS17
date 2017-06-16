@@ -81,11 +81,11 @@ public class PersonMapper {
 				/**
 				 * Einfuegeoption, damit das neue Person-Tupel in die Datenbank eingefuegt werden kann
 				 */
-				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) "
+				stmt.executeUpdate("INSERT INTO orgaunit (id, created, google_id, description, type) "
 									+ "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" 
 									+ p.getGoogleID() +  "','" + p.getDescription() +  "','"
 									+ p.getType() + "')");
-				stmt.executeUpdate("INSERT INTO person (id, created, firstName, lastName, street, zipcode, city) "
+				stmt.executeUpdate("INSERT INTO person (id, created, firstname, lastname, street, zipcode, city) "
 									+ "VALUES (" + p.getID() + ",'" + p.getCreated() + "','"
 									+ p.getFirstName() + "','" + p.getLastName() + "','" + p.getStreet() + "'," 
 									+ p.getZipcode() + ",'" + p.getCity() + "')");
@@ -122,7 +122,7 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
 											+ "ON orgaunit.id = person.id "
-											+ "WHERE orgaunit.googleID = '" + googleID + "'");		
+											+ "WHERE orgaunit.google_id = '" + googleID + "'");		
 			
 			if (rs.next()) {
 				Person p = new Person();
@@ -130,11 +130,11 @@ public class PersonMapper {
 				p.setCreated(rs.getTimestamp("created"));
 				p.setGoogleID(googleID);
 				p.setDescription(rs.getString("description"));
-				p.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				p.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				p.setType(rs.getString("type"));
 				
-				p.setFirstName(rs.getString("firstName"));
-				p.setLastName(rs.getString("lastName"));
+				p.setFirstName(rs.getString("firstname"));
+				p.setLastName(rs.getString("lastname"));
 				p.setStreet(rs.getString("street"));
 				p.setZipcode(rs.getInt("zipcode"));
 				p.setCity(rs.getString("city"));
@@ -162,9 +162,9 @@ public class PersonMapper {
 	    	//Updaten einer Person :) 
 	    	stmt.executeUpdate("UPDATE orgaunit, person SET"
 	    						+ " orgaunit.description='" + p.getDescription() +
-	    						"', orgaunit.partnerprofileID= " + p.getPartnerProfileID() +
-	    						", person.firstName= '" + p.getFirstName() +
-	    						"', person.lastName= '" + p.getLastName() + 
+	    						"', orgaunit.partnerprofile_id= " + p.getPartnerProfileID() +
+	    						", person.firstname= '" + p.getFirstName() +
+	    						"', person.lastname= '" + p.getLastName() + 
 	    						"', person.street= '" + p.getStreet() + 
 	    						"', person.city= '" + p.getCity() + 
 	    						"', person.zipcode= " + p.getZipcode() + 
@@ -224,13 +224,13 @@ public class PersonMapper {
 				Person p = new Person();
 				p.setID(rs.getInt("id"));
 				p.setCreated(rs.getTimestamp("created"));
-				p.setGoogleID(rs.getString("googleID"));
+				p.setGoogleID(rs.getString("google_id"));
 				p.setDescription(rs.getString("description"));
-				p.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				p.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				p.setType(rs.getString("type"));
 				
-				p.setFirstName(rs.getString("firstName"));
-				p.setLastName(rs.getString("lastName"));
+				p.setFirstName(rs.getString("firstname"));
+				p.setLastName(rs.getString("lastname"));
 				p.setStreet(rs.getString("street"));
 				p.setZipcode(rs.getInt("zipcode"));
 				p.setCity(rs.getString("city"));

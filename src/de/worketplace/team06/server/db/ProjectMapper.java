@@ -32,7 +32,7 @@ import de.worketplace.team06.shared.bo.Team;
 	   */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	 /**
-	   * Gesch�tzter Konstruktor - verhindert die M�glichkeit, mit <code>new</code>
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected ProjectMapper(){
@@ -104,7 +104,7 @@ import de.worketplace.team06.shared.bo.Team;
         	
         	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
         			+ "projectleader_id, projectowner_id, start_date, end_date, created,  "
-        	+ "FROM team ");
+        	+ "FROM project ");
         	
         	while (rs.next()){
         		Project proj = new Project();
@@ -146,7 +146,7 @@ import de.worketplace.team06.shared.bo.Team;
         	Statement stmt = con.createStatement();
         	/** 
 			 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
-			 *wird dann um 1 erhoet und an an proj vergeben
+			 * wird dann um 1 erhoet und an an proj vergeben
 			*/
         	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM project ");
         	
@@ -157,17 +157,17 @@ import de.worketplace.team06.shared.bo.Team;
         	/**
 			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
 			 */
-        	stmt.executeUpdate("INSERT INTO project (id, title, description, projectleader_id, projectowner_id, start_date, end_date, marketplace_id) " 
+        	stmt.executeUpdate("INSERT INTO project (id, created, title, description, projectleader_id, projectowner_id, start_date, end_date, marketplace_id) " 
         	+ "VALUES (" 
-        	+ proj.getID() + ", " 
+        	+ proj.getID() + ",'" 
+        	+ proj.getCreated() + "','" 
         	+ proj.getTitle() + "','" 
         	+ proj.getDescription() + "','"
         	+ proj.getProjectLeaderID() + "','"
         	+ proj.getProjectOwnerID() + "','"
         	+ startdate + "','"
         	+ enddate + "','"
-        	+ proj.getMarketplaceID() + "','"         // noch hinzugef�gt, damit das Projekt einem Marktplatz zugewiesen werden kann 
-        	+ "')");
+        	+ proj.getMarketplaceID() + "')");
         	}
         }
        catch (SQLException e){

@@ -89,7 +89,7 @@ public class OrganisationMapper {
 				/**
 				 * Einfuegeoption, damit das neue Organisation-Tupel in die Datenbank eingefuegt werden kann
 				 */
-				stmt.executeUpdate("INSERT INTO orgaunit (id, created, googleID, description, type) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getGoogleID() +  "','" + o.getDescription() +  "','" + o.getType() + "')");
+				stmt.executeUpdate("INSERT INTO orgaunit (id, created, google_id, description, type) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getGoogleID() +  "','" + o.getDescription() +  "','" + o.getType() + "')");
 				stmt.executeUpdate("INSERT INTO organisation (id, created, name, street, zipcode, city) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getName() + "','" + o.getStreet() + "'," + o.getZipcode() + ",'" + o.getCity() + "')");
 				con.commit();
 			}
@@ -122,7 +122,7 @@ public class OrganisationMapper {
 		
 		try {						
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.googleID = '" + googleID + "'");		
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.google_id = '" + googleID + "'");		
 			
 			if (rs.next()) {
 				Organisation o = new Organisation();
@@ -130,7 +130,7 @@ public class OrganisationMapper {
 				o.setCreated(rs.getTimestamp("created"));
 				o.setGoogleID(googleID);
 				o.setDescription(rs.getString("description"));
-				o.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				o.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				o.setType(rs.getString("type"));
 				
 				o.setName(rs.getString("name"));
@@ -161,7 +161,7 @@ public class OrganisationMapper {
 	    	//Updaten einer Person :) 
 	    	stmt.executeUpdate("UPDATE orgaunit, organisation SET"
 	    						+ " orgaunit.description='" + o.getDescription() +
-	    						"', orgaunit.partnerprofileID= " + o.getPartnerProfileID() +
+	    						"', orgaunit.partnerprofile_id= " + o.getPartnerProfileID() +
 	    						", organisation.name= '" + o.getName() +
 	    						"', organisation.street= '" + o.getStreet() + 
 	    						"', organisation.zipcode= " + o.getZipcode() + 
@@ -214,9 +214,9 @@ public class OrganisationMapper {
 				Organisation o = new Organisation();
 				o.setID(rs.getInt("id"));
 				o.setCreated(rs.getTimestamp("created"));
-				o.setGoogleID(rs.getString("googleID"));
+				o.setGoogleID(rs.getString("google_id"));
 				o.setDescription(rs.getString("description"));
-				o.setPartnerProfileID(rs.getInt("partnerprofileID"));
+				o.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				o.setType(rs.getString("type"));
 				
 				o.setName(rs.getString("name"));

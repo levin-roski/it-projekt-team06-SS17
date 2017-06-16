@@ -860,9 +860,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
 			OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate) throws IllegalArgumentException {
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		Project p = new Project();
 		p.setTitle(title);
+		p.setCreated(created);
 		p.setDescription(description);
 		p.setProjectLeaderID(projectLeaderPerson.getID());
 		p.setProjectOwnerID(projectOwnerOrgaUnit.getID());
