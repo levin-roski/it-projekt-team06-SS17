@@ -1122,11 +1122,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Löschen eines Teams aus der Datenbank
 	 * @throws WindowAlertException 
 	 */
+	
+	
 	@Override
-	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException {		
-		Vector<Marketplace> markets = getMarketplacesFor(team);
-		Vector<Project> projects = getProjectsForOwner(team);
+	public void deleteTeam(Team team) throws IllegalArgumentException{		
 		
+		/* 
 		if ((markets != null) && (projects != null)){
 			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze und Projekte"
 					+ "oder ernennen Sie neue Besitzer bevor Sie Ihren Account löschen!");
@@ -1142,6 +1143,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		else {			
 		this.teamMapper.delete(team);
 		}
+		*/
+		this.teamMapper.delete(team);
 	}
 	
 	/**
