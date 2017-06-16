@@ -208,7 +208,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		Rating r = this.ratingMapper.findById(application.getRatingID());
+		
+		if (this.enrollMapper.findByRatingID(r.getID()) == null){
+			this.ratingMapper.delete(r);
+			this.appMapper.delete(application);
+		}
+		
+		else{
+			this.appMapper.delete(application);
+		}
 		
 	}
 	

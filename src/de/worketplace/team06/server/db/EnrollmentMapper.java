@@ -154,6 +154,38 @@ public class EnrollmentMapper {
 		return result;
 	}
 	
+public Enrollment findByRatingID (int rID) {
+		
+		Connection con = DBConnection.connection();
+		
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE rating_id ='" + rID + "'ORDER BY id");
+			
+				if (rs.next()) {
+				
+					Enrollment e = new Enrollment();
+					e.setID(rs.getInt("id"));
+					e.setCreated(rs.getTimestamp("created"));
+					e.setStartDate(sdf.parse(rs.getString("start_date")));
+					e.setPeriod(rs.getInt("period"));
+					e.setEndDate(sdf.parse(rs.getString("start_date")));
+					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
+					e.setProjectID(rs.getInt("project_id"));
+					e.setRatingID(rs.getInt("rating_id"));
+				
+				return e;
+			}
+		}
+		
+		catch (SQLException | ParseException e2) {
+			e2.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	
 	public Enrollment insert(Enrollment e) {
 		Connection con = DBConnection.connection();
