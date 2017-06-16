@@ -78,6 +78,32 @@ public class ApplicationMapper {
 		return result;
 	}
 	
+	public Application findByRatingID(int rID) {
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id FROM application " + "WHERE rating_id = " + rID);
+			
+			if (rs.next()) {
+				Application a = new Application();
+				a.setID(rs.getInt("id"));
+				a.setCreated(rs.getTimestamp("created"));
+				a.setText(rs.getString("text"));
+				a.setCallID(rs.getInt("call_id"));
+				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
+				a.setRatingID(rs.getInt("rating_id"));
+				return a;
+			}
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
 	
 	public Vector<Application> findByOrgaUnitID (int orgaUnitID) {
 		
