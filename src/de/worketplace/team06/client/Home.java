@@ -31,7 +31,7 @@ public class Home implements EntryPoint {
 		final Button editorButton = new Button("Editor");
 		editorButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Window.Location.assign("Worketplace.html");
+				Window.Location.assign("worketplace.html");
 			}
 		});
 		RootPanel.get("editorButton").add(editorButton);
@@ -39,7 +39,7 @@ public class Home implements EntryPoint {
 		final Button reportGeneratorButton = new Button("ReportGenerator");
 		reportGeneratorButton.addClickHandler(new ClickHandler() {
 		  public void onClick(ClickEvent event) {
-		    Window.Location.assign("ReportGenerator.html");
+		    Window.Location.assign("reportGenerator.html");
 		  }
 		});
 		RootPanel.get("reportGeneratorButton").add(reportGeneratorButton);
