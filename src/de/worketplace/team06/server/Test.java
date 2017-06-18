@@ -148,11 +148,55 @@ public class Test {
 			e.printStackTrace();
 		}
 		admin.createCall(pro1, p2, pp1, "Testcall 1", "test", deadline);
+			
+	}
+	
+	
+	public static void testDeleteAll(WorketplaceAdministrationImpl admin){
 		
+		Vector<Project> allProjects = admin.getAllProjects();
 		
+		if (allProjects != null){
+			for (Project p : allProjects){
+				admin.deleteProject(p);
+			}
+		}
 		
+		Vector<Person> allPersons = new Vector<Person>();
+		allPersons.add(admin.getPersonByGoogleID("G3000"));
+		allPersons.add(admin.getPersonByGoogleID("G3001"));
+		allPersons.add(admin.getPersonByGoogleID("G3002"));
+		
+		if (allPersons != null){
+			for (Person per : allPersons){
+				admin.deletePerson(per);
+			}
+		}
+		
+		Vector<Team> allTeams = new Vector<Team>();
+		allTeams.add(admin.getTeamByGoogleID("G2000"));
+		allTeams.add(admin.getTeamByGoogleID("G2001"));
+		allTeams.add(admin.getTeamByGoogleID("G2002"));
+		
+		if (allTeams != null){
+			for (Team t : allTeams){
+				admin.deleteTeam(t);
+			}
+		}
+		
+		Vector<Organisation> allOrganisations = new Vector<Organisation>();
+		allOrganisations.add(admin.getOrganisationByGoogleID("G2000"));
+		allOrganisations.add(admin.getOrganisationByGoogleID("G2001"));
+		allOrganisations.add(admin.getOrganisationByGoogleID("G2002"));
+		
+		if (allOrganisations != null){
+			for (Organisation o : allOrganisations){
+				admin.deleteOrganisation(o);
+			}
+		}
 		
 	}
+	
 	
 
 	/*
