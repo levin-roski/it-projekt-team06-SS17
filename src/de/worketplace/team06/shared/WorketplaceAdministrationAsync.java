@@ -133,6 +133,16 @@ public interface WorketplaceAdministrationAsync {
 	void createCall(Project project, Person callerPerson, String title, String description, Date deadline,
 			AsyncCallback<Call> callback);
 
+	void createPerson(String firstName, String lastName, String street, int zipcode, String city, String description,
+			String googleID, AsyncCallback<Person> callback);
+
+	void createTeam(String name, String description, int membercount, String googleID, AsyncCallback<Team> callback);
+
+	void createOrganisation(String name, String description, String street, int zipcode, String city, String googleID,
+			AsyncCallback<Organisation> callback);
+	
+	
+
 
 	
 }
