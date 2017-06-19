@@ -12,6 +12,7 @@
 	<servlet-mapping>
 		<servlet-name>worketplaceAdministration</servlet-name>
 		<url-pattern>/worketplace/worketplaceAdmin</url-pattern>
+		<url-pattern>/test/worketplaceAdmin</url-pattern>
 	</servlet-mapping>
  
     <!-- Für lokale Tests auskommentieren -->
@@ -34,12 +35,14 @@
 		<servlet-name>loginService</servlet-name>
 		<url-pattern>/worketplace/login</url-pattern>
 		<url-pattern>/home/login</url-pattern>
+		<url-pattern>/test/login</url-pattern>
 	</servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-    <welcome-file>Worketplace.html</welcome-file>
+    <welcome-file>worketplace.html</welcome-file>
+    <welcome-file>test.html</welcome-file>
   </welcome-file-list>
 
 </web-app>
