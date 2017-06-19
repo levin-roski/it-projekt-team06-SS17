@@ -13,6 +13,7 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MarketplaceForm;
 import de.worketplace.team06.client.gui.SearchMarketplace;
+import de.worketplace.team06.client.gui.testRpcGetAllMarketplaces;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.bo.LoginInfo;
@@ -31,11 +32,11 @@ public class Worketplace implements EntryPoint {
 	public void onModuleLoad() {
 		final EditorNavigation navigationMenu = new EditorNavigation();
 		navigationMenu.load();
-		final MarketplaceForm form = new MarketplaceForm();
+//		final MarketplaceForm form = new MarketplaceForm();
 //		form.load(null);
 
-		final SearchMarketplace searchMarketplace = new SearchMarketplace();
-		searchMarketplace.load();
+		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
+		testRpcGetAllMarketplaces.load();
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
