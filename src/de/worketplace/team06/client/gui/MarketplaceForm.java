@@ -16,6 +16,15 @@ public class MarketplaceForm {
 	private TextBox nameInput = new TextBox();
 	private Label beschreibungLabel = new Label("Beschreibung");
 	private TextBox beschreibungInput = new TextBox();
+	private Boolean shouldUpdate = false;
+	private Marketplace toChangeMarketplace;
+	
+//	public MarketplaceForm(Marketplace pToChangeMarketplace = null){
+//		if (pToChangeMarketplace != null) {
+//			shouldUpdate = true;
+//			this.toChangeMarketplace = pToChangeMarketplace;
+//		}
+//	}
 	
 	public void load (Marketplace marketplace) {
 		Grid form = new Grid(2,2);

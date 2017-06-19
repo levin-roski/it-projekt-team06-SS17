@@ -1,5 +1,6 @@
 package de.worketplace.team06.client.gui;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
