@@ -63,6 +63,7 @@ public interface WorketplaceAdministration extends RemoteService {
     /**
      * Speichern eines Objekts vom Typ Team (Subklasse von OrgaUnit)
      * 
+     *
      * @param team das zu speichernde Team
      */
     public void saveTeam(Team team) throws IllegalArgumentException;
@@ -193,7 +194,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param deadline 
      * @return
      */
-    public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title, String description, Date deadline) throws IllegalArgumentException;
+
 
     /**
      * @param call
@@ -321,5 +322,14 @@ public interface WorketplaceAdministration extends RemoteService {
 	Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException;
 
 	Property createProperty(PartnerProfile partnerProfile, String name, double value) throws IllegalArgumentException;
+
+	public Call createCall(Project project, Person callerPerson, String title, String description, Date deadline)
+			throws IllegalArgumentException;
+	
+	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException;
+	
+	public Team createTeam(String name, String description, int membercount, String googleID) throws IllegalArgumentException;
+	
+	public Organisation createOrganisation(String name, String description, String street, int zipcode, String city, String googleID) throws IllegalArgumentException;
 
 }

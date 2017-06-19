@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.db;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.*;
@@ -8,6 +10,8 @@ import de.worketplace.team06.shared.bo.*;
 public class CallMapper {
 	
 	private static CallMapper callMapper = null;
+	
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	 /**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
@@ -33,25 +37,25 @@ public class CallMapper {
 	 * @return
 	 */
 	
-	public Call update(Call c) {
+	public void update(Call c) {
     	Connection con = DBConnection.connection();
     	
     	try {
+    		String deadline = sdf.format(c.getDeadline());
+    		
     		Statement stmt = con.createStatement();
-    		stmt.executeUpdate("UPDATE call SET"
-					+ " call.title='" + c.getTitle() +
-					"', call.description= " + c.getDescription() +
-					", call.deadline= '" + c.getDeadline() +
-					"', call.project_id= " + c.getProjectID() + 
-					"', call.projectleader_id= " + c.getProjectLeaderID() +
-					"', call.partnerProfile_id= " + c.getPartnerProfileID() +
-					" WHERE call.id= " + c.getID());
+    		stmt.executeUpdate("UPDATE projektmarktplatz.`call` SET"
+					+ " projektmarktplatz.`call`.title='" + c.getTitle() +
+					"', projektmarktplatz.`call`.description= '" + c.getDescription() +
+					"', projektmarktplatz.`call`.deadline= '" + deadline +
+					"', projektmarktplatz.`call`.project_id= " + c.getProjectID() + 
+					", projektmarktplatz.`call`.orgaunit_id= " + c.getCallerID() +
+					", projektmarktplatz.`call`.partnerProfile_id= " + c.getPartnerProfileID() +
+					" WHERE projektmarktplatz.`call`.id= " + c.getID());
     	}
     	catch (SQLException e2) {
     		e2.printStackTrace();	
     	}
-		return null;
-		
 	}
 
 	/**
@@ -64,33 +68,26 @@ public class CallMapper {
 		Connection con = DBConnection.connection();
 		
 		try {
+			String deadline = sdf.format(c.getDeadline());
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM call ");			
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM projektmarktplatz.`call`");			
 			if (rs.next()) {
 				
 				c.setID(rs.getInt("maxid") + 1);
 		
-				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO call (id, title, description, deadline, project_id, projectleader_id, partnerprofile_id) " 
-				+ "VALUES (" + c.getID() + ",'" 
+				stmt.executeUpdate("INSERT INTO projektmarktplatz.`call` (id, created, title, description, deadline, orgaunit_id, project_id) " 
+				+ "VALUES (" + c.getID() + ",'" + c.getCreated() + "','" 
 				+ c.getTitle() + "','" + c.getDescription() +  "','" 
-				+ c.getDeadline() + "'," + c.getProjectID() +  "," 
-				+ c.getProjectLeaderID() +  "," + c.getPartnerProfileID() + ")");
+				+ deadline + "'," + c.getCallerID() +  "," 
+				+ c.getProjectID() + ")");
 			}
 		}
 		
-		catch (SQLException e2) {
-			try {
-				System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. Es wird versucht die Transaktion rückgängig zu machen!");
-				con.rollback();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			  finally {
-				  e2.printStackTrace();
-			}	
+		catch (SQLException e) {
+			
+				e.printStackTrace();	
 		}
 		return c;
 	}
@@ -110,22 +107,22 @@ public class CallMapper {
         	
         	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
         			+ "deadline, project_id, projectleader_id, partnerprofile_id,  "
-        	+ "FROM Call ");
+        	+ "FROM projektmarktplatz.`call` ");
         	
         	while (rs.next()){
         		Call c = new Call();
         		c.setID(rs.getInt("id"));
         		c.setTitle(rs.getString("title"));
         		c.setDescription(rs.getString("description"));
-        		c.setDeadline(rs.getDate("deadline"));
+        		c.setDeadline(sdf.parse(rs.getString("deadline")));
         		c.setProjectID(rs.getInt("projectID"));
-        		c.setProjectLeaderID(rs.getInt("projectleader_id"));
+        		c.setCallerID(rs.getInt("orgaunit_id"));
         		c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
         		
         		result.addElement(c);
         	}
         }
-        catch (SQLException e){
+        catch (SQLException | ParseException e){
         	e.printStackTrace();
         }
         return result;
@@ -143,22 +140,22 @@ public class CallMapper {
 		
 		try {						
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM call WHERE call.project_id = '" + projectID + "'");		
+			ResultSet rs = stmt.executeQuery("SELECT * FROM projektmarktplatz.`call` WHERE projektmarktplatz.`call`.project_id = '" + projectID + "'");		
 			
 			if (rs.next()) {
 				Call c = new Call();
 				c.setID(rs.getInt("id"));
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
-				c.setDeadline(rs.getDate("deadline"));
+				c.setDeadline(sdf.parse(rs.getString("deadline")));
 				c.setProjectID(rs.getInt("projectID"));
-				c.setProjectLeaderID(rs.getInt("projectleader_id"));
+				c.setCallerID(rs.getInt("orgaunit_id"));
 				c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				
 				result.addElement(c);
 			}			
 		}
-		catch (SQLException e2) {
+		catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 			return null;
 		}
@@ -176,22 +173,22 @@ public class CallMapper {
 		
 		try {						
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM call WHERE call.id = " + callID);		
+			ResultSet rs = stmt.executeQuery("SELECT * FROM projektmarktplatz.`call` WHERE projektmarktplatz.`call`.id = " + callID);		
 			
 			if (rs.next()) {
 				Call c = new Call();
 				c.setID(rs.getInt("id"));
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
-				c.setDeadline(rs.getDate("deadline"));
+				c.setDeadline(sdf.parse(rs.getString("deadline")));
 				c.setProjectID(rs.getInt("ProjectID"));
-				c.setProjectLeaderID(rs.getInt("projectleader_id"));
+				c.setCallerID(rs.getInt("orgaunit_id"));
 				c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				
 				return c;
 			}			
 		}
-		catch (SQLException e2) {
+		catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
 			return null;
 		}
@@ -208,7 +205,7 @@ public class CallMapper {
 
 	    try {
 	    	Statement stmt = con.createStatement();
-	    	stmt.executeUpdate("DELETE call FROM call WHERE call.id= " + c.getID());
+	    	stmt.executeUpdate("DELETE projektmarktplatz.`call` FROM projektmarktplatz.`call` WHERE projektmarktplatz.`call`.id= " + c.getID());
 	    	
 	    }
 	    catch (SQLException e2) {

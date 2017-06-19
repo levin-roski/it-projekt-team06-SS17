@@ -96,7 +96,7 @@ public class Test {
 		
 		admin.createMarketplace("Marktplatz Blau", "Dieser Marktplatz ist für Blaue", p1);
 		
-		OrgaUnit u1 = admin.getOrganisationByGoogleID("G1001");
+		Organisation u1 = admin.getOrganisationByGoogleID("G1001");
 		admin.createMarketplace("Marktplatz Rot", "Dieser Marktplatz ist für Rote", u1);
 		
 //		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
@@ -135,8 +135,8 @@ public class Test {
 		Project pro1 = admin.getProjectByID(1);
 		Project pro2 = admin.getProjectByID(2);
 		Date deadline = new Date();
-		PartnerProfile pp1 = new PartnerProfile();
-		pp1.setID(1);
+		
+
 		
 		//TODO: PartnerProfile Mapper funktioniert nicht. Fehler @ SQL Syntax
 		//admin.createPartnerProfileFor(p2);
@@ -147,7 +147,10 @@ public class Test {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		admin.createCall(pro1, p2, pp1, "Testcall 1", "test", deadline);
+		Call c = admin.createCall(pro1, p2, "Testcall 1", "test", deadline);
+		
+		System.out.println(c.getDeadline());
+		System.out.println(c.getCreated());
 			
 	}
 	

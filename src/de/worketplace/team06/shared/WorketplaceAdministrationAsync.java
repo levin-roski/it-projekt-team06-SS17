@@ -22,8 +22,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void checkExistence(String googleID, AsyncCallback<Boolean> callback);
 
-	void createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
-			String description, Date deadline, AsyncCallback<Call> callback);
+	
 
 	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload,
 			AsyncCallback<Enrollment> callback);
@@ -130,6 +129,19 @@ public interface WorketplaceAdministrationAsync {
 	void deleteOrganisation(Organisation organisation, AsyncCallback<Void> callback);
 
 	void getMarketplaceByID(int marketplaceID, AsyncCallback<Marketplace> callback);
+
+	void createCall(Project project, Person callerPerson, String title, String description, Date deadline,
+			AsyncCallback<Call> callback);
+
+	void createPerson(String firstName, String lastName, String street, int zipcode, String city, String description,
+			String googleID, AsyncCallback<Person> callback);
+
+	void createTeam(String name, String description, int membercount, String googleID, AsyncCallback<Team> callback);
+
+	void createOrganisation(String name, String description, String street, int zipcode, String city, String googleID,
+			AsyncCallback<Organisation> callback);
+	
+	
 
 
 	
