@@ -258,18 +258,25 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen einer Ausschreibung
 	 */
 	@Override
-	public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title,
+	public Call createCall(Project project, Person callerPerson, String title,
 			String description, Date deadline) throws IllegalArgumentException {
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		Call c = new Call();
+		c.setCreated(created);
 		c.setTitle(title);
 		c.setDescription(description);
 		c.setDeadline(deadline);
 		c.setProjectID(project.getID());
-		c.setProjectLeaderID(projectLeaderPerson.getID());
-		c.setPartnerProfileID(partnerProfile.getID());
+		c.setCallerID(callerPerson.getID());
 		
-		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
-		return this.callMapper.insert(c);
+		c = this.callMapper.insert(c);
+		PartnerProfile p = createPartnerProfileFor(c);
+		c.setPartnerProfileID(p.getID());
+		
+		this.callMapper.update(c);
+		return c;
+		
+		
 	}
 
 	/**
@@ -1291,6 +1298,4 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	    return userService.getCurrentUser();
 	  }
 	
-	
-
 }

@@ -39,9 +39,9 @@ public class Call extends BusinessObject {
     private int projectID;
     
     /**
-     * ID für den Projektleiter
+     * ID des Ausschreibenden 
      */
-    private int projectLeaderID;
+    private int callerID;
 
     /**
      * ID für das PartnerProfil
@@ -52,8 +52,8 @@ public class Call extends BusinessObject {
      * Auslesen der ID für den Projektleiter
      * @return projectLeaderID
      */
-    public int getProjectLeaderID() {
-        return this.projectLeaderID;
+    public int getCallerID() {
+        return this.callerID;
     }
 
     /**
@@ -100,8 +100,8 @@ public class Call extends BusinessObject {
      * Setzen der ID für den Projektleiter
      * @param projectLeaderID
      */
-    public void setProjectLeaderID(int projectLeaderID) {
-        this.projectLeaderID = projectLeaderID;
+    public void setCallerID(int projectLeaderID) {
+        this.callerID = projectLeaderID;
     }
 
     /**

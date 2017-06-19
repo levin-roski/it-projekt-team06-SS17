@@ -94,9 +94,8 @@ public class PartnerProfileMapper {
         	stmt.executeUpdate("INSERT INTO partnerprofile (id, last_edit, created) " 
         	+ "VALUES (" 
         	+ part.getID() + ",'" 
-        	+ part.getLastEdit() + "',"
-        	+ part.getCreated() + ",'"
-        	+ "')");
+        	+ part.getLastEdit() + "','"
+        	+ part.getCreated() + "')");
         	}
         }
        catch (SQLException e){

@@ -193,7 +193,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param deadline 
      * @return
      */
-    public Call createCall(Project project, Person projectLeaderPerson, PartnerProfile partnerProfile, String title, String description, Date deadline) throws IllegalArgumentException;
+
 
     /**
      * @param call
@@ -321,5 +321,8 @@ public interface WorketplaceAdministration extends RemoteService {
 	Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException;
 
 	Property createProperty(PartnerProfile partnerProfile, String name, double value) throws IllegalArgumentException;
+
+	public Call createCall(Project project, Person callerPerson, String title, String description, Date deadline)
+			throws IllegalArgumentException;
 
 }
