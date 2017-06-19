@@ -34,6 +34,9 @@ public class Worketplace implements EntryPoint {
 		navigationMenu.load();
 //		final MarketplaceForm form = new MarketplaceForm();
 //		form.load(null);
+		
+//		final SearchMarketplace searchMarketplace = new SearchMarketplace();
+//		searchMarketplace.load();
 
 		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
 		testRpcGetAllMarketplaces.load();
