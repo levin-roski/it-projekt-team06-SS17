@@ -7,8 +7,10 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-public class SearchMarketplace {
+public class SearchMarketplace extends Page {
 	private static class Marketplace {
 		private final String title;
 		private final String owner;
@@ -26,7 +28,7 @@ public class SearchMarketplace {
 			new Marketplace("Karlsruhe", "Dominik Florschütz", "Hier steht eine Beschreibung des Marktplatzes Karlsruhe"),
 			new Marketplace("Heilbronn", "Tobias Müller", "Hier steht eine Beschreibung des Marktplatzes Heilbronn"));
 	
-	public void load() {
+	public void run() {
 		final CellTable<Marketplace> table = new CellTable<Marketplace>();
 		table.setPageSize(3);
 		
@@ -53,7 +55,11 @@ public class SearchMarketplace {
 			}
 		};
 		table.addColumn(titleColumn, "Beschreibung");
+		table.setRowData(MARKETPLACE);
+		final VerticalPanel root = new VerticalPanel();
+		root.add(createHeadline("Projekt-Marktplätze"));
+		root.add(table);
 		
-		RootPanel.get("content").add(table);
+		RootPanel.get("content").add(root);
 	}
 }
