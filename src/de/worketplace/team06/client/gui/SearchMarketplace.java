@@ -71,7 +71,7 @@ public class SearchMarketplace extends Page {
 				return object.owner;
 			}
 		};
-		allMarketplacesTable.addColumn(titleColumn, "Inhaber");
+		allMarketplacesTable.addColumn(ownerColumn, "Inhaber");
 
 		TextColumn<Marketplace> descriptionColumn = new TextColumn<Marketplace>() {
 			@Override
