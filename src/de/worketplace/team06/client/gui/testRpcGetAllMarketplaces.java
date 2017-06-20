@@ -6,17 +6,19 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
-public class testRpcGetAllMarketplaces {
+public class testRpcGetAllMarketplaces extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 
-	public void load() {
+	public void run() {
 		final Label searchMarketplace = new Label("Alle Marktplätze");
 
 		// Create a Flex Table
@@ -48,7 +50,10 @@ public class testRpcGetAllMarketplaces {
 				}
 			}
 		});
-
-		RootPanel.get("content").add(flexTable);
+		final VerticalPanel root = new VerticalPanel();
+		root.add(createHeadline("RPC Testing..."));
+		root.add(flexTable);
+		
+		RootPanel.get("content").add(root);
 	}
 }

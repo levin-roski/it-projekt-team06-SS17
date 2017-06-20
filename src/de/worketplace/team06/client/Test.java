@@ -31,7 +31,7 @@ public class Test implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		final EditorNavigation navigationMenu = new EditorNavigation();
-		navigationMenu.load();
+		navigationMenu.run();
 //		final MarketplaceForm form = new MarketplaceForm();
 //		form.load(null);
 		
@@ -39,7 +39,7 @@ public class Test implements EntryPoint {
 //		searchMarketplace.load();
 
 		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
-		testRpcGetAllMarketplaces.load();
+		testRpcGetAllMarketplaces.run();
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {

@@ -10,9 +10,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class SearchMarketplace extends Page {
-	
 	private static class Marketplace {
 		private final String title;
 		private final String owner;
@@ -31,22 +32,14 @@ public class SearchMarketplace extends Page {
 			new Marketplace("Stuttgart", "Patrick Strepp", "Hier steht eine Beschreibung des Marktplatzes Stuttgart"),
 			new Marketplace("Karlsruhe", "Dominik Florschütz", "Hier steht eine Beschreibung des Marktplatzes Karlsruhe"),
 			new Marketplace("Heilbronn", "Tobias Müller", "Hier steht eine Beschreibung des Marktplatzes Heilbronn"));
-	
-	
-	
-	@Override
-	protected String getHeadlineText() {
-		return "<h1>Alle Marktplätze</h1>";
-	}
-	
+
 	public void run() {
-		
-		final CellTable<Marketplace> allmarketplacestable = new CellTable<Marketplace>();
-		allmarketplacestable.setPageSize(3);
+		final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
+		allMarketplacesTable.setPageSize(3);
 		
 		final SingleSelectionModel<Marketplace> allmarketplacessm = new SingleSelectionModel<Marketplace>();
 		
-		allmarketplacestable.setSelectionModel(allmarketplacessm);
+		allMarketplacesTable.setSelectionModel(allmarketplacessm);
 		
 		allmarketplacessm.addSelectionChangeHandler(new Handler() { 
 			
@@ -57,7 +50,9 @@ public class SearchMarketplace extends Page {
 			RootPanel.get("Anzeige").clear();
 			RootPanel.get("Anzeige").add(page);
 		}
-	});
+
+		final CellTable<Marketplace> table = new CellTable<Marketplace>();
+		table.setPageSize(3);
 		
 		TextColumn<Marketplace> titleColumn = new TextColumn<Marketplace>() {
 			@Override
@@ -65,7 +60,7 @@ public class SearchMarketplace extends Page {
 				return object.title;
 			}
 		};
-		allmarketplacestable.addColumn(titleColumn, "Name");
+		allMarketplacesTable.addColumn(titleColumn, "Name");
 		
 		TextColumn<Marketplace> ownerColumn = new TextColumn<Marketplace>() {
 			@Override
@@ -73,7 +68,7 @@ public class SearchMarketplace extends Page {
 				return object.owner;
 			}
 		};
-		allmarketplacestable.addColumn(titleColumn, "Inhaber");
+		allMarketplacesTable.addColumn(titleColumn, "Inhaber");
 		
 		TextColumn<Marketplace> descriptionColumn = new TextColumn<Marketplace>() {
 			@Override
@@ -81,10 +76,13 @@ public class SearchMarketplace extends Page {
 				return object.description;
 			}
 		};
-		allmarketplacestable.addColumn(titleColumn, "Beschreibung");
-		allmarketplacestable.setRowData(MARKETPLACE);
-		allmarketplacestable.setWidth("100%", true);
+		allMarketplacesTable.setWidth("100%", true);
+		table.addColumn(titleColumn, "Beschreibung");
+		table.setRowData(MARKETPLACE);
+		final VerticalPanel root = new VerticalPanel();
+		root.add(createHeadline("Projekt-Marktplätze"));
+		root.add(allMarketplacesTable);
 		
-		RootPanel.get("content").add(allmarketplacestable);
+		RootPanel.get("content").add(root);
 	}
 }

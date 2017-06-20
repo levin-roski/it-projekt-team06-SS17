@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class EditorNavigation extends VerticalPanel {
-	public void load() {
+	public void run() {
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		menu.setAnimationEnabled(true);

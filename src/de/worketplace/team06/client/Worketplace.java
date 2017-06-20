@@ -31,15 +31,16 @@ public class Worketplace implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		final EditorNavigation navigationMenu = new EditorNavigation();
-		navigationMenu.load();
-//		final MarketplaceForm form = new MarketplaceForm();
-//		form.load(null);
+		navigationMenu.run();
 		
-//		final SearchMarketplace searchMarketplace = new SearchMarketplace();
-//		searchMarketplace.load();
+//		final MarketplaceForm form = new MarketplaceForm(null);
+//		form.run();
+		
+		final SearchMarketplace searchMarketplace = new SearchMarketplace();
+		searchMarketplace.run();
 
-		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
-		testRpcGetAllMarketplaces.load();
+//		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
+//		testRpcGetAllMarketplaces.run();
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
