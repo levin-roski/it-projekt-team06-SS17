@@ -33,13 +33,10 @@ public class Worketplace implements EntryPoint {
 		final EditorNavigation navigationMenu = new EditorNavigation();
 		navigationMenu.run();
 		
-//		final MarketplaceForm form = new MarketplaceForm(null);
-//		form.run();
+		final MarketplaceForm form = new MarketplaceForm(null);
+		form.run();
 		
-		final SearchMarketplace searchMarketplace = new SearchMarketplace();
-		searchMarketplace.run();
-
-//		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
+		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
 //		testRpcGetAllMarketplaces.run();
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
@@ -54,7 +51,7 @@ public class Worketplace implements EntryPoint {
 					worketplaceAdministration.checkExistence(loginInfo.getGoogleId(), new CheckExistenceLoginInfoCallback());
 				} else {
 //					TODO Login aufrufen (nicht eingeloggt)
-					Window.alert("Login aufrufen");
+//					Window.alert("Login aufrufen");
 				}
 			}
 		});
@@ -70,7 +67,7 @@ public class Worketplace implements EntryPoint {
 			if (userStatus) {
 //				TODO Editor initialisieren mit z.B. loadEditor
 			} else {
-				Window.alert( "F�r diese Email existiert kein Nutzer." + " Bitte erstelle ein neues Nutzerporofil");
+//				Window.alert( "Für diese Email existiert kein Nutzer." + " Bitte erstelle ein neues Nutzerporofil");
 
 //				TODO Usererstellung hier ausf�hren, bzw. Formular f�r Usereinstellungen aufrufen
 			}
@@ -82,7 +79,7 @@ public class Worketplace implements EntryPoint {
 	 * @param error
 	 */
 	private void handleError(Throwable error) {
-	    Window.alert(error.getMessage());
+//	    Window.alert(error.getMessage());
 	    if (error instanceof NotLoggedInException) {
 	      Window.Location.replace(loginInfo.getLogoutUrl());
 	    }

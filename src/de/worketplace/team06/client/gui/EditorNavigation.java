@@ -2,11 +2,12 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.worketplace.team06.shared.bo.Marketplace;
 
 public class EditorNavigation extends VerticalPanel {
 	public void run() {
@@ -39,12 +40,22 @@ public class EditorNavigation extends VerticalPanel {
 			}
 		}));
 		menu.addSeparator();
+		menu.addItem(new MenuItem("Beispielmarktplatz bearbeiten", new Command() {
+			public void execute() {
+				Marketplace m = new Marketplace();
+				m.setTitle("Stuttgart");
+				m.setDescription("Hier steht eine Beschreibung des Marktplatzes Stuttgart");
+				RootPanel.get("content").clear();
+				final MarketplaceForm marketplaceForm = new MarketplaceForm(m);
+				marketplaceForm.run();
+			}
+		}));
+		menu.addSeparator();
 		menu.addItem(new MenuItem("Marktplätze suchen", new Command() {
 			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
+				RootPanel.get("content").clear();
+				final SearchMarketplace searchMarketplace = new SearchMarketplace();
+				searchMarketplace.run();
 			}
 		}));
 		menu.addSeparator();
