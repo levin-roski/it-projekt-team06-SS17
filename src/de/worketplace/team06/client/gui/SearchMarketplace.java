@@ -15,9 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SearchMarketplace extends Page {
 	
-
-	
-	private static class Marketplace {
+		private static class Marketplace {
 		private final String title;
 		private final String owner;
 		private final String description;
@@ -81,10 +79,9 @@ public class SearchMarketplace extends Page {
 				return object.description;
 			}
 		};
-		allMarketplacesTable.setWidth("100%", true);
-		allMarketplacesTable.addColumn(titleColumn, "Name");
-		allMarketplacesTable.addColumn(ownerColumn, "Inhaber");
 		allMarketplacesTable.addColumn(descriptionColumn, "Beschreibung");
+		
+		allMarketplacesTable.setWidth("100%", true);
 		allMarketplacesTable.setRowData(MARKETPLACE);
 		final VerticalPanel root = new VerticalPanel();
 		root.add(createHeadline("Alle Marktplätze"));
