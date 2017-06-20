@@ -14,6 +14,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SearchMarketplace extends Page {
+	
+
+	
 	private static class Marketplace {
 		private final String title;
 		private final String owner;
@@ -28,14 +31,16 @@ public class SearchMarketplace extends Page {
 
 	private static final List<Marketplace> MARKETPLACE = Arrays.asList(
 			new Marketplace("Stuttgart", "Patrick Strepp", "Hier steht eine Beschreibung des Marktplatzes Stuttgart"),
-			new Marketplace("Karlsruhe", "Dominik Florschütz",
-					"Hier steht eine Beschreibung des Marktplatzes Karlsruhe"),
+			new Marketplace("Karlsruhe", "Dominik Florschütz", "Hier steht eine Beschreibung des Marktplatzes Karlsruhe"),
 			new Marketplace("Heilbronn", "Tobias Müller", "Hier steht eine Beschreibung des Marktplatzes Heilbronn"));
 
-	public void run() {
-		final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
-		allMarketplacesTable.setPageSize(3);
+	final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
+	
+	public void run() {
+
+		allMarketplacesTable.setPageSize(3);
+		
 		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();
 
 		allMarketplacesTable.setSelectionModel(allMarketplaceSsm);
@@ -77,10 +82,12 @@ public class SearchMarketplace extends Page {
 			}
 		};
 		allMarketplacesTable.setWidth("100%", true);
-		table.addColumn(titleColumn, "Beschreibung");
-		table.setRowData(MARKETPLACE);
+		allMarketplacesTable.addColumn(titleColumn, "Name");
+		allMarketplacesTable.addColumn(ownerColumn, "Inhaber");
+		allMarketplacesTable.addColumn(descriptionColumn, "Beschreibung");
+		allMarketplacesTable.setRowData(MARKETPLACE);
 		final VerticalPanel root = new VerticalPanel();
-		root.add(createHeadline("Projekt-Marktplätze"));
+		root.add(createHeadline("Alle Marktplätze"));
 		root.add(allMarketplacesTable);
 
 		RootPanel.get("content").add(root);
