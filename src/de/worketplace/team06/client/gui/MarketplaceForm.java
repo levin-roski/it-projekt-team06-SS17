@@ -2,7 +2,6 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -11,7 +10,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
@@ -26,7 +24,7 @@ public class MarketplaceForm extends Page {
 	private Boolean shouldUpdate = false;
 	private Marketplace toChangeMarketplace;
 	
-	public MarketplaceForm(Marketplace pToChangeMarketplace){
+	public MarketplaceForm(Marketplace pToChangeMarketplace) {
 		if (pToChangeMarketplace != null) {
 			shouldUpdate = true;
 			this.toChangeMarketplace = pToChangeMarketplace;
@@ -40,6 +38,8 @@ public class MarketplaceForm extends Page {
 		form.setWidget(1, 0, beschreibungLabel);
 		form.setWidget(1, 1, beschreibungInput);
 		if (shouldUpdate) {
+			nameInput.setText(toChangeMarketplace.getTitle());
+			beschreibungInput.setText(toChangeMarketplace.getDescription());
 			final Button saveButton = new Button("Änderungen speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
@@ -57,7 +57,6 @@ public class MarketplaceForm extends Page {
 			    }
 			});
 			panel.add(deleteButton);
-			Window.alert("Clicked");
 			form.setWidget(2, 1, panel);
 		} else {
 			final Button saveButton = new Button("Neuen Marktplatz anlegen");
