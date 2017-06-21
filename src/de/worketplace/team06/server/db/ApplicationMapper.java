@@ -5,14 +5,57 @@ import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.*;
 
+/**
+ * Die Mapper-Klasse ApplicationMapper bildet Application-Objekte als Datensätze
+ * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
+ * können mit deren Hilfe Objekte erzeugt, verändert, gelöscht und ausgelesen werden.
+ * Das Mapping erfolgt bidirektional: Objekte können in Datensätze und Datensätze in 
+ * Objekte umgewandelt werden.
+ * 
+ * @see CallMapper
+ * @see EnrollmentMapper
+ * @see MarketplaceMapper
+ * @see OrganisationMapper
+ * @see OrgaUnitMapper
+ * @see PartnerProfileMapper
+ * @see PersonMapper
+ * @see ProjectMapper
+ * @see PropertyMapper
+ * @see RatingMapper
+ * @see TeamMapper
+ * 
+ * @author Patrick
+ */
+
 public class ApplicationMapper {
+	
+    /**
+     * Die Instatiierung der Klasse ApplicationMapper erfolgt nur einmal.
+     * Dies wird auch als Singleton bezeichnet.
+     * Durch den Bezeichner static ist die Variable nur einmal für jede Instanz der Klasse vorhanden.
+     * Sie speichert die einzige Instanz der Klasse.
+     * 
+     * @see ApplicationMapper#applicationMapper()
+     */
 	
 	private static ApplicationMapper applicationMapper = null;
 	
+	/**
+	 * Der geschützte Konstruktor verhindert das Erzeugen neuer Instanzen
+	 * der Klasse, sollte schon eine Instanz vorhanden sein.
+	 */
 	protected ApplicationMapper() {
 		
 	}
-
+	
+	/**
+	 * Durch ApplicationMapper.applicationMapper wird die folgende Methode aufgerufen.
+	 * Durch sie wird die Singleton-Eigenschaft sichergestellt, in dem sie dafür sorgt, dass nur eine 
+	 * Instanz von DBConnection existiert.
+	 * Die Instantiierung der DBConnection sollte stets durch den Aufruf dieser Methode erfolgen.
+	 * 
+	 * @return ApplicationMapper-Objekt.
+	 */
 	public static ApplicationMapper applicationMapper() {
 		if (applicationMapper == null) {
 			applicationMapper = new ApplicationMapper();
@@ -21,7 +64,14 @@ public class ApplicationMapper {
 		return applicationMapper;
 	}
 
-	
+	/**
+	 * Methode zur Suche nach Bewerbungen anhand der Bewerbungs-ID.
+	 * Da diese eindeutig ist wird genau ein Objekt zurückgegeben.
+	 * 
+	 * @param id
+	 * @return Application-Objekt, das der übergebenen ID entspricht bzw. null, 
+	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
+	 */
 	public Application findByID(int id) {
 		Connection con = DBConnection.connection();
 		

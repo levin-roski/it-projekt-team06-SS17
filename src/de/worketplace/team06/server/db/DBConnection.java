@@ -6,104 +6,61 @@ import java.sql.DriverManager;
 import com.google.appengine.api.utils.SystemProperty;
 
 /**
+ * Verwalten der Datenbank-Verbindung.
  * 
- * Verwalten einer Verbindung zur Datenbank.
- * <p>
- * <b>Vorteil:</b> Sehr einfacher Verbindungsaufbau zur Datenbank.
- * <p>
- * <b>Nachteil:</b> Durch die Singleton-Eigenschaft der Klasse kann nur auf eine
- * fest vorgegebene Datenbank zugegriffen werden.
- * <p>
- * In der Praxis kommen die meisten Anwendungen mit einer einzigen Datenbank
- * aus. Eine flexiblere Variante für mehrere gleichzeitige
- * Datenbank-Verbindungen wäre sicherlich leistungsfähiger. Dies würde
- * allerdings den Rahmen dieses Projekts sprengen bzw. die Software unnötig
- * verkomplizieren, da dies für diesen Anwendungsfall nicht erforderlich ist.
- * 
- * @author Thies
+ * @author Patrick
  */
 public class DBConnection {
 
     /**
-     * Die Klasse DBConnection wird nur einmal instantiiert. Man spricht hierbei
-     * von einem sogenannten <b>Singleton</b>.
-     * <p>
-     * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
-     * für sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
-     * speichert die einzige Instanz dieser Klasse.
-     * 
-     * @see AccountMapper.accountMapper()
-     * @see CustomerMapper.customerMapper()
+     * Die Instatiierung der Klasse DBConnection erfolgt nur einmal.
+     * Dies wird auch als Singleton bezeichnet.
+     * Durch den Bezeichner static ist die Variable nur einmal für jede Instanz der Klasse vorhanden.
+     * Sie speichert die einzige Instanz der Klasse.
      */
     private static Connection con = null;
 
     /**
-     * Die URL, mit deren Hilfe die Datenbank angesprochen wird. In einer
-     * professionellen Applikation würde diese Zeichenkette aus einer
-     * Konfigurationsdatei eingelesen oder über einen Parameter von außen
-     * mitgegeben, um bei einer Veränderung dieser URL nicht die gesamte
-     * Software neu kompilieren zu müssen.
+     * Über folgende URL wird die Datenbank angesprochen.
      */
     
       private static String googleUrl = "jdbc:google:mysql://it-projekt-team06-ss17-v1:it-projekt-team-06/projektmarktplatz?user=jdbcg&password=Uvawevusa675";
-  //  private static String localUrl = "jdbc:mysql://127.0.0.1:3306/bankproject?user=demo&password=demo"; */
       private static String localUrl = "jdbc:mysql://173.194.243.13:3306/projektmarktplatz?user=jdbc&password=Uvawevusa675";
     
     /**
-     * Diese statische Methode kann aufgrufen werden durch
-     * <code>DBConnection.connection()</code>. Sie stellt die
-     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine
-     * einzige Instanz von <code>DBConnection</code> existiert.
-     * <p>
-     * 
-     * <b>Fazit:</b> DBConnection sollte nicht mittels <code>new</code>
-     * instantiiert werden, sondern stets durch Aufruf dieser statischen
-     * Methode.
-     * <p>
-     * 
-     * <b>Nachteil:</b> Bei Zusammenbruch der Verbindung zur Datenbank - dies
-     * kann z.B. durch ein unbeabsichtigtes Herunterfahren der Datenbank
-     * ausgelöst werden - wird keine neue Verbindung aufgebaut, so dass die in
-     * einem solchen Fall die gesamte Software neu zu starten ist. In einer
-     * robusten Lösung würde man hier die Klasse dahingehend modifizieren, dass
-     * bei einer nicht mehr funktionsfähigen Verbindung stets versucht würde,
-     * eine neue Verbindung aufzubauen. Dies würde allerdings ebenfalls den
-     * Rahmen dieses Projekts sprengen.
-     * 
-     * @return DAS <code>DBConncetion</code>-Objekt.
-     * @see con
+	 * Durch DBConnection.connection() wird die folgende Methode aufgerufen.
+	 * Durch sie wird die Singleton-Eigenschaft sichergestellt, in dem sie dafür sorgt, dass nur eine 
+	 * Instanz von DBConnection existiert.
+	 * Die Instantiierung der DBConnection sollte stets durch den Aufruf dieser Methode erfolgen.
+	 * 
+	 * @return DBConnection-Objekt.
+	 * 
+	 * @see DBConnection#con
      */
     public static Connection connection() {
-        // Wenn es bisher keine Conncetion zur DB gab, ...
+    	
         if (con == null) {
             String url = null;
             try {
                  if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
-                    // Load the class that provides the new
-                    // "jdbc:google:mysql://" prefix.
+                	 
             	     Class.forName("com.mysql.jdbc.GoogleDriver");
                       url = googleUrl;	
-                 } else {
-                    // Local MySQL instance to use during development.
+                 } 
+                 else {
+                	 
                 	 Class.forName("com.mysql.jdbc.Driver");
                 	 url = localUrl; 
                 } 
-                /*
-                 * Dann erst kann uns der DriverManager eine Verbindung mit den
-                 * oben in der Variable url angegebenen Verbindungsinformationen
-                 * aufbauen.
-                 * 
-                 * Diese Verbindung wird dann in der statischen Variable con
-                 * abgespeichert und fortan verwendet.
-                 */
+                 
                 con = DriverManager.getConnection(url);
-            } catch (Exception e) {
+            } 
+            catch (Exception e) {
                 con = null;
                 e.printStackTrace();
             }
         }
 
-        // Zurückgegeben der Verbindung
         return con;
     }
 
