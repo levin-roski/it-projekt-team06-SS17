@@ -65,8 +65,20 @@ public class Test {
 		 * Name, Beschreibung, Straße, PLZ, Stadt, GoogleID
 		 */
 		Organisation o1 = admin.createOrganisation("1Unternehmen", "1 Nice Unternehmen vong Niceigkeit her", "Stadtstrand 1", 13337, "Stutututtgart", "G1000");
+
+		
 		PartnerProfile part1 = admin.createPartnerProfileFor(o1);
+		
+		
+		System.out.println(part1.getCreated());
+		System.out.println(part1.getLastEdit());
+
+		
 		admin.createProperty(part1, "Organisationsbezeichnung", "Lechwerke AG");
+		
+		System.out.println(part1.getCreated());
+		System.out.println(part1.getLastEdit());
+		
 		
 		Organisation o2 = admin.createOrganisation("CoolStrich", "Malerei", "Hansestraße 4", 87765, "Hamburg", "G1001");
 		PartnerProfile part2 = admin.createPartnerProfileFor(o2);

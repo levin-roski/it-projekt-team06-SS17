@@ -1160,6 +1160,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setName(name);
 		p.setValue(value);
 		p.setCreated(created);
+		p.setPartnerProfileID(partnerProfile.getID());
 		
 		//Setzen einer vorläufigen ID
 		p.setID(1);
