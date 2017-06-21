@@ -168,12 +168,12 @@ public class PropertyMapper {
         	/**
 			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
 			 */
-        	stmt.executeUpdate("INSERT INTO property (id, created, name, value) " 
+        	stmt.executeUpdate("INSERT INTO property (id, created, name, value, partnerprofile_id) " 
         	+ "VALUES (" 
-        		+ prop.getID() + ", "
-        		+ prop.getCreated() + ", " 
-        		+ prop.getName() + ", " 
-        		+ prop.getValue() + "',"
+        		+ prop.getID() + ", '"
+        		+ prop.getCreated() + "', '" 
+        		+ prop.getName() + "', '" 
+        		+ prop.getValue() + "', "
         		+ prop.getPartnerProfileID() +")");
         	}
         }
