@@ -45,7 +45,7 @@ public class DBConnection {
      * Software neu kompilieren zu müssen.
      */
     
-      private static String googleUrl = "jdbc:google:mysql://173.194.243.13:it-projekt-team06-ss17-v1:it-projekt-team-06/projektmarktplatz?user=jdbcg&password=Uvawevusa675";
+      private static String googleUrl = "jdbc:google:mysql://it-projekt-team06-ss17-v1:it-projekt-team-06/projektmarktplatz?user=jdbcg&password=Uvawevusa675";
   //  private static String localUrl = "jdbc:mysql://127.0.0.1:3306/bankproject?user=demo&password=demo"; */
       private static String localUrl = "jdbc:mysql://173.194.243.13:3306/projektmarktplatz?user=jdbc&password=Uvawevusa675";
     
