@@ -30,7 +30,7 @@ public interface WorketplaceAdministrationAsync {
 
 
 	void createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
-			OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate, AsyncCallback<Project> callback);
+			Date startDate, Date endDate, AsyncCallback<Project> callback);
 
 	void createProperty(PartnerProfile partnerProfile, String name, double value, AsyncCallback<Property> callback);
 
@@ -112,7 +112,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void getProjectsForLeader(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
 
-	void getProjectsForOwner(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
+//	void getProjectsForOwner(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
 
 	void getProjectByID(int projectID, AsyncCallback<Project> callback);
 
