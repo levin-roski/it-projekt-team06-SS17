@@ -35,8 +35,10 @@ public class Project extends BusinessObject {
 
     /**
      * Variable für die ID des Projektinhabers
+     * 
+     * Ausgeklammert. Wird nicht benutzt.
      */
-    private int projectOwnerID;
+//    private int projectOwnerID;
     
     /**
      * Variable für die ID des Marktplatzes
@@ -80,10 +82,12 @@ public class Project extends BusinessObject {
 	/**
 	 * Auslesen der ID des Projektleiters
 	 * @return projectOwnerID
+	 * 
+	 * Ausgeklammert. Wird nicht benutzt.
 	 */
-	public int getProjectOwnerID() {
-		return projectOwnerID;
-	}
+//	public int getProjectOwnerID() {
+//		return projectOwnerID;
+//	}
 
 	/**
 	 * Auslesen des Startdatums für das Projekt
@@ -136,10 +140,12 @@ public class Project extends BusinessObject {
 	/**
 	 * Setzen der ID des Projektinhabers
 	 * @param projetOwnerID 
+	 * 
+	 * Ausgeklammert. Wird nicht benutzt.
 	 */
-	public void setProjectOwnerID(int projectOwnerID) {
-		this.projectOwnerID = projectOwnerID;
-	}
+//	public void setProjectOwnerID(int projectOwnerID) {
+//		this.projectOwnerID = projectOwnerID;
+//	}
 
 	/**
 	 * Sezen des Startdatums für das Projekt
