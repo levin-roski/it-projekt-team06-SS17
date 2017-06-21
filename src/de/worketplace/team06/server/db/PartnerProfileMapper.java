@@ -111,7 +111,7 @@ public class PartnerProfileMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE project SET last_edit=\"" + part.getLastEdit() + "\", "
+        	stmt.executeUpdate("UPDATE partnerprofile SET last_edit=\"" + part.getLastEdit() + "\", "
         	+ "WHERE id=" + part.getID());
         }
         

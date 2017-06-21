@@ -62,17 +62,18 @@ public class PropertyMapper {
     	try{
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery
-    				("SELECT id, created, name, value, FROM Property " + "WHERE id= " + id);
+    				("SELECT id, created, name, value, partnerprofile_id FROM property " + "WHERE id= " + id);
     		/**
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
 			 */
     		if (rs.next()) {
     			Property prop = new Property();
-    			prop.setID(rs.getInt("id"));
-    			prop.setCreated(rs.getTimestamp("created"));
-    			prop.setName(rs.getString("name"));
-    			prop.setValue(rs.getString("value"));
+				prop.setID(rs.getInt("id"));
+				prop.setName(rs.getString("name"));
+				prop.setCreated(rs.getTimestamp("created"));
+        		prop.setValue(rs.getString("value"));
+        		prop.setPartnerProfileID(rs.getInt("partnerprofile_id"));
     		}	
     	}
     	catch (SQLException e){
@@ -88,14 +89,15 @@ public class PropertyMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, created, name, value "+ "FROM Property ");
+        	ResultSet rs = stmt.executeQuery("SELECT id, created, name, value, partnerprofile_id "+ "FROM Property ");
         	
         	while (rs.next()){
         		Property prop = new Property();
-        		prop.setID(rs.getInt("id"));
-        		prop.setCreated(rs.getTimestamp("created"));
-        		prop.setName(rs.getString("name"));
+				prop.setID(rs.getInt("id"));
+				prop.setName(rs.getString("name"));
+				prop.setCreated(rs.getTimestamp("created"));
         		prop.setValue(rs.getString("value"));
+        		prop.setPartnerProfileID(rs.getInt("partnerprofile_id"));
         		
         		result.addElement(prop);
         	}
@@ -189,7 +191,7 @@ public class PropertyMapper {
      * @param prop
      * @return Property
      */
-    public Property update(Property prop) {
+    public Property update (Property prop) {
         Connection con = DBConnection.connection();
         
         try{
