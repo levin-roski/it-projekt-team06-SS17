@@ -857,11 +857,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 * Erstellen eines Projekts auf einem Marktplatz
+	 * Erstellen eines Projekts auf einem Marktplatz.
+	 * 
+	 * ProjectOwnerID ausgeklammert. Wird nicht benutzt.
 	 */
 	@Override
 	public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
-			OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate) throws IllegalArgumentException {
+			Date startDate, Date endDate) throws IllegalArgumentException {
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		Project p = new Project();
@@ -869,7 +871,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		p.setCreated(created);
 		p.setDescription(description);
 		p.setProjectLeaderID(projectLeaderPerson.getID());
-		p.setProjectOwnerID(projectOwnerOrgaUnit.getID());
+//		p.setProjectOwnerID(projectOwnerOrgaUnit.getID());
 		p.setStartDate(startDate);
 		p.setEndDate(endDate);
 		p.setMarketplaceID(marketplace.getID());
@@ -1028,7 +1030,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Auslesen aller Projekte, die eine bestimmte Organisationseinheit besitzt.
+	 * Ausgeklammert. Wird nicht benutzt.
 	 */
+	/*
 	@Override
 	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		//***WICHTIG*** Nochmals pr�fen...
@@ -1036,7 +1040,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 		return this.projectMapper.findByProjectOwnerID(orgaUnit.getID());
 	}
-	
+	*/
 	/**
 	 * Auslesen eines Projektes mit einer projectID
 	 */
