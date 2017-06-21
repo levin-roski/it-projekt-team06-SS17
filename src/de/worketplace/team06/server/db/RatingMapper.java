@@ -162,15 +162,13 @@ public class RatingMapper {
         	/**
 			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
 			 */
-        	stmt.executeUpdate("INSERT INTO rating (id, statement, created, rating, application_id) " 
+        	stmt.executeUpdate("INSERT INTO rating (id, created, statement, rating) " 
         	+ "VALUES (" 
-        		+ r.getID() + ", "
-        		+ r.getCreated() + ", " 
-        		+ r.getRating() + ", " 
-        		//TODO: *** WICHTIG *** Setzen wir die AppID im Rating??
-        		//+ r.getApplicationID() + ", "
-        		+ r.getRatingStatement() 
-        		+ "','" +"')");
+        		+ r.getID() + ", '"
+        		+ r.getCreated() + "', '" 
+        		+ r.getRatingStatement() + "', " 
+        		+ r.getRating()
+        		 +")");
         	}
         }
        catch (SQLException e){

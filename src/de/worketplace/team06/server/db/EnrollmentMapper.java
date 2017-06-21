@@ -38,7 +38,7 @@ public class EnrollmentMapper {
 				e.setID(rs.getInt("id"));
 				e.setCreated(rs.getTimestamp("created"));
 				e.setStartDate(sdf.parse(rs.getString("start_date")));
-				e.setPeriod(rs.getInt("period"));
+				e.setWorkload(rs.getInt("period"));
 				e.setEndDate(sdf.parse(rs.getString("end_date")));
 				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				e.setProjectID(rs.getInt("project_id"));
@@ -71,7 +71,7 @@ public class EnrollmentMapper {
 				e.setID(rs.getInt("id"));
 				e.setCreated(rs.getTimestamp("created"));
 				e.setStartDate(sdf.parse(rs.getString("start_date")));
-				e.setPeriod(rs.getInt("period"));
+				e.setWorkload(rs.getInt("period"));
 				e.setEndDate(sdf.parse(rs.getString("end_date")));
 				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				e.setProjectID(rs.getInt("project_id"));
@@ -103,7 +103,7 @@ public class EnrollmentMapper {
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
 					e.setStartDate(sdf.parse(rs.getString("start_date")));
-					e.setPeriod(rs.getInt("period"));
+					e.setWorkload(rs.getInt("period"));
 					e.setEndDate(sdf.parse(rs.getString("end_date")));
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
@@ -137,7 +137,7 @@ public class EnrollmentMapper {
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
 					e.setStartDate(sdf.parse(rs.getString("start_date")));
-					e.setPeriod(rs.getInt("period"));
+					e.setWorkload(rs.getInt("period"));
 					e.setEndDate(sdf.parse(rs.getString("start_date")));
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
@@ -169,7 +169,7 @@ public Enrollment findByRatingID (int rID) {
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
 					e.setStartDate(sdf.parse(rs.getString("start_date")));
-					e.setPeriod(rs.getInt("period"));
+					e.setWorkload(rs.getInt("period"));
 					e.setEndDate(sdf.parse(rs.getString("start_date")));
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
@@ -196,7 +196,7 @@ public Enrollment findByRatingID (int rID) {
         	
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxis " + "FROM enrollment ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM enrollment ");
 			
 			if (rs.next()) {
 				
@@ -204,10 +204,10 @@ public Enrollment findByRatingID (int rID) {
 				
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO enrollment (id, created, start_date, period, end_date,"
-						+ " orgaunit_id, project_id, rating_id) " + "VALUES (" + e.getID() + ","
-						+ e.getCreated() + ",'" + startdate + "'," + e.getPeriod() + ",'"
-						+ enddate + "'," + e.getOrgaUnitID() + "," + e.getProjectID() + ","
+				stmt.executeUpdate("INSERT INTO enrollment (id, created, start_date, end_date, period,"
+						+ " orgaunit_id, project_id, rating_id) " + "VALUES (" + e.getID() + ",'"
+						+ e.getCreated() + "','" + startdate + "','" + enddate + "',"
+				        + e.getWorkload() + "," + e.getOrgaUnitID() + "," + e.getProjectID() + ","
 						+ e.getRatingID()+ ")");
 			}
 		}
@@ -229,7 +229,7 @@ public Enrollment findByRatingID (int rID) {
 			
 			stmt.executeUpdate("UPDATE enrollment " + "SET start_date='" + startdate +
 					"', end_date='" + enddate + "', orgaunit_id=" + e.getOrgaUnitID() + 
-					", project_id=" + e.getProjectID() + ", rating_id=" + e.getRatingID() + ", period=" + e.getPeriod() +
+					", project_id=" + e.getProjectID() + ", rating_id=" + e.getRatingID() + ", period=" + e.getWorkload() +
 					"WHERE id=" + e.getID());
 			
 		}

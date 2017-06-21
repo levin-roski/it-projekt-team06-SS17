@@ -389,6 +389,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		e.setEndDate(endDate);
 		e.setWorkload(workload);
 		
+		
 //		//Überprüfung ob Start- und Enddatum bereits gesetzt
 //		if (startDate != null && endDate != null){
 //			e.setPeriod();
@@ -1230,9 +1231,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Rating rateApplication(Application application, Float rating, String ratingStatement)
 			throws IllegalArgumentException {
+		
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		
 		Rating r = new Rating();
 		r.setRating(rating);
 		r.setRatingStatement(ratingStatement);
+		r.setCreated(created);
 		
 		//***WICHTIG*** Hier fehlt noch die Zuweisung zur Application. Wie realisieren wir das genau?
 		
@@ -1240,7 +1245,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		r.setID(1);
 		
 		//Speichern des Objekts in der Datenbank
-		return this.ratingMapper.insert(r);
+		r = this.ratingMapper.insert(r);
+		
+		application.setRatingID(r.getID());
+		
+		saveApplication(application);
+		
+		return r;
 	}
 
 	/**

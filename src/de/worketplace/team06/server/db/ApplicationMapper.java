@@ -226,7 +226,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxis " + "FROM application ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM application ");
 			
 			if (rs.next()) {
 				
@@ -234,7 +234,7 @@ public class ApplicationMapper {
 				
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, orgaunit_id, rating_id) " + "VALUES (" + a.getID() + "," + a.getCreated() + "," + a.getText() + "," + a.getCallID() + "," + a.getOrgaUnitID()+ "," + a.getRatingID()+ ")");
+				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, orgaunit_id) " + "VALUES (" + a.getID() + ",'" + a.getCreated() + "','" + a.getText() + "'," + a.getCallID() + "," + a.getOrgaUnitID()+ ")");
 			}
 		}
 		catch (SQLException e2) {
@@ -250,7 +250,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("UPDATE application " + "SET text='" + a.getText() + "', rating_id="+ a.getRatingID() + "WHERE id=" + a.getID());
+			stmt.executeUpdate("UPDATE application SET text='" + a.getText() + "', rating_id="+ a.getRatingID() + " WHERE id=" + a.getID());
 			// alt:  stmt.executeUpdate("UPDATE application " + "SET text=\"" + a.getText() + "\" " + "WHERE id=" + a.getID());
 		}
 		catch (SQLException e2) {
