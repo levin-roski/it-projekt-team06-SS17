@@ -26,49 +26,51 @@ public abstract class Report implements Serializable {
    * 
    */
   private static final long serialVersionUID = 1L;
-  
+
   /**
-   * Variable für das Impressum
+   * Ein kleines Impressum, das eine Art Briefkopf darstellt. Jedes Unternehmen
+   * einige Daten wie Firmenname, Adresse, Logo, etc. auf Geschäftsdokumenten
+   * ab. Dies gilt auch für die hier realisierten Reports.
    */
   private Paragraph imprint = null;
 
   /**
-   * Kopfdaten des Berichts
+   * Kopfdaten des Berichts.
    */
   private Paragraph headerData = null;
 
   /**
-   * Titel des Berichts
+   * Jeder Bericht kann einen individuellen Titel besitzen.
    */
   private String title = "Report";
 
   /**
-   * Datum der Erstellung des Berichts
+   * Datum der Erstellung des Berichts.
    */
   private Timestamp created;
 
   /**
-   * Auslesen des Impressums
+   * Auslesen des Impressums.
    * 
-   * @return imprint
+   * @return Text des Impressums
    */
   public Paragraph getImprint() {
     return this.imprint;
   }
 
   /**
-   * Setzen des Impressums
+   * Setzen des Impressums.
    * 
-   * @param imprint
+   * @param imprint Text des Impressums
    */
   public void setImprint(Paragraph imprint) {
     this.imprint = imprint;
   }
-  
+
   /**
-   * Auslesen der Kopfdaten
+   * Auslesen der Kopfdaten.
    * 
-   * @return headerData
+   * @return Text der Kopfdaten.
    */
   public Paragraph getHeaderData() {
     return this.headerData;
@@ -77,43 +79,45 @@ public abstract class Report implements Serializable {
   /**
    * Setzen der Kopfdaten.
    * 
-   * @param headerData
+   * @param headerData Text der Kopfdaten.
    */
   public void setHeaderData(Paragraph headerData) {
     this.headerData = headerData;
   }
 
   /**
-   * Auslesen des Titels des Berichts
+   * Auslesen des Berichtstitels.
    * 
-   * @return title
+   * @return Titeltext
    */
   public String getTitle() {
     return this.title;
   }
 
   /**
-   * Setzen des Titels des Berichts
+   * Setzen des Berichtstitels.
    * 
-   * @param title
+   * @param title Titeltext
    */
   public void setTitle(String title) {
     this.title = title;
   }
 
   /**
-   * Auslesen des Erstellungsdatums
+   * Auslesen des Erstellungsdatums.
    * 
-   * @return created
+   * @return Datum der Erstellung des Berichts
    */
   public Timestamp getCreated() {
     return this.created;
   }
 
   /**
-   * Setzen des Erstellungsdatums
+   * Setzen des Erstellungsdatums. <b>Hinweis:</b> Der Aufruf dieser Methoden
+   * ist nicht unbedingt erforderlich, da jeder Report bei seiner Erstellung
+   * automatisch den aktuellen Zeitpunkt festhält.
    * 
-   * @param created
+   * @param created Zeitpunkt der Erstellung
    */
   public void setCreated(Timestamp created) {
     this.created = created;
