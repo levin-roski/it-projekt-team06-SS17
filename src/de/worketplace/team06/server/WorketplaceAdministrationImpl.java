@@ -1154,9 +1154,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
 			throws IllegalArgumentException {
+		
+		Timestamp created = new Timestamp(System.currentTimeMillis());
 		Property p = new Property();
 		p.setName(name);
 		p.setValue(value);
+		p.setCreated(created);
 		
 		//Setzen einer vorläufigen ID
 		p.setID(1);
