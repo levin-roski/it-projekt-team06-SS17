@@ -313,15 +313,15 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
 
-	void deletePerson(Person person) throws IllegalArgumentException;
+	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException;
 
-	void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException;
+	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException;
 
-	void deleteOrganisation(Organisation organisation) throws IllegalArgumentException;
+	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException, WindowAlertException;
 
-	Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException;
+	public Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException;
 
-	Property createProperty(PartnerProfile partnerProfile, String name, double value) throws IllegalArgumentException;
+	public Property createProperty(PartnerProfile partnerProfile, String name, double value) throws IllegalArgumentException;
 
 	public Call createCall(Project project, Person callerPerson, String title, String description, Date deadline)
 			throws IllegalArgumentException;
@@ -331,5 +331,7 @@ public interface WorketplaceAdministration extends RemoteService {
 	public Team createTeam(String name, String description, int membercount, String googleID) throws IllegalArgumentException;
 	
 	public Organisation createOrganisation(String name, String description, String street, int zipcode, String city, String googleID) throws IllegalArgumentException;
+
+	public void deletePartnerProfile(PartnerProfile p);
 
 }

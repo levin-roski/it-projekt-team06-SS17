@@ -635,10 +635,42 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Löschen einer Organisation aus der Datenbank
+	 * @throws WindowAlertException 
 	 */
 	@Override
-	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException {
-		this.orgaMapper.delete(organisation);
+	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException, WindowAlertException {
+		Vector<Marketplace> markets = getMarketplacesFor(organisation);
+		Vector<Enrollment> enrollments = getEnrollmentFor(organisation);
+		Vector<Application> applications = getApplicationsFor(organisation);
+		
+		// nur bei Person, da nur Person Projektleiter: Vector<Project> projects = getProjectsForLeader(team); 
+	
+		if (markets != null){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
+					+ "Sie neue Besitzer für Ihre Marktplätze");
+		}
+	
+		else {		
+			PartnerProfile part = getPartnerProfileFor(organisation);
+			organisation.setPartnerProfileID(-1);
+			this.saveOrganisation(organisation);
+			this.partnerMapper.delete(part);
+			
+			if (enrollments != null){
+				for (Enrollment e : enrollments){
+					deleteEnrollment(e);
+				}
+			}
+			
+			
+			if (applications != null){
+				for (Application a : applications){
+					deleteApplication(a);
+				}	
+			}	
+
+			this.orgaMapper.delete(organisation);	
+		}
 	}
 	
 	/**
@@ -771,6 +803,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
 	}
 	
+	/**
+	 * Löschen eines ParnterProfils
+	 */
+	@Override
+	public void deletePartnerProfile(PartnerProfile p){
+		this.partnerMapper.delete(p);
+	}
+	
 	
 	
 	/*
@@ -832,10 +872,53 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Löschen einer Person aus der Datenbank
+	 * @throws WindowAlertException 
 	 */
 	@Override
-	public void deletePerson(Person person) throws IllegalArgumentException {
+	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException {
+		
+		Vector<Marketplace> markets = getMarketplacesFor(person);
+		Vector<Project> projects = getProjectsForLeader(person); 
+		Vector<Enrollment> enrollments = getEnrollmentFor(person);
+		Vector<Application> applications = getApplicationsFor(person);
+		
+		if ((markets != null) && (projects != null)){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze und Projekte oder ernennen"
+					+ "Sie neue Besitzer/Projektleiter bevor Sie Ihren Account löschen!");
+		}
+		else if ((markets != null)){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
+					+ "Sie neue Besitzer für Ihre Marktplätze");
+		}
+		
+		else if (projects != null){
+			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Projekte oder ernennen"
+					+ "Sie einen neuen Projektleiter");
+		}
+		else {	
+		
+			
+		PartnerProfile part = getPartnerProfileFor(person);
+		person.setPartnerProfileID(-1);
+		this.savePerson(person);
+		this.partnerMapper.delete(part);
+		
+		if (enrollments != null){
+			for (Enrollment e : enrollments){
+				deleteEnrollment(e);
+			}
+		}
+		
+		
+		if (applications != null){
+			for (Application a : applications){
+				deleteApplication(a);
+			}	
+		}	
+
 		this.personMapper.delete(person);
+		}
+
 	}
 	
 	/**
@@ -1235,26 +1318,40 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	
 	@Override
-	public void deleteTeam(Team team) throws IllegalArgumentException{		
+	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException{		
 		
-		/* 
-		if ((markets != null) && (projects != null)){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze und Projekte"
-					+ "oder ernennen Sie neue Besitzer bevor Sie Ihren Account löschen!");
-		}
-		else if (markets != null){
+		Vector<Marketplace> markets = getMarketplacesFor(team);
+		Vector<Enrollment> enrollments = getEnrollmentFor(team);
+		Vector<Application> applications = getApplicationsFor(team);
+		
+		// nur bei Person, da nur Person Projektleiter: Vector<Project> projects = getProjectsForLeader(team); 
+	
+		if (markets != null){
 			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
 					+ "Sie neue Besitzer für Ihre Marktplätze");
 		}
-		else if (projects != null){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Projekte oder ernennen"
-					+ "Sie neue Besitzer für Ihre Projekte");
+	
+		else {		
+			PartnerProfile part = getPartnerProfileFor(team);
+			team.setPartnerProfileID(-1);
+			this.saveTeam(team);
+			this.partnerMapper.delete(part);
+			
+			if (enrollments != null){
+				for (Enrollment e : enrollments){
+					deleteEnrollment(e);
+				}
+			}
+			
+			
+			if (applications != null){
+				for (Application a : applications){
+					deleteApplication(a);
+				}	
+			}	
+
+			this.teamMapper.delete(team);	
 		}
-		else {			
-		this.teamMapper.delete(team);
-		}
-		*/
-		this.teamMapper.delete(team);
 	}
 	
 	/**

@@ -140,6 +140,10 @@ public interface WorketplaceAdministrationAsync {
 
 	void createOrganisation(String name, String description, String street, int zipcode, String city, String googleID,
 			AsyncCallback<Organisation> callback);
+
+	void deletePartnerProfile(PartnerProfile p, AsyncCallback<Void> callback);
+
+	
 	
 	
 
