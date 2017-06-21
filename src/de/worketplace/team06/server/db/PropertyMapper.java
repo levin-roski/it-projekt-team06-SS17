@@ -72,7 +72,7 @@ public class PropertyMapper {
     			prop.setID(rs.getInt("id"));
     			prop.setCreated(rs.getTimestamp("created"));
     			prop.setName(rs.getString("name"));
-    			prop.setValue(rs.getDouble("value"));
+    			prop.setValue(rs.getString("value"));
     		}	
     	}
     	catch (SQLException e){
@@ -95,7 +95,7 @@ public class PropertyMapper {
         		prop.setID(rs.getInt("id"));
         		prop.setCreated(rs.getTimestamp("created"));
         		prop.setName(rs.getString("name"));
-        		prop.setValue(rs.getDouble("value"));
+        		prop.setValue(rs.getString("value"));
         		
         		result.addElement(prop);
         	}
@@ -127,7 +127,7 @@ public class PropertyMapper {
 				prop.setID(rs.getInt("id"));
 				prop.setName(rs.getString("name"));
 				prop.setCreated(rs.getTimestamp("created"));
-        		prop.setValue(rs.getDouble("value"));
+        		prop.setValue(rs.getString("value"));
         		prop.setPartnerProfileID(rs.getInt("partnerprofile_id"));
         		
         		result.add(prop);	

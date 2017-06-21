@@ -320,7 +320,7 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException;
 
-	public Property createProperty(PartnerProfile partnerProfile, String name, double value) throws IllegalArgumentException;
+	public Property createProperty(PartnerProfile partnerProfile, String name, String value) throws IllegalArgumentException;
 
 	public Call createCall(Project project, Person callerPerson, String title, String description, Date deadline)
 			throws IllegalArgumentException;

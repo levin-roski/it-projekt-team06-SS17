@@ -32,7 +32,7 @@ public interface WorketplaceAdministrationAsync {
 	void createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
 			Date startDate, Date endDate, AsyncCallback<Project> callback);
 
-	void createProperty(PartnerProfile partnerProfile, String name, double value, AsyncCallback<Property> callback);
+	void createProperty(PartnerProfile partnerProfile, String name, String value, AsyncCallback<Property> callback);
 
 	void deleteApplication(Application application, AsyncCallback<Void> callback);
 

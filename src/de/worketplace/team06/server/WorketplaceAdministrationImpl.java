@@ -1152,7 +1152,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen von Eigenschaften für ein PartnerProfil
 	 */
 	@Override
-	public Property createProperty(PartnerProfile partnerProfile, String name, double value)
+	public Property createProperty(PartnerProfile partnerProfile, String name, String value)
 			throws IllegalArgumentException {
 		Property p = new Property();
 		p.setName(name);

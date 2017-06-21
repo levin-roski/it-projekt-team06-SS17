@@ -64,25 +64,44 @@ public class Test {
 		 * Unternehmen generieren
 		 * Name, Beschreibung, Straße, PLZ, Stadt, GoogleID
 		 */
-		admin.createOrganisation("1Unternehmen", "1 Nice Unternehmen vong Niceigkeit her", "Stadtstrand 1", 13337, "Stutututtgart", "G1000");
-		admin.createOrganisation("CoolStrich", "Malerei", "Hansestraße 4", 87765, "Hamburg", "G1001");
-		admin.createOrganisation("Mediakram", "Medienagentur", "Friedrich-Schiller-Straße 34a", 70174, "Stuttgart", "G1003");
+		Organisation o1 = admin.createOrganisation("1Unternehmen", "1 Nice Unternehmen vong Niceigkeit her", "Stadtstrand 1", 13337, "Stutututtgart", "G1000");
+		PartnerProfile part1 = admin.createPartnerProfileFor(o1);
+		
+		admin.createProperty(part1, "Organisationsbezeichnung", "Lechwerke AG");
+		
+		Organisation o2 = admin.createOrganisation("CoolStrich", "Malerei", "Hansestraße 4", 87765, "Hamburg", "G1001");
+		PartnerProfile part2 = admin.createPartnerProfileFor(o2);
+		
+		Organisation o3 = admin.createOrganisation("Mediakram", "Medienagentur", "Friedrich-Schiller-Straße 34a", 70174, "Stuttgart", "G1003");
+		PartnerProfile part3 = admin.createPartnerProfileFor(o3);
 			
 		/*
 		 * Teams generieren
 		 * Name, Beschreibung, Mitgliederzahl, GoogleID
 		 */
-		admin.createTeam("Superknechte", "Ist wohl ein Team", 1000, "G2000");
-		admin.createTeam("Glücksspechte", "Mehrfaches Glück bedeutet Können", 500, "G2001");
-		admin.createTeam("Team Alpha", "Alphasaurier", 30, "G2002");
+		Team t1 = admin.createTeam("Superknechte", "Ist wohl ein Team", 1000, "G2000");
+		PartnerProfile part4 = admin.createPartnerProfileFor(t1);
+		
+		Team t2 = admin.createTeam("Glücksspechte", "Mehrfaches Glück bedeutet Können", 500, "G2001");
+		PartnerProfile part5 = admin.createPartnerProfileFor(t2);
+		
+		Team t3 = admin.createTeam("Team Alpha", "Alphasaurier", 30, "G2002");
+		PartnerProfile part6 = admin.createPartnerProfileFor(t3);
 		
 		/*
 		 * Personen generieren
 		 * Vorname, Nachname, Straße, PLZ, Stadt, Beschreibung, GoogleID
 		 */
-		admin.createPerson("Hans", "Mayer", "Lagistraße 5", 86637, "Augsburg", "Ein Mensch", "G3000");
-		admin.createPerson("Thomas", "Mueller", "Schuttstr 6", 38299, "Langweid", "Auch ein Mensch", "G3001");
-		admin.createPerson("Jesus", "Christus", "Wüstenweg 4", 12345, "Jerusalem", "Kein Mensch, Gott.", "G3002");
+		Person p1 = admin.createPerson("Hans", "Mayer", "Lagistraße 5", 86637, "Augsburg", "Ein Mensch", "G3000");
+		PartnerProfile part7 = admin.createPartnerProfileFor(p1);
+		
+		
+		Person p2 = admin.createPerson("Thomas", "Mueller", "Schuttstr 6", 38299, "Langweid", "Auch ein Mensch", "G3001");
+		PartnerProfile part8 = admin.createPartnerProfileFor(p2);
+		
+		Person p3 = admin.createPerson("Jesus", "Christus", "Wüstenweg 4", 12345, "Jerusalem", "Kein Mensch, Gott.", "G3002");
+		PartnerProfile part9 = admin.createPartnerProfileFor(p3);
+		
 		
 		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
 		try {
@@ -91,13 +110,21 @@ public class Test {
 			e.printStackTrace();
 		}
 		
-		Person p1 = admin.getPersonByGoogleID("G3000");
-		System.out.println(p1.getGoogleID());
+		Person person1 = admin.getPersonByGoogleID("G3000");
+		System.out.println("Person, GoogleID: " + person1.getGoogleID());
 		
-		admin.createMarketplace("Marktplatz Blau", "Dieser Marktplatz ist für Blaue", p1);
+		Team team1 = admin.getTeamByGoogleID("G2000");
+		System.out.println("Team, GoogleID: " + team1.getGoogleID());
 		
-		Organisation u1 = admin.getOrganisationByGoogleID("G1001");
-		admin.createMarketplace("Marktplatz Rot", "Dieser Marktplatz ist für Rote", u1);
+		Organisation orga1 = admin.getOrganisationByGoogleID("G1000");
+		System.out.println("Organisation, GoogleID: " + orga1.getGoogleID());
+		
+		
+		
+		admin.createMarketplace("Marktplatz Blau", "Dieser Marktplatz ist für Blaue", person1);
+		
+		
+		admin.createMarketplace("Marktplatz Rot", "Dieser Marktplatz ist für Rote", orga1);
 		
 //		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
 //		try {
@@ -107,7 +134,11 @@ public class Test {
 //		}
 		
 		Marketplace m1 = admin.getMarketplaceByID(1);
-		Person p2 = admin.getPersonByGoogleID("G3001");
+		
+		
+		/*
+		 * Projekte generieren
+		 */
 		Date startdate = new Date();
 		Date enddate = new Date();
 		
@@ -119,11 +150,9 @@ public class Test {
 			e.printStackTrace();
 		}
 		
-		/*
-		 * Projekte generieren
-		 */
-		admin.createProject(m1, "Testprojekt", "Ein Projekt zu Testzwecken", p2, u1, startdate, enddate);
-		admin.createProject(m1, "Testprojekt 2", "Ein neues Projekt", p2, u1, startdate, enddate);
+		
+		admin.createProject(m1, "Testprojekt", "Ein Projekt zu Testzwecken", p2, startdate, enddate);
+		admin.createProject(m1, "Testprojekt 2", "Ein neues Projekt", p2, startdate, enddate);
 		
 //		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
 //		try {
@@ -131,6 +160,11 @@ public class Test {
 //		} catch (InterruptedException e) {
 //			e.printStackTrace();
 //		}
+		
+		
+		/*
+		 * Calls generieren
+		 */
 		
 		Project pro1 = admin.getProjectByID(1);
 		Project pro2 = admin.getProjectByID(2);
@@ -147,12 +181,23 @@ public class Test {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		Call c = admin.createCall(pro1, p2, "Testcall 1", "test", deadline);
+		Call c1 = admin.createCall(pro1, p2, "Testcall 1", "test", deadline);
+		Call c2 = admin.createCall(pro2, p3, "Testcall 2", "test2", deadline);
 		
-		System.out.println(c.getDeadline());
-		System.out.println(c.getCreated());
+		System.out.println("Deadline: "+ c1.getDeadline());
+		System.out.println("Timestamp: "+ c1.getCreated());
 			
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public static void testDeleteAll(WorketplaceAdministrationImpl admin){
