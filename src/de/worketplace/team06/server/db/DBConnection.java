@@ -33,7 +33,7 @@ public class DBConnection {
 	 * Instanz von DBConnection existiert.
 	 * Die Instantiierung der DBConnection sollte stets durch den Aufruf dieser Methode erfolgen.
 	 * 
-	 * @return DAS DBConnection-Objekt.
+	 * @return DBConnection-Objekt.
 	 * 
 	 * @see DBConnection#con
      */
