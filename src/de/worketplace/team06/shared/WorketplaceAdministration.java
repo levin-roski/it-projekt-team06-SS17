@@ -152,12 +152,11 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param title 
      * @param description 
      * @param projectLeaderPerson 
-     * @param projectOwnerOrgaUnit 
      * @param startDate 
      * @param endDate 
      * @return
      */
-    public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson, OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate) throws IllegalArgumentException;
+    public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson, Date startDate, Date endDate) throws IllegalArgumentException;
 
     /**
      * @param project
@@ -303,7 +302,7 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
-	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException;
+//	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException;
 	
 	public Project getProjectByID(int projectID) throws IllegalArgumentException;
 	
