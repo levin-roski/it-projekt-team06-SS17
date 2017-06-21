@@ -66,11 +66,11 @@ public class Test {
 		 */
 		Organisation o1 = admin.createOrganisation("1Unternehmen", "1 Nice Unternehmen vong Niceigkeit her", "Stadtstrand 1", 13337, "Stutututtgart", "G1000");
 		PartnerProfile part1 = admin.createPartnerProfileFor(o1);
-		
 		admin.createProperty(part1, "Organisationsbezeichnung", "Lechwerke AG");
 		
 		Organisation o2 = admin.createOrganisation("CoolStrich", "Malerei", "Hansestraße 4", 87765, "Hamburg", "G1001");
 		PartnerProfile part2 = admin.createPartnerProfileFor(o2);
+		admin.createProperty(part2, "Entwickleranzahl", "5");
 		
 		Organisation o3 = admin.createOrganisation("Mediakram", "Medienagentur", "Friedrich-Schiller-Straße 34a", 70174, "Stuttgart", "G1003");
 		PartnerProfile part3 = admin.createPartnerProfileFor(o3);
@@ -81,6 +81,7 @@ public class Test {
 		 */
 		Team t1 = admin.createTeam("Superknechte", "Ist wohl ein Team", 1000, "G2000");
 		PartnerProfile part4 = admin.createPartnerProfileFor(t1);
+		admin.createProperty(part4, "Teammitglieder", "50");
 		
 		Team t2 = admin.createTeam("Glücksspechte", "Mehrfaches Glück bedeutet Können", 500, "G2001");
 		PartnerProfile part5 = admin.createPartnerProfileFor(t2);
@@ -94,7 +95,7 @@ public class Test {
 		 */
 		Person p1 = admin.createPerson("Hans", "Mayer", "Lagistraße 5", 86637, "Augsburg", "Ein Mensch", "G3000");
 		PartnerProfile part7 = admin.createPartnerProfileFor(p1);
-		
+		admin.createProperty(part7, "Berufserfahrung", "4 Jahre");
 		
 		Person p2 = admin.createPerson("Thomas", "Mueller", "Schuttstr 6", 38299, "Langweid", "Auch ein Mensch", "G3001");
 		PartnerProfile part8 = admin.createPartnerProfileFor(p2);
@@ -186,6 +187,24 @@ public class Test {
 		
 		System.out.println("Deadline: "+ c1.getDeadline());
 		System.out.println("Timestamp: "+ c1.getCreated());
+		
+		
+		Application a = admin.applyFor(c1, p1, "Ich bewerbe mich mit ganz viel Freude und so geblubber! ");
+		
+		
+		Rating r = admin.rateApplication(a, (float) 0.6, "Ahjoo hört si doch ganz vielversprechend a");
+		
+		
+		try {
+			startdate = sdf.parse("2017-08-15");
+			enddate = sdf.parse("2017-10-16");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+		admin.createEnrollment(pro1, p1, r, startdate, enddate, 5);
+		
+		
 			
 	}
 	
