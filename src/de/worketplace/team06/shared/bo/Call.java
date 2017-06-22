@@ -16,6 +16,7 @@ public class Call extends BusinessObject {
      * Default constructor
      */
     public Call() {
+    	this.setStatus(0);
     }
 
     /**

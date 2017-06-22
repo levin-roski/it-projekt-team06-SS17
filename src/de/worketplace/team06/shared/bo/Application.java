@@ -17,7 +17,7 @@ public class Application extends BusinessObject {
      * Default constructor
      */
     public Application() {
-    	// TODO implement here
+    	this.setStatus(0);
     }
 
     /**
@@ -108,8 +108,8 @@ public class Application extends BusinessObject {
      * 
      * @param status
      */
-	public Integer setStatus() {
-		return status;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
     
     /**
