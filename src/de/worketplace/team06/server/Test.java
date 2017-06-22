@@ -18,13 +18,14 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-//		fillDatabaseWithExamples(admin);
+		fillDatabaseWithExamples(admin);
 		
 //		testOfDeleteRating(admin);
 //		testOfDeleteApplication(admin);
 //		testOfDeleteEnrollment(admin);
 // 		testOfDeleteCall(admin);
- 		testOfDeleteProperty(admin);
+// 		testOfDeleteProperty(admin);
+		testOfDeleteProject(admin);
 		
 		
 //		testOfCreateOrganisation(admin);
@@ -189,6 +190,7 @@ public class Test {
 		
 		Project pro1 = admin.getProjectByID(1);
 		Project pro2 = admin.getProjectByID(2);
+		Project pro3 = admin.getProjectByID(3);
 		Date deadline = new Date();
 		
 
@@ -204,6 +206,7 @@ public class Test {
 		}
 		Call c1 = admin.createCall(pro1, p2, "Testcall 1", "test", deadline);
 		Call c2 = admin.createCall(pro2, p3, "Testcall 2", "test2", deadline);
+		Call c3 = admin.createCall(pro3, p1, "Testcall 3", "test3", deadline);
 		
 		System.out.println("Deadline: "+ c1.getDeadline());
 		System.out.println("Timestamp: "+ c1.getCreated());
@@ -324,8 +327,15 @@ Person p1 = admin.getPersonByGoogleID("G3000");
 	
 }	
 
-
-
+public static void testOfDeleteProject(WorketplaceAdministrationImpl admin){
+	Person p1 = admin.getPersonByGoogleID("G3001");
+	Vector<Project> allProjects = admin.getProjectsForLeader(p1);
+	
+	System.out.println("Projekt wird gelöscht: "+ allProjects.firstElement().getDescription());
+	
+	admin.deleteProject(allProjects.firstElement());
+	
+}
 
 	
 	
