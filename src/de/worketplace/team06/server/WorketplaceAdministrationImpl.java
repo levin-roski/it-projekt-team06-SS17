@@ -667,6 +667,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * -- METHODEN für OrgaUnit --
 	 * ---------------------------------
 	 */
+	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
 		
 		String type = orgaUnitMapper.findTypeByGoogleID(loginInfo.getGoogleId());
