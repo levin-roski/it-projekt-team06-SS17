@@ -15,6 +15,7 @@ import de.worketplace.team06.shared.*;
 import de.worketplace.team06.server.WorketplaceAdministrationImpl;
 
 import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.shared.report.CompositeParagraph;
 import de.worketplace.team06.client.NotLoggedInException;
 import de.worketplace.team06.client.UserChangedException;
 import de.worketplace.team06.client.WindowAlertException;
@@ -53,7 +54,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	protected WorketplaceAdministration getWorketplaceAdministration() {
 		return this.wpadmin;
 	}
-	  
+	
+	
+	protected void addImprint (Report r){
+		
+		CompositeParagraph imprint = new CompositeParagraph();
+		
+		imprint.addSubParagraph(new SimpleParagraph(""));
+		
+	}
 	
 
 }
