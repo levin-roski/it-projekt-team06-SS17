@@ -18,12 +18,13 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-		fillDatabaseWithExamples(admin);
+//		fillDatabaseWithExamples(admin);
 		
 //		testOfDeleteRating(admin);
 //		testOfDeleteApplication(admin);
 //		testOfDeleteEnrollment(admin);
- 		testOfDeleteCall(admin);
+// 		testOfDeleteCall(admin);
+ 		testOfDeleteProperty(admin);
 		
 		
 //		testOfCreateOrganisation(admin);
@@ -307,7 +308,21 @@ Person p1 = admin.getPersonByGoogleID("G3001");
 	
 }	
 
-
+public static void testOfDeleteProperty(WorketplaceAdministrationImpl admin){
+	
+Person p1 = admin.getPersonByGoogleID("G3000");
+	
+	PartnerProfile part1 = admin.getPartnerProfileFor(p1);
+	
+	System.out.println("partnerprofile: " + part1.getCreated());
+	
+	Vector<Property> allprops = admin.getAllPropertiesFor(part1);
+	
+	System.out.println("Property: " + allprops.firstElement().getName());
+	
+	admin.deleteProperty(allprops.firstElement());
+	
+}	
 
 
 

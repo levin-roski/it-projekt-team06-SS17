@@ -134,12 +134,13 @@ public class PropertyMapper {
         		
         		result.add(prop);	
 			}
+			return result;
         }
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 		
-    		return result;
+    		return null;
 	}
     
 	/**
