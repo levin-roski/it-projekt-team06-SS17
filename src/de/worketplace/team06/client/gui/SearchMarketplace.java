@@ -25,31 +25,9 @@ public class SearchMarketplace extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 
-	// private static class Marketplace {
-	// private final String title;
-	// private final String owner;
-	// private final String description;
-	//
-	// public Marketplace(String title, String owner, String description) {
-	// this.title = title;
-	// this.owner = owner;
-	// this.description = description;
-	// }
-	// }
-	//
-	// private static final List<Marketplace> MARKETPLACE = Arrays.asList(
-	// new Marketplace("Stuttgart", "Patrick Strepp", "Hier steht eine
-	// Beschreibung des Marktplatzes Stuttgart"),
-	// new Marketplace("Karlsruhe", "Dominik Florschütz", "Hier steht eine
-	// Beschreibung des Marktplatzes Karlsruhe"),
-	// new Marketplace("Heilbronn", "Tobias Müller", "Hier steht eine
-	// Beschreibung des Marktplatzes Heilbronn"));
-
-	final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
-
 	public void run() {
 
-//		allMarketplacesTable.setPageSize(3);
+		final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 		
 		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();
 
@@ -66,7 +44,7 @@ public class SearchMarketplace extends Page {
 			}
 		});
 
-		final CellTable<Marketplace> table = new CellTable<Marketplace>();
+//		final CellTable<Marketplace> table = new CellTable<Marketplace>();
 
 		TextColumn<Marketplace> titleColumn = new TextColumn<Marketplace>() {
 			@Override
@@ -93,10 +71,9 @@ public class SearchMarketplace extends Page {
 		allMarketplacesTable.addColumn(descriptionColumn, "Beschreibung");
 		
 		allMarketplacesTable.setWidth("100%", true);
-//		allMarketplacesTable.setRowData(MARKETPLACE);
-		final VerticalPanel root = new VerticalPanel();
-		root.add(createHeadline("Alle Marktplätze"));
-		root.add(allMarketplacesTable);
+		final VerticalPanel allMarketplacesPanel = new VerticalPanel();
+		allMarketplacesPanel.add(createHeadline("Alle Marktplätze"));
+		allMarketplacesPanel.add(allMarketplacesTable);
 
 		worketplaceAdministration.getAllMarketplaces(new AsyncCallback<Vector<Marketplace>>() {
 			@Override
@@ -111,5 +88,5 @@ public class SearchMarketplace extends Page {
 			}
 		});
 
-	RootPanel.get("content").add(root);
+	RootPanel.get("content").add(allMarketplacesPanel);
 }}
