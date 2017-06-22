@@ -310,7 +310,7 @@ public interface WorketplaceAdministration extends RemoteService {
 	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
 
-	Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
+	public Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
 
 	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException;
 
