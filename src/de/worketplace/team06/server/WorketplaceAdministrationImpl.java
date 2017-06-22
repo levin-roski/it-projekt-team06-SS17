@@ -1395,22 +1395,26 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * ***************************************************************************
 	 */
 	
+	/**
+	 * Auslesen der Organisationseinheit, die aktuell für die Verwaltung zuständig ist.
+	 */
 	@Override
 	public OrgaUnit getOrgaUnit() throws IllegalArgumentException {
 		return this.orgaUnit;
 	}
 	
+	/**
+	 * Setzen der Organisationseinheit, die aktuell für die Verwaltung zuständig ist.
+	 */
 	@Override
 	public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException {
 		this.orgaUnit = ou;
 	}
-	
 	
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, ENDE: Verschiedenes
 	 * ***************************************************************************
 	 */
-
 	
 }
