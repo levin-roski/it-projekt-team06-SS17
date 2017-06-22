@@ -8,16 +8,15 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.gui.EditorNavigation;
+import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.MarketplaceForm;
 import de.worketplace.team06.client.gui.SearchMarketplace;
-import de.worketplace.team06.client.gui.testRpcGetAllMarketplaces;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.bo.LoginInfo;
@@ -25,14 +24,15 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
 import de.worketplace.team06.shared.bo.Person;
 
 /**
- * Entry-Point-Klasse des Projekts <b>Worketplace</b>.
- * Diese enhtählt die Funktionalitäten des Editors.
+ * Entry-Point-Klasse des Projekts <b>Worketplace</b>. Diese enhtählt die
+ * Funktionalitäten des Editors.
  */
 public class Worketplace implements EntryPoint {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	private LoginInfo loginInfo = null;
 	private Logger console = Logger.getLogger("");
+	private MainPanel mainPanel;
 
 	/**
 	 * Da diese Klasse die Implementierung des Interface <code>EntryPoint</code>
@@ -42,24 +42,25 @@ public class Worketplace implements EntryPoint {
 	 */
 	@Override
 	public void onModuleLoad() {
+		mainPanel = new MainPanel(Unit.PCT);
+		ClientsideSettings.setMainPanel(mainPanel);
+		
 		Person ou = new Person();
 		ou.setID(7);
 		ou.setGoogleID("G3000");
 		ClientsideSettings.setCurrentUser(ou);
-		DockLayoutPanel mainPanel = new DockLayoutPanel(Unit.EM);
-		mainPanel.addWest(new MarketplaceForm(null);, size);
+
+		mainPanel.setOverview(new SearchMarketplace());
+//		mainPanel.se(new MarketplaceForm(null), 70);
+
+		RootLayoutPanel rp = RootLayoutPanel.get();
+		rp.add(mainPanel);
 
 		/*
-		 * Initialisiert die Editor-Navigation und rendert diese im HTML Dokument in #navigation
+		 * Navigationsleiste des Editors
 		 */
 		final EditorNavigation navigationMenu = new EditorNavigation();
-//		navigationMenu.run();
-
-		final MarketplaceForm form = new MarketplaceForm(null);
-//		form.run();
-
-		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
-		// testRpcGetAllMarketplaces.run();
+		RootPanel.get("navigation").add(navigationMenu);
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {

@@ -6,7 +6,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -46,6 +45,8 @@ public class MarketplaceForm extends Page {
 		}
 
 		Grid form = new Grid(3, 2);
+		form.setWidth("100%");
+		
 		form.setWidget(0, 0, nameLabel);
 		form.setWidget(0, 1, nameInput);
 		form.setWidget(1, 0, beschreibungLabel);
@@ -75,7 +76,7 @@ public class MarketplaceForm extends Page {
 					}
 				}
 			});
-			final HorizontalPanel panel = new HorizontalPanel();
+			final VerticalPanel panel = new VerticalPanel();
 			panel.add(saveButton);
 			final Button deleteButton = new Button("Diesen Marktplatz entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
@@ -122,8 +123,9 @@ public class MarketplaceForm extends Page {
 			form.setWidget(2, 1, saveButton);
 		}
 		final VerticalPanel root = new VerticalPanel();
-		root.add(createHeadline("Marktplatz bearbeiten"));
+		root.add(createHeadlineWithCloseButton("Marktplatz bearbeiten", true));
 		root.add(form);
+		this.add(root);
 		nameInput.setFocus(true);
 	}
 }

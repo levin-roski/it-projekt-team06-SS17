@@ -2,6 +2,7 @@ package de.worketplace.team06.client;
 
 import com.google.gwt.core.client.GWT;
 
+import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.shared.*;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 
@@ -21,6 +22,7 @@ public class ClientsideSettings {
 	 */
 	private static WorketplaceAdministrationAsync worketplaceAdministration = null;
 	private static OrgaUnit currentUser = null;
+	private static MainPanel mainPanel = null;
 	
 	/**
 	 * 
@@ -45,6 +47,14 @@ public class ClientsideSettings {
 	
 	public static void setCurrentUser(OrgaUnit pCurrentUser) {
 		currentUser = pCurrentUser;
+	}
+	
+	public static void setMainPanel(MainPanel pMainPanel) {
+		mainPanel = pMainPanel;
+	}
+	
+	public static MainPanel getMainPanel() {
+		return mainPanel;
 	}
 	
 	/**

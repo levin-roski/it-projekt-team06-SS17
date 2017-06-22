@@ -21,7 +21,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SearchMarketplace extends Page {
-
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 
@@ -47,8 +46,7 @@ public class SearchMarketplace extends Page {
 
 	final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
-	public void run() {
-
+	public SearchMarketplace() {
 //		allMarketplacesTable.setPageSize(3);
 		
 		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();
@@ -58,11 +56,8 @@ public class SearchMarketplace extends Page {
 		allMarketplaceSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-//				m1 = allMarketplaceSsm.getSelectedObject();
-//				Page page = new SearchProject(m1);
-//				RootPanel.get("Anzeige").clear();
-//				RootPanel.get("Anzeige").add(page);
-				Window.alert("Element geklickt");
+				Marketplace m1 = allMarketplaceSsm.getSelectedObject();
+				ClientsideSettings.getMainPanel().setItem(new MarketplaceForm(m1));
 			}
 		});
 
@@ -95,21 +90,20 @@ public class SearchMarketplace extends Page {
 		allMarketplacesTable.setWidth("100%", true);
 //		allMarketplacesTable.setRowData(MARKETPLACE);
 		final VerticalPanel root = new VerticalPanel();
-		root.add(createHeadline("Alle Marktplätze"));
+		root.add(createHeadline("Alle Marktplätze", true));
 		root.add(allMarketplacesTable);
 
 		worketplaceAdministration.getAllMarketplaces(new AsyncCallback<Vector<Marketplace>>() {
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Hat nicht funtioniert!");
+//				TODO
 			}
 			
 			public void onSuccess(Vector<Marketplace> results) {
 				allMarketplacesTable.setRowData(0, results);
 				allMarketplacesTable.setRowCount(results.size(), true);
-				Window.alert("Funktioniert!");
 			}
 		});
 
-	RootPanel.get("content").add(root);
+	this.add(root);
 }}
