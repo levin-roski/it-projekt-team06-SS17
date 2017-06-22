@@ -243,13 +243,13 @@ public class RatingMapper {
     	try{
     		Statement stmt = con.createStatement();
     		
-    		ResultSet rs = stmt.executeQuery("SELECT FROM rating" + "INNER JOIN application" + 
-    		"ON application.id = rating.application_id" + "WHERE application.id = " + applicationID);
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM rating INNER JOIN application " + 
+    		"ON application.rating_id = rating.id WHERE application.id = " + applicationID);
     		
     		if (rs.next()){
     			Rating r = new Rating ();
     			r.setID(rs.getInt("id"));
-    			r.setRatingStatement(rs.getString("RatingStatement"));
+    			r.setRatingStatement(rs.getString("statement"));
     			r.setRating(rs.getFloat("Rating"));
     			return r;
     		}

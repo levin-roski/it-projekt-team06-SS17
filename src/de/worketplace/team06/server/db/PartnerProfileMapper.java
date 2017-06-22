@@ -34,7 +34,7 @@ public class PartnerProfileMapper {
     	
     	try{
     		Statement stmt= con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT id, created, last_edit, teamID, personID "
+    		ResultSet rs = stmt.executeQuery("SELECT id, created, last_edit "
     				+ "FROM partnerprofile WHERE id= " + id);
     		
     		if (rs.next()) {
@@ -127,7 +127,7 @@ public class PartnerProfileMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("DELETE * FROM partnerprofile " + "WHERE id=" + part.getID());
+        	stmt.executeUpdate("DELETE FROM partnerprofile WHERE id=" + part.getID());
         	
         }
         catch (SQLException e){
@@ -135,9 +135,19 @@ public class PartnerProfileMapper {
         }
     }
 
-	public PartnerProfile findPartnerProfileByID(Integer partnerProfileID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	public PartnerProfile findPartnerProfileByID(Integer partnerProfileID) {
+//		 Connection con = DBConnection.connection();
+//	        
+//	        try {
+//	        	Statement stmt = con.createStatement();
+//	        	
+//	        	stmt.executeUpdate();
+//	        	
+//	        }
+//	        catch (SQLException e){
+//	        	e.printStackTrace();
+//	        }
+//		return null;
+//	}
 	
 }

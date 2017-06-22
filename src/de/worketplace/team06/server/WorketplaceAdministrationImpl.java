@@ -210,14 +210,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void deleteApplication(Application application) throws IllegalArgumentException {
 		Rating r = this.ratingMapper.findById(application.getRatingID());
 		
-		if (r != null && this.enrollMapper.findByRatingID(r.getID()) == null){
-			this.ratingMapper.delete(r);
-		}
-		
-		
 		this.appMapper.delete(application);
 		
-		
+		if (r != null && this.enrollMapper.findByRatingID(r.getID()) == null){
+			this.ratingMapper.delete(r);
+		}	
 	}
 	
 	/**
@@ -301,35 +298,18 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Vector<Application> allApps = appMapper.findByCallID(call.getID());
 		if (allApps != null){
 			for (Application a : allApps){
-				
-				//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
-				Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
-					
-				if (rating != null){
-				//Es wird überprüft ob die Bewertung auch mit einer Enrollment Instanz verbunden ist
-				//Wenn ja wird der Rating Mapper nicht gelöscht, Wenn nein wird er gelöscht. 
-					if (this.enrollMapper.findByRatingID(rating.getID()) == null){
-						this.ratingMapper.delete(rating);
-					}
-					
-					
-				}	
-				this.appMapper.delete(a);
-											
+				deleteApplication(a);							
 			}
 		}
 		
 		PartnerProfile pp = getPartnerProfileFor(call);
-		if (pp != null){
-			
-			this.propertyMapper.deleteByPartnerProfileID(pp.getID());
-			this.partnerMapper.delete(pp);
-		} else {
-			//TODO: Fehlermeldung
-		}
 			
 		//Löschen der jeweiligen Ausschreibung
 		this.callMapper.delete(call);
+		
+		if (pp != null){
+			deletePartnerProfile(pp);
+		} 
 	}
 
 	/**
@@ -387,10 +367,27 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		e.setWorkload(workload);
 		
 		
-//		//Überprüfung ob Start- und Enddatum bereits gesetzt
-//		if (startDate != null && endDate != null){
-//			e.setPeriod();
-//		}
+		//Setzen einer vorlauefigen ID
+		e.setID(1);
+		
+		//***WICHTIG*** @ DB-Team: Methode muss noch deklariert werden.
+		return this.enrollMapper.insert(e);
+	}
+	
+	/**
+	 * Erstellen einer automatischen Beteiligung
+	 */
+	//Kein Override wird nur auf ServerEbene angesprochen
+	public Enrollment createAutomaticEnrollment(Project project, OrgaUnit orgaUnit, Rating rating) throws IllegalArgumentException {
+		Enrollment e = new Enrollment();
+		
+		e.setRatingID(rating.getID());
+		e.setProjectID(project.getID());
+		e.setOrgaUnitID(orgaUnit.getID());
+		
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		e.setCreated(created);
 		
 		//Setzen einer vorlauefigen ID
 		e.setID(1);
@@ -415,11 +412,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
 		Rating r = this.ratingMapper.findById(enrollment.getRatingID());
 		
+		this.enrollMapper.delete(enrollment);
+		
 		if (r != null && this.appMapper.findByRatingID(r.getID()) == null){
 			this.ratingMapper.delete(r);
 		}
-		
-		this.enrollMapper.delete(enrollment);
 		
 	}
 	
@@ -487,26 +484,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Vector<Project> allProjects = projectMapper.findByMarketplaceID(m.getID());
 		
 		if (allProjects != null){
-			
 			//Für Jedes Projekt werden die zugehörigen Ausschreibungen und Beteiligungen ausgelesen und gelöscht
 			for(Project p : allProjects){
-				Vector<Call> allCalls = callMapper.findByProjectID(p.getID());
-				if (allCalls != null){
-					for(Call c : allCalls){
-					deleteCall(c);
-					}
-				}
-				Vector<Enrollment> allEnrollments = enrollMapper.findByProjectID(p.getID());
-				if (allEnrollments != null){
-					for(Enrollment e : allEnrollments){
-					deleteEnrollment(e);
-					}
-				}
-				this.projectMapper.delete(p);
+				deleteProject(p);
 			}
-			this.marketMapper.delete(m);
 		}
-		
+		this.marketMapper.delete(m);
 		
 		
 		
@@ -547,10 +530,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//Löschen der jeweiligen Ausschreibung
 		this.callMapper.delete(call);
 		 */
-		
-		
-		
-		this.marketMapper.delete(m);
 	}
 	
 	/**
@@ -790,7 +769,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(call.getPartnerProfileID());
+		return this.partnerMapper.findById(call.getPartnerProfileID());
 	}
 
 	/**
@@ -798,7 +777,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
+		return this.partnerMapper.findById(orgaunit.getPartnerProfileID());
 	}
 	
 	/**
@@ -986,57 +965,25 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 */
 		Integer pID = project.getID();
 		
+		
 		/*
 		 * Löschen aller Beteiligungen anhand der Projekt ID.
 		 */
 		Vector<Enrollment> allEnrolls = enrollMapper.findByProjectID(pID);
 		if (allEnrolls != null){
-			for (Integer i = 0; allEnrolls.capacity()>i; i++){
-				this.enrollMapper.delete(allEnrolls.get(i));
+			for (Enrollment e : allEnrolls){
+				deleteEnrollment(e);
 			}
 		}
 		
+		
 		/*
-		 * Das Löschen der Objekte, welche in Beziehung zum zu löschenden Projekt stehen,
-		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
+		 * Löschen aller Ausschreibungen anhand der Projekt ID
 		 */
-		
-		
-		//Auslesen aller Ausschreibungen in einen Vektor anhand der ProjectID
 		Vector<Call> allCalls = callMapper.findByProjectID(pID);
 		if (allCalls != null){
 			for (Call c : allCalls){
-				
-				//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
-				Vector<Application> allApps = appMapper.findByCallID(c.getID());
-				if (allApps != null){
-					for (Application a : allApps){
-						
-						//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
-						Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
-						if (rating != null){
-							
-							//Löschen der Bewertung
-							this.ratingMapper.delete(rating);
-						}
-						
-						//Löschen der jeweiligen Bewerbung
-						this.appMapper.delete(a);
-													
-					}
-				}
-				
-				//Für den jeweiligen Call wird auch das PartnerProfile gelöscht
-				PartnerProfile pp = getPartnerProfileFor(c);
-				if (pp != null){
-					this.partnerMapper.delete(pp);
-				} else {
-					//TODO: Fehlermeldung
-				}
-				
-				//Löschen der jeweiligen Ausschreibung
-				this.callMapper.delete(c);
-				
+				deleteCall(c);
 			}
 		}
 		
@@ -1247,6 +1194,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		application.setRatingID(r.getID());
 		
 		saveApplication(application);
+		
+		Call c = this.getCallByID(application.getCallID());
+		Project p = this.getProjectByID(c.getProjectID());
+		OrgaUnit ou = this.getOrgaUnitById(application.getOrgaUnitID());
+		
+		if (r.getRating() == 1){
+			this.createAutomaticEnrollment(p, ou, r);
+		}
 		
 		return r;
 	}

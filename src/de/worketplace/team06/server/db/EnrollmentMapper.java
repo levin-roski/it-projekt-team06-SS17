@@ -191,8 +191,17 @@ public Enrollment findByRatingID (Integer rID) {
 		Connection con = DBConnection.connection();
 		
 		try {
-			String startdate = sdf.format(e.getStartDate());
-        	String enddate = sdf.format(e.getEndDate());
+			String invertedcomma = "'";
+			String startdate = null;
+			String enddate = null;
+			if (e.getStartDate() != null){
+			startdate = sdf.format(e.getStartDate());
+			startdate = invertedcomma.concat(startdate).concat(invertedcomma);
+			}
+			if (e.getEndDate() != null){
+			enddate = sdf.format(e.getEndDate());
+			enddate = invertedcomma.concat(enddate).concat(invertedcomma);
+			}
         	
 			Statement stmt = con.createStatement();
 			
@@ -206,7 +215,7 @@ public Enrollment findByRatingID (Integer rID) {
 				
 				stmt.executeUpdate("INSERT INTO enrollment (id, created, start_date, end_date, period,"
 						+ " orgaunit_id, project_id, rating_id) " + "VALUES (" + e.getID() + ",'"
-						+ e.getCreated() + "','" + startdate + "','" + enddate + "',"
+						+ e.getCreated() + "'," + startdate + "," + enddate + ","
 				        + e.getWorkload() + "," + e.getOrgaUnitID() + "," + e.getProjectID() + ","
 						+ e.getRatingID()+ ")");
 			}

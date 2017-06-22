@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-
+import de.worketplace.team06.client.WindowAlertException;
 import de.worketplace.team06.shared.bo.*;
 
 public class Test {
@@ -17,11 +17,18 @@ public class Test {
 		
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
-	
-//		fillDatabaseWithExamples(admin);
 		
-		testOfDeleteRatings(admin);
-
+		fillDatabaseWithExamples(admin);
+		
+//		testOfDeleteRating(admin);
+//		testOfDeleteApplication(admin);
+//		testOfDeleteEnrollment(admin);
+// 		testOfDeleteCall(admin);
+// 		testOfDeleteProperty(admin);
+//		testOfDeleteProject(admin);
+//		testOfDeletePerson(admin);
+		
+		
 //		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);
 //		testOfCreatePerson(admin);	
@@ -51,10 +58,7 @@ public class Test {
 //		
 //		System.out.println(timestamp);
 //      private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		String currentTime = sdf.format(m.getCreated());
-		
-		
-		
+//		String currentTime = sdf.format(m.getCreated());	
 	}
 	
 	
@@ -187,6 +191,7 @@ public class Test {
 		
 		Project pro1 = admin.getProjectByID(1);
 		Project pro2 = admin.getProjectByID(2);
+		Project pro3 = admin.getProjectByID(3);
 		Date deadline = new Date();
 		
 
@@ -202,6 +207,7 @@ public class Test {
 		}
 		Call c1 = admin.createCall(pro1, p2, "Testcall 1", "test", deadline);
 		Call c2 = admin.createCall(pro2, p3, "Testcall 2", "test2", deadline);
+		Call c3 = admin.createCall(pro3, p1, "Testcall 3", "test3", deadline);
 		
 		System.out.println("Deadline: "+ c1.getDeadline());
 		System.out.println("Timestamp: "+ c1.getCreated());
@@ -211,7 +217,7 @@ public class Test {
 		Application a2 = admin.applyFor(c2, p2, "Hab halt mal ne Bewerbung geschickt, nehmt mich oder nicht");
 		
 		Rating r = admin.rateApplication(a, (float) 0.6, "Ahjoo hört si doch ganz vielversprechend a");
-		Rating r2 = admin.rateApplication(a2, (float) 0.8, "Du bisch mir so ein Schlingel");
+		Rating r2 = admin.rateApplication(a2, (float) 1, "Du bisch mir so ein Schlingel");
 		
 		
 		try {
@@ -222,7 +228,7 @@ public class Test {
 			}
 			
 		admin.createEnrollment(pro1, p1, r, startdate, enddate, 5);
-		admin.createEnrollment(pro2, p2, r2, startdate, enddate, 7);
+		
 		
 		
 			
@@ -240,7 +246,7 @@ public class Test {
 	
 	// DELETE Methods
 	
-	public static void testOfDeleteRatings(WorketplaceAdministrationImpl admin){
+	public static void testOfDeleteRating(WorketplaceAdministrationImpl admin){
 		
 		Person p1 = admin.getPersonByGoogleID("G3001");
 		
@@ -262,13 +268,77 @@ public class Test {
 	}
 	
 	
+public static void testOfDeleteApplication(WorketplaceAdministrationImpl admin){
+		
+		Person p1 = admin.getPersonByGoogleID("G3001");
+		
+		Vector<Project> myprojects = admin.getProjectsForLeader(p1);
+		
+		Vector<Call> mycalls = admin.getCallsFor(myprojects.firstElement());
+		
+		Vector<Application> apps = admin.getApplicationsFor(mycalls.firstElement());
+		
+		System.out.println("Applications' Bewerbungstext" + apps.firstElement().getText());
+		
+		admin.deleteApplication(apps.firstElement());
+		
+	}
+
+public static void testOfDeleteEnrollment(WorketplaceAdministrationImpl admin){
+	
+	Person p1 = admin.getPersonByGoogleID("G3001");
+	
+	Vector<Project> myprojects = admin.getProjectsForLeader(p1);
+	
+	Vector<Enrollment> enrollments = admin.getEnrollmentFor(myprojects.firstElement());
+	
+	System.out.println("Enrollment Startdatum: " + enrollments.firstElement().getStartDate());
+	
+	admin.deleteEnrollment(enrollments.firstElement());
+	
+}
+
+public static void testOfDeleteCall(WorketplaceAdministrationImpl admin){
+Person p1 = admin.getPersonByGoogleID("G3001");
+	
+	Vector<Project> myprojects = admin.getProjectsForLeader(p1);
+	
+	Vector<Call> mycalls = admin.getCallsFor(myprojects.firstElement());
+	
+	System.out.println("Call der gelöscht wird: " + mycalls.firstElement().getDescription());
+	
+	admin.deleteCall(mycalls.firstElement());
 	
 	
+}	
+
+public static void testOfDeleteProperty(WorketplaceAdministrationImpl admin){
 	
+Person p1 = admin.getPersonByGoogleID("G3000");
 	
+	PartnerProfile part1 = admin.getPartnerProfileFor(p1);
 	
+	System.out.println("partnerprofile: " + part1.getCreated());
 	
+	Vector<Property> allprops = admin.getAllPropertiesFor(part1);
 	
+	System.out.println("Property: " + allprops.firstElement().getName());
+	
+	admin.deleteProperty(allprops.firstElement());
+	
+}	
+
+public static void testOfDeleteProject(WorketplaceAdministrationImpl admin){
+	Person p1 = admin.getPersonByGoogleID("G3001");
+	Vector<Project> allProjects = admin.getProjectsForLeader(p1);
+	
+	System.out.println("Projekt wird gelöscht: "+ allProjects.firstElement().getDescription());
+	
+	admin.deleteProject(allProjects.firstElement());
+	
+}
+
+
 	
 	
 	
@@ -396,8 +466,19 @@ public class Test {
 
 
 	public static void testOfDeletePerson(WorketplaceAdministrationImpl admin) {
-		Person p = admin.getPersonByGoogleID("G256061");
-		admin.deletePerson(p);
+		Person p = admin.getPersonByGoogleID("G3001");
+		
+		System.out.println("Die folgende Person wird gelöscht: " + p.getFirstName());
+		try {
+			admin.deletePerson(p);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (WindowAlertException e) {
+			
+			e.getMessage();
+			e.printStackTrace();
+		}
 	}
 	
 	public static void testOfGetPerson(WorketplaceAdministrationImpl admin) {

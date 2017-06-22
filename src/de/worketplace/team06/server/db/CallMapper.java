@@ -181,7 +181,7 @@ public class CallMapper {
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(sdf.parse(rs.getString("deadline")));
-				c.setProjectID(rs.getInt("ProjectID"));
+				c.setProjectID(rs.getInt("project_id"));
 				c.setCallerID(rs.getInt("orgaunit_id"));
 				c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				
