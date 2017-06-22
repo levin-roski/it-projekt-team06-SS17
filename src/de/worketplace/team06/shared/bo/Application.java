@@ -24,6 +24,14 @@ public class Application extends BusinessObject {
      * Variable für das Speichern des Bewerbungstextes
      */
     private String applicationText;
+    
+    /**
+     * Variable für den Status der Bewerbung
+     * -1 abgelehnt
+     * 0 laufend
+     * 1 angenommen
+     */
+    private Integer status;
 
     /**
      * ID der dazgehörigen Ausschreibung
@@ -47,6 +55,18 @@ public class Application extends BusinessObject {
     public String getText() {
         return applicationText;
     }
+    
+    /**
+     * Auslesen des Status für die Bewerbung
+     * -1 abgelehnt
+     * 0 laufend
+     * 1 angenommen
+     * 
+     * @param status
+     */
+	public Integer getStatus() {
+		return status;
+	}
 
     /**
      *  Auslesen der ID der Ausschreibung
@@ -79,6 +99,18 @@ public class Application extends BusinessObject {
     public void setText(String applicationText) {
         this.applicationText = applicationText;
     }
+    
+    /**
+     * Setzen des Status für die Bewerbung
+     * -1 abgelehnt
+     * 0 laufend
+     * 1 angenommen
+     * 
+     * @param status
+     */
+	public Integer setStatus() {
+		return status;
+	}
     
     /**
      *  Setzen der ID der Ausschreibung

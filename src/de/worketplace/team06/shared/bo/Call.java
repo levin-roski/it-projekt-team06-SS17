@@ -34,6 +34,14 @@ public class Call extends BusinessObject {
     private Date deadline;
     
     /**
+     * Variable für den Status der Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     */
+    private Integer status;
+    
+    /**
      * ID für das Projekt
      */
     private Integer projectID;
@@ -79,6 +87,18 @@ public class Call extends BusinessObject {
     public Date getDeadline() {
         return this.deadline;
     }
+    
+    /**
+     * Auslesen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param status
+     */
+	public Integer getStatus() {
+		return status;
+	}
     
     /**
      * auslesen der ID für das Projekt
@@ -127,6 +147,18 @@ public class Call extends BusinessObject {
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
+    
+    /**
+     * Setzen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param status
+     */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	/**
 	 * Setzen der ID für das Projekt
@@ -143,6 +175,5 @@ public class Call extends BusinessObject {
 	public void setPartnerProfileID(Integer partnerProfileID) {
 		this.partnerProfileID = partnerProfileID;
 	}
-
 
 }
