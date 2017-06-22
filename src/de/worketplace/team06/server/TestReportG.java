@@ -1,6 +1,8 @@
 package de.worketplace.team06.server;
 
 import de.worketplace.team06.server.report.*;
+import de.worketplace.team06.shared.bo.Person;
+import de.worketplace.team06.shared.report.*;
 
 /**
  * Diese Klasse dient zum Testen einzelner Methoden für die Erstellung von Reports
@@ -9,10 +11,23 @@ import de.worketplace.team06.server.report.*;
  *
  */
 public class TestReportG {
+	
+	
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ReportGeneratorImpl reportGen = new ReportGeneratorImpl();
+		reportGen.init();
 
+		ShowAllCallsReport(reportGen);
+	
+	}
+	
+	public static void ShowAllCallsReport(ReportGeneratorImpl gen){
+		Person p = new Person();
+		p.setGoogleID("G3000");
+		PlainTextReportWriter writer = new PlainTextReportWriter();
+		writer.process(gen.createAllCallsReport(p));
+		System.out.println(writer.getReportText());
 	}
 
 }

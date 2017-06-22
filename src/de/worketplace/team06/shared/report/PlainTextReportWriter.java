@@ -51,7 +51,11 @@ public class PlainTextReportWriter extends ReportWriter {
 		
 		StringBuffer result = new StringBuffer();
 		result.append("Title: " + r.getTitle());
-		result.append("Header: " + r.getHeaderData());
+		
+		if (r.getHeaderData() != null){
+			result.append("Header: " + r.getHeaderData());
+		}
+		
 		result.append("Generiert am: " + r.getCreated());
 		
 		Vector<Row> allRows = r.getRows();
