@@ -17,11 +17,15 @@ public class Test {
 		
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
-	
-//		fillDatabaseWithExamples(admin);
 		
-		testOfDeleteRatings(admin);
-
+		fillDatabaseWithExamples(admin);
+		
+//		testOfDeleteRating(admin);
+//		testOfDeleteApplication(admin);
+//		testOfDeleteEnrollment(admin);
+ 		testOfDeleteCall(admin);
+		
+		
 //		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);
 //		testOfCreatePerson(admin);	
@@ -51,10 +55,7 @@ public class Test {
 //		
 //		System.out.println(timestamp);
 //      private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		String currentTime = sdf.format(m.getCreated());
-		
-		
-		
+//		String currentTime = sdf.format(m.getCreated());	
 	}
 	
 	
@@ -240,7 +241,7 @@ public class Test {
 	
 	// DELETE Methods
 	
-	public static void testOfDeleteRatings(WorketplaceAdministrationImpl admin){
+	public static void testOfDeleteRating(WorketplaceAdministrationImpl admin){
 		
 		Person p1 = admin.getPersonByGoogleID("G3001");
 		
@@ -262,12 +263,49 @@ public class Test {
 	}
 	
 	
+public static void testOfDeleteApplication(WorketplaceAdministrationImpl admin){
+		
+		Person p1 = admin.getPersonByGoogleID("G3001");
+		
+		Vector<Project> myprojects = admin.getProjectsForLeader(p1);
+		
+		Vector<Call> mycalls = admin.getCallsFor(myprojects.firstElement());
+		
+		Vector<Application> apps = admin.getApplicationsFor(mycalls.firstElement());
+		
+		System.out.println("Applications' Bewerbungstext" + apps.firstElement().getText());
+		
+		admin.deleteApplication(apps.firstElement());
+		
+	}
+
+public static void testOfDeleteEnrollment(WorketplaceAdministrationImpl admin){
+	
+	Person p1 = admin.getPersonByGoogleID("G3001");
+	
+	Vector<Project> myprojects = admin.getProjectsForLeader(p1);
+	
+	Vector<Enrollment> enrollments = admin.getEnrollmentFor(myprojects.firstElement());
+	
+	System.out.println("Enrollment Startdatum: " + enrollments.firstElement().getStartDate());
+	
+	admin.deleteEnrollment(enrollments.firstElement());
+	
+}
+
+public static void testOfDeleteCall(WorketplaceAdministrationImpl admin){
+Person p1 = admin.getPersonByGoogleID("G3001");
+	
+	Vector<Project> myprojects = admin.getProjectsForLeader(p1);
+	
+	Vector<Call> mycalls = admin.getCallsFor(myprojects.firstElement());
+	
+	System.out.println("Call der gelöscht wird: " + mycalls.firstElement().getDescription());
+	
+	admin.deleteCall(mycalls.firstElement());
 	
 	
-	
-	
-	
-	
+}	
 	
 	
 	
