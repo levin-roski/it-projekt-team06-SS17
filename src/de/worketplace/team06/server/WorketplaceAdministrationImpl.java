@@ -790,7 +790,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileFor(Call call) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(call.getPartnerProfileID());
+		return this.partnerMapper.findById(call.getPartnerProfileID());
 	}
 
 	/**
@@ -798,7 +798,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileFor(OrgaUnit orgaunit) throws IllegalArgumentException {
-		return this.partnerMapper.findPartnerProfileByID(orgaunit.getPartnerProfileID());
+		return this.partnerMapper.findById(orgaunit.getPartnerProfileID());
 	}
 	
 	/**
