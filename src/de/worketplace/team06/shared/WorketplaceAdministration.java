@@ -339,9 +339,9 @@ public interface WorketplaceAdministration extends RemoteService {
 	
 	public Rating getRatingFor(Enrollment enrollment) throws IllegalArgumentException;
 
-	public OrgaUnit getOrgaUnit() throws IllegalArgumentException;
+	//Wird wahrscheinlich nicht benötigt --> public OrgaUnit getOrgaUnit() throws IllegalArgumentException;
 
-	public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException;
+	//Wird wahrscheinlich nicht benötigt --> public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException;
 
 	public Person getPersonByGoogleID(String googleID);
 
