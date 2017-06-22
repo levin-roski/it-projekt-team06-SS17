@@ -47,7 +47,20 @@ public class PlainTextReportWriter extends ReportWriter {
 	
 	@Override
 	public void process(AllCallsReport r) {
-		// TODO Auto-generated method stub
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		result.append("Title: " + r.getTitle());
+		result.append("Header: " + r.getHeaderData());
+		result.append("Generiert am: " + r.getCreated());
+		
+		Vector<Row> allRows = r.getRows();
+		
+		for (Row rowToAppend : allRows){
+			result.append(rowToAppend);
+		}
+		
+		this.reportText = result.toString();
 			
 	}
 	
