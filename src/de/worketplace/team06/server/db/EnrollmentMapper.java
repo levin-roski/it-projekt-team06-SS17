@@ -191,6 +191,14 @@ public Enrollment findByRatingID (Integer rID) {
 		Connection con = DBConnection.connection();
 		
 		try {
+			
+			/*
+			 *  Start und Enddatum werden mit Hochkommas verknüpft, da im Falle einer Automatischen
+			 *  Beteiligung das Start und Enddatum nicht gesetzt sind. "Null" darf nicht als String
+			 *  in der Datenbank gespeichert werden, deshalb werden die Hochkommas direkt im startdatum und 
+			 *  enddatum gesetzt. 
+			 */
+			
 			String invertedcomma = "'";
 			String startdate = null;
 			String enddate = null;
