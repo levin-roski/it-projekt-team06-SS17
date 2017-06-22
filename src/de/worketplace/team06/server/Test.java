@@ -18,9 +18,9 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 	
-		fillDatabaseWithExamples(admin);
+//		fillDatabaseWithExamples(admin);
 		
-//		testOfDeleteRatings(admin);
+		testOfDeleteRatings(admin);
 
 //		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);

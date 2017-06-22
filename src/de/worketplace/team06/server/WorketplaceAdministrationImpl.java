@@ -145,13 +145,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public boolean checkExistence(String googleID) throws IllegalArgumentException {
-		Integer temp = 0;
+		Integer temp = null;
 		if (orgaUnitMapper.findID(googleID) != 0){
 			temp = orgaUnitMapper.findID(googleID);
 			return true;
 		}
 		else{
-			temp = -1;
+			temp = null;
 			return false;
 		}
 	}
@@ -650,7 +650,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 		else {		
 			PartnerProfile part = getPartnerProfileFor(organisation);
-			organisation.setPartnerProfileID(-1);
+			organisation.setPartnerProfileID(null);
 			this.saveOrganisation(organisation);
 			this.partnerMapper.delete(part);
 			
@@ -897,7 +897,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 			
 		PartnerProfile part = getPartnerProfileFor(person);
-		person.setPartnerProfileID(-1);
+		person.setPartnerProfileID(null);
 		this.savePerson(person);
 		this.partnerMapper.delete(part);
 		
@@ -1287,13 +1287,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Enrollment e = enrollMapper.findByRatingID(rating.getID());
 		
 		if (a != null){
-		a.setRatingID(-1);
+		a.setRatingID(null);
 		this.appMapper.update(a);
 		}
 		if (e != null){
-		e.setRatingID(-1);
+		e.setRatingID(null);
 		this.enrollMapper.update(e);
 		}
+		
 		this.ratingMapper.delete(rating);
 		
 	}
@@ -1367,7 +1368,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 		else {		
 			PartnerProfile part = getPartnerProfileFor(team);
-			team.setPartnerProfileID(-1);
+			team.setPartnerProfileID(null);
 			this.saveTeam(team);
 			this.partnerMapper.delete(part);
 			

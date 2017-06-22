@@ -227,10 +227,10 @@ public Enrollment findByRatingID (Integer rID) {
         	
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("UPDATE enrollment " + "SET start_date='" + startdate +
+			stmt.executeUpdate("UPDATE enrollment SET start_date='" + startdate +
 					"', end_date='" + enddate + "', orgaunit_id=" + e.getOrgaUnitID() + 
 					", project_id=" + e.getProjectID() + ", rating_id=" + e.getRatingID() + ", period=" + e.getWorkload() +
-					"WHERE id=" + e.getID());
+					" WHERE id=" + e.getID());
 			
 		}
 		catch (SQLException e2) {

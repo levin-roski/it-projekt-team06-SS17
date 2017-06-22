@@ -219,7 +219,7 @@ public class RatingMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("DELETE FROM team " + "WHERE id=" + r.getID());
+        	stmt.executeUpdate("DELETE FROM rating " + "WHERE id=" + r.getID());
         }
         catch (SQLException e){
         	e.printStackTrace();
