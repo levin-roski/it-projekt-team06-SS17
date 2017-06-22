@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-
+import de.worketplace.team06.client.WindowAlertException;
 import de.worketplace.team06.shared.bo.*;
 
 public class Test {
@@ -18,14 +18,15 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-		fillDatabaseWithExamples(admin);
+//		fillDatabaseWithExamples(admin);
 		
 //		testOfDeleteRating(admin);
 //		testOfDeleteApplication(admin);
 //		testOfDeleteEnrollment(admin);
 // 		testOfDeleteCall(admin);
 // 		testOfDeleteProperty(admin);
-		testOfDeleteProject(admin);
+//		testOfDeleteProject(admin);
+		testOfDeletePerson(admin);
 		
 		
 //		testOfCreateOrganisation(admin);
@@ -337,7 +338,7 @@ public static void testOfDeleteProject(WorketplaceAdministrationImpl admin){
 	
 }
 
-	
+
 	
 	
 	
@@ -465,8 +466,19 @@ public static void testOfDeleteProject(WorketplaceAdministrationImpl admin){
 
 
 	public static void testOfDeletePerson(WorketplaceAdministrationImpl admin) {
-		Person p = admin.getPersonByGoogleID("G256061");
-		admin.deletePerson(p);
+		Person p = admin.getPersonByGoogleID("G3001");
+		
+		System.out.println("Die folgende Person wird gelöscht: " + p.getFirstName());
+		try {
+			admin.deletePerson(p);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (WindowAlertException e) {
+			
+			e.getMessage();
+			e.printStackTrace();
+		}
 	}
 	
 	public static void testOfGetPerson(WorketplaceAdministrationImpl admin) {

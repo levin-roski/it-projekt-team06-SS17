@@ -367,10 +367,27 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		e.setWorkload(workload);
 		
 		
-//		//Überprüfung ob Start- und Enddatum bereits gesetzt
-//		if (startDate != null && endDate != null){
-//			e.setPeriod();
-//		}
+		//Setzen einer vorlauefigen ID
+		e.setID(1);
+		
+		//***WICHTIG*** @ DB-Team: Methode muss noch deklariert werden.
+		return this.enrollMapper.insert(e);
+	}
+	
+	/**
+	 * Erstellen einer automatischen Beteiligung
+	 */
+	//Kein Override wird nur auf ServerEbene angesprochen
+	public Enrollment createAutomaticEnrollment(Project project, OrgaUnit orgaUnit, Rating rating) throws IllegalArgumentException {
+		Enrollment e = new Enrollment();
+		
+		e.setRatingID(rating.getID());
+		e.setProjectID(project.getID());
+		e.setOrgaUnitID(orgaUnit.getID());
+		
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		e.setCreated(created);
 		
 		//Setzen einer vorlauefigen ID
 		e.setID(1);
@@ -1177,6 +1194,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		application.setRatingID(r.getID());
 		
 		saveApplication(application);
+		
+		Call c = this.getCallByID(application.getCallID());
+		Project p = this.getProjectByID(c.getProjectID());
+		OrgaUnit ou = this.getOrgaUnitById(application.getOrgaUnitID());
+		
+		if (r.getRating() == 1){
+			this.createAutomaticEnrollment(p, ou, r);
+		}
 		
 		return r;
 	}
