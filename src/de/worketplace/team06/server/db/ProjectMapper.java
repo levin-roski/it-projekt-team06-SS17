@@ -61,7 +61,7 @@ import de.worketplace.team06.shared.bo.Team;
 	 * @param proj
 	 * @return Project-Objekt, das der übergebenen ID entspricht
 	 */
-	public Project findByID(int projectID) {
+	public Project findByID(Integer projectID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -233,7 +233,7 @@ import de.worketplace.team06.shared.bo.Team;
 	 * @param marketplaceID
 	 * @return Project-Objekt 
 	 */
-	public Vector<Project> findByMarketplaceID(int marketplaceID) {
+	public Vector<Project> findByMarketplaceID(Integer marketplaceID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -322,7 +322,7 @@ import de.worketplace.team06.shared.bo.Team;
 	 * @author Patrick
 	 */
 	
-	public Vector<Project> findByProjectLeaderID(int projectLeaderID) {
+	public Vector<Project> findByProjectLeaderID(Integer projectLeaderID) {
 		Connection con = DBConnection.connection();
 		
 		Vector<Project> result = new Vector<Project>();
@@ -330,7 +330,7 @@ import de.worketplace.team06.shared.bo.Team;
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, "
-					+ "start_date, end_date, marketplace_id "
+					+ "start_date, end_date, created, marketplace_id "
 					+ " FROM project WHERE projectleader_id ='" + projectLeaderID + "'ORDER BY id");
 			
 			while (rs.next()){
@@ -343,7 +343,7 @@ import de.worketplace.team06.shared.bo.Team;
         		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
         		proj.setCreated(rs.getTimestamp("created"));
-        		proj.setMarketplaceID(rs.getInt("marektplace_id"));
+        		proj.setMarketplaceID(rs.getInt("marketplace_id"));
         		
         		result.add(proj);	
 			}

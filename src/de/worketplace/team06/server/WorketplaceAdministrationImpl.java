@@ -145,7 +145,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public boolean checkExistence(String googleID) throws IllegalArgumentException {
-		int temp = 0;
+		Integer temp = 0;
 		if (orgaUnitMapper.findID(googleID) != 0){
 			temp = orgaUnitMapper.findID(googleID);
 			return true;
@@ -230,7 +230,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 //		/**
 //		 * Variable für die OrgaUnit ID
 //		 */
-//		int findID = orgaUnit.getID();
+//		Integer findID = orgaUnit.getID();
 //		return this.appMapper.findByOrgaUnitID(findID);
 		
 		return this.appMapper.findByOrgaUnitID(orgaUnit.getID());
@@ -314,9 +314,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 					
 					
 				}	
-				else {
-					//TO Do: Fehlermeldung
-				}
 				this.appMapper.delete(a);
 											
 			}
@@ -358,7 +355,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	/**
 	 * Auslesen einer Ausschreibung mit einer CallID
 	 */
-	public Call getCallByID(int callID) throws IllegalArgumentException {
+	public Call getCallByID(Integer callID) throws IllegalArgumentException {
 		return this.callMapper.findByID(callID);
 	}
 	
@@ -374,7 +371,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen einer Beteiligung
 	 */
 	@Override
-	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload) throws IllegalArgumentException {
+	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, Integer workload) throws IllegalArgumentException {
 		Enrollment e = new Enrollment();
 		
 		e.setRatingID(rating.getID());
@@ -578,7 +575,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Auslesen eines Marktplatzes anhand der ID
 	 */
 	@Override
-	public Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException {
+	public Marketplace getMarketplaceByID(Integer marketplaceID) throws IllegalArgumentException {
 		return this.marketMapper.findByID(marketplaceID);
 	}
 
@@ -602,7 +599,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public Organisation createOrganisation(String name, String description, String street, int zipcode, String city, String googleID) throws IllegalArgumentException {
+	public Organisation createOrganisation(String name, String description, String street, Integer zipcode, String city, String googleID) throws IllegalArgumentException {
 		
 		Organisation o = new Organisation();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -710,7 +707,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
 	}
 	
-	public OrgaUnit getOrgaUnitById(int ouid) throws IllegalArgumentException {
+	public OrgaUnit getOrgaUnitById(Integer ouid) throws IllegalArgumentException {
 		
 		String type = orgaUnitMapper.findTypeByID(ouid);
         
@@ -808,7 +805,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Löschen eines ParnterProfils
 	 */
 	@Override
-	public void deletePartnerProfile(PartnerProfile p){
+	public void deletePartnerProfile(PartnerProfile p) throws IllegalArgumentException {
 		this.partnerMapper.delete(p);
 	}
 	
@@ -836,7 +833,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException {
+	public Person createPerson(String firstName, String lastName, String street, Integer zipcode, String city, String description, String googleID) throws IllegalArgumentException {
 		Person p = new Person();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
@@ -987,14 +984,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 * Wir deklarieren die Variable pID und setzen die ProjectID als Value.
 		 * So muss die Methode getID nicht mehrfach aufgerufen werden.
 		 */
-		int pID = project.getID();
+		Integer pID = project.getID();
 		
 		/*
 		 * Löschen aller Beteiligungen anhand der Projekt ID.
 		 */
 		Vector<Enrollment> allEnrolls = enrollMapper.findByProjectID(pID);
 		if (allEnrolls != null){
-			for (int i = 0; allEnrolls.capacity()>i; i++){
+			for (Integer i = 0; allEnrolls.capacity()>i; i++){
 				this.enrollMapper.delete(allEnrolls.get(i));
 			}
 		}
@@ -1053,12 +1050,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 //		//Auslesen aller Ausschreibungen in einen Vektor anhand der ProjectID
 //		Vector<Call> allCalls = callMapper.findByProjectID(pID);
 //		if (allCalls != null){
-//			for (int i = 0; allCalls.capacity()>i; i++){
+//			for (Integer i = 0; allCalls.capacity()>i; i++){
 //				
 //				//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
 //				Vector<Application> allApps = appMapper.findByCallID(allCalls.get(i).getID());
 //				if (allApps != null){
-//					for (int j = 0; allApps.capacity()>j; j++){
+//					for (Integer j = 0; allApps.capacity()>j; j++){
 //						
 //						//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
 //						Rating rating = ratingMapper.findRatingByApplicationID(allApps.get(i).getID());
@@ -1128,7 +1125,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	/**
 	 * Auslesen eines Projektes mit einer projectID
 	 */
-	public Project getProjectByID(int projectID) throws IllegalArgumentException{
+	public Project getProjectByID(Integer projectID) throws IllegalArgumentException{
 	return this.projectMapper.findByID(projectID);	
 	}
 	
@@ -1253,6 +1250,24 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		return r;
 	}
+	
+	/**
+	 * Auslesen einer Bewertung für eine Bewerbung
+	 * @param application
+	 * @return
+	 */
+	public Rating getRatingFor(Application application) throws IllegalArgumentException {
+		return this.ratingMapper.findById(application.getRatingID());
+	}
+	
+	/**
+	 * Auslesen einer Bewertung für eine Beteiligung
+	 * @param enrollment
+	 * @return
+	 */
+	public Rating getRatingFor(Enrollment enrollment) throws IllegalArgumentException {
+		return this.ratingMapper.findById(enrollment.getRatingID());
+	}
 
 	/**
 	 * Speichern von Änderungen einer Bewertung
@@ -1301,7 +1316,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public Team createTeam(String name, String description, int membercount, String googleID) throws IllegalArgumentException {
+	public Team createTeam(String name, String description, Integer membercount, String googleID) throws IllegalArgumentException {
 		
 		Team t = new Team();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -1413,5 +1428,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	    UserService userService = UserServiceFactory.getUserService();
 	    return userService.getCurrentUser();
 	  }
+
 	
 }

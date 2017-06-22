@@ -56,7 +56,7 @@ public class PropertyMapper {
 	 * @param prop
 	 * @return Property-Objekt, das der übergebenen ID entspricht
 	 */
-	public Property findById (int id){
+	public Property findById (Integer id){
     	Connection con = DBConnection.connection();
     	
     	try{
@@ -113,7 +113,7 @@ public class PropertyMapper {
 	 * @param partnerProfileID 
 	 * @return Property-Objekt 
 	 */
-	public Vector<Property> findByPartnerProfileID(int partnerProfileID) {
+	public Vector<Property> findByPartnerProfileID(Integer partnerProfileID) {
 		
 		Connection con = DBConnection.connection();
 		Vector<Property> result = new Vector<Property>();
@@ -226,7 +226,7 @@ public class PropertyMapper {
         }
     }
     
-    public void deleteByPartnerProfileID(int id) {
+    public void deleteByPartnerProfileID(Integer id) {
     	 Connection con = DBConnection.connection();
     	 
     	 try{

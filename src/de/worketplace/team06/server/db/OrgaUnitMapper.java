@@ -87,7 +87,7 @@ public class OrgaUnitMapper {
 		
 	}
 
-	public String findTypeByID(int ouid) {
+	public String findTypeByID(Integer ouid) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -107,7 +107,7 @@ public class OrgaUnitMapper {
 	public Integer findID(String googleID) {
 		
 		Connection con = DBConnection.connection();
-		int checkID;
+		Integer checkID;
 		
 		try {
 			Statement stmt = con.createStatement();

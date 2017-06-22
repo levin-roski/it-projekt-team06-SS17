@@ -31,19 +31,19 @@ public class Project extends BusinessObject {
     /**
      * Variable für die ID des Projektleiters
      */
-    private int projectLeaderID;
+    private Integer projectLeaderID;
 
     /**
      * Variable für die ID des Projektinhabers
      * 
      * Ausgeklammert. Wird nicht benutzt.
      */
-//    private int projectOwnerID;
+//    private Integer projectOwnerID;
     
     /**
      * Variable für die ID des Marktplatzes
      */
-    private int marketplaceID;
+    private Integer marketplaceID;
 
     /**
      * Variable für das Startdatum des Projektes
@@ -75,7 +75,7 @@ public class Project extends BusinessObject {
 	 * Auslesen der ID des Projektleiters
 	 * @return projectLeaderID
 	 */
-	public int getProjectLeaderID() {
+	public Integer getProjectLeaderID() {
 		return projectLeaderID;
 	}
 
@@ -85,7 +85,7 @@ public class Project extends BusinessObject {
 	 * 
 	 * Ausgeklammert. Wird nicht benutzt.
 	 */
-//	public int getProjectOwnerID() {
+//	public Integer getProjectOwnerID() {
 //		return projectOwnerID;
 //	}
 
@@ -109,7 +109,7 @@ public class Project extends BusinessObject {
 	 * Auslesen der ID des Marktplatzes, zu welchem das Projekt gehört
 	 * @return marketplaceID
 	 */
-	public int getMarketplaceID() {
+	public Integer getMarketplaceID() {
 		return marketplaceID;
 	}
 	
@@ -133,7 +133,7 @@ public class Project extends BusinessObject {
 	 * Setzen der ID des Projektleiters
 	 * @param projectLeaderID
 	 */
-	public void setProjectLeaderID(int projectLeaderID) {
+	public void setProjectLeaderID(Integer projectLeaderID) {
 		this.projectLeaderID = projectLeaderID;
 	}
 
@@ -143,7 +143,7 @@ public class Project extends BusinessObject {
 	 * 
 	 * Ausgeklammert. Wird nicht benutzt.
 	 */
-//	public void setProjectOwnerID(int projectOwnerID) {
+//	public void setProjectOwnerID(Integer projectOwnerID) {
 //		this.projectOwnerID = projectOwnerID;
 //	}
 
@@ -167,7 +167,7 @@ public class Project extends BusinessObject {
 	 * Setzen der ID des Marktplatzes
 	 * @param marketplaceID
 	 */
-	public void setMarketplaceID(int marketplaceID) {
+	public void setMarketplaceID(Integer marketplaceID) {
 		this.marketplaceID = marketplaceID;
 	}
 

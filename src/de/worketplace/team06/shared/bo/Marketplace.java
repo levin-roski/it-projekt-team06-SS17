@@ -31,7 +31,7 @@ public class Marketplace extends BusinessObject {
     /**
      * Variable für den Ersteller des Marktplatzes
      */
-    private int orgaUnitID;
+    private Integer orgaUnitID;
 
     /**
      * Auslesen des Titels des Marktplatzes
@@ -53,7 +53,7 @@ public class Marketplace extends BusinessObject {
      * Auslesen des Erstellers des Marktplatzes
      * @return orgaUnitID
      */
-    public int getOrgaUnitID() {
+    public Integer getOrgaUnitID() {
 		return orgaUnitID;
 	}
 
@@ -77,7 +77,7 @@ public class Marketplace extends BusinessObject {
 	 * Setzen des Erstellers des Marktplatzes
 	 * @param orgaUnitID
 	 */
-	public void setOrgaUnitID(int orgaUnitID) {
+	public void setOrgaUnitID(Integer orgaUnitID) {
 		this.orgaUnitID = orgaUnitID;
 	}
 

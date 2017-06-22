@@ -134,7 +134,7 @@ public class CallMapper {
 	 * @return
 	 */
 	
-	public Vector<Call> findByProjectID(int projectID) {
+	public Vector<Call> findByProjectID(Integer projectID) {
 		Connection con = DBConnection.connection();
 		Vector<Call> result = new Vector<Call>();
 		
@@ -148,7 +148,7 @@ public class CallMapper {
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(sdf.parse(rs.getString("deadline")));
-				c.setProjectID(rs.getInt("projectID"));
+				c.setProjectID(rs.getInt("project_id"));
 				c.setCallerID(rs.getInt("orgaunit_id"));
 				c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
 				
@@ -168,7 +168,7 @@ public class CallMapper {
 	 * @return
 	 */
 	
-	public Call findByID(int callID) {
+	public Call findByID(Integer callID) {
 		Connection con = DBConnection.connection();
 		
 		try {						

@@ -36,23 +36,23 @@ public class Call extends BusinessObject {
     /**
      * ID für das Projekt
      */
-    private int projectID;
+    private Integer projectID;
     
     /**
      * ID des Ausschreibenden 
      */
-    private int callerID;
+    private Integer callerID;
 
     /**
      * ID für das PartnerProfil
      */
-    private int partnerProfileID;
+    private Integer partnerProfileID;
 
     /**
      * Auslesen der ID für den Projektleiter
      * @return projectLeaderID
      */
-    public int getCallerID() {
+    public Integer getCallerID() {
         return this.callerID;
     }
 
@@ -84,7 +84,7 @@ public class Call extends BusinessObject {
      * auslesen der ID für das Projekt
      * @return projectID
      */
-	public int getProjectID() {
+	public Integer getProjectID() {
 		return projectID;
 	}
     
@@ -92,7 +92,7 @@ public class Call extends BusinessObject {
 	 * Auslesen der ID für das PartnerProfil
 	 * @return the partnerProfileID
 	 */
-	public int getPartnerProfileID() {
+	public Integer getPartnerProfileID() {
 		return partnerProfileID;
 	}
 
@@ -100,7 +100,7 @@ public class Call extends BusinessObject {
      * Setzen der ID für den Projektleiter
      * @param projectLeaderID
      */
-    public void setCallerID(int projectLeaderID) {
+    public void setCallerID(Integer projectLeaderID) {
         this.callerID = projectLeaderID;
     }
 
@@ -132,7 +132,7 @@ public class Call extends BusinessObject {
 	 * Setzen der ID für das Projekt
 	 * @param projectID
 	 */
-	public void setProjectID(int projectID) {
+	public void setProjectID(Integer projectID) {
 		this.projectID = projectID;
 	}
     
@@ -140,7 +140,7 @@ public class Call extends BusinessObject {
 	 * Setzen der ID für das PartnerProfil
 	 * @param partnerProfileID
 	 */
-	public void setPartnerProfileID(int partnerProfileID) {
+	public void setPartnerProfileID(Integer partnerProfileID) {
 		this.partnerProfileID = partnerProfileID;
 	}
 

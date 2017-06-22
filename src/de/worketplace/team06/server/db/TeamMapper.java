@@ -187,7 +187,7 @@ import de.worketplace.team06.shared.bo.*;
 		 * @return Team-Objekt, das der übergebenen ID entspricht
 		 */
 		
-		public Team findByID(int ouid) {
+		public Team findByID(Integer ouid) {
 			Connection con = DBConnection.connection();
 			
 			try {						

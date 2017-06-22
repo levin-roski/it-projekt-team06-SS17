@@ -31,7 +31,7 @@ public abstract class OrgaUnit extends BusinessObject {
     /**
      * Variable für die ID eines PartnerProfils
      */
-    private int partnerprofileID;
+    private Integer partnerprofileID;
     
     /**
      * Variable für den OrgaUnit Typ (Organisation, Team oder Person)
@@ -58,7 +58,7 @@ public abstract class OrgaUnit extends BusinessObject {
      * Auslesen der ID für das PartnerProfil der OrganisationsEinheit
      * @return partnerprofileID
      */
-    public int getPartnerProfileID() {
+    public Integer getPartnerProfileID() {
         return this.partnerprofileID;
     }
     
@@ -90,7 +90,7 @@ public abstract class OrgaUnit extends BusinessObject {
      * Setzen der ID für das PartnerProfil der OrganisationsEinheit
      * @param partnerProfileID
      */
-    public void setPartnerProfileID(int partnerProfileID) {
+    public void setPartnerProfileID(Integer partnerProfileID) {
         this.partnerprofileID = partnerProfileID;
     }
 	

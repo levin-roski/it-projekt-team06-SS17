@@ -28,17 +28,17 @@ public class Application extends BusinessObject {
     /**
      * ID der dazgehörigen Ausschreibung
      */
-    private int callID;
+    private Integer callID;
     
     /**
      * ID der dazgehörigen OrganisationsEinheit
      */
-    private int orgaUnitID;
+    private Integer orgaUnitID;
     
     /**
      * ID der zugehörigen ratingID
      */
-    private int ratingID;
+    private Integer ratingID;
     
     /**
      * Auslesen des Bewerbungstextes
@@ -52,7 +52,7 @@ public class Application extends BusinessObject {
      *  Auslesen der ID der Ausschreibung
      *  @return callID
      */
-	public int getCallID() {
+	public Integer getCallID() {
 		return callID;
 	}
 	
@@ -60,7 +60,7 @@ public class Application extends BusinessObject {
      *  Auslesen der ID der OrganisationsEinheit
      *  @return orgaUnitID
      */
-	public int getOrgaUnitID() {
+	public Integer getOrgaUnitID() {
 		return orgaUnitID;
 	}
 	
@@ -68,7 +68,7 @@ public class Application extends BusinessObject {
 	 * Auslesen der ID der zugehörigen Rating Instanz
 	 * @return ratingID;
 	 */
-	public int getRatingID() {
+	public Integer getRatingID() {
 		return ratingID;
 	}
     
@@ -84,7 +84,7 @@ public class Application extends BusinessObject {
      *  Setzen der ID der Ausschreibung
      *  @param callID
      */
-	public void setCallID(int id) {
+	public void setCallID(Integer id) {
 		this.callID = id;
 	}
 
@@ -92,7 +92,7 @@ public class Application extends BusinessObject {
      *  Setzen der ID der OrganisationsEinheit
      *  @param orgaUnitID
      */
-	public void setOrgaUnitID(int id) {
+	public void setOrgaUnitID(Integer id) {
 		this.orgaUnitID = id;
 	}
 
@@ -100,7 +100,7 @@ public class Application extends BusinessObject {
 	 * Setzen der ID der zugehörigen Rating Instanz
 	 * @param ratingID
 	 */
-	public void setRatingID(int ratingID) {
+	public void setRatingID(Integer ratingID) {
 		this.ratingID = ratingID;
 	}
 

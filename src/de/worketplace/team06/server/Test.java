@@ -20,7 +20,7 @@ public class Test {
 	
 		fillDatabaseWithExamples(admin);
 		
-		
+//		testOfDeleteRatings(admin);
 
 //		testOfCreateOrganisation(admin);
 //		testOfCreateTeam(admin);
@@ -139,14 +139,19 @@ public class Test {
 		
 		admin.createMarketplace("Marktplatz Rot", "Dieser Marktplatz ist für Rote", orga1);
 		
-//		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		
+		admin.createMarketplace("Marktplatz Pink", "Dieser Marktplatz ist für Pinke", team1);
+		
+		// 3 Sekunden warten, um sicherzustellen, dass die Daten in der DB gespeichert wurden
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 		Marketplace m1 = admin.getMarketplaceByID(1);
+		
+		Vector<Marketplace> Vm2 = admin.getMarketplacesFor(orga1);
 		
 		
 		/*
@@ -164,6 +169,7 @@ public class Test {
 		}
 		
 		
+		admin.createProject(Vm2.firstElement(), "Orgaprojekt", "Ein Projekt für Organisationen", person1, startdate, enddate);
 		admin.createProject(m1, "Testprojekt", "Ein Projekt zu Testzwecken", p2, startdate, enddate);
 		admin.createProject(m1, "Testprojekt 2", "Ein neues Projekt", p2, startdate, enddate);
 		
@@ -202,9 +208,10 @@ public class Test {
 		
 		
 		Application a = admin.applyFor(c1, p1, "Ich bewerbe mich mit ganz viel Freude und so geblubber! ");
-		
+		Application a2 = admin.applyFor(c2, p2, "Hab halt mal ne Bewerbung geschickt, nehmt mich oder nicht");
 		
 		Rating r = admin.rateApplication(a, (float) 0.6, "Ahjoo hört si doch ganz vielversprechend a");
+		Rating r2 = admin.rateApplication(a2, (float) 0.8, "Du bisch mir so ein Schlingel");
 		
 		
 		try {
@@ -215,6 +222,7 @@ public class Test {
 			}
 			
 		admin.createEnrollment(pro1, p1, r, startdate, enddate, 5);
+		admin.createEnrollment(pro2, p2, r2, startdate, enddate, 7);
 		
 		
 			
@@ -230,51 +238,87 @@ public class Test {
 	
 	
 	
+	// DELETE Methods
 	
-	public static void testDeleteAll(WorketplaceAdministrationImpl admin){
+	public static void testOfDeleteRatings(WorketplaceAdministrationImpl admin){
 		
-		Vector<Project> allProjects = admin.getAllProjects();
+		Person p1 = admin.getPersonByGoogleID("G3001");
 		
-		if (allProjects != null){
-			for (Project p : allProjects){
-				admin.deleteProject(p);
-			}
-		}
+		Vector<Project> myprojects = admin.getProjectsForLeader(p1);
 		
-		Vector<Person> allPersons = new Vector<Person>();
-		allPersons.add(admin.getPersonByGoogleID("G3000"));
-		allPersons.add(admin.getPersonByGoogleID("G3001"));
-		allPersons.add(admin.getPersonByGoogleID("G3002"));
+		Vector<Call> mycalls = admin.getCallsFor(myprojects.firstElement());
 		
-		if (allPersons != null){
-			for (Person per : allPersons){
-				admin.deletePerson(per);
-			}
-		}
+		Vector<Application> apps = admin.getApplicationsFor(mycalls.firstElement());
 		
-		Vector<Team> allTeams = new Vector<Team>();
-		allTeams.add(admin.getTeamByGoogleID("G2000"));
-		allTeams.add(admin.getTeamByGoogleID("G2001"));
-		allTeams.add(admin.getTeamByGoogleID("G2002"));
+		System.out.println("Applications' RatingID" + apps.firstElement().getRatingID());
+		System.out.println("Applications' RatingID" + apps.firstElement().getText());
 		
-		if (allTeams != null){
-			for (Team t : allTeams){
-				admin.deleteTeam(t);
-			}
-		}
+		Rating r = admin.getRatingFor(apps.firstElement());
 		
-		Vector<Organisation> allOrganisations = new Vector<Organisation>();
-		allOrganisations.add(admin.getOrganisationByGoogleID("G2000"));
-		allOrganisations.add(admin.getOrganisationByGoogleID("G2001"));
-		allOrganisations.add(admin.getOrganisationByGoogleID("G2002"));
+		System.out.println("Rating: " + r.getRatingStatement());
 		
-		if (allOrganisations != null){
-			for (Organisation o : allOrganisations){
-				admin.deleteOrganisation(o);
-			}
-		}
+		admin.deleteRating(r);
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	public static void testDeleteAll(WorketplaceAdministrationImpl admin){
+//		
+//		
+//		
+//		
+//		Vector<Project> allProjects = admin.getAllProjects();
+//		
+//		if (allProjects != null){
+//			for (Project p : allProjects){
+//				admin.deleteProject(p);
+//			}
+//		}
+//		
+//		Vector<Person> allPersons = new Vector<Person>();
+//		allPersons.add(admin.getPersonByGoogleID("G3000"));
+//		allPersons.add(admin.getPersonByGoogleID("G3001"));
+//		allPersons.add(admin.getPersonByGoogleID("G3002"));
+//		
+//		if (allPersons != null){
+//			for (Person per : allPersons){
+//				admin.deletePerson(per);
+//			}
+//		}
+//		
+//		Vector<Team> allTeams = new Vector<Team>();
+//		allTeams.add(admin.getTeamByGoogleID("G2000"));
+//		allTeams.add(admin.getTeamByGoogleID("G2001"));
+//		allTeams.add(admin.getTeamByGoogleID("G2002"));
+//		
+//		if (allTeams != null){
+//			for (Team t : allTeams){
+//				admin.deleteTeam(t);
+//			}
+//		}
+//		
+//		Vector<Organisation> allOrganisations = new Vector<Organisation>();
+//		allOrganisations.add(admin.getOrganisationByGoogleID("G2000"));
+//		allOrganisations.add(admin.getOrganisationByGoogleID("G2001"));
+//		allOrganisations.add(admin.getOrganisationByGoogleID("G2002"));
+//		
+//		if (allOrganisations != null){
+//			for (Organisation o : allOrganisations){
+//				admin.deleteOrganisation(o);
+//			}
+//		}
+//		
+//	}
 	
 	
 

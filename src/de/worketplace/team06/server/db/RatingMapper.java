@@ -60,7 +60,7 @@ public class RatingMapper {
 	 * @return Rating-Objekt, das der übergebenen ID entspricht
 	 */
 
-	public Rating findById (int id){
+	public Rating findById (Integer id){
     	Connection con = DBConnection.connection();
     	/**
     	 * Verbindung zur Datenbank herstellen 
@@ -73,7 +73,7 @@ public class RatingMapper {
     		
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery
-    				("SELECT id, statement, created, rating, application_id FROM Rating " + "WHERE id= " + id);
+    				("SELECT id, statement, created, rating FROM rating " + "WHERE id= " + id);
     		/**
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
@@ -84,8 +84,6 @@ public class RatingMapper {
     			r.setRatingStatement(rs.getString("statement"));
     			r.setCreated(rs.getTimestamp("created"));
     			r.setRating(rs.getFloat("rating"));
-    			//TODO: *** WICHTIG *** Setzen wir die AppID im Rating??
-    			//r.setApplicationID(rs.getInt("ApplicationID"));
     			return r;
     		}	
     	}
@@ -110,7 +108,7 @@ public class RatingMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, statement, created, rating, application_id "+ "FROM Team ");
+        	ResultSet rs = stmt.executeQuery("SELECT id, statement, created, rating "+ "FROM Team ");
         	
         	while (rs.next()){
         		Rating r = new Rating();
@@ -236,7 +234,7 @@ public class RatingMapper {
 	 * @return Rating-Objekt 
 	 */
     
-    public Rating findRatingByApplicationID(int applicationID){
+    public Rating findRatingByApplicationID(Integer applicationID){
     	/**
          * Verbindung zur Datenbank herstellen
          */

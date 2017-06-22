@@ -45,13 +45,13 @@ public abstract class BusinessObject implements Serializable {
     /**
      * Die eindeutige Identifikationsnummer einer Instanz dieser Klasse.
      */
-    private int id;
+    private Integer id;
 
     /**
      * Auslesen der ID;
      * @return Iid
      */
-    public int getID() {
+    public Integer getID() {
         return this.id;
     }
 
@@ -103,7 +103,7 @@ public abstract class BusinessObject implements Serializable {
      * Setzen der ID
      * @param ID
      */
-    public void setID(int id) {
+    public void setID(Integer id) {
         this.id = id;
     }
 

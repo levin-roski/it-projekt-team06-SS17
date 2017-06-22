@@ -72,7 +72,7 @@ public class ApplicationMapper {
 	 * @return Application-Objekt, das der übergebenen ID entspricht bzw. null, 
 	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
 	 */
-	public Application findByID(int id) {
+	public Application findByID(Integer id) {
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -128,7 +128,7 @@ public class ApplicationMapper {
 		return result;
 	}
 	
-	public Application findByRatingID(int rID) {
+	public Application findByRatingID(Integer rID) {
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -155,7 +155,7 @@ public class ApplicationMapper {
 	}
 	
 	
-	public Vector<Application> findByOrgaUnitID (int orgaUnitID) {
+	public Vector<Application> findByOrgaUnitID (Integer orgaUnitID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -164,7 +164,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id "
-					+ " FROM orgaunit WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
+					+ " FROM application WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
 			
 				while (rs.next()) {
 				
@@ -187,7 +187,7 @@ public class ApplicationMapper {
 		return result;
 	}
 	
-	public Vector<Application> findByCallID (int callID) {
+	public Vector<Application> findByCallID (Integer callID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -195,8 +195,8 @@ public class ApplicationMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id "
-					+ " FROM call WHERE call_id ='" + callID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id"
+					+ " FROM application WHERE call_id ='" + callID + "'ORDER BY id");
 			
 				while (rs.next()) {
 				
@@ -205,7 +205,8 @@ public class ApplicationMapper {
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
 				a.setCallID(rs.getInt("call_id"));
-				a.setOrgaUnitID(rs.getInt("organisation_id"));
+				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
+				a.setRatingID(rs.getInt("rating_id"));
 				
 				result.addElement(a);
 			}
@@ -247,9 +248,9 @@ public class ApplicationMapper {
 	public Application update(Application a) {
 		Connection con = DBConnection.connection();
 		
+	
 		try {
 			Statement stmt = con.createStatement();
-			
 			stmt.executeUpdate("UPDATE application SET text='" + a.getText() + "', rating_id="+ a.getRatingID() + " WHERE id=" + a.getID());
 			// alt:  stmt.executeUpdate("UPDATE application " + "SET text=\"" + a.getText() + "\" " + "WHERE id=" + a.getID());
 		}

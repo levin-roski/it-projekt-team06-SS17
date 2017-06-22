@@ -26,7 +26,7 @@ public class Team extends OrgaUnit {
     /**
      * Variable für die Anzahl der Mitglieder eines Teams
      */
-    private int membercount;
+    private Integer membercount;
 
 	/**
 	 * Auslesen des Namens für das Team
@@ -40,7 +40,7 @@ public class Team extends OrgaUnit {
 	 * Auslesen der Mitgliederzahl für das Team
 	 * @return membercount
 	 */
-	public int getMembercount() {
+	public Integer getMembercount() {
 		return membercount;
 	}
 	
@@ -56,7 +56,7 @@ public class Team extends OrgaUnit {
 	 * Setzen der Mitgliederzahl für das Team
 	 * @param membercount
 	 */
-	public void setMembercount(int membercount) {
+	public void setMembercount(Integer membercount) {
 		this.membercount = membercount;
 	}
 

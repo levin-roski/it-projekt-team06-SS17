@@ -25,7 +25,7 @@ public class EnrollmentMapper {
 	}
 
 	
-	public Enrollment findByID(int id) {
+	public Enrollment findByID(Integer id) {
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -87,7 +87,7 @@ public class EnrollmentMapper {
 	}
 	
 	
-	public Vector<Enrollment> findByOrgaUnitID (int orgaUnitID) {
+	public Vector<Enrollment> findByOrgaUnitID (Integer orgaUnitID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -121,7 +121,7 @@ public class EnrollmentMapper {
 	}
 	
 	
-	public Vector<Enrollment> findByProjectID (int projectID) {
+	public Vector<Enrollment> findByProjectID (Integer projectID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -154,7 +154,7 @@ public class EnrollmentMapper {
 		return result;
 	}
 	
-public Enrollment findByRatingID (int rID) {
+public Enrollment findByRatingID (Integer rID) {
 		
 		Connection con = DBConnection.connection();
 		

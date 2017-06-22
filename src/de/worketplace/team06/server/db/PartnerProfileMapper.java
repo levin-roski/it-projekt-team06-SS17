@@ -29,7 +29,7 @@ public class PartnerProfileMapper {
 		return partnerProfileMapper; 
 	}
 	
-	public PartnerProfile findById (int id){
+	public PartnerProfile findById (Integer id){
     	Connection con = DBConnection.connection();
     	
     	try{
@@ -135,7 +135,7 @@ public class PartnerProfileMapper {
         }
     }
 
-	public PartnerProfile findPartnerProfileByID(int partnerProfileID) {
+	public PartnerProfile findPartnerProfileByID(Integer partnerProfileID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

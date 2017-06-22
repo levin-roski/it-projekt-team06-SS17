@@ -31,7 +31,7 @@ public class Property extends BusinessObject {
     /**
      * Variable für die ID des PartnerProfils
      */
-    private int partnerProfileID;
+    private Integer partnerProfileID;
     
     /**
    	 * Auslesen des Namens der Eigenschaft
@@ -52,7 +52,7 @@ public class Property extends BusinessObject {
    	/**
    	 * Auslesen der PartnerProfileID
    	 */
-   	public int getPartnerProfileID() {
+   	public Integer getPartnerProfileID() {
    		return partnerProfileID;
    	}
    	
@@ -76,7 +76,7 @@ public class Property extends BusinessObject {
    	 * Setzen der PartnerProfileID
    	 * @param ppid
    	 */
-	public void setPartnerProfileID(int ppid) {
+	public void setPartnerProfileID(Integer ppid) {
 		this.partnerProfileID = ppid;
 		
 	}

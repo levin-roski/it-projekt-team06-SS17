@@ -34,7 +34,7 @@ public class Person extends OrgaUnit {
     /**
      * Variable für die Postleitzahl der Person
      */
-    private int zipcode;
+    private Integer zipcode;
     
     /**
      * Variable für die Stadt der Person
@@ -69,7 +69,7 @@ public class Person extends OrgaUnit {
      * Auslesen der Postleitzahl der Person
      * @return zipcode
      */
-    public int getZipcode() {
+    public Integer getZipcode() {
 		return zipcode;
 	}
     
@@ -109,7 +109,7 @@ public class Person extends OrgaUnit {
 	 * Setzen der Postleitzahl der Person
 	 * @param zipcode
 	 */
-	public void setZipcode(int zipcode) {
+	public void setZipcode(Integer zipcode) {
 		this.zipcode = zipcode;
 	}
 	
