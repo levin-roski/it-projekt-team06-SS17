@@ -53,7 +53,7 @@ public class Overview extends Page {
 		};
 		myMarketplacesTable.addColumn(marketplacesTitleColumn, "Name");
 
-		//Muss eigentlich Int (bzw. Row counter) wiedergeben
+		//Muss eigentlich Integer (bzw. Row counter) wiedergeben
 		TextColumn<Marketplace> marketplacesCounterColumn = new TextColumn<Marketplace>() {
 			@Override
 			public String getValue(Marketplace object) {
@@ -118,16 +118,18 @@ public class Overview extends Page {
 //		});
 		
 		
-		// overviewPanel2 erstellt ein Panel dem 2 Tabellen zugeordnet sind die bei 50% gesplittet sind
+		// overviewPanel1 erstellt ein Panel dem 2 Tabellen zugeordnet sind die bei 50% gesplittet sind
 //		Widget myMarketplacesTable = new Widget();
 //		Widget myProjectsTable = new Widget();
 		
 		LayoutPanel overviewPanel1 = new LayoutPanel();
 	
-		overviewPanel1.add(myProjectsTable);
+		overviewPanel1.add(createHeadline("Meine Marktplätze"));
+		overviewPanel1.add(myMarketplacesTable);
+		overviewPanel1.add(createHeadline("Meine Projekte"));
 		overviewPanel1.add(myProjectsTable);
 	
-		overviewPanel1.setWidgetLeftWidth(myProjectsTable, 0, Unit.PCT, 50, Unit.PCT);
+		overviewPanel1.setWidgetLeftWidth(myMarketplacesTable, 0, Unit.PCT, 50, Unit.PCT);
 		overviewPanel1.setWidgetRightWidth(myProjectsTable, 0, Unit.PCT, 50, Unit.PCT);
 		overviewPanel1.add(createHeadline("Alle Marktplätze"));
 		
