@@ -64,8 +64,26 @@ public class Application extends BusinessObject {
      * 
      * @param status
      */
-	public Integer getStatus() {
-		return status;
+	public String getStatus() {
+		
+        String s = new String();
+        
+		/*
+		 * Über eine Switch-Case Abfrage wird herausgefunden, welcher Status derzeit besteht
+		 * und entsprechend als String zurückgegeben.
+		 */
+        switch(this.status){ 
+        case -1: 
+        	s = "Abgelehnt";
+        	break;
+		case 0: 
+        	s = "Laufend";
+        	break;
+		case 1: 
+        	s = "Angenommen";
+        	break;
+        }
+		return s;
 	}
 
     /**
