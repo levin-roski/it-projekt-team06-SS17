@@ -68,6 +68,15 @@ public class PlainTextReportWriter extends ReportWriter {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	  /**
+	   * Auslesen des Ergebnisses der zuletzt aufgerufenen Prozessierungsmethode.
+	   * 
+	   * @return ein String bestehend aus einfachem Text
+	   */
+	  public String getReportText() {
+	    return this.getHeader() + this.reportText + this.getTrailer();
+	  }
  
   
 }
