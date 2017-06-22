@@ -18,7 +18,7 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-//		fillDatabaseWithExamples(admin);
+		fillDatabaseWithExamples(admin);
 		
 //		testOfDeleteRating(admin);
 //		testOfDeleteApplication(admin);
@@ -26,7 +26,7 @@ public class Test {
 // 		testOfDeleteCall(admin);
 // 		testOfDeleteProperty(admin);
 //		testOfDeleteProject(admin);
-		testOfDeletePerson(admin);
+//		testOfDeletePerson(admin);
 		
 		
 //		testOfCreateOrganisation(admin);
@@ -217,7 +217,7 @@ public class Test {
 		Application a2 = admin.applyFor(c2, p2, "Hab halt mal ne Bewerbung geschickt, nehmt mich oder nicht");
 		
 		Rating r = admin.rateApplication(a, (float) 0.6, "Ahjoo hört si doch ganz vielversprechend a");
-		Rating r2 = admin.rateApplication(a2, (float) 0.8, "Du bisch mir so ein Schlingel");
+		Rating r2 = admin.rateApplication(a2, (float) 1, "Du bisch mir so ein Schlingel");
 		
 		
 		try {
@@ -228,7 +228,7 @@ public class Test {
 			}
 			
 		admin.createEnrollment(pro1, p1, r, startdate, enddate, 5);
-		admin.createEnrollment(pro2, p2, r2, startdate, enddate, 7);
+		
 		
 		
 			
