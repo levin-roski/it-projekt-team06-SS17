@@ -5,8 +5,12 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.client.ClientsideSettings;
@@ -42,15 +46,17 @@ public class Worketplace implements EntryPoint {
 		ou.setID(7);
 		ou.setGoogleID("G3000");
 		ClientsideSettings.setCurrentUser(ou);
-		
+		DockLayoutPanel mainPanel = new DockLayoutPanel(Unit.EM);
+		mainPanel.addWest(new MarketplaceForm(null);, size);
+
 		/*
 		 * Initialisiert die Editor-Navigation und rendert diese im HTML Dokument in #navigation
 		 */
 		final EditorNavigation navigationMenu = new EditorNavigation();
-		navigationMenu.run();
+//		navigationMenu.run();
 
 		final MarketplaceForm form = new MarketplaceForm(null);
-		form.run();
+//		form.run();
 
 		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
 		// testRpcGetAllMarketplaces.run();

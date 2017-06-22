@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -20,8 +19,10 @@ import de.worketplace.team06.shared.bo.Marketplace;
  * 
  * @author Roski
  *
- * Formular für die Darstellung, Bearbeitung und Löschung eines selektierten Marktplatzes.
- * Falls kein selektierter Marktplatz beim Initialisieren übergeben wird, ist das Formular leer, bereit für die Erstellung eines neuen Marktplatzes.
+ *         Formular für die Darstellung, Bearbeitung und Löschung eines
+ *         selektierten Marktplatzes. Falls kein selektierter Marktplatz beim
+ *         Initialisieren übergeben wird, ist das Formular leer, bereit für die
+ *         Erstellung eines neuen Marktplatzes.
  */
 public class MarketplaceForm extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
@@ -34,17 +35,16 @@ public class MarketplaceForm extends Page {
 	private Marketplace toChangeMarketplace;
 
 	/*
-	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der dann bearbeitet und gelöscht werden kann.
-	 * null übergeben, falls ein neuer Marktplatz erstellt werden soll.
+	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der
+	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
+	 * Marktplatz erstellt werden soll.
 	 */
 	public MarketplaceForm(Marketplace pToChangeMarketplace) {
 		if (pToChangeMarketplace != null) {
 			shouldUpdate = true;
 			this.toChangeMarketplace = pToChangeMarketplace;
 		}
-	}
 
-	public void run() {
 		Grid form = new Grid(3, 2);
 		form.setWidget(0, 0, nameLabel);
 		form.setWidget(0, 1, nameInput);
@@ -124,7 +124,6 @@ public class MarketplaceForm extends Page {
 		final VerticalPanel root = new VerticalPanel();
 		root.add(createHeadline("Marktplatz bearbeiten"));
 		root.add(form);
-		RootPanel.get("content").add(root);
 		nameInput.setFocus(true);
 	}
 }
