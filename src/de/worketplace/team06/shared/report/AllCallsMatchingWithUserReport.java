@@ -5,7 +5,7 @@ package de.worketplace.team06.shared.report;
  * @author Toby
  *
  */
-public class AllCallsMatchingWithUser extends SimpleReport {
+public class AllCallsMatchingWithUserReport extends SimpleReport {
 
 	/**
 	 * 
