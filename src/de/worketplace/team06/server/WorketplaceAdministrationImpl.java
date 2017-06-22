@@ -28,6 +28,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Referenz auf die zugehörige Organisationseinheit
+	 */
+	private OrgaUnit orgaUnit = null;
 	
 	/*
 	 * ***************************************************************************
@@ -1384,6 +1388,29 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	    UserService userService = UserServiceFactory.getUserService();
 	    return userService.getCurrentUser();
 	  }
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, BEGINN: Verschiedenes
+	 * ***************************************************************************
+	 */
+	
+	@Override
+	public OrgaUnit getOrgaUnit() throws IllegalArgumentException {
+		return this.orgaUnit;
+	}
+	
+	@Override
+	public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException {
+		this.orgaUnit = ou;
+	}
+	
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, ENDE: Verschiedenes
+	 * ***************************************************************************
+	 */
 
 	
 }

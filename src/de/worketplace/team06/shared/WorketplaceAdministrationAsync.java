@@ -148,10 +148,9 @@ public interface WorketplaceAdministrationAsync {
 
 	void getRatingFor(Enrollment enrollment, AsyncCallback<Rating> callback);
 
-	
-	
-	
+	void getOrgaUnit(AsyncCallback<OrgaUnit> callback);
 
+	void setOrgaUnit(OrgaUnit ou, AsyncCallback<Void> callback);
 
 	
 }

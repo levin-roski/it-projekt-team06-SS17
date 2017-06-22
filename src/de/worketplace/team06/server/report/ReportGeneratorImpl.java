@@ -15,11 +15,12 @@ import de.worketplace.team06.shared.*;
 import de.worketplace.team06.server.WorketplaceAdministrationImpl;
 
 import de.worketplace.team06.shared.bo.*;
-import de.worketplace.team06.shared.report.CompositeParagraph;
+import de.worketplace.team06.shared.report.*;
+import de.worketplace.team06.server.db.*;
 import de.worketplace.team06.client.NotLoggedInException;
 import de.worketplace.team06.client.UserChangedException;
 import de.worketplace.team06.client.WindowAlertException;
-import de.worketplace.team06.server.db.*;
+
 
 /**
  * @author Toby
