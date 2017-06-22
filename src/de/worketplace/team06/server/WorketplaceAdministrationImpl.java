@@ -659,6 +659,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Organisation getOrganisationByGoogleID(String googleID){
 
 		return this.orgaMapper.findByGoogleID(googleID);
@@ -907,6 +908,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Person getPersonByGoogleID(String googleID){
 
 		return this.personMapper.findByGoogleID(googleID);
@@ -1353,6 +1355,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Team getTeamByGoogleID(String googleID){
 
 		return this.teamMapper.findByGoogleID(googleID);

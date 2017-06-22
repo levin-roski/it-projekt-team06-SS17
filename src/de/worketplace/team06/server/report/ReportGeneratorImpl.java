@@ -61,6 +61,20 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		CompositeParagraph imprint = new CompositeParagraph();
 		
+		OrgaUnit orgaUnit = wpadmin.getOrgaUnit();
+        
+        switch(orgaUnit.getType()){ 
+        case "Person": 
+        	wpadmin.getPersonByGoogleID();
+        	break;
+		case "Team": 
+			
+            break;
+		case "Organisation": 
+			
+        	break;
+        }
+		
 		imprint.addSubParagraph(new SimpleParagraph(""));
 		
 	}

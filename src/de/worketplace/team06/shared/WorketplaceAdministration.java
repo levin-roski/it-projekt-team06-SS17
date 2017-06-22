@@ -343,4 +343,10 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException;
 
+	public Person getPersonByGoogleID(String googleID);
+
+	public Team getTeamByGoogleID(String googleID);
+
+	public Organisation getOrganisationByGoogleID(String googleID);
+
 }
