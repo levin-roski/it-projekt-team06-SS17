@@ -191,6 +191,11 @@ public Enrollment findByRatingID (Integer rID) {
 		Connection con = DBConnection.connection();
 		
 		try {
+			
+			/*
+			 *  Start und Enddatum werden mit Hochkommas verknüpft, da im Falle einer Automatischen
+			 */
+			
 			String invertedcomma = "'";
 			String startdate = null;
 			String enddate = null;
