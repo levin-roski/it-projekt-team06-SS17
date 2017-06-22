@@ -77,15 +77,6 @@ public class EditorNavigation extends VerticalPanel {
 			}
 		}));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Ausschreibungen suchen", new Command() {
-			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
-			}
-		}));
-		menu.addSeparator();
 		MenuBar optionenMenu = new MenuBar(true);
 		optionenMenu.setAnimationEnabled(true);
 		optionenMenu.addItem(new MenuItem("Mein Profil", new Command() {

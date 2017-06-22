@@ -64,20 +64,17 @@ public class MarketplaceForm extends Page {
 			final Button saveButton = new Button("Neuen Marktplatz anlegen");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					Window.alert("Clicked");
 					if (beschreibungInput.getText().length() == 0) {
 						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
 					} else if (nameInput.getText().length() == 0) {
 						Window.alert("Bitte vergeben Sie einen Namen");
 					} else {
-						toChangeMarketplace.setDescription(beschreibungInput.getText());
-						toChangeMarketplace.setTitle(nameInput.getText());
-						worketplaceAdministration.saveMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(), ClientsideSettings.getCurrentUser(), new AsyncCallback<Marketplace>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
 							}
-							public void onSuccess(Void result) {
-								Window.alert("Der Marktplatz wurde gespeichert");
+							public void onSuccess(Marketplace result) {
+								Window.alert("Der Marktplatz \""+result.getTitle()+"\" wurde erstellt");
 							}
 						});
 					}

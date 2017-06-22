@@ -3,15 +3,16 @@ package de.worketplace.team06.client;
 import com.google.gwt.core.client.GWT;
 
 import de.worketplace.team06.shared.*;
+import de.worketplace.team06.shared.bo.OrgaUnit;
 
 /**
- * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen relevant sind
+ * Klasse mit Eigenschaften und Diensten, die fï¿½r alle Client-seitigen Klassen relevant sind
  *
  * @author Roski
  * @version 1.0
  * @since 08.05.2017
  * 
- * TODO extends CommonSettings hinzufügen?
+ * TODO extends CommonSettings hinzufï¿½gen?
  *
  */
 public class ClientsideSettings {
@@ -19,6 +20,7 @@ public class ClientsideSettings {
 	 * 
 	 */
 	private static WorketplaceAdministrationAsync worketplaceAdministration = null;
+	private static OrgaUnit currentUser = null;
 	
 	/**
 	 * 
@@ -35,6 +37,14 @@ public class ClientsideSettings {
 		}
 		
 		return worketplaceAdministration;
+	}
+	
+	public static OrgaUnit getCurrentUser() {
+		return currentUser;
+	}
+	
+	public static void setCurrentUser(OrgaUnit pCurrentUser) {
+		currentUser = pCurrentUser;
 	}
 	
 	/**
