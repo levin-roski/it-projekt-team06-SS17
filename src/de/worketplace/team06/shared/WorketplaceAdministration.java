@@ -310,7 +310,7 @@ public interface WorketplaceAdministration extends RemoteService {
 	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
 
-	Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
+	public Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
 
 	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException;
 
@@ -325,12 +325,12 @@ public interface WorketplaceAdministration extends RemoteService {
 	public Call createCall(Project project, Person callerPerson, String title, String description, Date deadline)
 			throws IllegalArgumentException;
 	
-	Person createPerson(String firstName, String lastName, String street, Integer zipcode, String city, String description,
+	public Person createPerson(String firstName, String lastName, String street, Integer zipcode, String city, String description,
 			String googleID);
 	
 	public Team createTeam(String name, String description, Integer membercount, String googleID) throws IllegalArgumentException;
 	
-	Organisation createOrganisation(String name, String description, String street, Integer zipcode, String city,
+	public Organisation createOrganisation(String name, String description, String street, Integer zipcode, String city,
 			String googleID);
 
 	public void deletePartnerProfile(PartnerProfile p) throws IllegalArgumentException;
@@ -338,5 +338,15 @@ public interface WorketplaceAdministration extends RemoteService {
 	public Rating getRatingFor(Application application) throws IllegalArgumentException;
 	
 	public Rating getRatingFor(Enrollment enrollment) throws IllegalArgumentException;
+
+	//Wird wahrscheinlich nicht benötigt --> public OrgaUnit getOrgaUnit() throws IllegalArgumentException;
+
+	//Wird wahrscheinlich nicht benötigt --> public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException;
+
+	public Person getPersonByGoogleID(String googleID);
+
+	public Team getTeamByGoogleID(String googleID);
+
+	public Organisation getOrganisationByGoogleID(String googleID);
 
 }

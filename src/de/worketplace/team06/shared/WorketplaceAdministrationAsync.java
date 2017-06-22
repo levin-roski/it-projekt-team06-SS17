@@ -148,10 +148,15 @@ public interface WorketplaceAdministrationAsync {
 
 	void getRatingFor(Enrollment enrollment, AsyncCallback<Rating> callback);
 
-	
-	
-	
+	//Wird wahrscheinlich nicht benötigt --> void getOrgaUnit(AsyncCallback<OrgaUnit> callback);
 
+	//Wird wahrscheinlich nicht benötigt --> void setOrgaUnit(OrgaUnit ou, AsyncCallback<Void> callback);
+
+	void getPersonByGoogleID(String googleID, AsyncCallback<Person> callback);
+
+	void getTeamByGoogleID(String googleID, AsyncCallback<Team> callback);
+
+	void getOrganisationByGoogleID(String googleID, AsyncCallback<Organisation> callback);
 
 	
 }

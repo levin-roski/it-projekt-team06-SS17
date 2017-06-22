@@ -28,6 +28,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	private static final long serialVersionUID = 1L;
 	
+//	Wird wahrscheinlich nicht benötigt	
+//	/**
+//	 * Referenz auf die zugehörige Organisationseinheit
+//	 */
+//	private OrgaUnit orgaUnit = null;
 	
 	/*
 	 * ***************************************************************************
@@ -655,6 +660,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Organisation getOrganisationByGoogleID(String googleID){
 
 		return this.orgaMapper.findByGoogleID(googleID);
@@ -904,6 +910,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Person getPersonByGoogleID(String googleID){
 
 		return this.personMapper.findByGoogleID(googleID);
@@ -1350,6 +1357,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Team getTeamByGoogleID(String googleID){
 
 		return this.teamMapper.findByGoogleID(googleID);
@@ -1385,6 +1393,35 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	    UserService userService = UserServiceFactory.getUserService();
 	    return userService.getCurrentUser();
 	  }
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, BEGINN: Verschiedenes
+	 * ***************************************************************************
+	 */
 
+//	Wird wahrscheinlich nicht benötigt
+//	/**
+//	 * Auslesen der Organisationseinheit, die aktuell für die Verwaltung zuständig ist.
+//	 */
+//	@Override
+//	public OrgaUnit getOrgaUnit() throws IllegalArgumentException {
+//		return this.orgaUnit;
+//	}
+//	
+//	Wird wahrscheinlich nicht benötigt
+//	/**
+//	 * Setzen der Organisationseinheit, die aktuell für die Verwaltung zuständig ist.
+//	 */
+//	@Override
+//	public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException {
+//		this.orgaUnit = ou;
+//	}
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, ENDE: Verschiedenes
+	 * ***************************************************************************
+	 */
 	
 }
