@@ -16,6 +16,13 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
+/**
+ * 
+ * @author Roski
+ *
+ * Formular für die Darstellung, Bearbeitung und Löschung eines selektierten Marktplatzes.
+ * Falls kein selektierter Marktplatz beim Initialisieren übergeben wird, ist das Formular leer, bereit für die Erstellung eines neuen Marktplatzes.
+ */
 public class MarketplaceForm extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
@@ -26,6 +33,10 @@ public class MarketplaceForm extends Page {
 	private Boolean shouldUpdate = false;
 	private Marketplace toChangeMarketplace;
 
+	/*
+	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der dann bearbeitet und gelöscht werden kann.
+	 * null übergeben, falls ein neuer Marktplatz erstellt werden soll.
+	 */
 	public MarketplaceForm(Marketplace pToChangeMarketplace) {
 		if (pToChangeMarketplace != null) {
 			shouldUpdate = true;
@@ -45,8 +56,23 @@ public class MarketplaceForm extends Page {
 			final Button saveButton = new Button("Änderungen speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					// TODO
-					Window.alert("Clicked");
+					if (nameInput.getText().length() == 0) {
+						Window.alert("Bitte vergeben Sie einen Namen");
+					} else if (beschreibungInput.getText().length() == 0) {
+						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
+					} else {
+						toChangeMarketplace.setTitle(nameInput.getText());
+						toChangeMarketplace.setDescription(beschreibungInput.getText());
+						worketplaceAdministration.saveMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+							public void onFailure(Throwable caught) {
+								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+							}
+
+							public void onSuccess(Void result) {
+								Window.alert("Der Marktplatz wurde erfolgreich geändert");
+							}
+						});
+					}
 				}
 			});
 			final HorizontalPanel panel = new HorizontalPanel();
@@ -54,8 +80,18 @@ public class MarketplaceForm extends Page {
 			final Button deleteButton = new Button("Diesen Marktplatz entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					// TODO
-					Window.alert("Clicked");
+					final boolean confirmDelete = Window.confirm("Möchten Sie den Marktplatz wirklich löschen?");
+					if (confirmDelete) {
+						worketplaceAdministration.deleteMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+							public void onFailure(Throwable caught) {
+								Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+							}
+
+							public void onSuccess(Void result) {
+								Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
+							}
+						});
+					}
 				}
 			});
 			panel.add(deleteButton);
@@ -64,19 +100,22 @@ public class MarketplaceForm extends Page {
 			final Button saveButton = new Button("Neuen Marktplatz anlegen");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					if (beschreibungInput.getText().length() == 0) {
-						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
-					} else if (nameInput.getText().length() == 0) {
+					if (nameInput.getText().length() == 0) {
 						Window.alert("Bitte vergeben Sie einen Namen");
+					} else if (beschreibungInput.getText().length() == 0) {
+						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
 					} else {
-						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(), ClientsideSettings.getCurrentUser(), new AsyncCallback<Marketplace>() {
-							public void onFailure(Throwable caught) {
-								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
-							}
-							public void onSuccess(Marketplace result) {
-								Window.alert("Der Marktplatz \""+result.getTitle()+"\" wurde erstellt");
-							}
-						});
+						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(),
+								ClientsideSettings.getCurrentUser(), new AsyncCallback<Marketplace>() {
+									public void onFailure(Throwable caught) {
+										Window.alert(
+												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+									}
+
+									public void onSuccess(Marketplace result) {
+										Window.alert("Der Marktplatz \"" + result.getTitle() + "\" wurde erstellt");
+									}
+								});
 					}
 				}
 			});
@@ -86,5 +125,6 @@ public class MarketplaceForm extends Page {
 		root.add(createHeadline("Marktplatz bearbeiten"));
 		root.add(form);
 		RootPanel.get("content").add(root);
+		nameInput.setFocus(true);
 	}
 }

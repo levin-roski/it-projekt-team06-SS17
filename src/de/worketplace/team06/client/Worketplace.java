@@ -21,7 +21,8 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
 import de.worketplace.team06.shared.bo.Person;
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * Entry-Point-Klasse des Projekts <b>Worketplace</b>.
+ * Diese enhtählt die Funktionalitäten des Editors.
  */
 public class Worketplace implements EntryPoint {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
@@ -30,13 +31,21 @@ public class Worketplace implements EntryPoint {
 	private Logger console = Logger.getLogger("");
 
 	/**
-	 * This is the entry point method.
+	 * Da diese Klasse die Implementierung des Interface <code>EntryPoint</code>
+	 * zusichert, benötigen wir eine Methode
+	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
+	 * <code>main()</code>-Methode normaler Java-Applikationen.
 	 */
+	@Override
 	public void onModuleLoad() {
 		Person ou = new Person();
 		ou.setID(7);
 		ou.setGoogleID("G3000");
 		ClientsideSettings.setCurrentUser(ou);
+		
+		/*
+		 * Initialisiert die Editor-Navigation und rendert diese im HTML Dokument in #navigation
+		 */
 		final EditorNavigation navigationMenu = new EditorNavigation();
 		navigationMenu.run();
 

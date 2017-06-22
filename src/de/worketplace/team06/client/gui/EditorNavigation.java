@@ -1,5 +1,7 @@
 package de.worketplace.team06.client.gui;
 
+import java.sql.Timestamp;
+
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -43,8 +45,10 @@ public class EditorNavigation extends VerticalPanel {
 		menu.addItem(new MenuItem("Beispielmarktplatz bearbeiten", new Command() {
 			public void execute() {
 				Marketplace m = new Marketplace();
-				m.setTitle("Stuttgart");
-				m.setDescription("Hier steht eine Beschreibung des Marktplatzes Stuttgart");
+				m.setID(4);
+				m.setTitle("Levins Marktplatz");
+				m.setDescription("Das ist Levins Marktplatz");
+				m.setOrgaUnitID(7);
 				RootPanel.get("content").clear();
 				final MarketplaceForm marketplaceForm = new MarketplaceForm(m);
 				marketplaceForm.run();
