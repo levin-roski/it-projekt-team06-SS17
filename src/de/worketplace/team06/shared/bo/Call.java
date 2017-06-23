@@ -97,7 +97,19 @@ public class Call extends BusinessObject {
      * 
      * @param status
      */
-	public String getStatus() {
+	public Integer getStatus() {
+      return this.status;
+	}
+	
+	  /**
+     * Auslesen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param s
+     */
+	public String getStatusString() {
         String s = new String();
         
 		/*
