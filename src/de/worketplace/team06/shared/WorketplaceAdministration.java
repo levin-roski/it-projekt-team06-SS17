@@ -246,7 +246,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param period 
      * @return
      */
-    public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, Integer workload) throws IllegalArgumentException;
+    public Enrollment createEnrollment(Application app, Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, Integer workload) throws IllegalArgumentException;
 
     /**
      * @param enrollment
