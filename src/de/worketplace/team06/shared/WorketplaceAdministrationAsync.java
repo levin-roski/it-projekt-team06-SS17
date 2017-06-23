@@ -24,8 +24,8 @@ public interface WorketplaceAdministrationAsync {
 
 	
 
-	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
-			Integer workload, AsyncCallback<Enrollment> callback);
+	void createEnrollment(Application app, Project project, OrgaUnit orgaUnit, Rating rating, Date startDate,
+			Date endDate, Integer workload, AsyncCallback<Enrollment> callback);
 
 
 

@@ -366,7 +366,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen einer Beteiligung
 	 */
 	@Override
-	public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, Integer workload) throws IllegalArgumentException {
+	public Enrollment createEnrollment(Application app, Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, Integer workload) throws IllegalArgumentException {
+		
+		
 		Enrollment e = new Enrollment();
 		
 		e.setRatingID(rating.getID());
@@ -386,7 +388,30 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		e.setID(1);
 		
 		//***WICHTIG*** @ DB-Team: Methode muss noch deklariert werden.
-		return this.enrollMapper.insert(e);
+		e = this.enrollMapper.insert(e);
+		
+		if (e != null){
+			
+			//Den Bewerbungsstatus auf angenommen setzen 
+			app.setStatus(1);
+			saveApplication(app);
+			
+			//Den Ausschreibunsstatus auf erfolgreich besetzt setzen
+			Call c = this.callMapper.findByID(app.getCallID());
+			c.setStatus(1);
+			
+			//Den Status der übrigen Bewerbungen auf abgelehnt setzen
+			Vector<Application> allAppsForCall = this.getApplicationsFor(c);
+			for (Application a : allAppsForCall){
+				
+				if (!a.equals(app)){
+					a.setStatus(-1);
+					saveApplication(a);
+				}
+			}
+		}
+		
+		return e;
 	}
 	
 	/**
@@ -1377,9 +1402,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		// nur bei Person, da nur Person Projektleiter: Vector<Project> projects = getProjectsForLeader(team); 
 	
-		
-	
-		
+
 			PartnerProfile part = getPartnerProfileFor(team);
 						
 			if (enrollments != null){
