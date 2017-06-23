@@ -107,7 +107,7 @@ public class CallMapper {
         	Statement stmt = con.createStatement();
         	
         	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
-        			+ "deadline, project_id, projectleader_id, partnerprofile_id, status  "
+        			+ "deadline, project_id, orgaunit_id, partnerprofile_id, status  "
         	+ "FROM projektmarktplatz.`call` ");
         	
         	while (rs.next()){
