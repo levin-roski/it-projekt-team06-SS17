@@ -259,6 +259,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.appMapper.findByCallID(call.getID());
 	}
 	
+	/**
+	 * 
+	 */
+	@Override
+	public Integer getApplicationCountFor(Call c){
+		Vector<Application> allApps = this.getApplicationsFor(c);
+		return allApps.size();
+	}
+	
+	
+	
 
 	
 	/*
@@ -354,6 +365,23 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.callMapper.findByID(callID);
 	}
 	
+	/**
+	 * Auslesen der Anzahl offener Ausschreibungen eines Projektes
+	 */
+	@Override
+	public Integer getOpenCallCountFor(Project p){
+	
+		Vector<Call> allCalls = this.getCallsFor(p);
+		Integer count = 0;
+		
+		
+		for(Call c : allCalls){
+			if (c.getStatus() == 0){
+				count++;
+			}
+		}
+		return count; 
+	}
 	
 	
 	/*
