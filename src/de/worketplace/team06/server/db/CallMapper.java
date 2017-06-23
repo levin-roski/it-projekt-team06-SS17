@@ -106,7 +106,7 @@ public class CallMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
+        	ResultSet rs = stmt.executeQuery("SELECT id, created, title, description,"
         			+ "deadline, project_id, orgaunit_id, partnerprofile_id, status  "
         	+ "FROM projektmarktplatz.`call` ");
         	
@@ -117,7 +117,7 @@ public class CallMapper {
         		c.setTitle(rs.getString("title"));
         		c.setDescription(rs.getString("description"));
         		c.setDeadline(sdf.parse(rs.getString("deadline")));
-        		c.setProjectID(rs.getInt("projectID"));
+        		c.setProjectID(rs.getInt("project_id"));
         		c.setCallerID(rs.getInt("orgaunit_id"));
         		c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
         		c.setStatus(rs.getInt("status"));
