@@ -115,7 +115,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param orgaUnit 
      * @return
      */
-    public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
+//    public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
     /**
      * @return
@@ -310,7 +310,7 @@ public interface WorketplaceAdministration extends RemoteService {
 	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
 
-	public Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
 
 	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException;
 

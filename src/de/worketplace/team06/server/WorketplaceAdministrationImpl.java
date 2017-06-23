@@ -476,11 +476,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen eines Marktplatzes
 	 */
 	@Override
-	public Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException {
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException {
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
 		m.setDescription(description);
-		m.setOrgaUnitID(o.getID());
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -574,14 +573,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.marketMapper.findAll();
 	}
 
+
 	/**
 	 * Auslesen aller Marktplätze einer Organisations-Einheit
-	 */
+	 *//*
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		return this.marketMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
-	
+*/	
 	/**
 	 * Auslesen eines Marktplatzes anhand der ID
 	 */
@@ -651,20 +651,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException, WindowAlertException {
 		
 		
-		Vector<Marketplace> markets = getMarketplacesFor(organisation);
+//		Vector<Marketplace> markets = getMarketplacesFor(organisation);
 		Vector<Enrollment> enrollments = getEnrollmentFor(organisation);
 		Vector<Application> applications = getApplicationsFor(organisation);
 	
 		/*
 		 * Marktplätze werden nicht automatisch mitgelöscht. Es wird eine WindowAlertException ausgegeben,
 		 * dass die Marktplätze vorher manuell gelöscht werden sollen.
-		 */
+		 *//*
 		if (markets != null){
 			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
 					+ "Sie neue Besitzer für Ihre Marktplätze");
-		}
+		}*/
 	
-		else {
+		
 			
 			/*
 			 * Das zugehörige Partnerprofil muss zu Beginn instanziiert werden,
@@ -700,7 +700,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			 * vorhanden ist. 
 			 */
 			this.partnerMapper.delete(part);
-		}
+		
 	}
 	
 	/**
@@ -921,29 +921,17 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException {
 		
-		Vector<Marketplace> markets = getMarketplacesFor(person);
-		Vector<Project> projects = getProjectsForLeader(person); 
+//		Vector<Marketplace> markets = getMarketplacesFor(person);
+		
 		Vector<Enrollment> enrollments = getEnrollmentFor(person);
 		Vector<Application> applications = getApplicationsFor(person);
 		
-		/*
-		 * Person kann nur gelöscht werden, wenn Sie kein Besitzer von einem Marktplatz oder Projekt (Projektleiter) ist.
-		 */
-		if ((markets != null) && (projects != null)){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze und Projekte oder ernennen"
-					+ "Sie neue Besitzer/Projektleiter bevor Sie Ihren Account löschen!");
-		}
-		else if ((markets != null)){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
-					+ "Sie neue Besitzer für Ihre Marktplätze");
-		}
 		
-		else if (projects != null){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Projekte oder ernennen"
-					+ "Sie einen neuen Projektleiter");
+		//Löschen aller Projekte in denen die OrgaUnit Projektleiter ist
+		Vector<Project> projects = getProjectsForLeader(person); 
+		for (Project p : projects){
+			deleteProject(p);
 		}
-		else {	
-		
 			
 		PartnerProfile part = getPartnerProfileFor(person);	
 		
@@ -963,7 +951,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		this.personMapper.delete(person);
 		
 		this.partnerMapper.delete(part);
-		}
+		
 
 	}
 	
@@ -1383,18 +1371,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException{		
 		
-		Vector<Marketplace> markets = getMarketplacesFor(team);
+//		Vector<Marketplace> markets = getMarketplacesFor(team);
 		Vector<Enrollment> enrollments = getEnrollmentFor(team);
 		Vector<Application> applications = getApplicationsFor(team);
 		
 		// nur bei Person, da nur Person Projektleiter: Vector<Project> projects = getProjectsForLeader(team); 
 	
-		if (markets != null){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
-					+ "Sie neue Besitzer für Ihre Marktplätze");
-		}
+		
 	
-		else {		
+		
 			PartnerProfile part = getPartnerProfileFor(team);
 						
 			if (enrollments != null){
@@ -1412,7 +1397,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			this.teamMapper.delete(team);
 			
 			this.partnerMapper.delete(part);
-		}
+		
 	}
 	
 	/**
