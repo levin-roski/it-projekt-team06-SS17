@@ -60,10 +60,6 @@ public interface WorketplaceAdministrationAsync {
 	
 	void getApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
 
-	void getMarketplacesFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Marketplace>> callback);
-
-
-
 	void init(AsyncCallback<Void> callback);
 
 	void rateApplication(Application application, Float rating, String ratingStatemant,
@@ -120,7 +116,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
 
-	void createMarketplace(String title, String description, OrgaUnit o, AsyncCallback<Marketplace> callback);
+	void createMarketplace(String title, String description, AsyncCallback<Marketplace> callback);
 
 	void deletePerson(Person person, AsyncCallback<Void> callback);
 
@@ -148,10 +144,19 @@ public interface WorketplaceAdministrationAsync {
 
 	void getRatingFor(Enrollment enrollment, AsyncCallback<Rating> callback);
 
-	
-	
-	
+	//Wird wahrscheinlich nicht benötigt --> void getOrgaUnit(AsyncCallback<OrgaUnit> callback);
 
+	//Wird wahrscheinlich nicht benötigt --> void setOrgaUnit(OrgaUnit ou, AsyncCallback<Void> callback);
+
+	void getPersonByGoogleID(String googleID, AsyncCallback<Person> callback);
+
+	void getTeamByGoogleID(String googleID, AsyncCallback<Team> callback);
+
+	void getOrganisationByGoogleID(String googleID, AsyncCallback<Organisation> callback);
+
+	void getOrgaUnitById(Integer ouid, AsyncCallback<OrgaUnit> callback);
+
+	void deleteProperty(Property p, AsyncCallback<Void> callback);
 
 	
 }

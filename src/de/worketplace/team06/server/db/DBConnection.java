@@ -26,6 +26,9 @@ public class DBConnection {
     
       private static String googleUrl = "jdbc:google:mysql://it-projekt-team06-ss17-v1:it-projekt-team-06/projektmarktplatz?user=jdbcg&password=Uvawevusa675";
       private static String localUrl = "jdbc:mysql://173.194.243.13:3306/projektmarktplatz?user=jdbc&password=Uvawevusa675";
+      
+      //String für Toby's lokale DB
+      private static String localhost = "jdbc:mysql://127.0.0.1:8889/projektmarktplatz?user=root&password=root";;
     
     /**
 	 * Durch DBConnection.connection() wird die folgende Methode aufgerufen.
@@ -50,7 +53,8 @@ public class DBConnection {
                  else {
                 	 
                 	 Class.forName("com.mysql.jdbc.Driver");
-                	 url = localUrl; 
+                	 //url = localUrl; 
+                	 url = localhost;
                 } 
                  
                 con = DriverManager.getConnection(url);

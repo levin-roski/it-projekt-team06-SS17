@@ -28,6 +28,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	private static final long serialVersionUID = 1L;
 	
+//	Wird wahrscheinlich nicht benötigt	
+//	/**
+//	 * Referenz auf die zugehörige Organisationseinheit
+//	 */
+//	private OrgaUnit orgaUnit = null;
 	
 	/*
 	 * ***************************************************************************
@@ -208,16 +213,24 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
+		
+		/*
+		 * Die zugehörige Bewertung zur Bewerbung muss am Anfang initialisiert werden
+		 * nach Löschen der Bewerbung kann die Beziehung nicht wieder rekonstruiert werden.
+		 */
 		Rating r = this.ratingMapper.findById(application.getRatingID());
 		
-		if (r != null && this.enrollMapper.findByRatingID(r.getID()) == null){
-			this.ratingMapper.delete(r);
-		}
-		
-		
+		//Löschen der Bewerbung
 		this.appMapper.delete(application);
 		
-		
+		/*
+		 * Nachdem die Bewerbung gelöscht wurde kann auch die Bewertung gelöscht werden
+		 * Voraussetzung: Es besteht keine Beziehung von dieser Ratinginstanz zu einer
+		 * Enrollmentinstanz.
+		 */
+		if (r != null && this.enrollMapper.findByRatingID(r.getID()) == null){
+			this.ratingMapper.delete(r);
+		}	
 	}
 	
 	/**
@@ -293,43 +306,24 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteCall(Call call) throws IllegalArgumentException {
-		/*
-		 * Das Löschen der Objekte, welche in Beziehung zum zu löschenden Projekt stehen,
-		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
-		 */	
-		//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
+		
+		//Für jede Ausschreibung werden alle Bewerbungen gelöscht. 
 		Vector<Application> allApps = appMapper.findByCallID(call.getID());
 		if (allApps != null){
 			for (Application a : allApps){
-				
-				//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
-				Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
-					
-				if (rating != null){
-				//Es wird überprüft ob die Bewertung auch mit einer Enrollment Instanz verbunden ist
-				//Wenn ja wird der Rating Mapper nicht gelöscht, Wenn nein wird er gelöscht. 
-					if (this.enrollMapper.findByRatingID(rating.getID()) == null){
-						this.ratingMapper.delete(rating);
-					}
-					
-					
-				}	
-				this.appMapper.delete(a);
-											
+				deleteApplication(a);							
 			}
 		}
 		
 		PartnerProfile pp = getPartnerProfileFor(call);
-		if (pp != null){
-			
-			this.propertyMapper.deleteByPartnerProfileID(pp.getID());
-			this.partnerMapper.delete(pp);
-		} else {
-			//TODO: Fehlermeldung
-		}
 			
 		//Löschen der jeweiligen Ausschreibung
 		this.callMapper.delete(call);
+		
+		//Löschen des zugehörigen PartnerProfils
+		if (pp != null){
+			deletePartnerProfile(pp);
+		} 
 	}
 
 	/**
@@ -355,6 +349,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	/**
 	 * Auslesen einer Ausschreibung mit einer CallID
 	 */
+	@Override
 	public Call getCallByID(Integer callID) throws IllegalArgumentException {
 		return this.callMapper.findByID(callID);
 	}
@@ -387,10 +382,27 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		e.setWorkload(workload);
 		
 		
-//		//Überprüfung ob Start- und Enddatum bereits gesetzt
-//		if (startDate != null && endDate != null){
-//			e.setPeriod();
-//		}
+		//Setzen einer vorlauefigen ID
+		e.setID(1);
+		
+		//***WICHTIG*** @ DB-Team: Methode muss noch deklariert werden.
+		return this.enrollMapper.insert(e);
+	}
+	
+	/**
+	 * Erstellen einer automatischen Beteiligung
+	 */
+	//Kein Override wird nur auf ServerEbene angesprochen
+	public Enrollment createAutomaticEnrollment(Project project, OrgaUnit orgaUnit, Rating rating) throws IllegalArgumentException {
+		Enrollment e = new Enrollment();
+		
+		e.setRatingID(rating.getID());
+		e.setProjectID(project.getID());
+		e.setOrgaUnitID(orgaUnit.getID());
+		
+		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
+		Timestamp created = new Timestamp(System.currentTimeMillis());
+		e.setCreated(created);
 		
 		//Setzen einer vorlauefigen ID
 		e.setID(1);
@@ -413,13 +425,24 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteEnrollment(Enrollment enrollment) throws IllegalArgumentException {
+		
+		/*
+		 * Die zugehörige Bewertung zur Beteiligung muss am Anfang initialisiert werden
+		 * nach Löschen der Bewerbung kann die Beziehung nicht wieder rekonstruiert werden.
+		 */
 		Rating r = this.ratingMapper.findById(enrollment.getRatingID());
 		
+		//Löschen der Beteiligung
+		this.enrollMapper.delete(enrollment);
+		
+		/*
+		 * Nachdem die Beteiligung gelöscht wurde kann auch die Bewertung gelöscht werden
+		 * Voraussetzung: Es besteht keine Beziehung von dieser Ratinginstanz zu einer
+		 * Bewerbungsintinstanz.
+		 */
 		if (r != null && this.appMapper.findByRatingID(r.getID()) == null){
 			this.ratingMapper.delete(r);
 		}
-		
-		this.enrollMapper.delete(enrollment);
 		
 	}
 	
@@ -453,11 +476,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Erstellen eines Marktplatzes
 	 */
 	@Override
-	public Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException {
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException {
 		Marketplace m = new Marketplace();
 		m.setTitle(title);
 		m.setDescription(description);
-		m.setOrgaUnitID(o.getID());
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -484,33 +506,25 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteMarketplace(Marketplace m) throws IllegalArgumentException {
+		
+		/*
+		 * Alle Projekte eines Marktplatzes werden gelöscht
+		 */
 		Vector<Project> allProjects = projectMapper.findByMarketplaceID(m.getID());
 		
 		if (allProjects != null){
-			
-			//Für Jedes Projekt werden die zugehörigen Ausschreibungen und Beteiligungen ausgelesen und gelöscht
+			//Für Jeden Marktplatz werden die zugehörigen Projekte gelöscht 
 			for(Project p : allProjects){
-				Vector<Call> allCalls = callMapper.findByProjectID(p.getID());
-				if (allCalls != null){
-					for(Call c : allCalls){
-					deleteCall(c);
-					}
-				}
-				Vector<Enrollment> allEnrollments = enrollMapper.findByProjectID(p.getID());
-				if (allEnrollments != null){
-					for(Enrollment e : allEnrollments){
-					deleteEnrollment(e);
-					}
-				}
-				this.projectMapper.delete(p);
+				deleteProject(p);
 			}
-			this.marketMapper.delete(m);
 		}
 		
+		//Löschen des Marktplatzes
+		this.marketMapper.delete(m);
 		
 		
 		
-		/*
+		/*ALT!!!!
 		 * Vector<Application> allApps = appMapper.findByCallID(call.getID());
 		if (allApps != null){
 			for (Application a : allApps){
@@ -547,10 +561,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//Löschen der jeweiligen Ausschreibung
 		this.callMapper.delete(call);
 		 */
-		
-		
-		
-		this.marketMapper.delete(m);
 	}
 	
 	/**
@@ -563,14 +573,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.marketMapper.findAll();
 	}
 
+
 	/**
 	 * Auslesen aller Marktplätze einer Organisations-Einheit
-	 */
+	 *//*
 	@Override
 	public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException {
 		return this.marketMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
-	
+*/	
 	/**
 	 * Auslesen eines Marktplatzes anhand der ID
 	 */
@@ -599,6 +610,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
+	@Override
 	public Organisation createOrganisation(String name, String description, String street, Integer zipcode, String city, String googleID) throws IllegalArgumentException {
 		
 		Organisation o = new Organisation();
@@ -637,38 +649,58 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException, WindowAlertException {
-		Vector<Marketplace> markets = getMarketplacesFor(organisation);
+		
+		
+//		Vector<Marketplace> markets = getMarketplacesFor(organisation);
 		Vector<Enrollment> enrollments = getEnrollmentFor(organisation);
 		Vector<Application> applications = getApplicationsFor(organisation);
-		
-		// nur bei Person, da nur Person Projektleiter: Vector<Project> projects = getProjectsForLeader(team); 
 	
+		/*
+		 * Marktplätze werden nicht automatisch mitgelöscht. Es wird eine WindowAlertException ausgegeben,
+		 * dass die Marktplätze vorher manuell gelöscht werden sollen.
+		 *//*
 		if (markets != null){
 			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
 					+ "Sie neue Besitzer für Ihre Marktplätze");
-		}
+		}*/
 	
-		else {		
-			PartnerProfile part = getPartnerProfileFor(organisation);
-			organisation.setPartnerProfileID(null);
-			this.saveOrganisation(organisation);
-			this.partnerMapper.delete(part);
+		
 			
+			/*
+			 * Das zugehörige Partnerprofil muss zu Beginn instanziiert werden,
+			 * da nach löschen der Organisation keine Verbindung mehr zum 
+			 * Partnerprofil besteht.  
+			 */
+			PartnerProfile part = getPartnerProfileFor(organisation);
+			
+			/*
+			 * Alle Beteiligungen dieser Organisation löschen
+			 */
 			if (enrollments != null){
 				for (Enrollment e : enrollments){
 					deleteEnrollment(e);
 				}
 			}
 			
-			
+			/*
+			 * Alle Bewerbungen dieser Organisation löschen
+			 */
 			if (applications != null){
 				for (Application a : applications){
 					deleteApplication(a);
 				}	
 			}	
-
-			this.orgaMapper.delete(organisation);	
-		}
+			
+			// Löschen der Organisation
+			this.orgaMapper.delete(organisation);
+			
+			/*
+			 * Das PartnerProfil muss zueletzt gelöscht werden,
+			 * da ein Fremdschlüssel(partnerprofile_id) in der OrgaUnitInstanz 
+			 * vorhanden ist. 
+			 */
+			this.partnerMapper.delete(part);
+		
 	}
 	
 	/**
@@ -676,6 +708,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Organisation getOrganisationByGoogleID(String googleID){
 
 		return this.orgaMapper.findByGoogleID(googleID);
@@ -688,6 +721,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * -- METHODEN für OrgaUnit --
 	 * ---------------------------------
 	 */
+	
+	@Override
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
 		
 		String type = orgaUnitMapper.findTypeByGoogleID(loginInfo.getGoogleId());
@@ -707,6 +742,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
 	}
 	
+	@Override
 	public OrgaUnit getOrgaUnitById(Integer ouid) throws IllegalArgumentException {
 		
 		String type = orgaUnitMapper.findTypeByID(ouid);
@@ -735,7 +771,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	/**
-	 * Erstellen eines PartnerProfils
+	 * Erstellen eines PartnerProfils für einen Call
 	 */
 	@Override
 	public PartnerProfile createPartnerProfileFor(Call call)
@@ -806,6 +842,15 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public void deletePartnerProfile(PartnerProfile p) throws IllegalArgumentException {
+		
+		/*
+		 * Es werden alle zugehörigen Properties zum PartnerProfile gelöscht.
+		 */
+		Vector<Property> allproperties = this.getAllPropertiesFor(p);
+		for(Property prop : allproperties){
+			deleteProperty(prop);
+		}
+		// Das PartnerProfile wird gelöscht.
 		this.partnerMapper.delete(p);
 	}
 	
@@ -833,6 +878,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
+	@Override
 	public Person createPerson(String firstName, String lastName, String street, Integer zipcode, String city, String description, String googleID) throws IllegalArgumentException {
 		Person p = new Person();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -875,31 +921,19 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException {
 		
-		Vector<Marketplace> markets = getMarketplacesFor(person);
-		Vector<Project> projects = getProjectsForLeader(person); 
+//		Vector<Marketplace> markets = getMarketplacesFor(person);
+		
 		Vector<Enrollment> enrollments = getEnrollmentFor(person);
 		Vector<Application> applications = getApplicationsFor(person);
 		
-		if ((markets != null) && (projects != null)){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze und Projekte oder ernennen"
-					+ "Sie neue Besitzer/Projektleiter bevor Sie Ihren Account löschen!");
-		}
-		else if ((markets != null)){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
-					+ "Sie neue Besitzer für Ihre Marktplätze");
-		}
 		
-		else if (projects != null){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Projekte oder ernennen"
-					+ "Sie einen neuen Projektleiter");
+		//Löschen aller Projekte in denen die OrgaUnit Projektleiter ist
+		Vector<Project> projects = getProjectsForLeader(person); 
+		for (Project p : projects){
+			deleteProject(p);
 		}
-		else {	
-		
 			
-		PartnerProfile part = getPartnerProfileFor(person);
-		person.setPartnerProfileID(null);
-		this.savePerson(person);
-		this.partnerMapper.delete(part);
+		PartnerProfile part = getPartnerProfileFor(person);	
 		
 		if (enrollments != null){
 			for (Enrollment e : enrollments){
@@ -915,7 +949,9 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		}	
 
 		this.personMapper.delete(person);
-		}
+		
+		this.partnerMapper.delete(part);
+		
 
 	}
 	
@@ -924,6 +960,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Person getPersonByGoogleID(String googleID){
 
 		return this.personMapper.findByGoogleID(googleID);
@@ -986,57 +1023,25 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 */
 		Integer pID = project.getID();
 		
+		
 		/*
 		 * Löschen aller Beteiligungen anhand der Projekt ID.
 		 */
 		Vector<Enrollment> allEnrolls = enrollMapper.findByProjectID(pID);
 		if (allEnrolls != null){
-			for (Integer i = 0; allEnrolls.capacity()>i; i++){
-				this.enrollMapper.delete(allEnrolls.get(i));
+			for (Enrollment e : allEnrolls){
+				deleteEnrollment(e);
 			}
 		}
 		
+		
 		/*
-		 * Das Löschen der Objekte, welche in Beziehung zum zu löschenden Projekt stehen,
-		 * wird über mehrfach verschachtelte For-Schleifen und If-Abfragen gelöst.
+		 * Löschen aller Ausschreibungen anhand der Projekt ID
 		 */
-		
-		
-		//Auslesen aller Ausschreibungen in einen Vektor anhand der ProjectID
 		Vector<Call> allCalls = callMapper.findByProjectID(pID);
 		if (allCalls != null){
 			for (Call c : allCalls){
-				
-				//Für jede Ausschreibung werden alle Bewerbungen in einen Vektor ausgelesen
-				Vector<Application> allApps = appMapper.findByCallID(c.getID());
-				if (allApps != null){
-					for (Application a : allApps){
-						
-						//Für jede Ausschreibung wird die dazugehörige Bewertung ausgelesen
-						Rating rating = ratingMapper.findRatingByApplicationID(a.getID());
-						if (rating != null){
-							
-							//Löschen der Bewertung
-							this.ratingMapper.delete(rating);
-						}
-						
-						//Löschen der jeweiligen Bewerbung
-						this.appMapper.delete(a);
-													
-					}
-				}
-				
-				//Für den jeweiligen Call wird auch das PartnerProfile gelöscht
-				PartnerProfile pp = getPartnerProfileFor(c);
-				if (pp != null){
-					this.partnerMapper.delete(pp);
-				} else {
-					//TODO: Fehlermeldung
-				}
-				
-				//Löschen der jeweiligen Ausschreibung
-				this.callMapper.delete(c);
-				
+				deleteCall(c);
 			}
 		}
 		
@@ -1125,6 +1130,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	/**
 	 * Auslesen eines Projektes mit einer projectID
 	 */
+	@Override
 	public Project getProjectByID(Integer projectID) throws IllegalArgumentException{
 	return this.projectMapper.findByID(projectID);	
 	}
@@ -1210,6 +1216,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	/**
 	 * Löschen einer Eigenschaft 
 	 */
+	@Override
 	public void deleteProperty(Property p) throws IllegalArgumentException {
 		this.propertyMapper.delete(p);
 	}
@@ -1248,6 +1255,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		saveApplication(application);
 		
+		Call c = this.getCallByID(application.getCallID());
+		Project p = this.getProjectByID(c.getProjectID());
+		OrgaUnit ou = this.getOrgaUnitById(application.getOrgaUnitID());
+		
+		if (r.getRating() == 1){
+			this.createAutomaticEnrollment(p, ou, r);
+		}
+		
 		return r;
 	}
 	
@@ -1256,6 +1271,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param application
 	 * @return
 	 */
+	@Override
 	public Rating getRatingFor(Application application) throws IllegalArgumentException {
 		return this.ratingMapper.findById(application.getRatingID());
 	}
@@ -1265,6 +1281,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param enrollment
 	 * @return
 	 */
+	@Override
 	public Rating getRatingFor(Enrollment enrollment) throws IllegalArgumentException {
 		return this.ratingMapper.findById(enrollment.getRatingID());
 	}
@@ -1294,9 +1311,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		e.setRatingID(null);
 		this.enrollMapper.update(e);
 		}
-		
 		this.ratingMapper.delete(rating);
-		
 	}
 	
 	
@@ -1317,6 +1332,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
+	@Override
 	public Team createTeam(String name, String description, Integer membercount, String googleID) throws IllegalArgumentException {
 		
 		Team t = new Team();
@@ -1355,29 +1371,22 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	@Override
 	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException{		
 		
-		Vector<Marketplace> markets = getMarketplacesFor(team);
+//		Vector<Marketplace> markets = getMarketplacesFor(team);
 		Vector<Enrollment> enrollments = getEnrollmentFor(team);
 		Vector<Application> applications = getApplicationsFor(team);
 		
 		// nur bei Person, da nur Person Projektleiter: Vector<Project> projects = getProjectsForLeader(team); 
 	
-		if (markets != null){
-			throw new WindowAlertException("Bitte Löschen Sie zuerst Ihre Marktplätze oder ernennen"
-					+ "Sie neue Besitzer für Ihre Marktplätze");
-		}
+		
 	
-		else {		
+		
 			PartnerProfile part = getPartnerProfileFor(team);
-			team.setPartnerProfileID(null);
-			this.saveTeam(team);
-			this.partnerMapper.delete(part);
-			
+						
 			if (enrollments != null){
 				for (Enrollment e : enrollments){
 					deleteEnrollment(e);
 				}
 			}
-			
 			
 			if (applications != null){
 				for (Application a : applications){
@@ -1385,8 +1394,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 				}	
 			}	
 
-			this.teamMapper.delete(team);	
-		}
+			this.teamMapper.delete(team);
+			
+			this.partnerMapper.delete(part);
+		
 	}
 	
 	/**
@@ -1394,6 +1405,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @param googleID
 	 * @return
 	 */
+	@Override
 	public Team getTeamByGoogleID(String googleID){
 
 		return this.teamMapper.findByGoogleID(googleID);
@@ -1429,6 +1441,35 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	    UserService userService = UserServiceFactory.getUserService();
 	    return userService.getCurrentUser();
 	  }
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, BEGINN: Verschiedenes
+	 * ***************************************************************************
+	 */
 
+//	Wird wahrscheinlich nicht benötigt
+//	/**
+//	 * Auslesen der Organisationseinheit, die aktuell für die Verwaltung zuständig ist.
+//	 */
+//	@Override
+//	public OrgaUnit getOrgaUnit() throws IllegalArgumentException {
+//		return this.orgaUnit;
+//	}
+//	
+//	Wird wahrscheinlich nicht benötigt
+//	/**
+//	 * Setzen der Organisationseinheit, die aktuell für die Verwaltung zuständig ist.
+//	 */
+//	@Override
+//	public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException {
+//		this.orgaUnit = ou;
+//	}
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, ENDE: Verschiedenes
+	 * ***************************************************************************
+	 */
 	
 }

@@ -16,6 +16,7 @@ public class Call extends BusinessObject {
      * Default constructor
      */
     public Call() {
+    	this.setStatus(0);
     }
 
     /**
@@ -32,6 +33,14 @@ public class Call extends BusinessObject {
      * Datum für die Deadline einer Ausschreibung
      */
     private Date deadline;
+    
+    /**
+     * Variable für den Status der Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     */
+    private Integer status;
     
     /**
      * ID für das Projekt
@@ -81,6 +90,47 @@ public class Call extends BusinessObject {
     }
     
     /**
+     * Auslesen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param status
+     */
+	public Integer getStatus() {
+      return this.status;
+	}
+	
+	  /**
+     * Auslesen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param s
+     */
+	public String getStatusString() {
+        String s = new String();
+        
+		/*
+		 * Über eine Switch-Case Abfrage wird herausgefunden, welcher Status derzeit besteht
+		 * und entsprechend als String zurückgegeben.
+		 */
+        switch(this.status){ 
+        case -1: 
+        	s = "Abgelehnt";
+        	break;
+		case 0: 
+        	s = "Laufend";
+        	break;
+		case 1: 
+        	s = "Angenommen";
+        	break;
+        }
+		return s;
+	}
+    
+    /**
      * auslesen der ID für das Projekt
      * @return projectID
      */
@@ -127,6 +177,18 @@ public class Call extends BusinessObject {
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
+    
+    /**
+     * Setzen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param status
+     */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	/**
 	 * Setzen der ID für das Projekt
@@ -143,6 +205,5 @@ public class Call extends BusinessObject {
 	public void setPartnerProfileID(Integer partnerProfileID) {
 		this.partnerProfileID = partnerProfileID;
 	}
-
 
 }

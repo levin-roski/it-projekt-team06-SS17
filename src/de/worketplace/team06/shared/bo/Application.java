@@ -17,13 +17,21 @@ public class Application extends BusinessObject {
      * Default constructor
      */
     public Application() {
-    	// TODO implement here
+    	this.setStatus(0);
     }
 
     /**
      * Variable für das Speichern des Bewerbungstextes
      */
     private String applicationText;
+    
+    /**
+     * Variable für den Status der Bewerbung
+     * -1 abgelehnt
+     * 0 laufend
+     * 1 angenommen
+     */
+    private Integer status;
 
     /**
      * ID der dazgehörigen Ausschreibung
@@ -47,6 +55,49 @@ public class Application extends BusinessObject {
     public String getText() {
         return applicationText;
     }
+    
+    /**
+     * Auslesen des Status für die Bewerbung
+     * -1 abgelehnt
+     * 0 laufend
+     * 1 angenommen
+     * 
+     * @param status
+     */
+	public Integer getStatus() {
+		
+        return this.status;
+	}
+    
+    /**
+     * Auslesen des Status für die Bewerbung
+     * -1 abgelehnt
+     * 0 laufend
+     * 1 angenommen
+     * 
+     * @param s
+     */
+	public String getStatusString() {
+		
+        String s = new String();
+        
+		/*
+		 * Über eine Switch-Case Abfrage wird herausgefunden, welcher Status derzeit besteht
+		 * und entsprechend als String zurückgegeben.
+		 */
+        switch(this.status){ 
+        case -1: 
+        	s = "Abgelehnt";
+        	break;
+		case 0: 
+        	s = "Laufend";
+        	break;
+		case 1: 
+        	s = "Angenommen";
+        	break;
+        }
+		return s;
+	}
 
     /**
      *  Auslesen der ID der Ausschreibung
@@ -79,6 +130,18 @@ public class Application extends BusinessObject {
     public void setText(String applicationText) {
         this.applicationText = applicationText;
     }
+    
+    /**
+     * Setzen des Status für die Bewerbung
+     * -1 abgelehnt
+     * 0 laufend
+     * 1 angenommen
+     * 
+     * @param status
+     */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
     
     /**
      *  Setzen der ID der Ausschreibung

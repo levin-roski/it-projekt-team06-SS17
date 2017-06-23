@@ -78,7 +78,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id FROM application " + "WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id, status FROM application " + "WHERE id = " + id);
 			
 			if (rs.next()) {
 				Application a = new Application();
@@ -88,6 +88,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				return a;
 			}
 		}
@@ -107,7 +108,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id FROM application " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id, status FROM application " + "ORDER BY id");
 			
 			while (rs.next()) {
 				
@@ -118,6 +119,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("organisation_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				
 				result.addElement(a);
 			}
@@ -134,7 +136,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id FROM application " + "WHERE rating_id = " + rID);
+			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id, status FROM application " + "WHERE rating_id = " + rID);
 			
 			if (rs.next()) {
 				Application a = new Application();
@@ -144,6 +146,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				return a;
 			}
 		}
@@ -163,7 +166,7 @@ public class ApplicationMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id "
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id, status "
 					+ " FROM application WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
 			
 				while (rs.next()) {
@@ -175,6 +178,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("organisation_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				
 				result.addElement(a);
 			}
@@ -195,7 +199,7 @@ public class ApplicationMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id"
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id, status"
 					+ " FROM application WHERE call_id ='" + callID + "'ORDER BY id");
 			
 				while (rs.next()) {
@@ -207,6 +211,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				
 				result.addElement(a);
 			}
@@ -235,7 +240,7 @@ public class ApplicationMapper {
 				
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, orgaunit_id) " + "VALUES (" + a.getID() + ",'" + a.getCreated() + "','" + a.getText() + "'," + a.getCallID() + "," + a.getOrgaUnitID()+ ")");
+				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, orgaunit_id, status) " + "VALUES (" + a.getID() + ",'" + a.getCreated() + "','" + a.getText() + "'," + a.getCallID() + "," + a.getOrgaUnitID()+ "," + a.getStatus() + ")");
 			}
 		}
 		catch (SQLException e2) {
@@ -251,7 +256,7 @@ public class ApplicationMapper {
 	
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE application SET text='" + a.getText() + "', rating_id="+ a.getRatingID() + " WHERE id=" + a.getID());
+			stmt.executeUpdate("UPDATE application SET text='" + a.getText() + "', rating_id="+ a.getRatingID() + ", status="+ a.getStatus() + " WHERE id=" + a.getID());
 			// alt:  stmt.executeUpdate("UPDATE application " + "SET text=\"" + a.getText() + "\" " + "WHERE id=" + a.getID());
 		}
 		catch (SQLException e2) {

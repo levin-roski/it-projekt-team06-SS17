@@ -127,7 +127,7 @@ public class PartnerProfileMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("DELETE * FROM partnerprofile " + "WHERE id=" + part.getID());
+        	stmt.executeUpdate("DELETE FROM partnerprofile WHERE id=" + part.getID());
         	
         }
         catch (SQLException e){
