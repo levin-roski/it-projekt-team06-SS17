@@ -93,7 +93,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	*/
 	
-	
 	@Override
 	public AllCallsReport createAllCallsReport(OrgaUnit o) throws IllegalArgumentException {
 		
@@ -129,6 +128,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
+	
+	@Override
+	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException {
+		//TODO: Überlegung, wie die Partnerprofile verglichen werden. Ggf. DB "like"
+		return null;
+	}
+	
+	@Override
+	public AllApplicationsForCallsOfUserReport createAllApplicationsForCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		
+		return null;
+	}
 	
 	
 }

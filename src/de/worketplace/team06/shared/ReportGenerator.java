@@ -11,6 +11,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.worketplace.team06.client.WindowAlertException;
 import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.shared.report.AllApplicationsForCallsOfUserReport;
+import de.worketplace.team06.shared.report.AllCallsMatchingWithUserReport;
 import de.worketplace.team06.shared.report.AllCallsReport;
 
 /**
@@ -21,5 +23,10 @@ import de.worketplace.team06.shared.report.AllCallsReport;
 public interface ReportGenerator extends RemoteService {
 
 	public AllCallsReport createAllCallsReport(OrgaUnit o) throws IllegalArgumentException;
+
+	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException;
+
+	public AllApplicationsForCallsOfUserReport createAllApplicationsForCallsOfUserReport(OrgaUnit o)
+			throws IllegalArgumentException;
 
 }
