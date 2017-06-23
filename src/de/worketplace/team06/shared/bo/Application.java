@@ -64,7 +64,20 @@ public class Application extends BusinessObject {
      * 
      * @param status
      */
-	public String getStatus() {
+	public Integer getStatus() {
+		
+        return this.status;
+	}
+    
+    /**
+     * Auslesen des Status für die Bewerbung
+     * -1 abgelehnt
+     * 0 laufend
+     * 1 angenommen
+     * 
+     * @param s
+     */
+	public String getStatusString() {
 		
         String s = new String();
         
