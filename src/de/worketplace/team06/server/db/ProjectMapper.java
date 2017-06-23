@@ -61,18 +61,19 @@ import de.worketplace.team06.shared.bo.Team;
 	 * @param proj
 	 * @return Project-Objekt, das der übergebenen ID entspricht
 	 */
-	public Project findByID(int projectID) {
+	public Project findByID(Integer projectID) {
 		
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt= con.createStatement();
 		  	ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, "
-		  			+ "projectowner_id, start_date, end_date, marketplace_id "
+		  			+ "start_date, end_date, marketplace_id "
 		  			+ "FROM project WHERE ID=" + projectID);
 		  	/**
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
+			 * ProjectOwner ausgeklammert. Wird nicht benutzt.
 			 */
 		  	if (rs.next()){
 		  		Project proj = new Project();
@@ -80,7 +81,7 @@ import de.worketplace.team06.shared.bo.Team;
 		  		proj.setTitle(rs.getString("title"));
 		  		proj.setDescription(rs.getString("description"));
 		  		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-		  		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+//		  		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
 		  		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
 		  		proj.setMarketplaceID(rs.getInt("marketplace_id"));
@@ -103,7 +104,7 @@ import de.worketplace.team06.shared.bo.Team;
         	Statement stmt = con.createStatement();
         	
         	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
-        			+ "projectleader_id, projectowner_id, start_date, end_date, created,  "
+        			+ "projectleader_id, start_date, end_date, created,  "
         	+ "FROM project ");
         	
         	while (rs.next()){
@@ -112,7 +113,7 @@ import de.worketplace.team06.shared.bo.Team;
         		proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
         		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+//        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
         		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
         		proj.setCreated(rs.getTimestamp("created"));
@@ -156,15 +157,16 @@ import de.worketplace.team06.shared.bo.Team;
         	
         	/**
 			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
+			 * ProjectOwner ausgeklammert. Wird nicht benutzt.
 			 */
-        	stmt.executeUpdate("INSERT INTO project (id, created, title, description, projectleader_id, projectowner_id, start_date, end_date, marketplace_id) " 
+        	stmt.executeUpdate("INSERT INTO project (id, created, title, description, projectleader_id, start_date, end_date, marketplace_id) " 
         	+ "VALUES (" 
         	+ proj.getID() + ",'" 
         	+ proj.getCreated() + "','" 
         	+ proj.getTitle() + "','" 
         	+ proj.getDescription() + "','"
         	+ proj.getProjectLeaderID() + "','"
-        	+ proj.getProjectOwnerID() + "','"
+//        	+ proj.getProjectOwnerID() + "','"
         	+ startdate + "','"
         	+ enddate + "','"
         	+ proj.getMarketplaceID() + "')");
@@ -178,6 +180,7 @@ import de.worketplace.team06.shared.bo.Team;
     } 
     /**
      * Methode ermoeglicht, dass ein Project-Objekt in der Datenbank aktualisiert werden kann.
+     * ProjectOwner ausgeklammert. Wird nicht benutzt.
      * 
      * @param proj
      * @return Project
@@ -195,7 +198,7 @@ import de.worketplace.team06.shared.bo.Team;
         	+ "SET title=\"" + proj.getTitle() + "\", " 
         	+ "SET description=\"" + proj.getDescription() + "\", "
         	+ "SET projectleader_id=\"" + proj.getProjectLeaderID() + "\", "
-        	+ "SET projectowner_id=\"" + proj.getProjectOwnerID() + "\", "
+//        	+ "SET projectowner_id=\"" + proj.getProjectOwnerID() + "\", "
         	+ "SET start_date=\"" + startdate + "\", "
         	+ "SET end_date=\"" + enddate + "\", "
         	+ "WHERE id=" + proj.getID());
@@ -224,12 +227,13 @@ import de.worketplace.team06.shared.bo.Team;
         }
     }
     /**
-	 * Diese Methode findet ein Project-Objekt, anhand der übergebenen Marketplace-ID 
+	 * Diese Methode findet ein Project-Objekt, anhand der übergebenen Marketplace-ID. 
+	 * ProjectOwner ausgeklammert. Wird nicht benutzt.
 	 * 
 	 * @param marketplaceID
 	 * @return Project-Objekt 
 	 */
-	public Vector<Project> findByMarketplaceID(int marketplaceID) {
+	public Vector<Project> findByMarketplaceID(Integer marketplaceID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -239,7 +243,7 @@ import de.worketplace.team06.shared.bo.Team;
 			
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, projectowner_id, "
+			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, "
 					+ "start_date, end_date, marketplace_id "
 					+ " FROM project WHERE marketplace_id ='" + marketplaceID + "'ORDER BY id");
 			
@@ -249,7 +253,7 @@ import de.worketplace.team06.shared.bo.Team;
 				proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
         		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+//        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
         		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
         		proj.setCreated(rs.getTimestamp("created"));
@@ -264,7 +268,17 @@ import de.worketplace.team06.shared.bo.Team;
 		return result;
 	}
 	
-	
+	/**
+	 * Diese Methode gibt alle Project-Objekte als Vektor zurück, die die selbe projectOwnerID haben.
+	 * Ausgeklammert. Wird nicht benutzt.
+	 * 
+	 * @param projectOwnerID
+	 * @return Vector<Project> result
+	 * 
+	 * @author Patrick
+	 */
+
+/*	
 	public Vector<Project> findByProjectOwnerID(int projectOwnerID) {
 		Connection con = DBConnection.connection();
 		
@@ -296,17 +310,27 @@ import de.worketplace.team06.shared.bo.Team;
 		
 		return result;
 	}
-
+*/
 	
-	public Vector<Project> findByProjectLeaderID(int projectLeaderID) {
+	/**
+	 * Diese Methode gibt alle Project-Objekte als Vektor zurück, die die selbe projectLeaderID haben.
+	 * Ausgeklammert. Wird nicht benutzt.
+	 * 
+	 * @param projectOwnerID
+	 * @return Vector<Project> result
+	 * 
+	 * @author Patrick
+	 */
+	
+	public Vector<Project> findByProjectLeaderID(Integer projectLeaderID) {
 		Connection con = DBConnection.connection();
 		
 		Vector<Project> result = new Vector<Project>();
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, projectowner_id, "
-					+ "start_date, end_date, marketplace_id "
+			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, "
+					+ "start_date, end_date, created, marketplace_id "
 					+ " FROM project WHERE projectleader_id ='" + projectLeaderID + "'ORDER BY id");
 			
 			while (rs.next()){
@@ -315,11 +339,11 @@ import de.worketplace.team06.shared.bo.Team;
 				proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
         		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
+//        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
         		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
         		proj.setCreated(rs.getTimestamp("created"));
-        		proj.setMarketplaceID(rs.getInt("marektplace_id"));
+        		proj.setMarketplaceID(rs.getInt("marketplace_id"));
         		
         		result.add(proj);	
 			}

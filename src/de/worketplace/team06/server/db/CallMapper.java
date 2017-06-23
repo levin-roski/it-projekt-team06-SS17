@@ -51,6 +51,7 @@ public class CallMapper {
 					"', projektmarktplatz.`call`.project_id= " + c.getProjectID() + 
 					", projektmarktplatz.`call`.orgaunit_id= " + c.getCallerID() +
 					", projektmarktplatz.`call`.partnerProfile_id= " + c.getPartnerProfileID() +
+					", projektmarktplatz.`call`.status= " + c.getStatus() + 
 					" WHERE projektmarktplatz.`call`.id= " + c.getID());
     	}
     	catch (SQLException e2) {
@@ -77,11 +78,11 @@ public class CallMapper {
 				c.setID(rs.getInt("maxid") + 1);
 		
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO projektmarktplatz.`call` (id, created, title, description, deadline, orgaunit_id, project_id) " 
+				stmt.executeUpdate("INSERT INTO projektmarktplatz.`call` (id, created, title, description, deadline, orgaunit_id, project_id, status) " 
 				+ "VALUES (" + c.getID() + ",'" + c.getCreated() + "','" 
 				+ c.getTitle() + "','" + c.getDescription() +  "','" 
 				+ deadline + "'," + c.getCallerID() +  "," 
-				+ c.getProjectID() + ")");
+				+ c.getProjectID() + "," + c.getStatus() + ")");
 			}
 		}
 		
@@ -105,27 +106,31 @@ public class CallMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
-        			+ "deadline, project_id, projectleader_id, partnerprofile_id,  "
+        	ResultSet rs = stmt.executeQuery("SELECT id, created, title, description,"
+        			+ "deadline, project_id, orgaunit_id, partnerprofile_id, status  "
         	+ "FROM projektmarktplatz.`call` ");
         	
         	while (rs.next()){
         		Call c = new Call();
         		c.setID(rs.getInt("id"));
+        		c.setCreated(rs.getTimestamp("created"));
         		c.setTitle(rs.getString("title"));
         		c.setDescription(rs.getString("description"));
         		c.setDeadline(sdf.parse(rs.getString("deadline")));
-        		c.setProjectID(rs.getInt("projectID"));
+        		c.setProjectID(rs.getInt("project_id"));
         		c.setCallerID(rs.getInt("orgaunit_id"));
         		c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
+        		c.setStatus(rs.getInt("status"));
         		
         		result.addElement(c);
         	}
+        	
         }
         catch (SQLException | ParseException e){
         	e.printStackTrace();
+        	return null;
         }
-        return result;
+    return result;
 	}
 
 	/**
@@ -134,7 +139,7 @@ public class CallMapper {
 	 * @return
 	 */
 	
-	public Vector<Call> findByProjectID(int projectID) {
+	public Vector<Call> findByProjectID(Integer projectID) {
 		Connection con = DBConnection.connection();
 		Vector<Call> result = new Vector<Call>();
 		
@@ -142,18 +147,20 @@ public class CallMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM projektmarktplatz.`call` WHERE projektmarktplatz.`call`.project_id = '" + projectID + "'");		
 			
-			if (rs.next()) {
+			while (rs.next()) {
 				Call c = new Call();
 				c.setID(rs.getInt("id"));
+				c.setCreated(rs.getTimestamp("created"));
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(sdf.parse(rs.getString("deadline")));
-				c.setProjectID(rs.getInt("projectID"));
+				c.setProjectID(rs.getInt("project_id"));
 				c.setCallerID(rs.getInt("orgaunit_id"));
 				c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
+				c.setStatus(rs.getInt("status"));
 				
 				result.addElement(c);
-			}			
+			}
 		}
 		catch (SQLException | ParseException e2) {
 			e2.printStackTrace();
@@ -168,7 +175,8 @@ public class CallMapper {
 	 * @return
 	 */
 	
-	public Call findByID(int callID) {
+	public Call findByID(Integer callID) {
+		
 		Connection con = DBConnection.connection();
 		
 		try {						
@@ -178,13 +186,14 @@ public class CallMapper {
 			if (rs.next()) {
 				Call c = new Call();
 				c.setID(rs.getInt("id"));
+				c.setCreated(rs.getTimestamp("created"));
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(sdf.parse(rs.getString("deadline")));
-				c.setProjectID(rs.getInt("ProjectID"));
+				c.setProjectID(rs.getInt("project_id"));
 				c.setCallerID(rs.getInt("orgaunit_id"));
 				c.setPartnerProfileID(rs.getInt("partnerprofile_id"));
-				
+				c.setStatus(rs.getInt("status"));
 				return c;
 			}			
 		}

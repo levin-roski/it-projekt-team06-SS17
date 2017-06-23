@@ -111,11 +111,6 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException;
 
-    /**
-     * @param orgaUnit 
-     * @return
-     */
-    public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
     /**
      * @return
@@ -152,12 +147,11 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param title 
      * @param description 
      * @param projectLeaderPerson 
-     * @param projectOwnerOrgaUnit 
      * @param startDate 
      * @param endDate 
      * @return
      */
-    public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson, OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate) throws IllegalArgumentException;
+    public Project createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson, Date startDate, Date endDate) throws IllegalArgumentException;
 
     /**
      * @param project
@@ -252,7 +246,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param period 
      * @return
      */
-    public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload) throws IllegalArgumentException;
+    public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, Integer workload) throws IllegalArgumentException;
 
     /**
      * @param enrollment
@@ -303,33 +297,55 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Vector<Project> getProjectsForLeader(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
-	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException;
+//	public Vector<Project> getProjectsForOwner(OrgaUnit orgaUnit) throws IllegalArgumentException;
 	
-	public Project getProjectByID(int projectID) throws IllegalArgumentException;
+	public Project getProjectByID(Integer projectID) throws IllegalArgumentException;
 	
-	public Call getCallByID(int callID) throws IllegalArgumentException;
+	public Call getCallByID(Integer callID) throws IllegalArgumentException;
 	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
 
-	Marketplace createMarketplace(String title, String description, OrgaUnit o) throws IllegalArgumentException;
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
 
-	void deletePerson(Person person) throws IllegalArgumentException;
+	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException;
 
-	void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException;
+	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException;
 
-	void deleteOrganisation(Organisation organisation) throws IllegalArgumentException;
+	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException, WindowAlertException;
 
-	Marketplace getMarketplaceByID(int marketplaceID) throws IllegalArgumentException;
+	public Marketplace getMarketplaceByID(Integer marketplaceID) throws IllegalArgumentException;
 
-	Property createProperty(PartnerProfile partnerProfile, String name, double value) throws IllegalArgumentException;
+	public Property createProperty(PartnerProfile partnerProfile, String name, String value) throws IllegalArgumentException;
 
 	public Call createCall(Project project, Person callerPerson, String title, String description, Date deadline)
 			throws IllegalArgumentException;
 	
-	public Person createPerson(String firstName, String lastName, String street, int zipcode, String city, String description, String googleID) throws IllegalArgumentException;
+	public Person createPerson(String firstName, String lastName, String street, Integer zipcode, String city, String description,
+			String googleID);
 	
-	public Team createTeam(String name, String description, int membercount, String googleID) throws IllegalArgumentException;
+	public Team createTeam(String name, String description, Integer membercount, String googleID) throws IllegalArgumentException;
 	
-	public Organisation createOrganisation(String name, String description, String street, int zipcode, String city, String googleID) throws IllegalArgumentException;
+	public Organisation createOrganisation(String name, String description, String street, Integer zipcode, String city,
+			String googleID);
+
+	public void deletePartnerProfile(PartnerProfile p) throws IllegalArgumentException;
+	
+	public Rating getRatingFor(Application application) throws IllegalArgumentException;
+	
+	public Rating getRatingFor(Enrollment enrollment) throws IllegalArgumentException;
+
+	//Wird wahrscheinlich nicht benötigt --> public OrgaUnit getOrgaUnit() throws IllegalArgumentException;
+
+	//Wird wahrscheinlich nicht benötigt --> public void setOrgaUnit(OrgaUnit ou) throws IllegalArgumentException;
+
+	public Person getPersonByGoogleID(String googleID);
+
+	public Team getTeamByGoogleID(String googleID);
+
+	public Organisation getOrganisationByGoogleID(String googleID);
+
+	public OrgaUnit getOrgaUnitById(Integer ouid) throws IllegalArgumentException;
+
+	public void deleteProperty(Property p) throws IllegalArgumentException;
 
 }

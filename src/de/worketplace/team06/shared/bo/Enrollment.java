@@ -28,30 +28,30 @@ public class Enrollment extends BusinessObject {
      */
     private Date endDate;
 
-    /**
-     * Variable für die Dauer der Beteiligung
-     */
-    private int period;
+//    /**
+//     * Variable für die Dauer der Beteiligung
+//     */
+//    private Integer period;
     
     /**
-     * Variable für den geschätzen Workload in Arbeitstagen
+     * Variable für den geschätzen Workload in Stunden
      */
-    public int workload;
+    public Integer workload;
     
     /**
      * ID für die Bewertung der Beteiligung
      */
-    private int ratingID;
+    private Integer ratingID;
     
     /**
      * ID für das Projekt der Beteiligung
      */
-    private int projectID;
+    private Integer projectID;
     
     /**
      * ID für die OrganisationsEinheit für die Beteiligung
      */
-    private int orgaUnitID;
+    private Integer orgaUnitID;
 
     /**
      * Auslesen des Startdatums
@@ -69,18 +69,18 @@ public class Enrollment extends BusinessObject {
         return this.endDate;
     }
 
-    /**
-     * Auslesen der Dauer der Beteiligung
-     */
-    public int getPeriod() {
-        return this.period;
-    }
+//    /**
+//     * Auslesen der Dauer der Beteiligung
+//     */
+//    public Integer getPeriod() {
+//        return this.period;
+//    }
     
     /**
      * Auslesen des Workloads in Tagen
      * @return workload
      */
-    public int getWorkload() {
+    public Integer getWorkload() {
     	return this.workload;
     }
     
@@ -88,7 +88,7 @@ public class Enrollment extends BusinessObject {
      * Auslesen der ID für die Organisationseinheit
      * @return ratingID
      */
-	public int getRatingID() {
+	public Integer getRatingID() {
 		return this.ratingID;
 	}
 	
@@ -96,7 +96,7 @@ public class Enrollment extends BusinessObject {
 	 * Auslesen der ID für das Projekt
 	 * @return projectID
 	 */
-	public int getProjectID() {
+	public Integer getProjectID() {
 		return this.projectID;
 	}
 	
@@ -104,7 +104,7 @@ public class Enrollment extends BusinessObject {
 	 * Auslesen der ID für die OrganisationsEinheit
 	 * @return orgaUnitID
 	 */
-	public int getOrgaUnitID() {
+	public Integer getOrgaUnitID() {
 		return this.orgaUnitID;
 	}
 
@@ -124,12 +124,12 @@ public class Enrollment extends BusinessObject {
         this.endDate = endDate;
     }
 
-	/**
-	 * Setzen der Dauer der Beteiligung. Die Periode wird automatisch anhand des Start- und Enddatums berechnet.
-	 */
-	public void setPeriod(int per) {
-	   this.period = per;
-	 }
+//	/**
+//	 * Setzen der Dauer der Beteiligung. Die Periode wird automatisch anhand des Start- und Enddatums berechnet.
+//	 */
+//	public void setPeriod(Integer per) {
+//	   this.period = per;
+//	 }
     
 //    /**
 //     * Setzen der Dauer der Beteiligung. Die Periode wird automatisch anhand des Start- und Enddatums berechnet.
@@ -143,14 +143,14 @@ public class Enrollment extends BusinessObject {
 //      //Die Millisekunden in Tage umrechnen
 //      long z = (x - y) / 1000 / 60 / 60 / 24;
 //              
-//      this.period = (int) z;
+//      this.period = (Integer) z;
 //    }
     
     /**
      * setzen des Workloads in Tagen
      * @param workload
      */
-    public void setWorkload(int w) {
+    public void setWorkload(Integer w) {
     	this.workload = w;
     }
     
@@ -158,7 +158,7 @@ public class Enrollment extends BusinessObject {
      * Setzen der ID für die Bewertbung
      * @param ratingID
      */
-	public void setRatingID(int ratingID) {
+	public void setRatingID(Integer ratingID) {
 		this.ratingID = ratingID;
 	}
 
@@ -166,7 +166,7 @@ public class Enrollment extends BusinessObject {
 	 * Setzen der ID für das Projekt
 	 * @param projectID
 	 */
-	public void setProjectID(int projectID) {
+	public void setProjectID(Integer projectID) {
 		this.projectID = projectID;
 	}
 
@@ -174,7 +174,7 @@ public class Enrollment extends BusinessObject {
 	 * Setzen der ID für die OrganisationsEinheit
 	 * @param orgaUnitID
 	 */
-	public void setOrgaUnitID(int orgaUnitID) {
+	public void setOrgaUnitID(Integer orgaUnitID) {
 		this.orgaUnitID = orgaUnitID;
 	}
 

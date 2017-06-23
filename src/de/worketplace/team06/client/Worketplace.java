@@ -16,6 +16,7 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.MarketplaceForm;
+import de.worketplace.team06.client.gui.Overview;
 import de.worketplace.team06.client.gui.SearchMarketplace;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
@@ -60,7 +61,6 @@ public class Worketplace implements EntryPoint {
 		 */
 		final EditorNavigation navigationMenu = new EditorNavigation();
 		RootPanel.get("navigation").add(navigationMenu);
-
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {

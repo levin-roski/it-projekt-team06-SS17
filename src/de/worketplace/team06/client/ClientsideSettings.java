@@ -7,13 +7,13 @@ import de.worketplace.team06.shared.*;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 
 /**
- * Klasse mit Eigenschaften und Diensten, die f�r alle Client-seitigen Klassen relevant sind
+ * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen relevant sind
  *
  * @author Roski
  * @version 1.0
  * @since 08.05.2017
  * 
- * TODO extends CommonSettings hinzuf�gen?
+ * TODO extends CommonSettings hinzufügen?
  *
  */
 public class ClientsideSettings {
@@ -23,6 +23,7 @@ public class ClientsideSettings {
 	private static WorketplaceAdministrationAsync worketplaceAdministration = null;
 	private static OrgaUnit currentUser = null;
 	private static MainPanel mainPanel = null;
+	private static ReportGeneratorAsync reportGenerator = null;
 	
 	/**
 	 * 
@@ -61,11 +62,11 @@ public class ClientsideSettings {
 	 * 
 	 * @return
 	 */
-//	public static ReportGeneratorAsync getReportGenerator() {
-//		if (reportGenerator == null) {
-//			reportGenerator= GWT.create(ReportGenerator.class);
-//		}
-//		
-//		return reportGenerator;
-//	}
+	public static ReportGeneratorAsync getReportGenerator() {
+		if (reportGenerator == null) {
+			reportGenerator= GWT.create(ReportGenerator.class);
+		}
+		
+		return reportGenerator;
+	}
 }

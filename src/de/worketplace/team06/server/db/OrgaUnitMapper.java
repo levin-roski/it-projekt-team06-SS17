@@ -76,9 +76,11 @@ public class OrgaUnitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("Select id, created, google_id, description, partnerprofile_id, type FROM orgaunit " + "WHERE google_id = " + googleID);		
+			if (rs.next()) {
 			String type = rs.getString("type");
-		
 			return type;
+			}
+			return null;
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();
@@ -87,16 +89,18 @@ public class OrgaUnitMapper {
 		
 	}
 
-	public String findTypeByID(int ouid) {
+	public String findTypeByID(Integer ouid) {
 		
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select type FROM orgaunit " + "WHERE id = " + ouid);		
+			ResultSet rs = stmt.executeQuery("Select type FROM orgaunit " + "WHERE id = " + ouid);
+			if (rs.next()) {
 			String type = rs.getString("type");
-		
 			return type;
+			}
+			return null;
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();
@@ -107,13 +111,17 @@ public class OrgaUnitMapper {
 	public Integer findID(String googleID) {
 		
 		Connection con = DBConnection.connection();
-		int checkID;
+		Integer checkID;
 		
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("Select id FROM orgaunit " + "WHERE google_id = " + googleID);
+			
+			if (rs.next()) {
 			checkID = rs.getInt("id");
 			return checkID;
+			}
+			return null;
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();

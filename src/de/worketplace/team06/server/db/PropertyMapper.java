@@ -56,23 +56,24 @@ public class PropertyMapper {
 	 * @param prop
 	 * @return Property-Objekt, das der übergebenen ID entspricht
 	 */
-	public Property findById (int id){
+	public Property findById (Integer id){
     	Connection con = DBConnection.connection();
     	
     	try{
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery
-    				("SELECT id, created, name, value, FROM Property " + "WHERE id= " + id);
+    				("SELECT id, created, name, value, partnerprofile_id FROM property " + "WHERE id= " + id);
     		/**
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
 			 */
     		if (rs.next()) {
     			Property prop = new Property();
-    			prop.setID(rs.getInt("id"));
-    			prop.setCreated(rs.getTimestamp("created"));
-    			prop.setName(rs.getString("name"));
-    			prop.setValue(rs.getDouble("value"));
+				prop.setID(rs.getInt("id"));
+				prop.setName(rs.getString("name"));
+				prop.setCreated(rs.getTimestamp("created"));
+        		prop.setValue(rs.getString("value"));
+        		prop.setPartnerProfileID(rs.getInt("partnerprofile_id"));
     		}	
     	}
     	catch (SQLException e){
@@ -88,14 +89,15 @@ public class PropertyMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, created, name, value "+ "FROM Property ");
+        	ResultSet rs = stmt.executeQuery("SELECT id, created, name, value, partnerprofile_id "+ "FROM Property ");
         	
         	while (rs.next()){
         		Property prop = new Property();
-        		prop.setID(rs.getInt("id"));
-        		prop.setCreated(rs.getTimestamp("created"));
-        		prop.setName(rs.getString("name"));
-        		prop.setValue(rs.getDouble("value"));
+				prop.setID(rs.getInt("id"));
+				prop.setName(rs.getString("name"));
+				prop.setCreated(rs.getTimestamp("created"));
+        		prop.setValue(rs.getString("value"));
+        		prop.setPartnerProfileID(rs.getInt("partnerprofile_id"));
         		
         		result.addElement(prop);
         	}
@@ -111,7 +113,7 @@ public class PropertyMapper {
 	 * @param partnerProfileID 
 	 * @return Property-Objekt 
 	 */
-	public Vector<Property> findByPartnerProfileID(int partnerProfileID) {
+	public Vector<Property> findByPartnerProfileID(Integer partnerProfileID) {
 		
 		Connection con = DBConnection.connection();
 		Vector<Property> result = new Vector<Property>();
@@ -127,17 +129,18 @@ public class PropertyMapper {
 				prop.setID(rs.getInt("id"));
 				prop.setName(rs.getString("name"));
 				prop.setCreated(rs.getTimestamp("created"));
-        		prop.setValue(rs.getDouble("value"));
+        		prop.setValue(rs.getString("value"));
         		prop.setPartnerProfileID(rs.getInt("partnerprofile_id"));
         		
         		result.add(prop);	
 			}
+			return result;
         }
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 		
-    		return result;
+    		return null;
 	}
     
 	/**
@@ -168,13 +171,13 @@ public class PropertyMapper {
         	/**
 			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
 			 */
-        	stmt.executeUpdate("INSERT INTO rating (id, created, name, value) " 
+        	stmt.executeUpdate("INSERT INTO property (id, created, name, value, partnerprofile_id) " 
         	+ "VALUES (" 
-        		+ prop.getID() + ", "
-        		+ prop.getCreated() + ", " 
-        		+ prop.getName() + ", " 
-        		+ prop.getValue() 
-        		+ "','" +"')");
+        		+ prop.getID() + ", '"
+        		+ prop.getCreated() + "', '" 
+        		+ prop.getName() + "', '" 
+        		+ prop.getValue() + "', "
+        		+ prop.getPartnerProfileID() +")");
         	}
         }
         catch (SQLException e){
@@ -189,7 +192,7 @@ public class PropertyMapper {
      * @param prop
      * @return Property
      */
-    public Property update(Property prop) {
+    public Property update (Property prop) {
         Connection con = DBConnection.connection();
         
         try{
@@ -224,7 +227,7 @@ public class PropertyMapper {
         }
     }
     
-    public void deleteByPartnerProfileID(int id) {
+    public void deleteByPartnerProfileID(Integer id) {
     	 Connection con = DBConnection.connection();
     	 
     	 try{

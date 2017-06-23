@@ -25,7 +25,7 @@ public class Organisation extends OrgaUnit {
     /**
      * Variable für die Postleitzahl der Organisation
      */
-    private int zipcode;
+    private Integer zipcode;
     
     /**
      * Variable für die Stadt der Organisation
@@ -58,7 +58,7 @@ public class Organisation extends OrgaUnit {
      * Auslesen der Postleitzahl der Organisation
      * @return zipcode
      */
-    public int getZipcode() {
+    public Integer getZipcode() {
         return this.zipcode;
     }
 
@@ -90,7 +90,7 @@ public class Organisation extends OrgaUnit {
      * Setzen der Postleitzahl der Organisation
      * @param zipcode
      */
-    public void setZipcode(int zipcode) {
+    public void setZipcode(Integer zipcode) {
         this.zipcode = zipcode;
     }
 

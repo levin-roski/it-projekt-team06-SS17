@@ -16,6 +16,7 @@ public class Call extends BusinessObject {
      * Default constructor
      */
     public Call() {
+    	this.setStatus(0);
     }
 
     /**
@@ -34,25 +35,33 @@ public class Call extends BusinessObject {
     private Date deadline;
     
     /**
+     * Variable für den Status der Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     */
+    private Integer status;
+    
+    /**
      * ID für das Projekt
      */
-    private int projectID;
+    private Integer projectID;
     
     /**
      * ID des Ausschreibenden 
      */
-    private int callerID;
+    private Integer callerID;
 
     /**
      * ID für das PartnerProfil
      */
-    private int partnerProfileID;
+    private Integer partnerProfileID;
 
     /**
      * Auslesen der ID für den Projektleiter
      * @return projectLeaderID
      */
-    public int getCallerID() {
+    public Integer getCallerID() {
         return this.callerID;
     }
 
@@ -81,10 +90,51 @@ public class Call extends BusinessObject {
     }
     
     /**
+     * Auslesen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param status
+     */
+	public Integer getStatus() {
+      return this.status;
+	}
+	
+	  /**
+     * Auslesen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param s
+     */
+	public String getStatusString() {
+        String s = new String();
+        
+		/*
+		 * Über eine Switch-Case Abfrage wird herausgefunden, welcher Status derzeit besteht
+		 * und entsprechend als String zurückgegeben.
+		 */
+        switch(this.status){ 
+        case -1: 
+        	s = "Abgelehnt";
+        	break;
+		case 0: 
+        	s = "Laufend";
+        	break;
+		case 1: 
+        	s = "Angenommen";
+        	break;
+        }
+		return s;
+	}
+    
+    /**
      * auslesen der ID für das Projekt
      * @return projectID
      */
-	public int getProjectID() {
+	public Integer getProjectID() {
 		return projectID;
 	}
     
@@ -92,7 +142,7 @@ public class Call extends BusinessObject {
 	 * Auslesen der ID für das PartnerProfil
 	 * @return the partnerProfileID
 	 */
-	public int getPartnerProfileID() {
+	public Integer getPartnerProfileID() {
 		return partnerProfileID;
 	}
 
@@ -100,7 +150,7 @@ public class Call extends BusinessObject {
      * Setzen der ID für den Projektleiter
      * @param projectLeaderID
      */
-    public void setCallerID(int projectLeaderID) {
+    public void setCallerID(Integer projectLeaderID) {
         this.callerID = projectLeaderID;
     }
 
@@ -127,12 +177,24 @@ public class Call extends BusinessObject {
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
+    
+    /**
+     * Setzen des Status für die Ausschreibung
+     * -1 abgebrochen
+     * 0 laufend
+     * 1 erfolgreich besetzt
+     * 
+     * @param status
+     */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	/**
 	 * Setzen der ID für das Projekt
 	 * @param projectID
 	 */
-	public void setProjectID(int projectID) {
+	public void setProjectID(Integer projectID) {
 		this.projectID = projectID;
 	}
     
@@ -140,9 +202,8 @@ public class Call extends BusinessObject {
 	 * Setzen der ID für das PartnerProfil
 	 * @param partnerProfileID
 	 */
-	public void setPartnerProfileID(int partnerProfileID) {
+	public void setPartnerProfileID(Integer partnerProfileID) {
 		this.partnerProfileID = partnerProfileID;
 	}
-
 
 }

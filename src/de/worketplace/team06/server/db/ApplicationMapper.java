@@ -5,14 +5,57 @@ import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.*;
 
+/**
+ * Die Mapper-Klasse ApplicationMapper bildet Application-Objekte als Datensätze
+ * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
+ * können mit deren Hilfe Objekte erzeugt, verändert, gelöscht und ausgelesen werden.
+ * Das Mapping erfolgt bidirektional: Objekte können in Datensätze und Datensätze in 
+ * Objekte umgewandelt werden.
+ * 
+ * @see CallMapper
+ * @see EnrollmentMapper
+ * @see MarketplaceMapper
+ * @see OrganisationMapper
+ * @see OrgaUnitMapper
+ * @see PartnerProfileMapper
+ * @see PersonMapper
+ * @see ProjectMapper
+ * @see PropertyMapper
+ * @see RatingMapper
+ * @see TeamMapper
+ * 
+ * @author Patrick
+ */
+
 public class ApplicationMapper {
+	
+    /**
+     * Die Instatiierung der Klasse ApplicationMapper erfolgt nur einmal.
+     * Dies wird auch als Singleton bezeichnet.
+     * Durch den Bezeichner static ist die Variable nur einmal für jede Instanz der Klasse vorhanden.
+     * Sie speichert die einzige Instanz der Klasse.
+     * 
+     * @see ApplicationMapper#applicationMapper()
+     */
 	
 	private static ApplicationMapper applicationMapper = null;
 	
+	/**
+	 * Der geschützte Konstruktor verhindert das Erzeugen neuer Instanzen
+	 * der Klasse, sollte schon eine Instanz vorhanden sein.
+	 */
 	protected ApplicationMapper() {
 		
 	}
-
+	
+	/**
+	 * Durch ApplicationMapper.applicationMapper wird die folgende Methode aufgerufen.
+	 * Durch sie wird die Singleton-Eigenschaft sichergestellt, in dem sie dafür sorgt, dass nur eine 
+	 * Instanz von DBConnection existiert.
+	 * Die Instantiierung der DBConnection sollte stets durch den Aufruf dieser Methode erfolgen.
+	 * 
+	 * @return ApplicationMapper-Objekt.
+	 */
 	public static ApplicationMapper applicationMapper() {
 		if (applicationMapper == null) {
 			applicationMapper = new ApplicationMapper();
@@ -21,14 +64,21 @@ public class ApplicationMapper {
 		return applicationMapper;
 	}
 
-	
-	public Application findByID(int id) {
+	/**
+	 * Methode zur Suche nach Bewerbungen anhand der Bewerbungs-ID.
+	 * Da diese eindeutig ist wird genau ein Objekt zurückgegeben.
+	 * 
+	 * @param id
+	 * @return Application-Objekt, das der übergebenen ID entspricht bzw. null, 
+	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
+	 */
+	public Application findByID(Integer id) {
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id FROM application " + "WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id, status FROM application " + "WHERE id = " + id);
 			
 			if (rs.next()) {
 				Application a = new Application();
@@ -38,6 +88,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				return a;
 			}
 		}
@@ -57,7 +108,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id FROM application " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id, status FROM application " + "ORDER BY id");
 			
 			while (rs.next()) {
 				
@@ -68,6 +119,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("organisation_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				
 				result.addElement(a);
 			}
@@ -78,13 +130,13 @@ public class ApplicationMapper {
 		return result;
 	}
 	
-	public Application findByRatingID(int rID) {
+	public Application findByRatingID(Integer rID) {
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id FROM application " + "WHERE rating_id = " + rID);
+			ResultSet rs = stmt.executeQuery("Select id, created, text, call_id, orgaunit_id, rating_id, status FROM application " + "WHERE rating_id = " + rID);
 			
 			if (rs.next()) {
 				Application a = new Application();
@@ -94,6 +146,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				return a;
 			}
 		}
@@ -105,7 +158,7 @@ public class ApplicationMapper {
 	}
 	
 	
-	public Vector<Application> findByOrgaUnitID (int orgaUnitID) {
+	public Vector<Application> findByOrgaUnitID (Integer orgaUnitID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -113,8 +166,8 @@ public class ApplicationMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id "
-					+ " FROM orgaunit WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id, status "
+					+ " FROM application WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
 			
 				while (rs.next()) {
 				
@@ -125,6 +178,7 @@ public class ApplicationMapper {
 				a.setCallID(rs.getInt("call_id"));
 				a.setOrgaUnitID(rs.getInt("organisation_id"));
 				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				
 				result.addElement(a);
 			}
@@ -137,7 +191,7 @@ public class ApplicationMapper {
 		return result;
 	}
 	
-	public Vector<Application> findByCallID (int callID) {
+	public Vector<Application> findByCallID (Integer callID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -145,8 +199,8 @@ public class ApplicationMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id "
-					+ " FROM call WHERE call_id ='" + callID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, created, text, call_id, orgaunit_id, rating_id, status"
+					+ " FROM application WHERE call_id ='" + callID + "'ORDER BY id");
 			
 				while (rs.next()) {
 				
@@ -155,7 +209,9 @@ public class ApplicationMapper {
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
 				a.setCallID(rs.getInt("call_id"));
-				a.setOrgaUnitID(rs.getInt("organisation_id"));
+				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
+				a.setRatingID(rs.getInt("rating_id"));
+				a.setStatus(rs.getInt("status"));
 				
 				result.addElement(a);
 			}
@@ -176,7 +232,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxis " + "FROM application ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM application ");
 			
 			if (rs.next()) {
 				
@@ -184,7 +240,7 @@ public class ApplicationMapper {
 				
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, orgaunit_id, rating_id) " + "VALUES (" + a.getID() + "," + a.getCreated() + "," + a.getText() + "," + a.getCallID() + "," + a.getOrgaUnitID()+ "," + a.getRatingID()+ ")");
+				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, orgaunit_id, status) " + "VALUES (" + a.getID() + ",'" + a.getCreated() + "','" + a.getText() + "'," + a.getCallID() + "," + a.getOrgaUnitID()+ "," + a.getStatus() + ")");
 			}
 		}
 		catch (SQLException e2) {
@@ -197,10 +253,10 @@ public class ApplicationMapper {
 	public Application update(Application a) {
 		Connection con = DBConnection.connection();
 		
+	
 		try {
 			Statement stmt = con.createStatement();
-			
-			stmt.executeUpdate("UPDATE application " + "SET text='" + a.getText() + "', rating_id="+ a.getRatingID() + "WHERE id=" + a.getID());
+			stmt.executeUpdate("UPDATE application SET text='" + a.getText() + "', rating_id="+ a.getRatingID() + ", status="+ a.getStatus() + " WHERE id=" + a.getID());
 			// alt:  stmt.executeUpdate("UPDATE application " + "SET text=\"" + a.getText() + "\" " + "WHERE id=" + a.getID());
 		}
 		catch (SQLException e2) {

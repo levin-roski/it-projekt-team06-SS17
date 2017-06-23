@@ -24,15 +24,15 @@ public interface WorketplaceAdministrationAsync {
 
 	
 
-	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, int workload,
-			AsyncCallback<Enrollment> callback);
+	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
+			Integer workload, AsyncCallback<Enrollment> callback);
 
 
 
 	void createProject(Marketplace marketplace, String title, String description, Person projectLeaderPerson,
-			OrgaUnit projectOwnerOrgaUnit, Date startDate, Date endDate, AsyncCallback<Project> callback);
+			Date startDate, Date endDate, AsyncCallback<Project> callback);
 
-	void createProperty(PartnerProfile partnerProfile, String name, double value, AsyncCallback<Property> callback);
+	void createProperty(PartnerProfile partnerProfile, String name, String value, AsyncCallback<Property> callback);
 
 	void deleteApplication(Application application, AsyncCallback<Void> callback);
 
@@ -59,10 +59,6 @@ public interface WorketplaceAdministrationAsync {
 	void getApplicationsFor(Call call, AsyncCallback<Vector<Application>> callback);
 	
 	void getApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
-
-	void getMarketplacesFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Marketplace>> callback);
-
-
 
 	void init(AsyncCallback<Void> callback);
 
@@ -112,15 +108,15 @@ public interface WorketplaceAdministrationAsync {
 
 	void getProjectsForLeader(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
 
-	void getProjectsForOwner(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
+//	void getProjectsForOwner(OrgaUnit orgaUnit, AsyncCallback<Vector<Project>> callback);
 
-	void getProjectByID(int projectID, AsyncCallback<Project> callback);
+	void getProjectByID(Integer projectID, AsyncCallback<Project> callback);
 
-	void getCallByID(int callID, AsyncCallback<Call> callback);
+	void getCallByID(Integer callID, AsyncCallback<Call> callback);
 
 	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
 
-	void createMarketplace(String title, String description, OrgaUnit o, AsyncCallback<Marketplace> callback);
+	void createMarketplace(String title, String description, AsyncCallback<Marketplace> callback);
 
 	void deletePerson(Person person, AsyncCallback<Void> callback);
 
@@ -128,21 +124,39 @@ public interface WorketplaceAdministrationAsync {
 
 	void deleteOrganisation(Organisation organisation, AsyncCallback<Void> callback);
 
-	void getMarketplaceByID(int marketplaceID, AsyncCallback<Marketplace> callback);
+	void getMarketplaceByID(Integer marketplaceID, AsyncCallback<Marketplace> callback);
 
 	void createCall(Project project, Person callerPerson, String title, String description, Date deadline,
 			AsyncCallback<Call> callback);
 
-	void createPerson(String firstName, String lastName, String street, int zipcode, String city, String description,
-			String googleID, AsyncCallback<Person> callback);
+	void createPerson(String firstName, String lastName, String street, Integer zipcode, String city,
+			String description, String googleID, AsyncCallback<Person> callback);
 
-	void createTeam(String name, String description, int membercount, String googleID, AsyncCallback<Team> callback);
+	void createTeam(String name, String description, Integer membercount, String googleID,
+			AsyncCallback<Team> callback);
 
-	void createOrganisation(String name, String description, String street, int zipcode, String city, String googleID,
+	void createOrganisation(String name, String description, String street, Integer zipcode, String city, String googleID,
 			AsyncCallback<Organisation> callback);
-	
-	
 
+	void deletePartnerProfile(PartnerProfile p, AsyncCallback<Void> callback);
+
+	void getRatingFor(Application application, AsyncCallback<Rating> callback);
+
+	void getRatingFor(Enrollment enrollment, AsyncCallback<Rating> callback);
+
+	//Wird wahrscheinlich nicht benötigt --> void getOrgaUnit(AsyncCallback<OrgaUnit> callback);
+
+	//Wird wahrscheinlich nicht benötigt --> void setOrgaUnit(OrgaUnit ou, AsyncCallback<Void> callback);
+
+	void getPersonByGoogleID(String googleID, AsyncCallback<Person> callback);
+
+	void getTeamByGoogleID(String googleID, AsyncCallback<Team> callback);
+
+	void getOrganisationByGoogleID(String googleID, AsyncCallback<Organisation> callback);
+
+	void getOrgaUnitById(Integer ouid, AsyncCallback<OrgaUnit> callback);
+
+	void deleteProperty(Property p, AsyncCallback<Void> callback);
 
 	
 }

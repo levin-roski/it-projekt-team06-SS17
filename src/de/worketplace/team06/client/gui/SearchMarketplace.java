@@ -47,15 +47,22 @@ public class SearchMarketplace extends Page {
 	// new Marketplace("Heilbronn", "Tobias Müller", "Hier steht eine
 	// Beschreibung des Marktplatzes Heilbronn"));
 
+	// erstellen der Tabelle Meine Marktplätze
 	final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
 	public SearchMarketplace() {
 		// allMarketplacesTable.setPageSize(3);
 
+		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();
 
+		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+		// Item zur selben Zeit ausgewählt sein kann
 		allMarketplacesTable.setSelectionModel(allMarketplaceSsm);
 
+		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
+		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
 		allMarketplaceSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
@@ -64,7 +71,7 @@ public class SearchMarketplace extends Page {
 			}
 		});
 
-		final CellTable<Marketplace> table = new CellTable<Marketplace>();
+		// final CellTable<Marketplace> table = new CellTable<Marketplace>();
 
 		TextColumn<Marketplace> titleColumn = new TextColumn<Marketplace>() {
 			@Override

@@ -209,7 +209,7 @@ public class OrganisationMapper {
 	 * @param ouid
 	 * @return Organisation-Objekt, das der übergebenen ID entspricht
 	 */
-    public Organisation findByID(int ouid) {
+    public Organisation findByID(Integer ouid) {
     	Connection con = DBConnection.connection();
 		
 		try {						

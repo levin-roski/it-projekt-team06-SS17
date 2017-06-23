@@ -215,7 +215,7 @@ public class PersonMapper {
 	 * @param ouid
 	 * @return Person-Objekt, das der übergebenen ID entspricht
 	 */
-	public Person findByID(int ouid) {
+	public Person findByID(Integer ouid) {
 		Connection con = DBConnection.connection();
 		
 		try {						
