@@ -40,7 +40,7 @@ public class RatingMapper {
 	 * RatingMapper sollte nicht über den New-Operator, sondern über den 
 	 * Aufruf dieser statischen Methode.
 	 * 
-	 * @return TeamMapper
+	 * @return RatingMapper
 	 * @author Thies
 	 * @author Theresa
 	 */
@@ -108,7 +108,7 @@ public class RatingMapper {
         try{
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT id, statement, created, rating "+ "FROM Team ");
+        	ResultSet rs = stmt.executeQuery("SELECT id, statement, created, rating "+ "FROM rating ");
         	
         	while (rs.next()){
         		Rating r = new Rating();
@@ -116,8 +116,6 @@ public class RatingMapper {
         		r.setRatingStatement(rs.getString("statement"));
         		r.setCreated(rs.getTimestamp("created"));
         		r.setRating(rs.getFloat("rating"));
-        		//TODO: *** WICHTIG *** Setzen wir die AppID im Rating??
-        		//r.setApplicationID(rs.getInt("ApplicationID"));
         		
         		result.addElement(r);
         	}
@@ -158,7 +156,7 @@ public class RatingMapper {
         	r.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
         	/**
-			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
+			 * Einfuegeoption, damit das neue Rating-Tupel in die Datenbank eingefuegt werden kann
 			 */
         	stmt.executeUpdate("INSERT INTO rating (id, created, statement, rating) " 
         	+ "VALUES (" 
