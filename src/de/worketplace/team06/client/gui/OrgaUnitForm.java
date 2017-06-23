@@ -6,6 +6,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -16,14 +17,15 @@ import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
 /**
- * Formular für die Darstellung, Bearbeitung und Löschung eines
- * selektierten Marktplatzes. Falls kein selektierter Marktplatz beim
- * Initialisieren übergeben wird, ist das Formular leer, bereit für die
- * Erstellung eines neuen Marktplatzes.
- * 
+ * Formular für die Darstellung und Bearbeitung der aktuellen OrgaUnit. Falls
+ * keine OrgaUnit beim Initialisieren in den ClientsideSettings verfügbar ist,
+ * bleibt das Formular leer, bereit für die Erstellung eines neuen Users. Im
+ * Anschluss wird dann der geänderte oder hinzugefügte User den
+ * ClientsideSettings hinzugefügt.
+ *
  * @author Roski
  */
-public class MarketplaceForm extends Page {
+public class OrgaUnitForm extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	private Label nameLabel = new Label("Name");
@@ -40,10 +42,9 @@ public class MarketplaceForm extends Page {
 	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
 	 * Marktplatz erstellt werden soll.
 	 * 
-	 * @param pToChangeMarketplace Marketplace, der im Formular angezeigt werden soll
-	 * @param pHeadline Falls true wird dem Formular eine Überschrift vorangehängt
+	 * 
 	 */
-	public MarketplaceForm (Marketplace pToChangeMarketplace, final boolean pHeadline) {
+	public OrgaUnitForm(Marketplace pToChangeMarketplace, final boolean pHeadline) {
 		if (pToChangeMarketplace != null) {
 			shouldUpdate = true;
 			this.toChangeMarketplace = pToChangeMarketplace;
@@ -53,22 +54,20 @@ public class MarketplaceForm extends Page {
 			addHeadline = createHeadline("Marktplatz hinzufügen", true);
 		}
 	}
+
 	/**
 	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der
 	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
 	 * Marktplatz erstellt werden soll.
 	 * 
-	 * @param pToChangeMarketplace Marketplace, der im Formular angezeigt werden soll
-	 * @param pHeadline Falls true wird dem Formular eine Überschrift vorangehängt
-	 * @param pClosingHeadline Falls true wird dem Formular eine Überschrift mit Button, der das aktuelle Item schließt, vorangehängt
+	 *
 	 */
-	public MarketplaceForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final Boolean pClosingHeadline) {
+	public OrgaUnitForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final Boolean pClosingHeadline) {
 		this(pToChangeMarketplace, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Marktplatz bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Marktplatz hinzufügen", true);
 		}
-		
 
 		/*
 		 * Grid mit 3 Zeilen und 2 Spalten für das Formular bereitstellen.
@@ -83,7 +82,8 @@ public class MarketplaceForm extends Page {
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*
-		 * Falls ein selektierter Marktplatz übergeben wurde und jetzt dargestellt werden soll
+		 * Falls ein selektierter Marktplatz übergeben wurde und jetzt
+		 * dargestellt werden soll
 		 */
 		if (shouldUpdate) {
 			if (changeHeadline != null) {
@@ -146,7 +146,8 @@ public class MarketplaceForm extends Page {
 					} else if (beschreibungInput.getText().length() == 0) {
 						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
 					} else {
-						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(), new AsyncCallback<Marketplace>() {
+						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(),
+								new AsyncCallback<Marketplace>() {
 									public void onFailure(Throwable caught) {
 										Window.alert(
 												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");

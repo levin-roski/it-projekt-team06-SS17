@@ -4,85 +4,50 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.worketplace.team06.shared.bo.Marketplace;
+import de.worketplace.team06.client.ClientsideSettings;
 
 public class EditorNavigation extends VerticalPanel {
-	public void run() {
+	MainPanel mainPanel = ClientsideSettings.getMainPanel();
+	
+	public EditorNavigation() {
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		menu.setAnimationEnabled(true);
-	    final SafeHtml image = new SafeHtml() {
+		this.setWidth("100%");
+		this.add(menu);
+		final SafeHtml image = new SafeHtml() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String asString() {
 				// TODO Auto-generated method stub
 				return "<img src=\"/logo.png\" style=\"width: 225px;\">";
 			}
 		};
-		
+
 		menu.addItem(new MenuItem(image, new Command() {
 			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
+				// TODO Anzeige generieren
+				// RootPanel.get("content").clear();
+				// RootPanel.get("content").add(alleNutzerAnzeigen);
+				// Window.Location.replace("home.html");
 			}
 		}));
-		menu.addSeparator();		
+		menu.addSeparator();
 		menu.addItem(new MenuItem("Mein Bereich", new Command() {
 			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
+				// TODO Anzeige generieren
+				// RootPanel.get("content").clear();
+				// RootPanel.get("content").add(alleNutzerAnzeigen);
+				// Window.Location.replace("home.html");
 			}
 		}));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Beispielmarktplatz bearbeiten", new Command() {
+		menu.addItem(new MenuItem("Marktplätze", new Command() {
 			public void execute() {
-				Marketplace m = new Marketplace();
-				m.setTitle("Stuttgart");
-				m.setDescription("Hier steht eine Beschreibung des Marktplatzes Stuttgart");
-				RootPanel.get("content").clear();
-				final MarketplaceForm marketplaceForm = new MarketplaceForm(m);
-				marketplaceForm.run();
-			}
-		}));
-		menu.addSeparator();
-		menu.addItem(new MenuItem("Marktplätze suchen", new Command() {
-			public void execute() {
-				RootPanel.get("content").clear();
-				final SearchMarketplace searchMarketplace = new SearchMarketplace();
-				searchMarketplace.run();
-			}
-		}));
-		menu.addSeparator();
-		menu.addItem(new MenuItem("Projekte suchen", new Command() {
-			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
-			}
-		}));
-		menu.addSeparator();
-		menu.addItem(new MenuItem("Ausschreibungen suchen", new Command() {
-			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
-			}
-		}));
-		menu.addSeparator();
-		menu.addItem(new MenuItem("Ausschreibungen suchen", new Command() {
-			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
+				mainPanel.setOverview(new SearchMarketplace());
 			}
 		}));
 		menu.addSeparator();
@@ -90,32 +55,29 @@ public class EditorNavigation extends VerticalPanel {
 		optionenMenu.setAnimationEnabled(true);
 		optionenMenu.addItem(new MenuItem("Mein Profil", new Command() {
 			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
+				// TODO Anzeige generieren
+				// RootPanel.get("content").clear();
+				// RootPanel.get("content").add(alleNutzerAnzeigen);
+				// Window.Location.replace("home.html");
 			}
 		}));
 		optionenMenu.addItem(new MenuItem("Zum Report Generator", new Command() {
 			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
+				// TODO Anzeige generieren
+				// RootPanel.get("content").clear();
+				// RootPanel.get("content").add(alleNutzerAnzeigen);
+				// Window.Location.replace("home.html");
 			}
 		}));
 		optionenMenu.addItem(new MenuItem("Logout", new Command() {
 			public void execute() {
-//				TODO Anzeige generieren
-//				RootPanel.get("content").clear();
-//				RootPanel.get("content").add(alleNutzerAnzeigen);
-//				Window.Location.replace("home.html");
+				// TODO Anzeige generieren
+				// RootPanel.get("content").clear();
+				// RootPanel.get("content").add(alleNutzerAnzeigen);
+				// Window.Location.replace("home.html");
 			}
 		}));
 		menu.addItem(new MenuItem("Mehr", optionenMenu));
 		menu.addSeparator();
-
-
-		RootPanel.get("navigation").add(menu);
 	}
 }

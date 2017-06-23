@@ -53,8 +53,8 @@ public class DBConnection {
                  else {
                 	 
                 	 Class.forName("com.mysql.jdbc.Driver");
-                	 //url = localUrl; 
-                	 url = localhost;
+                	 url = localUrl; 
+//                	 url = localhost;
                 } 
                  
                 con = DriverManager.getConnection(url);

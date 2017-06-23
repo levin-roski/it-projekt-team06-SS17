@@ -17,8 +17,7 @@ import de.worketplace.team06.shared.bo.Marketplace;
 public class testRpcGetAllMarketplaces extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
-
-	public void run() {
+	public testRpcGetAllMarketplaces () {
 		final Label searchMarketplace = new Label("Alle Marktplätze");
 
 		// Create a Flex Table
@@ -51,9 +50,8 @@ public class testRpcGetAllMarketplaces extends Page {
 			}
 		});
 		final VerticalPanel root = new VerticalPanel();
-		root.add(createHeadline("RPC Testing..."));
 		root.add(flexTable);
 		
-		RootPanel.get("content").add(root);
+		this.add(root);
 	}
 }

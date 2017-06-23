@@ -5,14 +5,17 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.gui.EditorNavigation;
-import de.worketplace.team06.client.gui.MarketplaceForm;
-import de.worketplace.team06.client.gui.SearchMarketplace;
+import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.testRpcGetAllMarketplaces;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
@@ -30,16 +33,19 @@ public class Test implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final EditorNavigation navigationMenu = new EditorNavigation();
-		navigationMenu.run();
-//		final MarketplaceForm form = new MarketplaceForm();
-//		form.load(null);
-		
-//		final SearchMarketplace searchMarketplace = new SearchMarketplace();
-//		searchMarketplace.load();
+		MainPanel mainPanel = new MainPanel(Unit.PCT);
+		mainPanel.setStyleName("main-panel");
+		mainPanel.addWest(new ScrollPanel(new testRpcGetAllMarketplaces()), 70);
+		mainPanel.getWidget(0).setStyleName("main-panel-overview");
 
-		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
-		testRpcGetAllMarketplaces.run();
+		RootLayoutPanel rp = RootLayoutPanel.get();
+		rp.add(mainPanel);
+
+		/*
+		 * Navigationsleiste des Editors
+		 */
+		final EditorNavigation navigationMenu = new EditorNavigation();
+		RootPanel.get("navigation").add(navigationMenu);
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
