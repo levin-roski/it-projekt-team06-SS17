@@ -158,5 +158,9 @@ public interface WorketplaceAdministrationAsync {
 
 	void getOrganisationByGoogleID(String googleID, AsyncCallback<Organisation> callback);
 
+	void getOrgaUnitById(Integer ouid, AsyncCallback<OrgaUnit> callback);
+
+	void deleteProperty(Property p, AsyncCallback<Void> callback);
+
 	
 }

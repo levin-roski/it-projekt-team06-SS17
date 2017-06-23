@@ -349,4 +349,8 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Organisation getOrganisationByGoogleID(String googleID);
 
+	public OrgaUnit getOrgaUnitById(Integer ouid) throws IllegalArgumentException;
+
+	public void deleteProperty(Property p) throws IllegalArgumentException;
+
 }
