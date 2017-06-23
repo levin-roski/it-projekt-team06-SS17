@@ -110,7 +110,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Projekt"));
 		headline.addColumn(new Column("Deadline"));
 		headline.addColumn(new Column("Status"));
-		
 		report.addRow(headline);
 		
 		

@@ -50,18 +50,22 @@ public class PlainTextReportWriter extends ReportWriter {
 		this.resetReportText();
 		
 		StringBuffer result = new StringBuffer();
-		result.append("Title: " + r.getTitle());
+		result.append("Reporttitel: " + r.getTitle() + "\n");
 		
 		if (r.getHeaderData() != null){
-			result.append("Header: " + r.getHeaderData());
+			result.append("Header: " + r.getHeaderData() + "\n");
 		}
 		
-		result.append("Generiert am: " + r.getCreated());
+		result.append("Generiert am: " + r.getCreated() + "\n\n");
 		
 		Vector<Row> allRows = r.getRows();
 		
 		for (Row rowToAppend : allRows){
-			result.append(rowToAppend);
+			for (int i = 0; i < rowToAppend.getNumColumns(); i++) {
+				result.append(rowToAppend.getColumnAt(i) + "\t ; \t");
+		    }
+
+			result.append("\n");			
 		}
 		
 		this.reportText = result.toString();
