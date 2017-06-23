@@ -25,7 +25,8 @@ public class TestReportG {
 	public static void ShowAllCallsReport(ReportGeneratorImpl gen){
 		Person p = new Person();
 		p.setGoogleID("G3000");
-		PlainTextReportWriter writer = new PlainTextReportWriter();
+		//PlainTextReportWriter writer = new PlainTextReportWriter();
+		HTMLReportWriter writer = new HTMLReportWriter();
 		writer.process(gen.createAllCallsReport(p));
 		System.out.println(writer.getReportText());
 	}
