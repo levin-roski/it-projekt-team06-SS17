@@ -123,7 +123,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			rowToAdd.addColumn(new Column(c.getDescription()));
 			rowToAdd.addColumn(new Column(p.getTitle()));
 			rowToAdd.addColumn(new Column(c.getDeadline().toString()));
-			rowToAdd.addColumn(new Column(c.getStatus()));
+			rowToAdd.addColumn(new Column(c.getStatusString()));
 			report.addRow(rowToAdd);
 		}
 		
