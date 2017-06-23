@@ -113,6 +113,7 @@ public class CallMapper {
         	while (rs.next()){
         		Call c = new Call();
         		c.setID(rs.getInt("id"));
+        		c.setCreated(rs.getTimestamp("created"));
         		c.setTitle(rs.getString("title"));
         		c.setDescription(rs.getString("description"));
         		c.setDeadline(sdf.parse(rs.getString("deadline")));
@@ -149,6 +150,7 @@ public class CallMapper {
 			while (rs.next()) {
 				Call c = new Call();
 				c.setID(rs.getInt("id"));
+				c.setCreated(rs.getTimestamp("created"));
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(sdf.parse(rs.getString("deadline")));
@@ -174,6 +176,7 @@ public class CallMapper {
 	 */
 	
 	public Call findByID(Integer callID) {
+		
 		Connection con = DBConnection.connection();
 		
 		try {						
@@ -183,6 +186,7 @@ public class CallMapper {
 			if (rs.next()) {
 				Call c = new Call();
 				c.setID(rs.getInt("id"));
+				c.setCreated(rs.getTimestamp("created"));
 				c.setTitle(rs.getString("title"));
 				c.setDescription(rs.getString("description"));
 				c.setDeadline(sdf.parse(rs.getString("deadline")));
@@ -197,7 +201,7 @@ public class CallMapper {
 			e2.printStackTrace();
 			return null;
 		}
-		
+		return null;
 	}
 
 	/**
