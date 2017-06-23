@@ -7,6 +7,7 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -28,10 +29,13 @@ public class Overview extends Page {
 		//erstellen der Tabelle Meine Marktplätze	
 		final CellTable<Marketplace> myMarketplacesTable = new CellTable<Marketplace>();
 		
+		//erstellen eines SingleSelectionModels -> macht, dass immer nur ein Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Marketplace> myMarketplacesSsm = new SingleSelectionModel<Marketplace>();
-
+		
+		//Das SingleSelectionModel wird der Tabelle Meine Marktplätze hinzugefügt
 		myMarketplacesTable.setSelectionModel(myMarketplacesSsm);
-
+		
+		//hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
 		myMarketplacesSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
@@ -43,8 +47,8 @@ public class Overview extends Page {
 			}
 		});
 
-//		final CellTable<Marketplace> table = new CellTable<Marketplace>();
 
+		//hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen Daten aus der Datenbank
 		TextColumn<Marketplace> marketplacesTitleColumn = new TextColumn<Marketplace>() {
 			@Override
 			public String getValue(Marketplace object) {
@@ -67,10 +71,13 @@ public class Overview extends Page {
 		//erstellen der Tabelle Meine Projekte	
 		final CellTable<Marketplace> myProjectsTable = new CellTable<Marketplace>();
 		
+		//erstellen eines SingleSelectionModels -> macht, dass immer nur ein Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Marketplace> myProjectsSsm = new SingleSelectionModel<Marketplace>();
-
+		
+		//Das SingleSelectionModel wird der Tabelle Meine Marktplätze hinzugefügt
 		myProjectsTable.setSelectionModel(myProjectsSsm);
-
+		
+		//hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
 		myProjectsSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
@@ -82,8 +89,8 @@ public class Overview extends Page {
 			}
 		});
 
-//		final CellTable<Marketplace> table = new CellTable<Marketplace>();
 
+		//hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen Daten aus der Datenbank
 		TextColumn<Marketplace> projectsTitleColumn = new TextColumn<Marketplace>() {
 			@Override
 			public String getValue(Marketplace object) {
@@ -118,23 +125,15 @@ public class Overview extends Page {
 //		});
 		
 		
-		// overviewPanel1 erstellt ein Panel dem 2 Tabellen zugeordnet sind die bei 50% gesplittet sind
-//		Widget myMarketplacesTable = new Widget();
-//		Widget myProjectsTable = new Widget();
-		
-		LayoutPanel overviewPanel1 = new LayoutPanel();
-	
-		overviewPanel1.add(createHeadline("Meine Marktplätze"));
-		overviewPanel1.add(myMarketplacesTable);
-		overviewPanel1.add(createHeadline("Meine Projekte"));
-		overviewPanel1.add(myProjectsTable);
-	
-		overviewPanel1.setWidgetLeftWidth(myMarketplacesTable, 0, Unit.PCT, 50, Unit.PCT);
-		overviewPanel1.setWidgetRightWidth(myProjectsTable, 0, Unit.PCT, 50, Unit.PCT);
-		overviewPanel1.add(createHeadline("Alle Marktplätze"));
+		DockLayoutPanel overviewDockPanel = new DockLayoutPanel(Unit.PC);
+		overviewDockPanel.addNorth(new HTML("Mein Bereich"), 100);
+		overviewDockPanel.addWest(myMarketplacesTable, 50);
+		overviewDockPanel.addEast(myProjectsTable, 50);
 		
 
-		RootPanel.get("content").add(overviewPanel1);
+		
+
+		RootPanel.get("content").add(overviewDockPanel);
 	}
 	
 }
