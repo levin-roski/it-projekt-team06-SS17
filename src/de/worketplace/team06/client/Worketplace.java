@@ -40,8 +40,8 @@ public class Worketplace implements EntryPoint {
 		final testRpcGetAllMarketplaces testRpcGetAllMarketplaces = new testRpcGetAllMarketplaces();
 //		testRpcGetAllMarketplaces.run();
 
-		final Overview overview = new Overview();
-		overview.run();
+		final Overview overviewDockPanel = new Overview();
+		overviewDockPanel.run();
 		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
