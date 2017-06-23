@@ -158,5 +158,9 @@ public interface WorketplaceAdministrationAsync {
 
 	void deleteProperty(Property p, AsyncCallback<Void> callback);
 
+	void getOpenCallCountFor(Project p, AsyncCallback<Integer> callback);
+
+	void getApplicationCountFor(Call c, AsyncCallback<Integer> callback);
+
 	
 }

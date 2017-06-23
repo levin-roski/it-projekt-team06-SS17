@@ -348,4 +348,8 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public void deleteProperty(Property p) throws IllegalArgumentException;
 
+	public Integer getOpenCallCountFor(Project p);
+
+	public Integer getApplicationCountFor(Call c);
+
 }
