@@ -60,10 +60,6 @@ public interface WorketplaceAdministrationAsync {
 	
 	void getApplicationsFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Application>> callback);
 
-//	void getMarketplacesFor(OrgaUnit orgaUnit, AsyncCallback<Vector<Marketplace>> callback);
-
-
-
 	void init(AsyncCallback<Void> callback);
 
 	void rateApplication(Application application, Float rating, String ratingStatemant,

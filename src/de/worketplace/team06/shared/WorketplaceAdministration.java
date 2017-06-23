@@ -111,11 +111,6 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public Vector<Marketplace> getAllMarketplaces() throws IllegalArgumentException;
 
-    /**
-     * @param orgaUnit 
-     * @return
-     */
-//    public Vector<Marketplace> getMarketplacesFor(OrgaUnit orgaUnit) throws IllegalArgumentException;
 
     /**
      * @return
