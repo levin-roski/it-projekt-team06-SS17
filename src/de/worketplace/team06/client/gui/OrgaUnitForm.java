@@ -17,10 +17,11 @@ import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
 /**
- * Formular für die Darstellung und Bearbeitung der aktuellen
- * OrgaUnit. Falls keine OrgaUnit beim Initialisieren in den ClientsideSettings
- * verfügbar ist, bleibt das Formular leer, bereit für die Erstellung eines neuen Users.
- * Im Anschluss wird dann der geänderte oder hinzugefügte User den ClientsideSettings hinzugefügt.
+ * Formular für die Darstellung und Bearbeitung der aktuellen OrgaUnit. Falls
+ * keine OrgaUnit beim Initialisieren in den ClientsideSettings verfügbar ist,
+ * bleibt das Formular leer, bereit für die Erstellung eines neuen Users. Im
+ * Anschluss wird dann der geänderte oder hinzugefügte User den
+ * ClientsideSettings hinzugefügt.
  *
  * @author Roski
  */
@@ -43,7 +44,7 @@ public class OrgaUnitForm extends Page {
 	 * 
 	 * 
 	 */
-	public OrgaUnitForm (Marketplace pToChangeMarketplace, final boolean pHeadline) {
+	public OrgaUnitForm(Marketplace pToChangeMarketplace, final boolean pHeadline) {
 		if (pToChangeMarketplace != null) {
 			shouldUpdate = true;
 			this.toChangeMarketplace = pToChangeMarketplace;
@@ -53,6 +54,7 @@ public class OrgaUnitForm extends Page {
 			addHeadline = createHeadline("Marktplatz hinzufügen", true);
 		}
 	}
+
 	/**
 	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der
 	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
@@ -66,7 +68,7 @@ public class OrgaUnitForm extends Page {
 			changeHeadline = createHeadlineWithCloseButton("Marktplatz bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Marktplatz hinzufügen", true);
 		}
-		
+
 		/*
 		 * Grid mit 3 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
@@ -80,7 +82,8 @@ public class OrgaUnitForm extends Page {
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*
-		 * Falls ein selektierter Marktplatz übergeben wurde und jetzt dargestellt werden soll
+		 * Falls ein selektierter Marktplatz übergeben wurde und jetzt
+		 * dargestellt werden soll
 		 */
 		if (shouldUpdate) {
 			if (changeHeadline != null) {
@@ -144,7 +147,7 @@ public class OrgaUnitForm extends Page {
 						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
 					} else {
 						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(),
-								ClientsideSettings.getCurrentUser(), new AsyncCallback<Marketplace>() {
+								new AsyncCallback<Marketplace>() {
 									public void onFailure(Throwable caught) {
 										Window.alert(
 												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");

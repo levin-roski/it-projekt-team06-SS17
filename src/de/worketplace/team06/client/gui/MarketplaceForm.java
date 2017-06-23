@@ -6,7 +6,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -147,8 +146,7 @@ public class MarketplaceForm extends Page {
 					} else if (beschreibungInput.getText().length() == 0) {
 						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
 					} else {
-						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(),
-								ClientsideSettings.getCurrentUser(), new AsyncCallback<Marketplace>() {
+						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(), new AsyncCallback<Marketplace>() {
 									public void onFailure(Throwable caught) {
 										Window.alert(
 												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
