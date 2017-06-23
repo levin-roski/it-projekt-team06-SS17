@@ -11,10 +11,12 @@ import de.worketplace.team06.client.ClientsideSettings;
 public abstract class Page extends HorizontalPanel {
 	private MainPanel mainPanel = ClientsideSettings.getMainPanel();
 	
-	protected HTML createHeadline(final String text, boolean isFirstPageElement) {
+	protected HorizontalPanel createHeadline(final String text, boolean isFirstPageElement) {
+		HorizontalPanel hp = new HorizontalPanel();
 		HTML sh = new HTML();
 		sh.setHTML("<h1 class=\"first-element\">"+text+"</h1>");
-		return sh;
+		hp.add(sh);
+		return hp;
 	}
 	
 	protected HorizontalPanel createHeadlineWithCloseButton(final String text, boolean isFirstPageElement) {

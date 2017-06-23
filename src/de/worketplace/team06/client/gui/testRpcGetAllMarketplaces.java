@@ -50,7 +50,6 @@ public class testRpcGetAllMarketplaces extends Page {
 			}
 		});
 		final VerticalPanel root = new VerticalPanel();
-		root.add(createHeadline("RPC Testing..."));
 		root.add(flexTable);
 		
 		this.add(root);

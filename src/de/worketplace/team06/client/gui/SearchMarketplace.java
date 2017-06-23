@@ -4,10 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -47,8 +50,8 @@ public class SearchMarketplace extends Page {
 	final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
 	public SearchMarketplace() {
-//		allMarketplacesTable.setPageSize(3);
-		
+		// allMarketplacesTable.setPageSize(3);
+
 		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();
 
 		allMarketplacesTable.setSelectionModel(allMarketplaceSsm);
@@ -57,7 +60,7 @@ public class SearchMarketplace extends Page {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Marketplace m1 = allMarketplaceSsm.getSelectedObject();
-				ClientsideSettings.getMainPanel().setItem(new MarketplaceForm(m1));
+				ClientsideSettings.getMainPanel().setItem(new MarketplaceForm(m1, false, true));
 			}
 		});
 
@@ -71,13 +74,13 @@ public class SearchMarketplace extends Page {
 		};
 		allMarketplacesTable.addColumn(titleColumn, "Name");
 
-//		TextColumn<Marketplace> ownerColumn = new TextColumn<Marketplace>() {
-//			@Override
-//			public String getValue(Marketplace object) {
-//				return object.getOrgaUnitID();
-//			}
-//		};
-//		allMarketplacesTable.addColumn(ownerColumn, "Inhaber");
+		// TextColumn<Marketplace> ownerColumn = new TextColumn<Marketplace>() {
+		// @Override
+		// public String getValue(Marketplace object) {
+		// return object.getOrgaUnitID();
+		// }
+		// };
+		// allMarketplacesTable.addColumn(ownerColumn, "Inhaber");
 
 		TextColumn<Marketplace> descriptionColumn = new TextColumn<Marketplace>() {
 			@Override
@@ -86,24 +89,34 @@ public class SearchMarketplace extends Page {
 			}
 		};
 		allMarketplacesTable.addColumn(descriptionColumn, "Beschreibung");
-		
+
 		allMarketplacesTable.setWidth("100%", true);
-//		allMarketplacesTable.setRowData(MARKETPLACE);
+		// allMarketplacesTable.setRowData(MARKETPLACE);
 		final VerticalPanel root = new VerticalPanel();
 		root.add(createHeadline("Alle Marktplätze", true));
 		root.add(allMarketplacesTable);
 
+		final Button newButton = new Button("Neuen Marktplatz hinzufügen");
+		newButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				MainPanel tmpMainPanel = ClientsideSettings.getMainPanel();
+				tmpMainPanel.setItem(new MarketplaceForm(null, false, true));
+			}
+		});
+		root.add(newButton);
+
 		worketplaceAdministration.getAllMarketplaces(new AsyncCallback<Vector<Marketplace>>() {
 			@Override
 			public void onFailure(Throwable caught) {
-//				TODO
+				// TODO
 			}
-			
+
 			public void onSuccess(Vector<Marketplace> results) {
 				allMarketplacesTable.setRowData(0, results);
 				allMarketplacesTable.setRowCount(results.size(), true);
 			}
 		});
 
-	this.add(root);
-}}
+		this.add(root);
+	}
+}

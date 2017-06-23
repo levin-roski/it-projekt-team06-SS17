@@ -51,7 +51,6 @@ public class Worketplace implements EntryPoint {
 		ClientsideSettings.setCurrentUser(ou);
 
 		mainPanel.setOverview(new SearchMarketplace());
-//		mainPanel.se(new MarketplaceForm(null), 70);
 
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		rp.add(mainPanel);

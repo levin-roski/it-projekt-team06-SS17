@@ -10,8 +10,8 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * 
  * @author Roski
- *
  */
 public class MainPanel extends DockLayoutPanel {
 	public MainPanel(Unit unit) {
