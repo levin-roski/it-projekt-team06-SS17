@@ -117,6 +117,8 @@ public class ProjectForm extends Page {
 					} else {
 						toChangeProject.setTitle(nameInput.getText());
 						toChangeProject.setDescription(beschreibungInput.getText());
+						toChangeProject.setStartDate(startDateInput.getText());
+						toChangeProject.setEndDate(endDateInput.getText());
 						worketplaceAdministration.saveProject(toChangeProject, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
@@ -161,6 +163,10 @@ public class ProjectForm extends Page {
 						Window.alert("Bitte vergeben Sie einen Namen");
 					} else if (beschreibungInput.getText().length() == 0) {
 						Window.alert("Bitte beschreiben Sie Ihr Projekt genauer");
+					} else if (startDateInput.getText().length() == 0) {
+						Window.alert("Bitte geben Sie ein Startdatum ein");
+					} else if (endDateInput.getText().length() == 0) {
+						Window.alert("Bitte geben Sie ein Enddatum ein"); 
 					} else {
 						worketplaceAdministration.createProject(nameInput.getText(), beschreibungInput.getText(), new AsyncCallback<Project>() {
 									public void onFailure(Throwable caught) {
@@ -169,7 +175,10 @@ public class ProjectForm extends Page {
 									}
 
 									public void onSuccess(Project result) {
-										Window.alert("Das Projekt \"" + result.getTitle() + "\" wurde erstellt");
+										Window.alert("Das Projekt \"" + result.getTitle() + 
+												"von " + result.getProjectLeaderID() 
+												+ "im Marktplatz " + result.getMarketplaceID() 
+												+ "\" wurde erstellt");
 									}
 								});
 					}
