@@ -39,7 +39,7 @@ public class MarketplaceOverview extends Page implements DataLoading {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Marketplace m1 = allMarketplaceSsm.getSelectedObject();
-				ClientsideSettings.getMainPanel().setView(new ProjectView(m1));
+				ClientsideSettings.getMainPanel().setView(new MarketplaceView(m1));
 			}
 		});
 

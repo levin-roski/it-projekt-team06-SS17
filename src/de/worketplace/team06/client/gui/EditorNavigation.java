@@ -45,7 +45,15 @@ public class EditorNavigation extends VerticalPanel {
 		menu.addSeparator();
 		MenuBar optionenMenu = new MenuBar(true);
 		optionenMenu.setAnimationEnabled(true);
-		optionenMenu.addItem(new MenuItem("Mein Profil", new Command() {
+		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {
+			public void execute() {
+				// TODO Anzeige generieren
+				// RootPanel.get("content").clear();
+				// RootPanel.get("content").add(alleNutzerAnzeigen);
+				// Window.Location.replace("home.html");
+			}
+		}));
+		optionenMenu.addItem(new MenuItem("Mein Partnerprofil", new Command() {
 			public void execute() {
 				// TODO Anzeige generieren
 				// RootPanel.get("content").clear();
