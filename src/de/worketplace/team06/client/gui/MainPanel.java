@@ -24,29 +24,34 @@ public class MainPanel extends DockLayoutPanel {
 	}
 
 	public <T extends Widget & DataLoading> void setView(T viewItem) {
+		ScrollPanel sp = new ScrollPanel(viewItem);
+		sp.setWidth("100%");
 		try {
 			this.getWidget(0);
 			try {
 				Widget item = this.getWidget(1);
 				this.getWidget(0).removeFromParent();
-				this.insertWest(new ScrollPanel(viewItem), 70, item);
+				this.insertWest(sp, 70, item);
 			} catch (Exception e) {
 				this.getWidget(0).removeFromParent();
-				this.addWest(new ScrollPanel(viewItem), 100);
+				this.addWest(sp, 100);
 			}
 		} catch (Exception e) {
 			this.addWest(new ScrollPanel(viewItem), 100);
 		}
 		this.getWidget(0).setStyleName("main-panel-overview");
 		this.getWidget(0).setHeight("100%");
+		sp.setHeight("100%");
 		ClientsideSettings.setCurrentView(viewItem);
 	}
 
-	public <T extends Widget> void setForm(T form) {
+	public <T extends Widget> void setForm(T formItem) {
+		ScrollPanel sp = new ScrollPanel(formItem);
+		sp.setWidth("100%");
 		try {
 			this.getWidget(1);
 			this.getWidget(1).removeFromParent();
-			this.addEast(new ScrollPanel(form), 30);
+			this.addEast(sp, 30);
 		} catch (Exception e) {
 			try {
 				Widget overviewWidget = this.getWidget(0);
@@ -54,10 +59,11 @@ public class MainPanel extends DockLayoutPanel {
 				this.addWest(overviewWidget, 70);
 			} catch (Exception e1) {
 			}
-			this.addEast(new ScrollPanel(form), 30);
+			this.addEast(sp, 30);
 		}
 		this.getWidget(1).setStyleName("main-panel-item");
 		this.getWidget(1).setHeight("100%");
+		sp.setHeight("100%");
 	}
 	
 	public void closeForm() {

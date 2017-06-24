@@ -17,6 +17,7 @@ import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.MarketplaceForm;
 import de.worketplace.team06.client.gui.MyOverview;
+import de.worketplace.team06.client.gui.ProjectView;
 import de.worketplace.team06.client.gui.MarketplaceOverview;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;

@@ -14,7 +14,11 @@ public abstract class Page extends HorizontalPanel {
 	protected HorizontalPanel createHeadline(final String text, boolean isFirstPageElement) {
 		HorizontalPanel hp = new HorizontalPanel();
 		HTML sh = new HTML();
-		sh.setHTML("<h1 class=\"first-element\">"+text+"</h1>");
+		if (isFirstPageElement) {
+			sh.setHTML("<h1 class=\"first-element\">"+text+"</h1>");
+		} else {
+			sh.setHTML("<h1>"+text+"</h1>");
+		}
 		hp.add(sh);
 		return hp;
 	}
@@ -22,7 +26,11 @@ public abstract class Page extends HorizontalPanel {
 	protected HorizontalPanel createHeadlineWithCloseButton(final String text, boolean isFirstPageElement) {
 		HorizontalPanel hp = new HorizontalPanel();
 		HTML sh = new HTML();
-		sh.setHTML("<h1 class=\"first-element\">"+text+"</h1>");
+		if (isFirstPageElement) {
+			sh.setHTML("<h1 class=\"first-element\">"+text+"</h1>");			
+		} else {
+			sh.setHTML("<h1>"+text+"</h1>");
+		}
 		Button closeButton = new Button("X");
 		closeButton.setStyleName("close-button");
 		closeButton.addClickHandler(new ClickHandler() {
@@ -31,6 +39,14 @@ public abstract class Page extends HorizontalPanel {
 			}
 		});
 		hp.add(closeButton);
+		hp.add(sh);
+		return hp;
+	}
+	
+	protected HorizontalPanel createSecondHeadline(final String text) {
+		HorizontalPanel hp = new HorizontalPanel();
+		HTML sh = new HTML();
+		sh.setHTML("<h2>"+text+"</h2>");
 		hp.add(sh);
 		return hp;
 	}

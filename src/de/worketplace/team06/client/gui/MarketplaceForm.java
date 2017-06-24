@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
@@ -69,7 +70,7 @@ public class MarketplaceForm extends Page {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public MarketplaceForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final boolean pClosingHeadline) {
+	public MarketplaceForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final boolean pClosingHeadline, final Callback editCallback, final Callback deleteCallback) {
 		this(pToChangeMarketplace, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Marktplatz bearbeiten", true);
@@ -115,7 +116,11 @@ public class MarketplaceForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Der Marktplatz wurde erfolgreich geändert");
-								renderFormSuccess();
+								if (editCallback != null) {
+									editCallback.run();
+								} else {
+									renderFormSuccess();
+								}
 							}
 						});
 					}
@@ -135,7 +140,11 @@ public class MarketplaceForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
-								renderFormSuccess();
+								if (deleteCallback != null) {
+									deleteCallback.run();
+								} else {
+									renderFormSuccess();
+								}
 							}
 						});
 					}
