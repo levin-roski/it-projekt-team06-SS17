@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -15,15 +14,15 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.client.Table;
+import de.worketplace.team06.client.DataLoading;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
-public class SearchMarketplace extends Page implements Table {
+public class SearchMarketplace extends Page implements DataLoading {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	// erstellen der Tabelle Meine Marktplätze
-	final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
+	private final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
 	public SearchMarketplace() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
@@ -40,7 +39,7 @@ public class SearchMarketplace extends Page implements Table {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Marketplace m1 = allMarketplaceSsm.getSelectedObject();
-				ClientsideSettings.getMainPanel().setItem(new MarketplaceForm(m1, false, true));
+				ClientsideSettings.getMainPanel().setForm(new MarketplaceForm(m1, false, true));
 			}
 		});
 
@@ -70,7 +69,7 @@ public class SearchMarketplace extends Page implements Table {
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				MainPanel tmpMainPanel = ClientsideSettings.getMainPanel();
-				tmpMainPanel.setItem(new MarketplaceForm(null, false, true));
+				tmpMainPanel.setForm(new MarketplaceForm(null, false, true));
 			}
 		});
 		root.add(newButton);
@@ -85,7 +84,6 @@ public class SearchMarketplace extends Page implements Table {
 		worketplaceAdministration.getAllMarketplaces(new AsyncCallback<Vector<Marketplace>>() {
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Daten für diese Ansicht können nicht geladen werden, bitte versuchen Sie es erneut");
 			}
 			@Override
 			public void onSuccess(Vector<Marketplace> results) {

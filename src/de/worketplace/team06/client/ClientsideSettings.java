@@ -1,6 +1,7 @@
 package de.worketplace.team06.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.Widget;
 
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.shared.*;
@@ -20,10 +21,11 @@ public class ClientsideSettings {
 	/**
 	 * 
 	 */
-	private static WorketplaceAdministrationAsync worketplaceAdministration = null;
-	private static OrgaUnit currentUser = null;
-	private static MainPanel mainPanel = null;
-	private static ReportGeneratorAsync reportGenerator = null;
+	private static WorketplaceAdministrationAsync worketplaceAdministration;
+	private static OrgaUnit currentUser;
+	private static MainPanel mainPanel;
+	private static ReportGeneratorAsync reportGenerator;
+	private static DataLoading currentOverview;
 	
 	/**
 	 * 
@@ -68,5 +70,13 @@ public class ClientsideSettings {
 		}
 		
 		return reportGenerator;
+	}
+
+	public static DataLoading getCurrentOverview() {
+		return currentOverview;
+	}
+
+	public static void setCurrentOverview(DataLoading pCurrentOverview) {
+		currentOverview = pCurrentOverview;
 	}
 }

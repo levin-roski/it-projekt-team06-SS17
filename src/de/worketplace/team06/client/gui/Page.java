@@ -27,7 +27,7 @@ public abstract class Page extends HorizontalPanel {
 		closeButton.setStyleName("close-button");
 		closeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				mainPanel.closeItem();
+				mainPanel.closeForm();
 			}
 		});
 		hp.add(closeButton);

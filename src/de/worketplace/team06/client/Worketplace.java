@@ -51,7 +51,7 @@ public class Worketplace implements EntryPoint {
 		ou.setGoogleID("G3000");
 		ClientsideSettings.setCurrentUser(ou);
 
-		mainPanel.setOverview(new SearchMarketplace());
+		mainPanel.setOverview(new Overview());
 
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		rp.add(mainPanel);

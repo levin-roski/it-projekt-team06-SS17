@@ -19,29 +19,21 @@ public class EditorNavigation extends VerticalPanel {
 		this.add(menu);
 		final SafeHtml image = new SafeHtml() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public String asString() {
-				// TODO Auto-generated method stub
 				return "<img src=\"/logo.png\" style=\"width: 225px;\">";
 			}
 		};
 
 		menu.addItem(new MenuItem(image, new Command() {
 			public void execute() {
-				// TODO Anzeige generieren
-				// RootPanel.get("content").clear();
-				// RootPanel.get("content").add(alleNutzerAnzeigen);
-				// Window.Location.replace("home.html");
+				mainPanel.setOverview(new Overview());
 			}
 		}));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Mein Bereich", new Command() {
 			public void execute() {
-				// TODO Anzeige generieren
-				// RootPanel.get("content").clear();
-				// RootPanel.get("content").add(alleNutzerAnzeigen);
-				// Window.Location.replace("home.html");
+				mainPanel.setOverview(new Overview());
 			}
 		}));
 		menu.addSeparator();

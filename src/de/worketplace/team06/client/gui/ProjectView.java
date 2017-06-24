@@ -86,7 +86,7 @@ public class ProjectView extends Page {
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				MainPanel tmpMainPanel = ClientsideSettings.getMainPanel();
-				tmpMainPanel.setItem(new MarketplaceForm(null, false, true));
+				tmpMainPanel.setForm(new MarketplaceForm(null, false, true));
 			}
 		});
 		root.add(newButton);
