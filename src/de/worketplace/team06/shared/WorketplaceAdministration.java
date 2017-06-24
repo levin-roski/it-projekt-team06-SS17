@@ -246,7 +246,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param period 
      * @return
      */
-    public Enrollment createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, Integer workload) throws IllegalArgumentException;
+    public Enrollment createEnrollment(Application app, Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate, Integer workload) throws IllegalArgumentException;
 
     /**
      * @param enrollment
@@ -347,5 +347,9 @@ public interface WorketplaceAdministration extends RemoteService {
 	public OrgaUnit getOrgaUnitById(Integer ouid) throws IllegalArgumentException;
 
 	public void deleteProperty(Property p) throws IllegalArgumentException;
+
+	public Integer getOpenCallCountFor(Project p);
+
+	public Integer getApplicationCountFor(Call c);
 
 }

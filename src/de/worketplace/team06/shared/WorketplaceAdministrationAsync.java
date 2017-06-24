@@ -24,8 +24,8 @@ public interface WorketplaceAdministrationAsync {
 
 	
 
-	void createEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, Date startDate, Date endDate,
-			Integer workload, AsyncCallback<Enrollment> callback);
+	void createEnrollment(Application app, Project project, OrgaUnit orgaUnit, Rating rating, Date startDate,
+			Date endDate, Integer workload, AsyncCallback<Enrollment> callback);
 
 
 
@@ -157,6 +157,10 @@ public interface WorketplaceAdministrationAsync {
 	void getOrgaUnitById(Integer ouid, AsyncCallback<OrgaUnit> callback);
 
 	void deleteProperty(Property p, AsyncCallback<Void> callback);
+
+	void getOpenCallCountFor(Project p, AsyncCallback<Integer> callback);
+
+	void getApplicationCountFor(Call c, AsyncCallback<Integer> callback);
 
 	
 }
