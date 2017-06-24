@@ -178,20 +178,23 @@ public class CallMapper {
 	 * Methode zur Suche nach allen Ausschreibungen, deren Eigenschaften des PartnerProfils
 	 * Gemeinsamkeiten haben mit den Eigenschaften eines PartnerProfils einer OrgaUnit.
 	 * 
-	 * @param projectID
-	 * @return Call-Objekt, das der übergebenen projectID entspricht bzw. null, 
-	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
+	 * @param callID
+	 * @return vector<Call> mit allen Call-Objekten, die ähnliche Partnerprofile haben.
 	 */	
-	public Vector<Call> findCallBySimilarProperty(Integer propertyID) {
+	public Vector<Call> findCallForSimilarPartnerProfile(Integer callID) {
 		Connection con = DBConnection.connection();
 		Vector<Call> result = new Vector<Call>();
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("call INNER JOIN property JOIN partnerprofile "
-					+ "SELECT * FROM call "
-					+ "WHERE call.id = property.partnerprofile_id AND property.name LIKE property.name ORDER BY id");
-			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM projektmarktplatz.'call' "
+					+ "INNER JOIN projektmarktplatz.'partnerprofile' "
+					+ "WHERE projektmarktplatz.`call`.partnerprofile_id = partnerprofile.id "
+					+ "INNER JOIN projektmarktplatz.'orgaunit' "
+					+ "INNER JOIN projektmarktplatz.'property' "
+					+ "AND projektmarktplatz.'orgaunit'.partnerprofile.property.name = call.partnerprofile.property.name "
+					+ "ORDER BY call.id");
+			// unfertig
 			while (rs.next()) {
 				Call c = new Call();
 			}
