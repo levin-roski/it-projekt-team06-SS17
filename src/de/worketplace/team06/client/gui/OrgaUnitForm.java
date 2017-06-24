@@ -113,6 +113,7 @@ public class OrgaUnitForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Der Marktplatz wurde erfolgreich geändert");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -140,6 +141,7 @@ public class OrgaUnitForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -168,6 +170,7 @@ public class OrgaUnitForm extends Page {
 
 									public void onSuccess(Marketplace result) {
 										Window.alert("Der Marktplatz \"" + result.getTitle() + "\" wurde erstellt");
+										renderFormSuccess();
 									}
 								});
 					}

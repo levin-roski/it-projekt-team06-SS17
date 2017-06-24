@@ -123,6 +123,7 @@ public class EnrollmentForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Die Beteiligung wurde erfolgreich geändert");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -142,6 +143,7 @@ public class EnrollmentForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Die Beteiligung wurde erfolgreich gelöscht");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -171,6 +173,7 @@ public class EnrollmentForm extends Page {
 
 									public void onSuccess(Enrollment result) {
 										Window.alert("Die Beteiligung \"" + result.getTitle() + "\" wurde erstellt");
+										renderFormSuccess();
 									}
 								});
 					}

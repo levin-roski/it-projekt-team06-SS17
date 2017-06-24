@@ -126,6 +126,7 @@ public class ProjectForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Das Projekt wurde erfolgreich geändert");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -145,6 +146,7 @@ public class ProjectForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Das Projekt wurde erfolgreich gelöscht");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -179,6 +181,7 @@ public class ProjectForm extends Page {
 												"von " + result.getProjectLeaderID() 
 												+ "im Marktplatz " + result.getMarketplaceID() 
 												+ "\" wurde erstellt");
+										renderFormSuccess();
 									}
 								});
 					}

@@ -104,6 +104,7 @@ public class ApplicationForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Die Bewerbung wurde erfolgreich geändert");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -123,6 +124,7 @@ public class ApplicationForm extends Page {
 
 							public void onSuccess(Void result) {
 								Window.alert("Die Bewerbung wurde erfolgreich gelöscht");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -148,6 +150,7 @@ public class ApplicationForm extends Page {
 
 									public void onSuccess(Application result) {
 										Window.alert("Die Bewerbung auf die Ausschreibung \"" + result.getCallTitle() + "\" wurde erstellt");
+										renderFormSuccess();
 									}
 								});
 					}

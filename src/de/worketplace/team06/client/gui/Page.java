@@ -34,4 +34,9 @@ public abstract class Page extends HorizontalPanel {
 		hp.add(sh);
 		return hp;
 	}
+	
+	protected void renderFormSuccess() {
+		ClientsideSettings.getCurrentOverview().loadData();
+		mainPanel.closeForm();
+	}
 }
