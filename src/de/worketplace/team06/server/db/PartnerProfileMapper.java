@@ -9,7 +9,25 @@ import java.util.*;
 import de.worketplace.team06.shared.bo.PartnerProfile;
 import de.worketplace.team06.shared.bo.Project;
 /**
+ * Die Mapper-Klasse PartnerProfileMapper bildet PartnerProfile-Objekte als Datensätze
+ * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
+ * können mit deren Hilfe Objekte erzeugt, verändert, gelöscht und ausgelesen werden.
+ * Das Mapping erfolgt bidirektional: Objekte können in Datensätze und Datensätze in 
+ * Objekte umgewandelt werden.
  * 
+ * @see ApplicationMapper
+ * @see CallMapper
+ * @see EnrollmentMapper
+ * @see MarketplaceMapper
+ * @see OrganisationMapper
+ * @see OrgaUnitMapper
+ * @see PersonMapper
+ * @see ProjectMapper
+ * @see PropertyMapper
+ * @see RatingMapper
+ * @see TeamMapper
+ * 
+ * @author Patrick
  */
 public class PartnerProfileMapper {
 
@@ -51,6 +69,13 @@ public class PartnerProfileMapper {
     	}
     	return null;
     }
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 * @return Vektor<PartnerProfile>
+	 */
 	
     public Vector<PartnerProfile> findAll() {
         Connection con = DBConnection.connection();
