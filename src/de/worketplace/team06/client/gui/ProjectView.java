@@ -19,70 +19,70 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
+import de.worketplace.team06.shared.bo.Project;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SearchMarketplace extends Page {
+public class ProjectView extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 
-
 	// erstellen der Tabelle Meine Marktplätze
-	final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
+	final CellTable<Project> allProjectsTable = new CellTable<Project>();
 
-	public SearchMarketplace() {
-
-		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
-		// Item zur selben Zeit ausgewählt sein kann
-		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();
+	public ProjectView() {
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
-		allMarketplacesTable.setSelectionModel(allMarketplaceSsm);
+		final SingleSelectionModel<Project> allProjectsSsm = new SingleSelectionModel<Project>();
+
+		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+		// Item zur selben Zeit ausgewählt sein kann
+		allProjectsTable.setSelectionModel(allProjectsSsm);
 
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-		allMarketplaceSsm.addSelectionChangeHandler(new Handler() {
+		allProjectsSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Marketplace m1 = allMarketplaceSsm.getSelectedObject();
-				ClientsideSettings.getMainPanel().setItem(new MarketplaceForm(m1, false, true));
+//				Marketplace m1 = allProjectsSsm.getSelectedObject();
+//				ClientsideSettings.getMainPanel().setItem(new MarketplaceForm(m1, false, true));
 			}
 		});
 
 
-		TextColumn<Marketplace> titleColumn = new TextColumn<Marketplace>() {
+		TextColumn<Project> projectsTitleColumn = new TextColumn<Project>() {
 			@Override
-			public String getValue(Marketplace object) {
+			public String getValue(Project object) {
 				return object.getTitle();
 			}
 		};
-		allMarketplacesTable.addColumn(titleColumn, "Name");
+		allProjectsTable.addColumn(projectsTitleColumn, "Name");
 
-		// TextColumn<Marketplace> ownerColumn = new TextColumn<Marketplace>() {
+		// TextColumn<Project> ownerColumn = new TextColumn<Project>() {
 		// @Override
-		// public String getValue(Marketplace object) {
+		// public String getValue(Project object) {
 		// return object.getOrgaUnitID();
 		// }
 		// };
 		// allMarketplacesTable.addColumn(ownerColumn, "Inhaber");
 
-		TextColumn<Marketplace> descriptionColumn = new TextColumn<Marketplace>() {
+		TextColumn<Project> descriptionColumn = new TextColumn<Project>() {
 			@Override
-			public String getValue(Marketplace object) {
+			public String getValue(Project object) {
 				return object.getDescription();
 			}
 		};
-		allMarketplacesTable.addColumn(descriptionColumn, "Beschreibung");
+		allProjectsTable.addColumn(descriptionColumn, "Beschreibung");
 
-		allMarketplacesTable.setWidth("100%", true);
+		allProjectsTable.setWidth("100%", true);
 		// allMarketplacesTable.setRowData(MARKETPLACE);
 		final VerticalPanel root = new VerticalPanel();
 		root.add(createHeadline("Alle Marktplätze", true));
-		root.add(allMarketplacesTable);
+		root.add(allProjectsTable);
 
-		final Button newButton = new Button("Neuen Marktplatz hinzufügen");
+		final Button newButton = new Button("Neues Projekt hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				MainPanel tmpMainPanel = ClientsideSettings.getMainPanel();
@@ -91,15 +91,15 @@ public class SearchMarketplace extends Page {
 		});
 		root.add(newButton);
 
-		worketplaceAdministration.getAllMarketplaces(new AsyncCallback<Vector<Marketplace>>() {
+		worketplaceAdministration.getAllProjects (new AsyncCallback<Vector<Project>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO
 			}
 
-			public void onSuccess(Vector<Marketplace> results) {
-				allMarketplacesTable.setRowData(0, results);
-				allMarketplacesTable.setRowCount(results.size(), true);
+			public void onSuccess(Vector<Project> results) {
+				allProjectsTable.setRowData(0, results);
+				allProjectsTable.setRowCount(results.size(), true);
 			}
 		});
 
