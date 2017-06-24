@@ -26,14 +26,14 @@ import de.worketplace.team06.shared.bo.Enrollment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectView extends Page {
+public class ProjectOverview extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 
 	// erstellen der Tabelle Ausschreibungen
 	final CellTable<Call> callTable = new CellTable<Call>();
 
-	public ProjectView() {
+	public ProjectOverview() {
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann

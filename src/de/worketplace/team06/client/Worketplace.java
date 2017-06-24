@@ -16,8 +16,8 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.MarketplaceForm;
-import de.worketplace.team06.client.gui.Overview;
-import de.worketplace.team06.client.gui.SearchMarketplace;
+import de.worketplace.team06.client.gui.MyOverview;
+import de.worketplace.team06.client.gui.MarketplaceOverview;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.bo.LoginInfo;
@@ -51,7 +51,7 @@ public class Worketplace implements EntryPoint {
 		ou.setGoogleID("G3000");
 		ClientsideSettings.setCurrentUser(ou);
 
-		mainPanel.setOverview(new Overview());
+		mainPanel.setOverview(new MyOverview());
 
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		rp.add(mainPanel);

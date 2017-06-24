@@ -20,7 +20,7 @@ import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.Project;
 
-public class Overview extends Page implements DataLoading {
+public class MyOverview extends Page implements DataLoading {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	private final CellTable<Project> myProjectsTable = new CellTable<Project>();
@@ -28,7 +28,7 @@ public class Overview extends Page implements DataLoading {
 	private final CellTable<Application> myApplicationsTable = new CellTable<Application>();
 	private final CellTable<Application> applicationsTable = new CellTable<Application>();
 
-	public Overview() {
+	public MyOverview() {
 		// erstellen der Tabelle Meine Projekte
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein

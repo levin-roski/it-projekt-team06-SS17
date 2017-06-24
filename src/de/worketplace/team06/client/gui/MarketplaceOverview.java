@@ -18,13 +18,13 @@ import de.worketplace.team06.client.DataLoading;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
-public class SearchMarketplace extends Page implements DataLoading {
+public class MarketplaceOverview extends Page implements DataLoading {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	// erstellen der Tabelle Meine Marktplätze
 	private final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
-	public SearchMarketplace() {
+	public MarketplaceOverview() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();
