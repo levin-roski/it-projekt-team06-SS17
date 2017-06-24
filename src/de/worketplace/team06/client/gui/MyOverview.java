@@ -29,8 +29,6 @@ public class MyOverview extends Page implements DataLoading {
 	private final CellTable<Application> applicationsTable = new CellTable<Application>();
 
 	public MyOverview() {
-		// erstellen der Tabelle Meine Projekte
-
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Project> myProjectsSsm = new SingleSelectionModel<Project>();
@@ -44,11 +42,9 @@ public class MyOverview extends Page implements DataLoading {
 		myProjectsSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				// m1 = allMarketplaceSsm.getSelectedObject();
-				// Page page = new SearchProject(m1);
-				// RootPanel.get("Anzeige").clear();
-				// RootPanel.get("Anzeige").add(page);
-				Window.alert("Element geklickt");
+				Project selectedProject = myProjectsSsm.getSelectedObject();
+				ClientsideSettings.getMainPanel()
+						.setForm(new ProjectForm(selectedProject, false, true, null, null, null));
 			}
 		});
 
@@ -66,10 +62,35 @@ public class MyOverview extends Page implements DataLoading {
 		TextColumn<Project> projectsCounterColumn = new TextColumn<Project>() {
 			@Override
 			public String getValue(Project object) {
+				// TODO Anzahl offene Ausschreibungen
 				return object.getDescription();
 			}
 		};
-		myProjectsTable.addColumn(projectsCounterColumn, "Offene Ausschreibungen");
+		myProjectsTable.addColumn(projectsCounterColumn, "Anzahl Offene Ausschreibungen");
+		
+		TextColumn<Project> projectsDescriptionColumn = new TextColumn<Project>() {
+			@Override
+			public String getValue(Project object) {
+				return object.getDescription();
+			}
+		};
+		myProjectsTable.addColumn(projectsDescriptionColumn, "Beschreibung");
+		
+		TextColumn<Project> projectsStartColumn = new TextColumn<Project>() {
+			@Override
+			public String getValue(Project object) {
+				return String.valueOf(object.getStartDate());
+			}
+		};
+		myProjectsTable.addColumn(projectsStartColumn, "Start");
+		
+		TextColumn<Project> projectsEndColumn = new TextColumn<Project>() {
+			@Override
+			public String getValue(Project object) {
+				return String.valueOf(object.getEndDate());
+			}
+		};
+		myProjectsTable.addColumn(projectsEndColumn, "Ende");
 
 		myProjectsTable.setWidth("100%", true);
 
@@ -111,7 +132,31 @@ public class MyOverview extends Page implements DataLoading {
 				return object.getDescription();
 			}
 		};
-		myCallsTable.addColumn(callsCounterColumn, "Anzahl Projekte");
+		myCallsTable.addColumn(callsCounterColumn, "Anzahl Bewerbungen");
+
+		TextColumn<Call> descriptionColumn = new TextColumn<Call>() {
+			@Override
+			public String getValue(Call object) {
+				return object.getDescription();
+			}
+		};
+		myCallsTable.addColumn(descriptionColumn, "Beschreibung");
+		
+		TextColumn<Call> deadlineColumn = new TextColumn<Call>() {
+			@Override
+			public String getValue(Call object) {
+				return String.valueOf(object.getDeadline());
+			}
+		};
+		myCallsTable.addColumn(deadlineColumn, "Bewerbungsfrist");
+		
+		TextColumn<Call> statusColumn = new TextColumn<Call>() {
+			@Override
+			public String getValue(Call object) {
+				return object.getStatusString();
+			}
+		};
+		myCallsTable.addColumn(statusColumn, "Status");
 
 		myCallsTable.setWidth("100%", true);
 
@@ -221,16 +266,16 @@ public class MyOverview extends Page implements DataLoading {
 		// });
 
 		VerticalPanel overviewVerticalPanel = new VerticalPanel();
-		overviewVerticalPanel.add(new HTML("Mein Bereich"));
-		overviewVerticalPanel.add(new HTML("Meine Projekte"));
+		overviewVerticalPanel.add(createHeadline("Mein Bereich", true));
+		overviewVerticalPanel.add(createSecondHeadline("Meine Projekte"));
 		overviewVerticalPanel.add(myProjectsTable);
-		overviewVerticalPanel.add(new HTML("Ausshreibungen von mir"));
+		overviewVerticalPanel.add(createSecondHeadline("Ausshreibungen von mir"));
 		overviewVerticalPanel.add(myCallsTable);
-		overviewVerticalPanel.add(new HTML("Bewerbungen von mir"));
+		overviewVerticalPanel.add(createSecondHeadline("Bewerbungen von mir"));
 		overviewVerticalPanel.add(myApplicationsTable);
-		overviewVerticalPanel.add(new HTML("Mitarbeiter Beteiligungen an meinen Projekten"));
+		overviewVerticalPanel.add(createSecondHeadline("Mitarbeiter-Beteiligungen an meinen Projekten"));
 		overviewVerticalPanel.add(applicationsTable);
-		overviewVerticalPanel.add(new HTML("Meine Projekt-Beteiligungen"));
+		overviewVerticalPanel.add(createSecondHeadline("Meine Projekt-Beteiligungen"));
 		overviewVerticalPanel.add(myProjectApplicationsTable);
 
 		this.add(overviewVerticalPanel);
@@ -241,51 +286,58 @@ public class MyOverview extends Page implements DataLoading {
 	public void loadData() {
 		final Vector<Call> myCalls = new Vector<Call>();
 		final Vector<Application> applicationsToMe = new Vector<Application>();
-		worketplaceAdministration.getProjectsForLeader(ClientsideSettings.getCurrentUser(), new AsyncCallback<Vector<Project>>() {
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-			@Override
-			public void onSuccess(Vector<Project> results) {
-				myProjectsTable.setRowData(0, results);
-				myProjectsTable.setRowCount(results.size(), true);
-				for(Project project : results) {
-					worketplaceAdministration.getCallsFor(project, new AsyncCallback<Vector<Call>>() {
-						@Override
-						public void onFailure(Throwable caught) {
-						}
-						@Override
-						public void onSuccess(Vector<Call> results2) {
-							myCalls.addAll(results2);
-							for (Call call : results2) {
-								worketplaceAdministration.getApplicationsFor(call, new AsyncCallback<Vector<Application>>() {
-									@Override
-									public void onFailure(Throwable caught) {
+		worketplaceAdministration.getProjectsForLeader(ClientsideSettings.getCurrentUser(),
+				new AsyncCallback<Vector<Project>>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Vector<Project> results) {
+						myProjectsTable.setRowData(0, results);
+						myProjectsTable.setRowCount(results.size(), true);
+						for (Project project : results) {
+							worketplaceAdministration.getCallsFor(project, new AsyncCallback<Vector<Call>>() {
+								@Override
+								public void onFailure(Throwable caught) {
+								}
+
+								@Override
+								public void onSuccess(Vector<Call> results2) {
+									myCalls.addAll(results2);
+									for (Call call : results2) {
+										worketplaceAdministration.getApplicationsFor(call,
+												new AsyncCallback<Vector<Application>>() {
+													@Override
+													public void onFailure(Throwable caught) {
+													}
+
+													@Override
+													public void onSuccess(Vector<Application> results3) {
+														applicationsToMe.addAll(results3);
+													}
+												});
 									}
-									@Override
-									public void onSuccess(Vector<Application> results3) {
-										applicationsToMe.addAll(results3);
-									}
-								});
-							}
+								}
+							});
 						}
-					});
-				}
-			}
-		});
+					}
+				});
 		myCallsTable.setRowData(0, myCalls);
 		myCallsTable.setRowCount(myCalls.size(), true);
 		applicationsTable.setRowData(0, applicationsToMe);
 		applicationsTable.setRowCount(applicationsToMe.size(), true);
-		worketplaceAdministration.getApplicationsFor(ClientsideSettings.getCurrentUser(), new AsyncCallback<Vector<Application>>() {
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-			@Override
-			public void onSuccess(Vector<Application> results) {
-				myApplicationsTable.setRowData(0, results);
-				myApplicationsTable.setRowCount(results.size(), true);
-			}
-		});
+		worketplaceAdministration.getApplicationsFor(ClientsideSettings.getCurrentUser(),
+				new AsyncCallback<Vector<Application>>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Vector<Application> results) {
+						myApplicationsTable.setRowData(0, results);
+						myApplicationsTable.setRowCount(results.size(), true);
+					}
+				});
 	}
 }
