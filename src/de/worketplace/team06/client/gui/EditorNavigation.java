@@ -27,19 +27,19 @@ public class EditorNavigation extends VerticalPanel {
 
 		menu.addItem(new MenuItem(image, new Command() {
 			public void execute() {
-				mainPanel.setOverview(new MyOverview());
+				mainPanel.setView(new MyOverview());
 			}
 		}));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Mein Bereich", new Command() {
 			public void execute() {
-				mainPanel.setOverview(new MyOverview());
+				mainPanel.setView(new MyOverview());
 			}
 		}));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Marktplätze", new Command() {
 			public void execute() {
-				mainPanel.setOverview(new MarketplaceOverview());
+				mainPanel.setView(new MarketplaceOverview());
 			}
 		}));
 		menu.addSeparator();

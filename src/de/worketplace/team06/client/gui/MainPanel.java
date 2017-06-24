@@ -23,23 +23,23 @@ public class MainPanel extends DockLayoutPanel {
 		this.setStyleName("main-panel");
 	}
 
-	public <T extends Widget & DataLoading> void setOverview(T overviewItem) {
+	public <T extends Widget & DataLoading> void setView(T viewItem) {
 		try {
 			this.getWidget(0);
 			try {
 				Widget item = this.getWidget(1);
 				this.getWidget(0).removeFromParent();
-				this.insertWest(new ScrollPanel(overviewItem), 70, item);
+				this.insertWest(new ScrollPanel(viewItem), 70, item);
 			} catch (Exception e) {
 				this.getWidget(0).removeFromParent();
-				this.addWest(new ScrollPanel(overviewItem), 100);
+				this.addWest(new ScrollPanel(viewItem), 100);
 			}
 		} catch (Exception e) {
-			this.addWest(new ScrollPanel(overviewItem), 100);
+			this.addWest(new ScrollPanel(viewItem), 100);
 		}
 		this.getWidget(0).setStyleName("main-panel-overview");
 		this.getWidget(0).setHeight("100%");
-		ClientsideSettings.setCurrentOverview(overviewItem);
+		ClientsideSettings.setCurrentView(viewItem);
 	}
 
 	public <T extends Widget> void setForm(T form) {

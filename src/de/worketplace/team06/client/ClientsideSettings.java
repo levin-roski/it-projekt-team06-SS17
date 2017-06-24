@@ -25,7 +25,7 @@ public class ClientsideSettings {
 	private static OrgaUnit currentUser;
 	private static MainPanel mainPanel;
 	private static ReportGeneratorAsync reportGenerator;
-	private static DataLoading currentOverview;
+	private static DataLoading currentView;
 	
 	/**
 	 * 
@@ -72,11 +72,11 @@ public class ClientsideSettings {
 		return reportGenerator;
 	}
 
-	public static DataLoading getCurrentOverview() {
-		return currentOverview;
+	public static DataLoading getCurrentView() {
+		return currentView;
 	}
 
-	public static void setCurrentOverview(DataLoading pCurrentOverview) {
-		currentOverview = pCurrentOverview;
+	public static void setCurrentView(DataLoading pCurrentView) {
+		currentView = pCurrentView;
 	}
 }
