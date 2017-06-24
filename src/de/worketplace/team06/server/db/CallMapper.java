@@ -7,21 +7,60 @@ import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.*;
 
+/**
+ * Die Mapper-Klasse CallMapper bildet Call-Objekte als Datensätze
+ * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
+ * können mit deren Hilfe Objekte erzeugt, verändert, gelöscht und ausgelesen werden.
+ * Das Mapping erfolgt bidirektional: Objekte können in Datensätze und Datensätze in 
+ * Objekte umgewandelt werden.
+ * 
+ * @see ApplicationMapper
+ * @see EnrollmentMapper
+ * @see MarketplaceMapper
+ * @see OrganisationMapper
+ * @see OrgaUnitMapper
+ * @see PartnerProfileMapper
+ * @see PersonMapper
+ * @see ProjectMapper
+ * @see PropertyMapper
+ * @see RatingMapper
+ * @see TeamMapper
+ * 
+ * @author Patrick
+ */ 
+
 public class CallMapper {
+	
+    /**
+     * Die Instatiierung der Klasse CallMapper erfolgt nur einmal.
+     * Dies wird auch als Singleton bezeichnet.
+     * Durch den Bezeichner static ist die Variable nur einmal für jede Instanz der Klasse vorhanden.
+     * Sie speichert die einzige Instanz der Klasse.
+     * 
+     * @see CallMapper#callMapper()
+     */
 	
 	private static CallMapper callMapper = null;
 	
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
-	 /**
-	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
-	   * neue Instanzen dieser Klasse zu erzeugen.
-	   */
+	/**
+	 * Der geschützte Konstruktor verhindert das Erzeugen neuer Instanzen
+	 * der Klasse, sollte schon eine Instanz vorhanden sein.
+	 */
 	
 	protected CallMapper() {
 		
 	}
-
+	
+	/**
+	 * Durch CallMapper.callMapper wird die folgende Methode aufgerufen.
+	 * Durch sie wird die Singleton-Eigenschaft sichergestellt, in dem sie dafür sorgt, dass nur eine 
+	 * Instanz von CallMapper existiert.
+	 * Die Instantiierung von CallMapper sollte stets durch den Aufruf dieser Methode erfolgen.
+	 * 
+	 * @return ApplicationMapper-Objekt.
+	 */
 	public static CallMapper callMapper() {
 		if (callMapper == null) {
 			callMapper = new CallMapper();
@@ -94,8 +133,10 @@ public class CallMapper {
 	}
 
 	/**
-	 * Auslesen aller Ausschreibungen, die in der Datenbank gespeichert sind
-	 * @return
+	 * Methode zur Suche nach allen Ausschreibungen, die in der Datenbank
+	 * gespeichert sind.
+	 * 
+	 * @return Vector<Call> mit allen Call-Objekten.
 	 */
 	
 	public Vector<Call> findAll() {
@@ -134,9 +175,42 @@ public class CallMapper {
 	}
 
 	/**
-	 * Auslesen einer Ausschreibung mithilfe der ProjectID
-	 * @param id
-	 * @return
+	 * Methode zur Suche nach allen Ausschreibungen, deren Eigenschaften des PartnerProfils
+	 * Gemeinsamkeiten haben mit den Eigenschaften eines PartnerProfils einer OrgaUnit.
+	 * 
+	 * @param projectID
+	 * @return Call-Objekt, das der übergebenen projectID entspricht bzw. null, 
+	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
+	 */	
+	public Vector<Call> findCallBySimilarProperty(Integer propertyID) {
+		Connection con = DBConnection.connection();
+		Vector<Call> result = new Vector<Call>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("call INNER JOIN property JOIN partnerprofile "
+					+ "SELECT * FROM call "
+					+ "WHERE call.id = property.partnerprofile_id AND property.name LIKE property.name ORDER BY id");
+			
+			while (rs.next()) {
+				Call c = new Call();
+			}
+		}
+		
+		catch (SQLException | ParseException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return result;
+	}
+	
+	/**
+	 * Methode zur Suche nach Ausschreibungen anhand einer projectID.
+	 * Da diese eindeutig ist wird genau ein Objekt zurückgegeben.
+	 * 
+	 * @param projectID
+	 * @return Call-Objekt, das der übergebenen projectID entspricht bzw. null, 
+	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
 	 */
 	
 	public Vector<Call> findByProjectID(Integer projectID) {
@@ -170,9 +244,12 @@ public class CallMapper {
 	}
 	
 	/**
-	 * bestimmte Ausschreibung auslesen mithilfe CallID
+	 * Methode zur Suche nach Ausschreibungen anhand einer callID.
+	 * Da diese eindeutig ist wird genau ein Objekt zurückgegeben.
+	 * 
 	 * @param callID
-	 * @return
+	 * @return Call-Objekt, das der übergebenen ID entspricht bzw. null, 
+	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
 	 */
 	
 	public Call findByID(Integer callID) {
