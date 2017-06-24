@@ -27,31 +27,11 @@ public class SearchMarketplace extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 
-	// private static class Marketplace {
-	// private final String title;
-	// private final String owner;
-	// private final String description;
-	//
-	// public Marketplace(String title, String owner, String description) {
-	// this.title = title;
-	// this.owner = owner;
-	// this.description = description;
-	// }
-	// }
-	//
-	// private static final List<Marketplace> MARKETPLACE = Arrays.asList(
-	// new Marketplace("Stuttgart", "Patrick Strepp", "Hier steht eine
-	// Beschreibung des Marktplatzes Stuttgart"),
-	// new Marketplace("Karlsruhe", "Dominik Florschütz", "Hier steht eine
-	// Beschreibung des Marktplatzes Karlsruhe"),
-	// new Marketplace("Heilbronn", "Tobias Müller", "Hier steht eine
-	// Beschreibung des Marktplatzes Heilbronn"));
 
 	// erstellen der Tabelle Meine Marktplätze
 	final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
 	public SearchMarketplace() {
-		// allMarketplacesTable.setPageSize(3);
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
@@ -71,7 +51,6 @@ public class SearchMarketplace extends Page {
 			}
 		});
 
-		// final CellTable<Marketplace> table = new CellTable<Marketplace>();
 
 		TextColumn<Marketplace> titleColumn = new TextColumn<Marketplace>() {
 			@Override
