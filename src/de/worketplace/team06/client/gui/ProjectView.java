@@ -18,8 +18,10 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
+import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Enrollment;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -28,22 +30,22 @@ public class ProjectView extends Page {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 
-	// erstellen der Tabelle Meine Marktplätze
-	final CellTable<Project> allProjectsTable = new CellTable<Project>();
+	// erstellen der Tabelle Ausschreibungen
+	final CellTable<Call> callTable = new CellTable<Call>();
 
 	public ProjectView() {
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
-		final SingleSelectionModel<Project> allProjectsSsm = new SingleSelectionModel<Project>();
+		final SingleSelectionModel<Call> callSsm = new SingleSelectionModel<Call>();
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
-		allProjectsTable.setSelectionModel(allProjectsSsm);
+		callTable.setSelectionModel(callSsm);
 
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-		allProjectsSsm.addSelectionChangeHandler(new Handler() {
+		callSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 //				Marketplace m1 = allProjectsSsm.getSelectedObject();
@@ -52,57 +54,120 @@ public class ProjectView extends Page {
 		});
 
 
-		TextColumn<Project> projectsTitleColumn = new TextColumn<Project>() {
+		TextColumn<Call> callsTitleColumn = new TextColumn<Call>() {
 			@Override
-			public String getValue(Project object) {
+			public String getValue(Call object) {
 				return object.getTitle();
 			}
 		};
-		allProjectsTable.addColumn(projectsTitleColumn, "Name");
+		callTable.addColumn(callsTitleColumn, "Name");
 
-		// TextColumn<Project> ownerColumn = new TextColumn<Project>() {
+		// TextColumn<Call> projectLeaderColumn = new TextColumn<Call>() {
 		// @Override
-		// public String getValue(Project object) {
+		// public String getValue(Call object) {
 		// return object.getOrgaUnitID();
 		// }
 		// };
-		// allMarketplacesTable.addColumn(ownerColumn, "Inhaber");
+		// callTable.addColumn(projectLeaderColumn, "Inhaber");
 
-		TextColumn<Project> descriptionColumn = new TextColumn<Project>() {
-			@Override
-			public String getValue(Project object) {
-				return object.getDescription();
-			}
-		};
-		allProjectsTable.addColumn(descriptionColumn, "Beschreibung");
 
-		allProjectsTable.setWidth("100%", true);
+
+		callTable.setWidth("100%", true);
 		// allMarketplacesTable.setRowData(MARKETPLACE);
-		final VerticalPanel root = new VerticalPanel();
-		root.add(createHeadline("Alle Marktplätze", true));
-		root.add(allProjectsTable);
+		final VerticalPanel callroot = new VerticalPanel();
+		callroot.add(createHeadline("Ausschreibungen", true));
+		callroot.add(callTable);
 
-		final Button newButton = new Button("Neues Projekt hinzufügen");
+		final Button newButton = new Button("Neue Ausschreibung hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				MainPanel tmpMainPanel = ClientsideSettings.getMainPanel();
 				tmpMainPanel.setItem(new MarketplaceForm(null, false, true));
 			}
 		});
-		root.add(newButton);
+		callroot.add(newButton);
 
-		worketplaceAdministration.getAllProjects (new AsyncCallback<Vector<Project>>() {
+		worketplaceAdministration.getAllCalls(new AsyncCallback<Vector<Call>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO
 			}
 
-			public void onSuccess(Vector<Project> results) {
-				allProjectsTable.setRowData(0, results);
-				allProjectsTable.setRowCount(results.size(), true);
+			public void onSuccess(Vector<Call> results) {
+				callTable.setRowData(0, results);
+				callTable.setRowCount(results.size(), true);
 			}
 		});
 
-		this.add(root);
+		
+		// erstellen der Tabelle Beteiligungen
+		final CellTable<Enrollment> enrollmentTable = new CellTable<Enrollment>();
+
+		
+		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+		// Item zur selben Zeit ausgewählt sein kann
+		final SingleSelectionModel<Enrollment> enrollmentSsm = new SingleSelectionModel<Enrollment>();
+
+		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+		// Item zur selben Zeit ausgewählt sein kann
+		enrollmentTable.setSelectionModel(enrollmentSsm);
+
+		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
+		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
+		enrollmentSsm.addSelectionChangeHandler(new Handler() {
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+//				Marketplace m1 = allProjectsSsm.getSelectedObject();
+//				ClientsideSettings.getMainPanel().setItem(new MarketplaceForm(m1, false, true));
+			}
+		});
+
+
+		TextColumn<Enrollment> enrollmentTitleColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return object.getOrgaUnitID();
+			}
+		};
+		enrollmentTable.addColumn(enrollmentTitleColumn, "Name");
+
+		TextColumn<Enrollment> timePeriodColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return object.getStartDate();
+				return object.getEndDate();
+			}
+		};
+		enrollmentTable.addColumn(timePeriodColumn, "Start - bis");
+		
+		TextColumn<Enrollment> workloadColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return object.getWorkload();
+			}
+		};
+		enrollmentTable.addColumn(workloadColumn, "Workload");
+
+
+		enrollmentTable.setWidth("100%", true);
+		final VerticalPanel enrollmentroot = new VerticalPanel();
+		enrollmentroot.add(createHeadline("Beteiligungen", true));
+		enrollmentroot.add(enrollmentTable);
+
+
+		worketplaceAdministration.getEnrollmentFor(project, new AsyncCallback<Vector<Enrollment>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO
+			}
+
+			public void onSuccess(Vector<Enrollment> results) {
+				enrollmentTable.setRowData(0, results);
+				enrollmentTable.setRowCount(results.size(), true);
+			}
+		});
+	
+		this.add(callroot);
+		this.add(enrollmentroot);
 	}
 }
