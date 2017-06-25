@@ -60,7 +60,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * Methode zum Hinzufügen eines Impressums zum entsprechenden Report
 	 * @param r
 	 */
-	
 	/*
 	 * Impressum hinzufügen (optional)
 	protected void addImprint (Report r){
@@ -93,27 +92,33 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	*/
 	
+	/**
+	 * Methode zum Generieren eines Reports für alle Ausschreibungen der übergebenen Organisationseinheit.
+	 */
 	@Override
 	public AllCallsReport createAllCallsReport(OrgaUnit o) throws IllegalArgumentException {
 		
+		//Erstellung einer Instanz des Reports
 		AllCallsReport report = new AllCallsReport();
 		
+		//Setzen des Reporttitels und dem Generierungsdatum
 		report.setTitle("Alle Ausschreibungen");
-		
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
 		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
 		headline.addColumn(new Column("Titel"));
 		headline.addColumn(new Column("Beschreibung"));
 		headline.addColumn(new Column("Projekt"));
 		headline.addColumn(new Column("Deadline"));
 		headline.addColumn(new Column("Status"));
+		
+		//Kopfzeile dem Report hinzufügen
 		report.addRow(headline);
 		
-		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		Vector<Call> calls = wpadmin.getAllCalls();
-		
 		for (Call c : calls){
 			Project p = wpadmin.getProjectByID(c.getProjectID());
 			Row rowToAdd = new Row();
@@ -129,16 +134,59 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	
+	/**
+	 * 
+	 */
 	@Override
 	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException {
 		//TODO: Überlegung, wie die Partnerprofile verglichen werden. Ggf. DB "like"
 		return null;
 	}
 	
+	
+	/**
+	 * Methode zum Generieren eines Reports für alle Bewerbungen auf Ausschreibungen, die dem übergebenenen Benutzer zugeordnet sind.
+	 */
 	@Override
 	public AllApplicationsForCallsOfUserReport createAllApplicationsForCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
 		
-		return null;
+		//Erstellung einer Instanz des Reports
+		AllApplicationsForCallsOfUserReport report = new AllApplicationsForCallsOfUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Alle Bewerbungen auf Ausschreibungen des Benutzers");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("Bewerbungstext"));
+		headline.addColumn(new Column("Status"));
+		headline.addColumn(new Column("Rating"));
+		headline.addColumn(new Column("Projekt"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		for (Project p : projects){
+			Vector<Call> calls = wpadmin.getCallsFor(p);
+			for (Call c : calls){
+				Vector<Application> applications = wpadmin.getApplicationsFor(c);
+				for (Application a : applications){
+					Row rowToAdd = new Row();
+					rowToAdd.addColumn(new Column(a.getText()));
+					rowToAdd.addColumn(new Column(a.getStatusString()));
+					Rating r = wpadmin.getRatingFor(a);
+					rowToAdd.addColumn(new Column(r.getRating().toString()));
+					rowToAdd.addColumn(new Column(p.getTitle()));
+					report.addRow(rowToAdd);
+				}
+			}
+		}
+		
+		return report;
 	}
 	
 	
