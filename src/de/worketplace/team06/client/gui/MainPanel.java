@@ -31,7 +31,7 @@ public class MainPanel extends DockLayoutPanel {
 			try {
 				Widget item = this.getWidget(1);
 				this.getWidget(0).removeFromParent();
-				this.insertWest(sp, 70, item);
+				this.insertWest(sp, 80, item);
 			} catch (Exception e) {
 				this.getWidget(0).removeFromParent();
 				this.addWest(sp, 100);
@@ -51,15 +51,15 @@ public class MainPanel extends DockLayoutPanel {
 		try {
 			this.getWidget(1);
 			this.getWidget(1).removeFromParent();
-			this.addEast(sp, 30);
+			this.addEast(sp, 20);
 		} catch (Exception e) {
 			try {
 				Widget overviewWidget = this.getWidget(0);
 				this.getWidget(0).removeFromParent();
-				this.addWest(overviewWidget, 70);
+				this.addWest(overviewWidget, 80);
 			} catch (Exception e1) {
 			}
-			this.addEast(sp, 30);
+			this.addEast(sp, 20);
 		}
 		this.getWidget(1).setStyleName("main-panel-item");
 		this.getWidget(1).setHeight("100%");

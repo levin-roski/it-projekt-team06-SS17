@@ -52,9 +52,8 @@ public class MarketplaceView extends Page implements DataLoading {
 		projectSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				// Marketplace m1 = allProjectsSsm.getSelectedObject();
-				// ClientsideSettings.getMainPanel().setItem(new
-				// MarketplaceForm(m1, false, true));
+				Project selectedProject = projectSsm.getSelectedObject();
+				ClientsideSettings.getMainPanel().setView(new ProjectView(selectedProject));
 			}
 		});
 

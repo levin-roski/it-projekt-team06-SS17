@@ -1,9 +1,12 @@
 package de.worketplace.team06.client.gui;
 
+import java.util.Vector;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -16,27 +19,29 @@ import de.worketplace.team06.client.DataLoading;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Enrollment;
-import de.worketplace.team06.shared.bo.Marketplace;
+import de.worketplace.team06.shared.bo.Project;
 
 public class ProjectView extends Page implements DataLoading {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	// erstellen der Tabelle Ausschreibungen
-	final CellTable<Call> callTable = new CellTable<Call>();
+	private final CellTable<Call> callTable = new CellTable<Call>();
 	// erstellen der Tabelle Beteiligungen
-	final CellTable<Enrollment> enrollmentTable = new CellTable<Enrollment>();
+	private final CellTable<Enrollment> enrollmentTable = new CellTable<Enrollment>();
+	private final Project currentProject;
 
-	public ProjectView(final Marketplace currentMarketplace) {
+	public ProjectView(Project pCurrentProject) {
+		currentProject = pCurrentProject;
 		final VerticalPanel root = new VerticalPanel();
 		root.setWidth("100%");
-		root.add(createHeadline("Projekt", true));
-		root.add(new MarketplaceForm(currentMarketplace, false, false, null, new Callback() {
+		root.add(createHeadline("Projekt-Details", true));
+		root.add(new ProjectForm(currentProject, false, false, null, new Callback() {
 			@Override
 			public void run() {
 				ClientsideSettings.getMainPanel().setView(new MarketplaceOverview());
 			}
-		}));
-		
+		}, null));
+
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Call> callSsm = new SingleSelectionModel<Call>();
@@ -71,8 +76,8 @@ public class ProjectView extends Page implements DataLoading {
 		final Button newButton = new Button("Neue Ausschreibung hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				MainPanel tmpMainPanel = ClientsideSettings.getMainPanel();
-				tmpMainPanel.setForm(new MarketplaceForm(null, false, true, null, null));
+//				MainPanel tmpMainPanel = ClientsideSettings.getMainPanel();
+//				tmpMainPanel.setForm(new MarketplaceForm(null, false, true, null, null));
 			}
 		});
 		root.add(newButton);
@@ -108,7 +113,6 @@ public class ProjectView extends Page implements DataLoading {
 			@Override
 			public String getValue(Enrollment object) {
 				return String.valueOf(object.getStartDate());
-//				return String.valueOf(object.getEndDate());
 			}
 		};
 		enrollmentTable.addColumn(timePeriodColumn, "Von - Bis");
@@ -130,30 +134,28 @@ public class ProjectView extends Page implements DataLoading {
 
 	@Override
 	public void loadData() {
-//		 worketplaceAdministration.getEnrollmentFor(project, new
-//		 AsyncCallback<Vector<Enrollment>>() {
-//		 @Override
-//		 public void onFailure(Throwable caught) {
-//		 // TODO
-//		 }
-//		
-//		 public void onSuccess(Vector<Enrollment> results) {
-//		 enrollmentTable.setRowData(0, results);
-//		 enrollmentTable.setRowCount(results.size(), true);
-//		 }
-//		 });
-		
-		// worketplaceAdministration.getAllCalls(new
-		// AsyncCallback<Vector<Call>>() {
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// // TODO
-		// }
-		//
-		// public void onSuccess(Vector<Call> results) {
-		// callTable.setRowData(0, results);
-		// callTable.setRowCount(results.size(), true);
-		// }
-		// });
+		worketplaceAdministration.getEnrollmentFor(currentProject, new AsyncCallback<Vector<Enrollment>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(Vector<Enrollment> result) {
+				enrollmentTable.setRowData(0, result);
+				enrollmentTable.setRowCount(result.size(), true);
+			}
+		});
+
+		worketplaceAdministration.getCallsFor(currentProject, new AsyncCallback<Vector<Call>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(Vector<Call> results) {
+				callTable.setRowData(0, results);
+				callTable.setRowCount(results.size(), true);
+			}
+		});
 	}
 }
