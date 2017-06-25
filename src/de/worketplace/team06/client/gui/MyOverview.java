@@ -56,14 +56,14 @@ public class MyOverview extends Page implements DataLoading {
 		myProjectsTable.addColumn(projectsTitleColumn, "Name");
 
 		// Muss eigentlich Int (bzw. Row counter) wiedergeben
-		TextColumn<Project> projectsCounterColumn = new TextColumn<Project>() {
-			@Override
-			public String getValue(Project object) {
-				// TODO Anzahl offene Ausschreibungen
-				return object.getDescription();
-			}
-		};
-		myProjectsTable.addColumn(projectsCounterColumn, "Anzahl Offene Ausschreibungen");
+//		TextColumn<Project> projectsCounterColumn = new TextColumn<Project>() {
+//			@Override
+//			public String getValue(Project object) {
+//				// TODO Anzahl offene Ausschreibungen
+//				return object.getDescription();
+//			}
+//		};
+//		myProjectsTable.addColumn(projectsCounterColumn, "Anzahl Offene Ausschreibungen");
 
 		TextColumn<Project> projectsDescriptionColumn = new TextColumn<Project>() {
 			@Override

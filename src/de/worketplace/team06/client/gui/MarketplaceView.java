@@ -57,13 +57,49 @@ public class MarketplaceView extends Page implements DataLoading {
 			}
 		});
 
-		TextColumn<Project> projectTitleColumn = new TextColumn<Project>() {
+		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
+		// Daten aus der Datenbank
+		TextColumn<Project> projectsTitleColumn = new TextColumn<Project>() {
 			@Override
 			public String getValue(Project object) {
 				return object.getTitle();
 			}
 		};
-		projectTable.addColumn(projectTitleColumn, "Name");
+		projectTable.addColumn(projectsTitleColumn, "Name");
+
+		// Muss eigentlich Int (bzw. Row counter) wiedergeben
+//		TextColumn<Project> projectsCounterColumn = new TextColumn<Project>() {
+//			@Override
+//			public String getValue(Project object) {
+//				// TODO Anzahl offene Ausschreibungen
+//				return object.getDescription();
+//			}
+//		};
+//		projectTable.addColumn(projectsCounterColumn, "Anzahl Offene Ausschreibungen");
+
+		TextColumn<Project> projectsDescriptionColumn = new TextColumn<Project>() {
+			@Override
+			public String getValue(Project object) {
+				return object.getDescription();
+			}
+		};
+		projectTable.addColumn(projectsDescriptionColumn, "Beschreibung");
+
+		TextColumn<Project> projectsStartColumn = new TextColumn<Project>() {
+			@Override
+			public String getValue(Project object) {
+				return simpleDateFormat.format(object.getStartDate());
+			}
+		};
+		projectTable.addColumn(projectsStartColumn, "Start");
+
+		TextColumn<Project> projectsEndColumn = new TextColumn<Project>() {
+			@Override
+			public String getValue(Project object) {
+				return simpleDateFormat.format(object.getEndDate());
+			}
+		};
+		projectTable.addColumn(projectsEndColumn, "Ende");
 
 		root.add(createSecondHeadline("Projekte auf diesem Marktplatz"));
 		root.add(projectTable);
