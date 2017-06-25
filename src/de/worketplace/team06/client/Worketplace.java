@@ -46,11 +46,29 @@ public class Worketplace implements EntryPoint {
 	public void onModuleLoad() {
 		mainPanel = new MainPanel(Unit.PCT);
 		ClientsideSettings.setMainPanel(mainPanel);
-		
+
 		Person ou = new Person();
 		ou.setID(7);
 		ou.setGoogleID("G3000");
 		ClientsideSettings.setCurrentUser(ou);
+
+		// if (ClientsideSettings.getBreadcrumbFirstLevel() != null) {
+		// if (ClientsideSettings.getBreadcrumbSecondLevel() != null) {
+		// if (ClientsideSettings.getBreadcrumbThirdLevel() != null) {
+		// if (ClientsideSettings.getBreadcrumbFourthLevel() != null) {
+		// mainPanel.setView(ClientsideSettings.getBreadcrumbFourthLevel());
+		// } else {
+		// mainPanel.setView(ClientsideSettings.getBreadcrumbThirdLevel());
+		// }
+		// } else {
+		// mainPanel.setView(ClientsideSettings.getBreadcrumbSecondLevel());
+		// }
+		// } else {
+		// mainPanel.setView(ClientsideSettings.getBreadcrumbFirstLevel());
+		// }
+		// } else {
+		// mainPanel.setView(new MyOverview());
+		// }
 
 		mainPanel.setView(new MyOverview());
 

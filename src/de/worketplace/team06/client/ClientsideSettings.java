@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.shared.*;
@@ -33,6 +32,7 @@ public class ClientsideSettings {
 	private static ReportGeneratorAsync reportGenerator;
 	private static View currentView;
 	private static View BreadcrumbFirstLevel;
+
 	private static String BreadcrumbFirstLevelName;
 	private static View BreadcrumbSecondLevel;
 	private static String BreadcrumbSecondLevelName;
@@ -173,5 +173,21 @@ public class ClientsideSettings {
 			}
 		}
 		return breadcrumbs;
+	}
+	
+	public static View getBreadcrumbFirstLevel() {
+		return BreadcrumbFirstLevel;
+	}
+
+	public static View getBreadcrumbSecondLevel() {
+		return BreadcrumbSecondLevel;
+	}
+
+	public static View getBreadcrumbThirdLevel() {
+		return BreadcrumbThirdLevel;
+	}
+
+	public static View getBreadcrumbFourthLevel() {
+		return BreadcrumbFourthLevel;
 	}
 }
