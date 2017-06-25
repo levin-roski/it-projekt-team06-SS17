@@ -2,7 +2,6 @@ package de.worketplace.team06.client.gui;
 
 import java.util.Vector;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
@@ -42,8 +41,7 @@ public class MyOverview extends Page implements DataLoading {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Project selectedProject = myProjectsSsm.getSelectedObject();
-				ClientsideSettings.getMainPanel()
-						.setForm(new ProjectForm(selectedProject, false, true, null, null, null));
+				mainPanel.setForm(new ProjectForm(selectedProject, false, true, null, null, null));
 			}
 		});
 
@@ -66,7 +64,7 @@ public class MyOverview extends Page implements DataLoading {
 			}
 		};
 		myProjectsTable.addColumn(projectsCounterColumn, "Anzahl Offene Ausschreibungen");
-		
+
 		TextColumn<Project> projectsDescriptionColumn = new TextColumn<Project>() {
 			@Override
 			public String getValue(Project object) {
@@ -74,7 +72,7 @@ public class MyOverview extends Page implements DataLoading {
 			}
 		};
 		myProjectsTable.addColumn(projectsDescriptionColumn, "Beschreibung");
-		
+
 		TextColumn<Project> projectsStartColumn = new TextColumn<Project>() {
 			@Override
 			public String getValue(Project object) {
@@ -82,7 +80,7 @@ public class MyOverview extends Page implements DataLoading {
 			}
 		};
 		myProjectsTable.addColumn(projectsStartColumn, "Start");
-		
+
 		TextColumn<Project> projectsEndColumn = new TextColumn<Project>() {
 			@Override
 			public String getValue(Project object) {
@@ -140,7 +138,7 @@ public class MyOverview extends Page implements DataLoading {
 			}
 		};
 		myCallsTable.addColumn(descriptionColumn, "Beschreibung");
-		
+
 		TextColumn<Call> deadlineColumn = new TextColumn<Call>() {
 			@Override
 			public String getValue(Call object) {
@@ -148,7 +146,7 @@ public class MyOverview extends Page implements DataLoading {
 			}
 		};
 		myCallsTable.addColumn(deadlineColumn, "Bewerbungsfrist");
-		
+
 		TextColumn<Call> statusColumn = new TextColumn<Call>() {
 			@Override
 			public String getValue(Call object) {

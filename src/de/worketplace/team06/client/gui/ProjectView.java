@@ -38,7 +38,7 @@ public class ProjectView extends Page implements DataLoading {
 		root.add(new ProjectForm(currentProject, false, false, null, new Callback() {
 			@Override
 			public void run() {
-				ClientsideSettings.getMainPanel().setView(new MarketplaceOverview());
+				mainPanel.setView(new MarketplaceOverview());
 			}
 		}, null));
 
@@ -56,7 +56,7 @@ public class ProjectView extends Page implements DataLoading {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				// Marketplace m1 = allProjectsSsm.getSelectedObject();
-				// ClientsideSettings.getMainPanel().setItem(new
+				// mainPanel.setItem(new
 				// MarketplaceForm(m1, false, true));
 			}
 		});
@@ -76,7 +76,7 @@ public class ProjectView extends Page implements DataLoading {
 		final Button newButton = new Button("Neue Ausschreibung hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-//				MainPanel tmpMainPanel = ClientsideSettings.getMainPanel();
+//				MainPanel tmpMainPanel = mainPanel;
 //				tmpMainPanel.setForm(new MarketplaceForm(null, false, true, null, null));
 			}
 		});
@@ -96,7 +96,7 @@ public class ProjectView extends Page implements DataLoading {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				// Marketplace m1 = allProjectsSsm.getSelectedObject();
-				// ClientsideSettings.getMainPanel().setItem(new
+				// mainPanel.setItem(new
 				// MarketplaceForm(m1, false, true));
 			}
 		});

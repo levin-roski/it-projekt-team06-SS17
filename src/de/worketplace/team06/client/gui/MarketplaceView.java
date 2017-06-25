@@ -35,7 +35,7 @@ public class MarketplaceView extends Page implements DataLoading {
 		root.add(new MarketplaceForm(currentMarketplace, false, false, null, new Callback() {
 			@Override
 			public void run() {
-				ClientsideSettings.getMainPanel().setView(new MarketplaceOverview());
+				mainPanel.setView(new MarketplaceOverview());
 			}
 		}));
 
@@ -53,7 +53,7 @@ public class MarketplaceView extends Page implements DataLoading {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Project selectedProject = projectSsm.getSelectedObject();
-				ClientsideSettings.getMainPanel().setView(new ProjectView(selectedProject));
+				mainPanel.setView(new ProjectView(selectedProject));
 			}
 		});
 
@@ -72,8 +72,7 @@ public class MarketplaceView extends Page implements DataLoading {
 		final Button newButton = new Button("Neues Projekt hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ClientsideSettings.getMainPanel()
-						.setForm(new ProjectForm(null, false, true, null, null, currentMarketplace));
+				mainPanel.setForm(new ProjectForm(null, false, true, null, null, currentMarketplace));
 			}
 		});
 		root.add(newButton);

@@ -39,7 +39,7 @@ public class MarketplaceOverview extends Page implements DataLoading {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Marketplace m1 = allMarketplaceSsm.getSelectedObject();
-				ClientsideSettings.getMainPanel().setView(new MarketplaceView(m1));
+				mainPanel.setView(new MarketplaceView(m1));
 			}
 		});
 
@@ -68,13 +68,13 @@ public class MarketplaceOverview extends Page implements DataLoading {
 		final Button newButton = new Button("Neuen Marktplatz hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ClientsideSettings.getMainPanel().setForm(new MarketplaceForm(null, false, true, null, null));
+				mainPanel.setForm(new MarketplaceForm(null, false, true, null, null));
 			}
 		});
 		root.add(newButton);
-		
+
 		this.add(root);
-		
+
 		loadData();
 	}
 
@@ -84,6 +84,7 @@ public class MarketplaceOverview extends Page implements DataLoading {
 			@Override
 			public void onFailure(Throwable caught) {
 			}
+
 			@Override
 			public void onSuccess(Vector<Marketplace> results) {
 				allMarketplacesTable.setRowData(0, results);

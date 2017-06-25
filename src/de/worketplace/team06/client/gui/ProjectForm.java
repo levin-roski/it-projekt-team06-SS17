@@ -179,7 +179,7 @@ public class ProjectForm extends Page {
 			if (!(ClientsideSettings.getCurrentUser() instanceof Person)) {
 				Window.alert(
 						"Sie können kein Projekt anlegen, da Sie einen Firmen-, oder Teamnutzer besitzen. Nur Personen Nutzer können neue Projekte anlegen.");
-				ClientsideSettings.getMainPanel().closeForm();
+				mainPanel.closeForm();
 			}
 			if (addHeadline != null) {
 				root.add(addHeadline);
