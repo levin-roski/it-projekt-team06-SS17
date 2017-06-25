@@ -61,7 +61,7 @@ public class MainPanel extends DockLayoutPanel {
 			}
 			this.addEast(sp, 20);
 		}
-		this.getWidget(1).setStyleName("main-panel-item");
+		this.getWidget(1).setStyleName("main-panel-form");
 		this.getWidget(1).setHeight("100%");
 		sp.setHeight("100%");
 	}
