@@ -15,13 +15,13 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.client.DataLoading;
+import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Enrollment;
 import de.worketplace.team06.shared.bo.Project;
 
-public class ProjectView extends Page implements DataLoading {
+public class ProjectView extends View {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	// erstellen der Tabelle Ausschreibungen
@@ -34,6 +34,7 @@ public class ProjectView extends Page implements DataLoading {
 		currentProject = pCurrentProject;
 		final VerticalPanel root = new VerticalPanel();
 		root.setWidth("100%");
+		root.add(ClientsideSettings.getBreadcrumbs());
 		root.add(createHeadline("Projekt-Details", true));
 		root.add(new ProjectForm(currentProject, false, false, null, new Callback() {
 			@Override
@@ -157,5 +158,10 @@ public class ProjectView extends Page implements DataLoading {
 				callTable.setRowCount(results.size(), true);
 			}
 		});
+	}
+
+	@Override
+	public void setBreadcrumb() {
+		ClientsideSettings.setThirdBreadcrumb(this, "Projekt-Details");
 	}
 }

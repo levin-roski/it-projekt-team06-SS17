@@ -15,8 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.worketplace.team06.client.Callback;
-import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
+import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.Person;
 import de.worketplace.team06.shared.bo.Project;
@@ -28,9 +27,7 @@ import de.worketplace.team06.shared.bo.Project;
  * 
  * @author Roski
  */
-public class ProjectForm extends Page {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
+public class ProjectForm extends Form {
 	private Label nameLabel = new Label("Name");
 	private TextBox nameInput = new TextBox();
 	private Label beschreibungLabel = new Label("Beschreibung");
@@ -176,7 +173,7 @@ public class ProjectForm extends Page {
 			panel.add(deleteButton);
 			form.setWidget(4, 1, panel);
 		} else {
-			if (!(ClientsideSettings.getCurrentUser() instanceof Person)) {
+			if (!(currentUser instanceof Person)) {
 				Window.alert(
 						"Sie können kein Projekt anlegen, da Sie einen Firmen-, oder Teamnutzer besitzen. Nur Personen Nutzer können neue Projekte anlegen.");
 				mainPanel.closeForm();
@@ -197,7 +194,7 @@ public class ProjectForm extends Page {
 						Window.alert("Bitte geben Sie ein Enddatum ein");
 					} else {
 						worketplaceAdministration.createProject(addToMarketplace, nameInput.getText(),
-								beschreibungInput.getText(), (Person) ClientsideSettings.getCurrentUser(),
+								beschreibungInput.getText(), (Person) currentUser,
 								startDateInput.getValue(), endDateInput.getValue(), new AsyncCallback<Project>() {
 									public void onFailure(Throwable caught) {
 										Window.alert(

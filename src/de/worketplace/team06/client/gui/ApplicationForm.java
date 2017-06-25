@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.ClientsideSettings;
+import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Application;
 
@@ -23,9 +24,7 @@ import de.worketplace.team06.shared.bo.Application;
  * 
  * @author Patrick
  */
-public class ApplicationForm extends Page {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
+public class ApplicationForm extends Form {
 	private Label textLabel = new Label("Bewerbungstext");
 	private TextBox textInput = new TextBox();
 	private Label statusLabel = new Label("Bewerbungsstatus");
@@ -159,6 +158,5 @@ public class ApplicationForm extends Page {
 			form.setWidget(2, 1, saveButton);
 		}
 		root.add(form);
-		nameInput.setFocus(true);
 	}
 }

@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.ClientsideSettings;
+import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Enrollment;
 
@@ -23,9 +24,7 @@ import de.worketplace.team06.shared.bo.Enrollment;
  * 
  * @author Roski
  */
-public class EnrollmentForm extends Page {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
+public class EnrollmentForm extends Form {
 	private Label startDateLabel = new Label("Startdatum");
 	private TextBox startDateInput = new TextBox();
 	private Label periodLabel = new Label("Dauer");

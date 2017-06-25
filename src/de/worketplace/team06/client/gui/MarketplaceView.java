@@ -15,12 +15,12 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.client.DataLoading;
+import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.Project;
 
-public class MarketplaceView extends Page implements DataLoading {
+public class MarketplaceView extends View {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	// erstellen der Tabelle Projekte
@@ -30,6 +30,7 @@ public class MarketplaceView extends Page implements DataLoading {
 	public MarketplaceView(Marketplace pCurrentMarketplace) {
 		currentMarketplace = pCurrentMarketplace;
 		final VerticalPanel root = new VerticalPanel();
+		root.add(ClientsideSettings.getBreadcrumbs());
 		root.setWidth("100%");
 		root.add(createHeadline("Marktplatz-Details", true));
 		root.add(new MarketplaceForm(currentMarketplace, false, false, null, new Callback() {
@@ -130,5 +131,10 @@ public class MarketplaceView extends Page implements DataLoading {
 				projectTable.setRowCount(results.size(), true);
 			}
 		});
+	}
+
+	@Override
+	public void setBreadcrumb() {
+		ClientsideSettings.setSecondBreadcrumb(this, "Marktplatz-Details");		
 	}
 }

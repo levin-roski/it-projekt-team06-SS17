@@ -56,6 +56,7 @@ button {
 	font-weight: bold !important;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td {
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td,
+.gwt-Anchor {
 	cursor: pointer;	
 }

@@ -12,8 +12,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.Callback;
-import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
+import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Marketplace;
 
 /**
@@ -24,9 +23,7 @@ import de.worketplace.team06.shared.bo.Marketplace;
  * 
  * @author Roski
  */
-public class MarketplaceForm extends Page {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
+public class MarketplaceForm extends Form {
 	private Label nameLabel = new Label("Name");
 	private TextBox nameInput = new TextBox();
 	private Label descriptionLabel = new Label("Beschreibung");
@@ -70,7 +67,8 @@ public class MarketplaceForm extends Page {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public MarketplaceForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final boolean pClosingHeadline, final Callback editCallback, final Callback deleteCallback) {
+	public MarketplaceForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final boolean pClosingHeadline,
+			final Callback editCallback, final Callback deleteCallback) {
 		this(pToChangeMarketplace, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Marktplatz bearbeiten", true);

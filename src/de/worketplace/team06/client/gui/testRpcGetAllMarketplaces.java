@@ -11,12 +11,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 import de.worketplace.team06.client.ClientsideSettings;
+import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
-public class testRpcGetAllMarketplaces extends Page {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
+public class testRpcGetAllMarketplaces extends View {
 	public testRpcGetAllMarketplaces () {
 		final Label searchMarketplace = new Label("Alle Marktplätze");
 

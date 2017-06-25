@@ -3,15 +3,13 @@
  */
 package de.worketplace.team06.client.gui;
 
-import com.google.cloud.sql.jdbc.internal.ClientSideBlob;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.client.DataLoading;
+import de.worketplace.team06.client.View;
 
 /**
  * 
@@ -23,7 +21,7 @@ public class MainPanel extends DockLayoutPanel {
 		this.setStyleName("main-panel");
 	}
 
-	public <T extends Widget & DataLoading> void setView(T viewItem) {
+	public <T extends View> void setView(T viewItem) {
 		ScrollPanel sp = new ScrollPanel(viewItem);
 		sp.setWidth("100%");
 		try {
@@ -65,7 +63,7 @@ public class MainPanel extends DockLayoutPanel {
 		this.getWidget(1).setHeight("100%");
 		sp.setHeight("100%");
 	}
-	
+
 	public void closeForm() {
 		try {
 			this.getWidget(1).removeFromParent();

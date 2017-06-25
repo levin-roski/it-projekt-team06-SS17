@@ -14,11 +14,11 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.client.DataLoading;
+import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
-public class MarketplaceOverview extends Page implements DataLoading {
+public class MarketplaceOverview extends View {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	// erstellen der Tabelle Meine Marktplätze
@@ -62,6 +62,7 @@ public class MarketplaceOverview extends Page implements DataLoading {
 		allMarketplacesTable.setWidth("100%", true);
 		// allMarketplacesTable.setRowData(MARKETPLACE);
 		final VerticalPanel root = new VerticalPanel();
+		root.add(ClientsideSettings.getBreadcrumbs());
 		root.add(createHeadline("Alle Marktplätze", true));
 		root.add(allMarketplacesTable);
 
@@ -91,5 +92,10 @@ public class MarketplaceOverview extends Page implements DataLoading {
 				allMarketplacesTable.setRowCount(results.size(), true);
 			}
 		});
+	}
+
+	@Override
+	public void setBreadcrumb() {
+		ClientsideSettings.setFirstBreadcrumb(this, "Marktplätze");		
 	}
 }

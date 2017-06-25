@@ -12,13 +12,13 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.client.DataLoading;
+import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Project;
 
-public class MyOverview extends Page implements DataLoading {
+public class MyOverview extends View {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 	private final CellTable<Project> myProjectsTable = new CellTable<Project>();
@@ -262,20 +262,21 @@ public class MyOverview extends Page implements DataLoading {
 		// }
 		// });
 
-		VerticalPanel overviewVerticalPanel = new VerticalPanel();
-		overviewVerticalPanel.add(createHeadline("Mein Bereich", true));
-		overviewVerticalPanel.add(createSecondHeadline("Meine Projekte"));
-		overviewVerticalPanel.add(myProjectsTable);
-		overviewVerticalPanel.add(createSecondHeadline("Ausshreibungen von mir"));
-		overviewVerticalPanel.add(myCallsTable);
-		overviewVerticalPanel.add(createSecondHeadline("Bewerbungen von mir"));
-		overviewVerticalPanel.add(myApplicationsTable);
-		overviewVerticalPanel.add(createSecondHeadline("Mitarbeiter-Beteiligungen an meinen Projekten"));
-		overviewVerticalPanel.add(applicationsTable);
-		overviewVerticalPanel.add(createSecondHeadline("Meine Projekt-Beteiligungen"));
-		overviewVerticalPanel.add(myProjectApplicationsTable);
+		VerticalPanel root = new VerticalPanel();
+		root.add(ClientsideSettings.getBreadcrumbs());
+		root.add(createHeadline("Mein Bereich", false));
+		root.add(createSecondHeadline("Meine Projekte"));
+		root.add(myProjectsTable);
+		root.add(createSecondHeadline("Ausshreibungen von mir"));
+		root.add(myCallsTable);
+		root.add(createSecondHeadline("Bewerbungen von mir"));
+		root.add(myApplicationsTable);
+		root.add(createSecondHeadline("Mitarbeiter-Beteiligungen an meinen Projekten"));
+		root.add(applicationsTable);
+		root.add(createSecondHeadline("Meine Projekt-Beteiligungen"));
+		root.add(myProjectApplicationsTable);
 
-		this.add(overviewVerticalPanel);
+		this.add(root);
 		loadData();
 	}
 
@@ -336,5 +337,10 @@ public class MyOverview extends Page implements DataLoading {
 						myApplicationsTable.setRowCount(results.size(), true);
 					}
 				});
+	}
+
+	@Override
+	public void setBreadcrumb() {
+		ClientsideSettings.setFirstBreadcrumb(this, "Mein Bereich");
 	}
 }

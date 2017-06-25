@@ -1,6 +1,5 @@
 package de.worketplace.team06.client.gui;
 
-import com.google.cloud.sql.jdbc.internal.ClientSideBlob;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -14,8 +13,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
+import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 
@@ -28,9 +26,7 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
  *
  * @author Roski
  */
-public class OrgaUnitForm extends Page {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
+public class OrgaUnitForm extends Form {
 	private Label typeLabel = new Label("Nutzertyp");
 	private ListBox typeInput = new ListBox();
 	private Label descriptionLabel = new Label("Beschreibung");
@@ -47,10 +43,10 @@ public class OrgaUnitForm extends Page {
 	 *            Falls true wird dem Formular eine Überschrift vorangehängt
 	 */
 	public OrgaUnitForm(final boolean pHeadline) {
-		try {
-			toChangeOrgaUnit = ClientsideSettings.getCurrentUser();
+		if (currentUser != null) {
+			toChangeOrgaUnit = currentUser;
 			shouldUpdate = true;
-		} catch (Exception e) {
+		} else {
 			shouldUpdate = false;
 		}
 		if (pHeadline) {
