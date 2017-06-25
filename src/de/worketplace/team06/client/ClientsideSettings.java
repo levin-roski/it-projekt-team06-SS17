@@ -32,7 +32,6 @@ public class ClientsideSettings {
 	private static ReportGeneratorAsync reportGenerator;
 	private static View currentView;
 	private static View BreadcrumbFirstLevel;
-
 	private static String BreadcrumbFirstLevelName;
 	private static View BreadcrumbSecondLevel;
 	private static String BreadcrumbSecondLevelName;
@@ -40,6 +39,9 @@ public class ClientsideSettings {
 	private static String BreadcrumbThirdLevelName;
 	private static View BreadcrumbFourthLevel;
 	private static String BreadcrumbFourthLevelName;
+	private static int currentMarketplaceId;
+	private static int currentProjectId;
+	private static int currentCallId;
 
 	// private static ReportGeneratorAsync reportGenerator = null;
 
@@ -189,5 +191,29 @@ public class ClientsideSettings {
 
 	public static View getBreadcrumbFourthLevel() {
 		return BreadcrumbFourthLevel;
+	}
+	
+	public static int getCurrentMarketplaceId() {
+		return currentMarketplaceId;
+	}
+
+	public static void setCurrentMarketplaceId(int currentMarketplaceId) {
+		ClientsideSettings.currentMarketplaceId = currentMarketplaceId;
+	}
+
+	public static int getCurrentProjectId() {
+		return currentProjectId;
+	}
+
+	public static void setCurrentProjectId(int currentProjectId) {
+		ClientsideSettings.currentProjectId = currentProjectId;
+	}
+
+	public static int getCurrentCallId() {
+		return currentCallId;
+	}
+
+	public static void setCurrentCallId(int currentCallId) {
+		ClientsideSettings.currentCallId = currentCallId;
 	}
 }

@@ -6,22 +6,24 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
-import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MainPanel;
-import de.worketplace.team06.client.gui.MarketplaceForm;
-import de.worketplace.team06.client.gui.MyOverview;
-import de.worketplace.team06.client.gui.ProjectView;
 import de.worketplace.team06.client.gui.MarketplaceOverview;
+import de.worketplace.team06.client.gui.MarketplaceView;
+import de.worketplace.team06.client.gui.MyOverview;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
+import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.LoginInfo;
+import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 import de.worketplace.team06.shared.bo.Person;
 
@@ -46,6 +48,9 @@ public class Worketplace implements EntryPoint {
 	public void onModuleLoad() {
 		mainPanel = new MainPanel(Unit.PCT);
 		ClientsideSettings.setMainPanel(mainPanel);
+		RootLayoutPanel rp = RootLayoutPanel.get();
+		rp.add(mainPanel);
+		renderUrlToken(null);
 
 		Person ou = new Person();
 		ou.setID(7);
@@ -70,10 +75,12 @@ public class Worketplace implements EntryPoint {
 		// mainPanel.setView(new MyOverview());
 		// }
 
-		mainPanel.setView(new MyOverview());
-
-		RootLayoutPanel rp = RootLayoutPanel.get();
-		rp.add(mainPanel);
+		History.addValueChangeHandler(new ValueChangeHandler<String>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				renderUrlToken(event.getValue());
+			}
+		});
 
 		/*
 		 * Navigationsleiste des Editors
@@ -97,6 +104,36 @@ public class Worketplace implements EntryPoint {
 				}
 			}
 		});
+	}
+
+	private void renderUrlToken(String historyToken) {
+		if (historyToken == null) {
+			historyToken = History.getToken();
+		}
+		// Parse the history token
+		try {
+			if (historyToken.substring(0, 12).equals("Marktplaetze")) {
+				mainPanel.setView(new MarketplaceOverview());
+			} else if (historyToken.substring(0, 18).equals("Marktplatz-Details")) {
+				worketplaceAdministration.getMarketplaceByID(Integer.parseInt(historyToken.substring(18)), new AsyncCallback<Marketplace>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						mainPanel.setView(new MyOverview());
+					}
+
+					@Override
+					public void onSuccess(Marketplace result) {
+						ClientsideSettings.setCurrentMarketplaceId(result.getID());
+						mainPanel.setView(new MarketplaceView(result));
+					}
+				});
+			} else {
+				mainPanel.setView(new MyOverview());
+			}
+		} catch (IndexOutOfBoundsException e) {
+			mainPanel.setView(new MyOverview());
+		}
+		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
 	}
 
 	class CheckExistenceLoginInfoCallback implements AsyncCallback<Boolean> {

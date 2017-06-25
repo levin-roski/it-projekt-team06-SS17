@@ -4,6 +4,8 @@
 package de.worketplace.team06.client.gui;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -41,6 +43,16 @@ public class MainPanel extends DockLayoutPanel {
 		this.getWidget(0).setHeight("100%");
 		sp.setHeight("100%");
 		ClientsideSettings.setCurrentView(viewItem);
+		if (viewItem instanceof MarketplaceOverview) {
+			History.newItem("Marktplaetze");
+		} else if (viewItem instanceof MyOverview) {
+			History.newItem("");
+		} else if (viewItem instanceof MarketplaceView) {
+			History.newItem("Marktplatz-Details"+ClientsideSettings.getCurrentMarketplaceId());
+		} else if (viewItem instanceof ProjectView) {
+//			["1","2"]
+		}
+		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
 	}
 
 	public <T extends Widget> void setForm(T formItem) {
