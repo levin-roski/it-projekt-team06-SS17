@@ -53,4 +53,16 @@ public class testRpcGetAllMarketplaces extends View {
 		
 		this.add(root);
 	}
+
+	@Override
+	public void setBreadcrumb() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void loadData() {
+		// TODO Auto-generated method stub
+		
+	}
 }
