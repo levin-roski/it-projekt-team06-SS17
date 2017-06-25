@@ -2,6 +2,8 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -10,7 +12,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
@@ -34,9 +36,9 @@ public class ProjectForm extends Page {
 	private Label beschreibungLabel = new Label("Beschreibung");
 	private TextBox beschreibungInput = new TextBox();
 	private Label startDateLabel = new Label("Startdatum");
-	private DatePicker startDateInput = new DatePicker();
+	private DateBox startDateInput = new DateBox();
 	private Label endDateLabel = new Label("Enddatum");
-	private DatePicker endDateInput = new DatePicker();
+	private DateBox endDateInput = new DateBox();
 	private Boolean shouldUpdate = false;
 	private Project toChangeProject;
 	private HorizontalPanel changeHeadline;
@@ -61,6 +63,8 @@ public class ProjectForm extends Page {
 			changeHeadline = createHeadline("Projekt bearbeiten", true);
 			addHeadline = createHeadline("Projekt hinzufügen", true);
 		}
+		startDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
+		endDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
 	}
 
 	/**

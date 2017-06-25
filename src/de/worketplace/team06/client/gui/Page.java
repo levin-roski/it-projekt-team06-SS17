@@ -2,6 +2,7 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -9,7 +10,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import de.worketplace.team06.client.ClientsideSettings;
 
 public abstract class Page extends HorizontalPanel {
-	private MainPanel mainPanel = ClientsideSettings.getMainPanel();
+	protected MainPanel mainPanel = ClientsideSettings.getMainPanel();
+	protected final DateTimeFormat simpleDateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
 	
 	protected HorizontalPanel createHeadline(final String text, boolean isFirstPageElement) {
 		HorizontalPanel hp = new HorizontalPanel();
