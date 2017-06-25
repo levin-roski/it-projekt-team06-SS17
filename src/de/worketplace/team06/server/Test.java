@@ -18,7 +18,10 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-		fillDatabaseWithExamples(admin);
+//		fillDatabaseWithExamples(admin);
+		
+		
+		testOfGetProjectsFor(admin);
 		
 //		testOfDeleteRating(admin);
 //		testOfDeleteApplication(admin);
@@ -340,7 +343,15 @@ public static void testOfDeleteProject(WorketplaceAdministrationImpl admin){
 
 
 	
+public static void testOfGetProjectsFor(WorketplaceAdministrationImpl admin){
+	Marketplace m = admin.getMarketplaceByID(1);
 	
+	Vector<Project> allps = admin.getProjectsFor(m);
+	
+	for(Project p : allps){
+		System.out.println("Projektmarktplatz Titel: "+p.getTitle());
+	}
+}
 	
 //	public static void testDeleteAll(WorketplaceAdministrationImpl admin){
 //		
