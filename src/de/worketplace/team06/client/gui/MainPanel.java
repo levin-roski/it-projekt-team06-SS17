@@ -26,6 +26,7 @@ public class MainPanel extends DockLayoutPanel {
 	public <T extends View> void setView(T viewItem) {
 		ScrollPanel sp = new ScrollPanel(viewItem);
 		sp.setWidth("100%");
+		sp.setHeight("100%");
 		try {
 			this.getWidget(0);
 			try {
@@ -41,7 +42,6 @@ public class MainPanel extends DockLayoutPanel {
 		}
 		this.getWidget(0).setStyleName("main-panel-overview");
 		this.getWidget(0).setHeight("100%");
-		sp.setHeight("100%");
 		ClientsideSettings.setCurrentView(viewItem);
 		if (viewItem instanceof MarketplaceOverview) {
 			History.newItem("Marktplaetze");
@@ -50,7 +50,7 @@ public class MainPanel extends DockLayoutPanel {
 		} else if (viewItem instanceof MarketplaceView) {
 			History.newItem("Marktplatz-Details"+ClientsideSettings.getCurrentMarketplaceId());
 		} else if (viewItem instanceof ProjectView) {
-//			["1","2"]
+			History.newItem("Projekt-Details"+ClientsideSettings.getCurrentProjectId()+"-"+ClientsideSettings.getCurrentMarketplaceId());
 		}
 		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
 	}

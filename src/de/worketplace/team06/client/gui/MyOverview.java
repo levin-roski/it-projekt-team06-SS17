@@ -40,8 +40,11 @@ public class MyOverview extends View {
 		myProjectsSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Project selectedProject = myProjectsSsm.getSelectedObject();
-				mainPanel.setForm(new ProjectForm(selectedProject, false, true, null, null, null));
+				if (myProjectsSsm.getSelectedObject() != null) {
+					Project selectedProject = myProjectsSsm.getSelectedObject();
+					mainPanel.setForm(new ProjectForm(selectedProject, false, true, null, null, null));
+					myProjectsSsm.clear();
+				}
 			}
 		});
 
@@ -264,7 +267,7 @@ public class MyOverview extends View {
 
 		VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
-		root.add(createHeadline("Mein Bereich", false));
+		root.add(createHeadline("Mein Bereich", true));
 		root.add(createSecondHeadline("Meine Projekte"));
 		root.add(myProjectsTable);
 		root.add(createSecondHeadline("Ausshreibungen von mir"));

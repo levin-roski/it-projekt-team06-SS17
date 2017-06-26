@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -28,6 +29,7 @@ public class MarketplaceView extends View {
 	Marketplace currentMarketplace;
 
 	public MarketplaceView(Marketplace pCurrentMarketplace) {
+		super();
 		currentMarketplace = pCurrentMarketplace;
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
@@ -54,6 +56,7 @@ public class MarketplaceView extends View {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Project selectedProject = projectSsm.getSelectedObject();
+				ClientsideSettings.setCurrentProjectId(selectedProject.getID());
 				mainPanel.setView(new ProjectView(selectedProject));
 			}
 		});
