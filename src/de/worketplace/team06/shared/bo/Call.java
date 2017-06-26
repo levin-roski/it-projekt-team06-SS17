@@ -36,7 +36,7 @@ public class Call extends BusinessObject {
     
     /**
      * Variable für den Status der Ausschreibung
-     * -1 abgebrochen
+     * 2 abgebrochen
      * 0 laufend
      * 1 erfolgreich besetzt
      */
@@ -103,7 +103,7 @@ public class Call extends BusinessObject {
 	
 	  /**
      * Auslesen des Status für die Ausschreibung
-     * -1 abgebrochen
+     * 2 abgebrochen
      * 0 laufend
      * 1 erfolgreich besetzt
      * 
@@ -117,14 +117,14 @@ public class Call extends BusinessObject {
 		 * und entsprechend als String zurückgegeben.
 		 */
         switch(this.status){ 
-        case -1: 
-        	s = "Abgelehnt";
+        case 2: 
+        	s = "Abgebrochen";
         	break;
 		case 0: 
         	s = "Laufend";
         	break;
 		case 1: 
-        	s = "Angenommen";
+        	s = "Erfolgreich";
         	break;
         }
 		return s;
