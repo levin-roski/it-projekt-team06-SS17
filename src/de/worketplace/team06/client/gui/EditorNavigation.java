@@ -2,6 +2,7 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -17,7 +18,7 @@ public class EditorNavigation extends VerticalPanel {
 		menu.setAnimationEnabled(true);
 		this.setWidth("100%");
 		this.add(menu);
-		final SafeHtml image = new SafeHtml() {
+		final SafeHtml logo = new SafeHtml() {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public String asString() {
@@ -25,7 +26,7 @@ public class EditorNavigation extends VerticalPanel {
 			}
 		};
 
-		menu.addItem(new MenuItem(image, new Command() {
+		menu.addItem(new MenuItem(logo, new Command() {
 			public void execute() {
 				mainPanel.setView(new MyOverview());
 			}
@@ -47,7 +48,7 @@ public class EditorNavigation extends VerticalPanel {
 		optionenMenu.setAnimationEnabled(true);
 		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {
 			public void execute() {
-				mainPanel.setView(new OrgaUnitFormView());
+				mainPanel.setView(new OrgaUnitFormView(null));
 			}
 		}));
 		optionenMenu.addItem(new MenuItem("Mein Partnerprofil", new Command() {
@@ -68,10 +69,7 @@ public class EditorNavigation extends VerticalPanel {
 		}));
 		optionenMenu.addItem(new MenuItem("Logout", new Command() {
 			public void execute() {
-				// TODO Anzeige generieren
-				// RootPanel.get("content").clear();
-				// RootPanel.get("content").add(alleNutzerAnzeigen);
-				// Window.Location.replace("home.html");
+				Window.Location.replace(ClientsideSettings.getLoginInfo().getLogoutUrl());
 			}
 		}));
 		menu.addItem(new MenuItem("Mehr", optionenMenu));

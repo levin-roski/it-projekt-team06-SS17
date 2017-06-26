@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.shared.*;
+import de.worketplace.team06.shared.bo.LoginInfo;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 
 /**
@@ -27,6 +28,7 @@ public class ClientsideSettings {
 	 * 
 	 */
 	private static WorketplaceAdministrationAsync worketplaceAdministration;
+	private static LoginInfo loginInfo;
 	private static OrgaUnit currentUser;
 	private static MainPanel mainPanel;
 	private static ReportGeneratorAsync reportGenerator;
@@ -215,5 +217,13 @@ public class ClientsideSettings {
 
 	public static void setCurrentCallId(int currentCallId) {
 		ClientsideSettings.currentCallId = currentCallId;
+	}
+
+	public static LoginInfo getLoginInfo() {
+		return loginInfo;
+	}
+
+	public static void setLoginInfo(LoginInfo loginInfo) {
+		ClientsideSettings.loginInfo = loginInfo;
 	}
 }

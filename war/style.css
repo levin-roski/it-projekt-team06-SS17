@@ -57,6 +57,12 @@ button {
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td,
-.gwt-Anchor {
-	cursor: pointer;	
+	.gwt-Anchor {
+	cursor: pointer;
+}
+
+.registration-logo {
+	width: 288px;
+	padding-left: 14px;
+	padding-top: 7px;
 }

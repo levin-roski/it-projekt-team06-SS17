@@ -1,6 +1,5 @@
 package de.worketplace.team06.client;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -29,9 +28,7 @@ import de.worketplace.team06.shared.bo.LoginInfo;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 import de.worketplace.team06.shared.bo.Organisation;
-import de.worketplace.team06.shared.bo.Person;
 import de.worketplace.team06.shared.bo.Project;
-import de.worketplace.team06.shared.bo.Team;
 
 /**
  * Entry-Point-Klasse des Projekts <b>Worketplace</b>. Diese enhtählt die
@@ -40,7 +37,6 @@ import de.worketplace.team06.shared.bo.Team;
 public class Worketplace implements EntryPoint {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
-	private LoginInfo loginInfo = null;
 	private Logger console = Logger.getLogger("");
 	private MainPanel mainPanel;
 
@@ -57,16 +53,24 @@ public class Worketplace implements EntryPoint {
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		rp.add(mainPanel);
 
-		worketplaceAdministration.getOrganisationByGoogleID("G1003", new AsyncCallback<Organisation>() {
-			public void onFailure(Throwable caught) {
+		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		loginService.login(GWT.getHostPageBaseURL() + "worketplace.html", new AsyncCallback<LoginInfo>() {
+			public void onFailure(Throwable error) {
 			}
 
-			public void onSuccess(Organisation result) {
-				ClientsideSettings.setCurrentUser(result);
-				renderUrlToken(null);
+			public void onSuccess(LoginInfo result) {
+				ClientsideSettings.setLoginInfo(result);
+				if (result.isLoggedIn()) {
+					worketplaceAdministration.checkExistence(result.getGoogleId(),
+							new CheckExistenceLoginInfoCallback());
+				} else {
+					Window.Location.replace(result.getLoginUrl());
+				}
 			}
 		});
+	}
 
+	public void renderApplicationForLoggedIn() {
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
@@ -77,25 +81,9 @@ public class Worketplace implements EntryPoint {
 		/*
 		 * Navigationsleiste des Editors
 		 */
-		final EditorNavigation navigationMenu = new EditorNavigation();
-		RootPanel.get("navigation").add(navigationMenu);
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL() + "Worketplace.html", new AsyncCallback<LoginInfo>() {
-			public void onFailure(Throwable error) {
-				console.log(Level.SEVERE, "Login Anfrage konnte nicht ausgef�hrt werden");
-			}
-
-			public void onSuccess(LoginInfo result) {
-				loginInfo = result;
-				if (loginInfo.isLoggedIn()) {
-					worketplaceAdministration.checkExistence(loginInfo.getGoogleId(),
-							new CheckExistenceLoginInfoCallback());
-				} else {
-					// TODO Login aufrufen (nicht eingeloggt)
-					// Window.alert("Login aufrufen");
-				}
-			}
-		});
+		RootPanel.get("navigation").add(new EditorNavigation());
+		
+		renderUrlToken(null);
 	}
 
 	private void renderUrlToken(String historyToken) {
@@ -106,8 +94,8 @@ public class Worketplace implements EntryPoint {
 		try {
 			if (historyToken.substring(0, 12).equals("Marktplaetze")) {
 				mainPanel.setView(new MarketplaceOverview());
-			} else if(historyToken.equals("Mein-Nutzer")) {
-				mainPanel.setView(new OrgaUnitFormView());
+			} else if (historyToken.equals("Mein-Nutzer")) {
+				mainPanel.setView(new OrgaUnitFormView(null));
 			} else if (historyToken.substring(0, 18).equals("Marktplatz-Details")) {
 				worketplaceAdministration.getMarketplaceByID(Integer.parseInt(historyToken.substring(18)),
 						new AsyncCallback<Marketplace>() {
@@ -152,7 +140,8 @@ public class Worketplace implements EntryPoint {
 						t = new Timer() {
 							public void run() {
 								RpcWrapper.this.checkRpcTimerCounter++;
-								if (RpcWrapper.this.tokenMov instanceof MarketplaceOverview && RpcWrapper.this.tokenMv instanceof MarketplaceView) {
+								if (RpcWrapper.this.tokenMov instanceof MarketplaceOverview
+										&& RpcWrapper.this.tokenMv instanceof MarketplaceView) {
 									Worketplace.this.worketplaceAdministration.getProjectByID(Integer.parseInt(ids[0]),
 											new AsyncCallback<Project>() {
 												@Override
@@ -183,7 +172,7 @@ public class Worketplace implements EntryPoint {
 				}
 				RpcWrapper rw = new RpcWrapper(ids);
 			} else if (historyToken.substring(0, 15).equals("calls")) {
-				// TODO calls aus Token rendern
+				// TODO Calls aus Token rendern
 			} else {
 				mainPanel.setView(new MyOverview());
 			}
@@ -194,47 +183,31 @@ public class Worketplace implements EntryPoint {
 	}
 
 	class CheckExistenceLoginInfoCallback implements AsyncCallback<Boolean> {
+		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Fehlermeldung �berlegen
+			mainPanel.setView(new OrgaUnitFormView(Worketplace.this));
 		}
 
+		@Override
 		public void onSuccess(Boolean userStatus) {
 			if (userStatus) {
-				worketplaceAdministration.getOrgaUnitFor(loginInfo, new AsyncCallback<OrgaUnit>() {
-					public void onFailure(Throwable caught) {
-						Window.alert(
-								"Ihr Nutzeraccount konnte nicht abgerufen werden, bitte kontaktieren Sie den technischen Support");
-					}
+				worketplaceAdministration.getOrgaUnitFor(ClientsideSettings.getLoginInfo(),
+						new AsyncCallback<OrgaUnit>() {
+							public void onFailure(Throwable caught) {
+								Window.alert(
+										"Ihr Nutzeraccount konnte nicht abgerufen werden, bitte kontaktieren Sie den technischen Support");
+							}
 
-					@Override
-					public void onSuccess(OrgaUnit result) {
-						ClientsideSettings.setCurrentUser(result);
-						// TODO Editor initialisieren mit z.B. loadEditor
-					}
-				});
+							@Override
+							public void onSuccess(OrgaUnit result) {
+								ClientsideSettings.setCurrentUser(result);
+								renderApplicationForLoggedIn();
+							}
+						});
 			} else {
-				// Window.alert( "Für diese Email existiert kein Nutzer." + "
-				// Bitte erstelle ein neues Nutzerporofil");
-
-				// TODO Usererstellung hier ausf�hren, bzw. Formular f�r
-				// Usereinstellungen aufrufen
+				Window.alert("Sie besitzen noch keinen Nutzer, bitte erstellen Sie über folgende Maske einen neuen");
+				mainPanel.setView(new OrgaUnitFormView(null));
 			}
-		}
-	}
-
-	/**
-	 * Helfermethode für die onFailure Methoden, In der Methode handleError
-	 * werden alle Fehler für den Editor gepflegt.
-	 * 
-	 * @param error
-	 */
-	private void handleError(Throwable error) {
-		// Window.alert(error.getMessage());
-		if (error instanceof NotLoggedInException) {
-			Window.Location.replace(loginInfo.getLogoutUrl());
-		}
-		if (error instanceof UserChangedException) {
-			Window.Location.replace(loginInfo.getLogoutUrl());
 		}
 	}
 }
