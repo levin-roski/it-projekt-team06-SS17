@@ -67,16 +67,17 @@ public class OrgaUnitFormView extends View {
 		typeInput.addItem("Organisation");
 
 		/*
-		 * Grid mit 8 Zeilen und 2 Spalten für das Formular bereitstellen.
+		 * Grid mit 9 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
-		final Grid form = new Grid(8, 2);
+		final Grid form = new Grid(9, 2);
 		form.setWidth("100%");
 		form.setWidget(0, 0, typeLabel);
 		form.setWidget(0, 1, typeInput);
 		form.setWidget(1, 0, descriptionLabel);
 		form.setWidget(1, 1, descriptionInput);
 		final VerticalPanel root = new VerticalPanel();
+		root.add(ClientsideSettings.getBreadcrumbs());
 		this.add(root);
 
 		/*
@@ -157,7 +158,6 @@ public class OrgaUnitFormView extends View {
 																Window.alert("Der Nutzer wurde erfolgreich gelöscht");
 															}
 														});
-
 											} catch (Exception e) {
 											}
 										}
@@ -173,6 +173,11 @@ public class OrgaUnitFormView extends View {
 											Window.alert("Bitte füllen Sie das Feld Nachname");
 										} else {
 											toChangePerson.setDescription(descriptionInput.getText());
+											toChangePerson.setFirstName(firstnameInput.getText());
+											toChangePerson.setLastName(lastnameInput.getText());
+											toChangePerson.setStreet(streetInput.getText());
+											toChangePerson.setZipcode(Integer.parseInt(zipcodeInput.getText()));
+											toChangePerson.setCity(cityInput.getText());
 											worketplaceAdministration.savePerson(toChangePerson,
 													new AsyncCallback<Void>() {
 														public void onFailure(Throwable caught) {
@@ -189,16 +194,168 @@ public class OrgaUnitFormView extends View {
 								});
 								form.setWidget(7, 1, saveButton);
 								form.setWidget(8, 1, deleteButton);
+								form.setWidget(7, 1, saveButton);
+								form.setWidget(8, 1, deleteButton);
 							}
 						});
 				break;
 
 			case "Team":
+				worketplaceAdministration.getTeamByGoogleID(toChangeOrgaUnit.getGoogleID(),
+						new AsyncCallback<Team>() {
+							public void onFailure(Throwable caught) {
+							}
 
+							public void onSuccess(final Team toChangeTeam) {
+								Label nameLaben = new Label("Team-Name");
+								form.setWidget(2, 0, nameLaben);
+								final TextBox nameInput = new TextBox();
+								nameInput.setText(toChangeTeam.getName());
+								form.setWidget(2, 1, nameInput);
+
+								Label countLabel = new Label("Anzahl Mitglieder");
+								form.setWidget(3, 0, countLabel);
+								final TextBox countInput = new TextBox();
+								countInput.setText(toChangeTeam.getMembercount().toString());
+								form.setWidget(3, 1, countInput);
+
+								deleteButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										final boolean confirmDelete = Window
+												.confirm("Möchten Sie Ihren Nutzer wirklich löschen?");
+										if (confirmDelete) {
+											try {
+												worketplaceAdministration.deleteTeam(toChangeTeam,
+														new AsyncCallback<Void>() {
+															public void onFailure(Throwable caught) {
+																Window.alert(
+																		"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+															}
+
+															public void onSuccess(Void result) {
+																Window.alert("Der Nutzer wurde erfolgreich gelöscht");
+															}
+														});
+											} catch (Exception e) {
+											}
+										}
+									}
+								});
+								saveButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										if (descriptionInput.getText().length() == 0) {
+											Window.alert("Bitte beschreiben Sie Ihren Nutzer genauer");
+										} else if (nameInput.getText().length() == 0) {
+											Window.alert("Bitte füllen Sie das Feld Name");
+										} else {
+											toChangeTeam.setDescription(descriptionInput.getText());
+											toChangeTeam.setName(nameInput.getText());
+											toChangeTeam.setMembercount(Integer.parseInt(countInput.getText()));
+											worketplaceAdministration.saveTeam(toChangeTeam,
+													new AsyncCallback<Void>() {
+														public void onFailure(Throwable caught) {
+															Window.alert(
+																	"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+														}
+
+														public void onSuccess(Void result) {
+															Window.alert("Der Nutzer wurde erfolgreich geändert");
+														}
+													});
+										}
+									}
+								});
+								form.setWidget(4, 1, saveButton);
+								form.setWidget(5, 1, deleteButton);
+							}
+						});
 				break;
 
 			case "Organisation":
+				worketplaceAdministration.getOrganisationByGoogleID(toChangeOrgaUnit.getGoogleID(),
+						new AsyncCallback<Organisation>() {
+							public void onFailure(Throwable caught) {
+							}
 
+							public void onSuccess(final Organisation toChangeOrganisation) {
+								Label nameLabel = new Label("Vorname");
+								form.setWidget(2, 0, nameLabel);
+								final TextBox nameInput = new TextBox();
+								nameInput.setText(toChangeOrganisation.getName());
+								form.setWidget(2, 1, nameInput);
+
+								Label streetLabel = new Label("Nachname");
+								form.setWidget(3, 0, streetLabel);
+								final TextBox streetInput = new TextBox();
+								streetInput.setText(toChangeOrganisation.getStreet());
+								form.setWidget(3, 1, streetInput);
+
+								Label zipcodeLabel = new Label("Postleitzahl");
+								form.setWidget(4, 0, zipcodeLabel);
+								final TextBox zipcodeInput = new TextBox();
+								zipcodeInput.setText(toChangeOrganisation.getZipcode().toString());
+								form.setWidget(4, 1, zipcodeInput);
+
+								Label cityLabel = new Label("Stadt");
+								form.setWidget(5, 0, cityLabel);
+								final TextBox cityInput = new TextBox();
+								cityInput.setText(toChangeOrganisation.getCity());
+								form.setWidget(5, 1, cityInput);
+
+								deleteButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										final boolean confirmDelete = Window
+												.confirm("Möchten Sie Ihren Nutzer wirklich löschen?");
+										if (confirmDelete) {
+											try {
+												worketplaceAdministration.deleteOrganisation(toChangeOrganisation,
+														new AsyncCallback<Void>() {
+															public void onFailure(Throwable caught) {
+																Window.alert(
+																		"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+															}
+
+															public void onSuccess(Void result) {
+																Window.alert("Der Nutzer wurde erfolgreich gelöscht");
+															}
+														});
+											} catch (Exception e) {
+											}
+										}
+									}
+								});
+								saveButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										if (descriptionInput.getText().length() == 0) {
+											Window.alert("Bitte beschreiben Sie Ihren Nutzer genauer");
+										} else if (nameInput.getText().length() == 0) {
+											Window.alert("Bitte füllen Sie das Feld Vorname");
+										} else if (streetInput.getText().length() == 0) {
+											Window.alert("Bitte füllen Sie das Feld Nachname");
+										} else {
+											toChangeOrganisation.setDescription(descriptionInput.getText());
+											toChangeOrganisation.setName(nameInput.getText());
+											toChangeOrganisation.setStreet(streetInput.getText());
+											toChangeOrganisation.setZipcode(Integer.parseInt(zipcodeInput.getText()));
+											toChangeOrganisation.setCity(cityInput.getText());
+											worketplaceAdministration.saveOrganisation(toChangeOrganisation,
+													new AsyncCallback<Void>() {
+														public void onFailure(Throwable caught) {
+															Window.alert(
+																	"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+														}
+
+														public void onSuccess(Void result) {
+															Window.alert("Der Nutzer wurde erfolgreich geändert");
+														}
+													});
+										}
+									}
+								});
+								form.setWidget(6, 1, saveButton);
+								form.setWidget(7, 1, deleteButton);
+							}
+						});
 				break;
 			}
 

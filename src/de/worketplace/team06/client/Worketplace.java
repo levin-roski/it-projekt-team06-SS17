@@ -28,8 +28,10 @@ import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.LoginInfo;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
+import de.worketplace.team06.shared.bo.Organisation;
 import de.worketplace.team06.shared.bo.Person;
 import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Team;
 
 /**
  * Entry-Point-Klasse des Projekts <b>Worketplace</b>. Diese enhtählt die
@@ -55,11 +57,11 @@ public class Worketplace implements EntryPoint {
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		rp.add(mainPanel);
 
-		worketplaceAdministration.getPersonByGoogleID("G3002", new AsyncCallback<Person>() {
+		worketplaceAdministration.getOrganisationByGoogleID("G1003", new AsyncCallback<Organisation>() {
 			public void onFailure(Throwable caught) {
 			}
 
-			public void onSuccess(Person result) {
+			public void onSuccess(Organisation result) {
 				ClientsideSettings.setCurrentUser(result);
 				renderUrlToken(null);
 			}
