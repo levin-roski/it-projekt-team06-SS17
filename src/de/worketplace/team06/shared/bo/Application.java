@@ -58,7 +58,7 @@ public class Application extends BusinessObject {
     
     /**
      * Auslesen des Status für die Bewerbung
-     * -1 abgelehnt
+     * 2 abgelehnt
      * 0 laufend
      * 1 angenommen
      * 
@@ -71,7 +71,7 @@ public class Application extends BusinessObject {
     
     /**
      * Auslesen des Status für die Bewerbung
-     * -1 abgelehnt
+     * 2 abgelehnt
      * 0 laufend
      * 1 angenommen
      * 
@@ -86,7 +86,7 @@ public class Application extends BusinessObject {
 		 * und entsprechend als String zurückgegeben.
 		 */
         switch(this.status){ 
-        case -1: 
+        case 2: 
         	s = "Abgelehnt";
         	break;
 		case 0: 
@@ -133,7 +133,7 @@ public class Application extends BusinessObject {
     
     /**
      * Setzen des Status für die Bewerbung
-     * -1 abgelehnt
+     * 2 abgelehnt
      * 0 laufend
      * 1 angenommen
      * 

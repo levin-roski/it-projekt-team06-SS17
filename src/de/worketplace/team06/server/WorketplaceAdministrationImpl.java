@@ -433,7 +433,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			for (Application a : allAppsForCall){
 				
 				if (!a.equals(app)){
-					a.setStatus(-1);
+					a.setStatus(2);
 					saveApplication(a);
 				}
 			}
