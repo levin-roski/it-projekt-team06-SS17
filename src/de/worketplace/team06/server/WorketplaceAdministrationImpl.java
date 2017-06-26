@@ -433,7 +433,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			for (Application a : allAppsForCall){
 				
 				if (!a.equals(app)){
-					a.setStatus(-1);
+					a.setStatus(2);
 					saveApplication(a);
 				}
 			}
@@ -1193,7 +1193,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Vector<Project> getProjectsFor(Marketplace marketplace) throws IllegalArgumentException {
-		//***WICHTIG*** Nochmals prüfen! Methode für das Suchen nach Projekten für einen Marktplatz im Mapper anlegen
 		return this.projectMapper.findByMarketplaceID(marketplace.getID());
 	}
 	

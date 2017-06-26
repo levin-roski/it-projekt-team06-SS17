@@ -28,7 +28,6 @@ import de.worketplace.team06.shared.bo.Team;
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies 
 	   */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	 /**
@@ -45,8 +44,6 @@ import de.worketplace.team06.shared.bo.Team;
 	 * Aufruf dieser statischen Methode.
 	 * 
 	 * @return ProjectMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public static ProjectMapper projectMapper(){
 		if (projectMapper == null){
@@ -134,8 +131,6 @@ import de.worketplace.team06.shared.bo.Team;
      * @param proj
      * @return Project
      * @throws  
-     * @author Thies 
-     * @author Theresa
      */
     public Project insert (Project proj) {
         Connection con = DBConnection.connection();
@@ -245,7 +240,7 @@ import de.worketplace.team06.shared.bo.Team;
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, created, title, description, projectleader_id, "
 					+ "start_date, end_date, marketplace_id "
-					+ " FROM project WHERE marketplace_id ='" + marketplaceID + "'ORDER BY id");
+					+ "FROM project WHERE marketplace_id = " + marketplaceID + " ORDER BY id");
 			
 			while (rs.next()){
 				Project proj = new Project();
