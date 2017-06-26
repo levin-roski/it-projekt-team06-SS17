@@ -20,6 +20,7 @@ import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.MarketplaceOverview;
 import de.worketplace.team06.client.gui.MarketplaceView;
 import de.worketplace.team06.client.gui.MyOverview;
+import de.worketplace.team06.client.gui.OrgaUnitFormView;
 import de.worketplace.team06.client.gui.ProjectView;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
@@ -53,30 +54,16 @@ public class Worketplace implements EntryPoint {
 		ClientsideSettings.setMainPanel(mainPanel);
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		rp.add(mainPanel);
-		renderUrlToken(null);
 
-		Person ou = new Person();
-		ou.setID(7);
-		ou.setGoogleID("G3000");
-		ClientsideSettings.setCurrentUser(ou);
+		worketplaceAdministration.getPersonByGoogleID("G3002", new AsyncCallback<Person>() {
+			public void onFailure(Throwable caught) {
+			}
 
-		// if (ClientsideSettings.getBreadcrumbFirstLevel() != null) {
-		// if (ClientsideSettings.getBreadcrumbSecondLevel() != null) {
-		// if (ClientsideSettings.getBreadcrumbThirdLevel() != null) {
-		// if (ClientsideSettings.getBreadcrumbFourthLevel() != null) {
-		// mainPanel.setView(ClientsideSettings.getBreadcrumbFourthLevel());
-		// } else {
-		// mainPanel.setView(ClientsideSettings.getBreadcrumbThirdLevel());
-		// }
-		// } else {
-		// mainPanel.setView(ClientsideSettings.getBreadcrumbSecondLevel());
-		// }
-		// } else {
-		// mainPanel.setView(ClientsideSettings.getBreadcrumbFirstLevel());
-		// }
-		// } else {
-		// mainPanel.setView(new MyOverview());
-		// }
+			public void onSuccess(Person result) {
+				ClientsideSettings.setCurrentUser(result);
+				renderUrlToken(null);
+			}
+		});
 
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -117,6 +104,8 @@ public class Worketplace implements EntryPoint {
 		try {
 			if (historyToken.substring(0, 12).equals("Marktplaetze")) {
 				mainPanel.setView(new MarketplaceOverview());
+			} else if(historyToken.equals("Mein-Nutzer")) {
+				mainPanel.setView(new OrgaUnitFormView());
 			} else if (historyToken.substring(0, 18).equals("Marktplatz-Details")) {
 				worketplaceAdministration.getMarketplaceByID(Integer.parseInt(historyToken.substring(18)),
 						new AsyncCallback<Marketplace>() {

@@ -48,9 +48,10 @@ public class MainPanel extends DockLayoutPanel {
 		} else if (viewItem instanceof MyOverview) {
 			History.newItem("");
 		} else if (viewItem instanceof MarketplaceView) {
-			History.newItem("Marktplatz-Details"+ClientsideSettings.getCurrentMarketplaceId());
+			History.newItem("Marktplatz-Details" + ClientsideSettings.getCurrentMarketplaceId());
 		} else if (viewItem instanceof ProjectView) {
-			History.newItem("Projekt-Details"+ClientsideSettings.getCurrentProjectId()+"-"+ClientsideSettings.getCurrentMarketplaceId());
+			History.newItem("Projekt-Details" + ClientsideSettings.getCurrentProjectId() + "-"
+					+ ClientsideSettings.getCurrentMarketplaceId());
 		}
 		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
 	}
