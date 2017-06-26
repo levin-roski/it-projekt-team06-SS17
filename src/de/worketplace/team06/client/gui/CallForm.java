@@ -107,89 +107,97 @@ public class CallForm {
 		form.setWidget(3, 1, statusInput);
 		form.setWidget(4, 0, callerIDLabel);
 		form.setWidget(4, 1, callerOutput);
-		
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
+		
 		/*
-		 * Falls ein selektierter Marktplatz übergeben wurde und jetzt dargestellt werden soll
+		 * Falls eine selektiertee Ausschreibung übergeben wurde und jetzt dargestellt werden soll
 		 */
-//		if (shouldUpdate) {
-//			if (changeHeadline != null) {
-//				root.add(changeHeadline);
-//			}
-//			nameInput.setText(toChangeMarketplace.getTitle());
-//			beschreibungInput.setText(toChangeMarketplace.getDescription());
-//			final Button saveButton = new Button("Änderungen speichern");
-//			saveButton.addClickHandler(new ClickHandler() {
-//				public void onClick(ClickEvent event) {
-//					if (nameInput.getText().length() == 0) {
-//						Window.alert("Bitte vergeben Sie einen Namen");
-//					} else if (beschreibungInput.getText().length() == 0) {
-//						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
-//					} else {
-//						toChangeMarketplace.setTitle(nameInput.getText());
-//						toChangeMarketplace.setDescription(beschreibungInput.getText());
-//						worketplaceAdministration.saveMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
-//							public void onFailure(Throwable caught) {
-//								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
-//							}
-//
-//							public void onSuccess(Void result) {
-//								Window.alert("Der Marktplatz wurde erfolgreich geändert");
-//							}
-//						});
-//					}
-//				}
-//			});
-//			final VerticalPanel panel = new VerticalPanel();
-//			panel.add(saveButton);
-//			final Button deleteButton = new Button("Diesen Marktplatz entfernen");
-//			deleteButton.addClickHandler(new ClickHandler() {
-//				public void onClick(ClickEvent event) {
-//					final boolean confirmDelete = Window.confirm("Möchten Sie den Marktplatz wirklich löschen?");
-//					if (confirmDelete) {
-//						worketplaceAdministration.deleteMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
-//							public void onFailure(Throwable caught) {
-//								Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
-//							}
-//
-//							public void onSuccess(Void result) {
-//								Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
-//							}
-//						});
-//					}
-//				}
-//			});
-//			panel.add(deleteButton);
-//			form.setWidget(2, 1, panel);
-//		} else {
-//			if (addHeadline != null) {
-//				root.add(addHeadline);
-//			}
-//			final Button saveButton = new Button("Neuen Marktplatz anlegen");
-//			saveButton.addClickHandler(new ClickHandler() {
-//				public void onClick(ClickEvent event) {
-//					if (nameInput.getText().length() == 0) {
-//						Window.alert("Bitte vergeben Sie einen Namen");
-//					} else if (beschreibungInput.getText().length() == 0) {
-//						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
-//					} else {
-//						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(), new AsyncCallback<Marketplace>() {
-//									public void onFailure(Throwable caught) {
-//										Window.alert(
-//												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
-//									}
-//
-//									public void onSuccess(Marketplace result) {
-//										Window.alert("Der Marktplatz \"" + result.getTitle() + "\" wurde erstellt");
-//									}
-//								});
-//					}
-//				}
-//			});
-//			form.setWidget(2, 1, saveButton);
-//		}
-//		root.add(form);
-//		nameInput.setFocus(true);
+		if (shouldUpdate) {
+			if (changeHeadline != null) {
+				root.add(changeHeadline);
+			}
+			titleInput.setText(toChangeCall.getTitle());
+			descriptionInput.setText(toChangeCall.getDescription());
+			deadlineInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
+			deadlineInput.setValue(toChangeCall.getDeadline());
+			statusInput.addItem("Abgelehnt");
+			statusInput.addItem("Laufend");
+			statusInput.addItem("Erfolgreich");
+			statusInput.setVisibleItemCount(1);
+			statusInput.set
+			
+			final Button saveButton = new Button("Änderungen speichern");
+			saveButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					if (nameInput.getText().length() == 0) {
+						Window.alert("Bitte vergeben Sie einen Namen");
+					} else if (beschreibungInput.getText().length() == 0) {
+						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
+					} else {
+						toChangeMarketplace.setTitle(nameInput.getText());
+						toChangeMarketplace.setDescription(beschreibungInput.getText());
+						worketplaceAdministration.saveMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+							public void onFailure(Throwable caught) {
+								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+							}
+
+							public void onSuccess(Void result) {
+								Window.alert("Der Marktplatz wurde erfolgreich geändert");
+							}
+						});
+					}
+				}
+			});
+			final VerticalPanel panel = new VerticalPanel();
+			panel.add(saveButton);
+			final Button deleteButton = new Button("Diesen Marktplatz entfernen");
+			deleteButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					final boolean confirmDelete = Window.confirm("Möchten Sie den Marktplatz wirklich löschen?");
+					if (confirmDelete) {
+						worketplaceAdministration.deleteMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+							public void onFailure(Throwable caught) {
+								Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+							}
+
+							public void onSuccess(Void result) {
+								Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
+							}
+						});
+					}
+				}
+			});
+			panel.add(deleteButton);
+			form.setWidget(2, 1, panel);
+		} else {
+			if (addHeadline != null) {
+				root.add(addHeadline);
+			}
+			final Button saveButton = new Button("Neuen Marktplatz anlegen");
+			saveButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					if (nameInput.getText().length() == 0) {
+						Window.alert("Bitte vergeben Sie einen Namen");
+					} else if (beschreibungInput.getText().length() == 0) {
+						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
+					} else {
+						worketplaceAdministration.createMarketplace(nameInput.getText(), beschreibungInput.getText(), new AsyncCallback<Marketplace>() {
+									public void onFailure(Throwable caught) {
+										Window.alert(
+												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+									}
+
+									public void onSuccess(Marketplace result) {
+										Window.alert("Der Marktplatz \"" + result.getTitle() + "\" wurde erstellt");
+									}
+								});
+					}
+				}
+			});
+			form.setWidget(2, 1, saveButton);
+		}
+		root.add(form);
+		nameInput.setFocus(true);
 	}
 }
