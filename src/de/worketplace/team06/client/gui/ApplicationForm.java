@@ -11,16 +11,16 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Application;
 
 /**
- * Formular für die Darstellung, Bearbeitung und Löschung einer
- * selektierten Bewerbung. Falls keine selektierte Bewerbung beim
- * Initialisieren übergeben wird, ist das Formular leer, bereit für die
- * Erstellung einer neuen Bewerbung.
+ * Formular für die Darstellung, Bearbeitung und Löschung einer selektierten
+ * Bewerbung. Falls keine selektierte Bewerbung beim Initialisieren übergeben
+ * wird, ist das Formular leer, bereit für die Erstellung einer neuen Bewerbung.
  * 
  * @author Patrick
  */
@@ -35,14 +35,16 @@ public class ApplicationForm extends Form {
 	private HorizontalPanel addHeadline;
 
 	/**
-	 * Im Konstruktor kann eine selektierte Bewerbung übergeben werden, die
-	 * dann bearbeitet und gelöscht werden kann. 
-	 * null wird übergeben, falls eine neue Bewerbung erstellt werden soll.
+	 * Im Konstruktor kann eine selektierte Bewerbung übergeben werden, die dann
+	 * bearbeitet und gelöscht werden kann. null wird übergeben, falls eine neue
+	 * Bewerbung erstellt werden soll.
 	 * 
-	 * @param pToChangeApplication Application, die im Formular angezeigt werden soll
-	 * @param pHeadline Falls true wird dem Formular eine Überschrift vorangehängt
+	 * @param pToChangeApplication
+	 *            Application, die im Formular angezeigt werden soll
+	 * @param pHeadline
+	 *            Falls true wird dem Formular eine Überschrift vorangehängt
 	 */
-	public ApplicationForm (Application pToChangeApplication, final boolean pHeadline) {
+	public ApplicationForm(Application pToChangeApplication, final boolean pHeadline) {
 		if (pToChangeApplication != null) {
 			shouldUpdate = true;
 			this.toChangeApplication = pToChangeApplication;
@@ -52,22 +54,27 @@ public class ApplicationForm extends Form {
 			addHeadline = createHeadline("Auf Projekt bewerben", true);
 		}
 	}
+
 	/**
-	 * Im Konstruktor kann eine selektierte Bewerbung übergeben werden, die
-	 * dann bearbeitet und gelöscht werden kann. 
-	 * null übergeben, falls eine neue Bewerbung erstellt werden soll.
+	 * Im Konstruktor kann eine selektierte Bewerbung übergeben werden, die dann
+	 * bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
+	 * Bewerbung erstellt werden soll.
 	 * 
-	 * @param pToChangeApplication Application, die im Formular angezeigt werden soll
-	 * @param pHeadline Falls true wird dem Formular eine Überschrift vorangehängt
-	 * @param pClosingHeadline Falls true wird dem Formular eine Überschrift mit Button, der das aktuelle Item schließt, vorangehängt
+	 * @param pToChangeApplication
+	 *            Application, die im Formular angezeigt werden soll
+	 * @param pHeadline
+	 *            Falls true wird dem Formular eine Überschrift vorangehängt
+	 * @param pClosingHeadline
+	 *            Falls true wird dem Formular eine Überschrift mit Button, der
+	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public ApplicationForm(Application pToChangeApplication, final boolean pHeadline, final boolean pClosingHeadline) {
+	public ApplicationForm(Application pToChangeApplication, final boolean pHeadline, final boolean pClosingHeadline,
+			final Callback editCallback, final Callback deleteCallback) {
 		this(pToChangeApplication, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Bewerbung bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Auf Projekt bewerben", true);
 		}
-		
 
 		/*
 		 * Grid mit 3 Zeilen und 2 Spalten für das Formular bereitstellen.
@@ -82,7 +89,8 @@ public class ApplicationForm extends Form {
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*
-		 * Falls eine selektierte Bewerbung übergeben wurde und jetzt dargestellt werden soll
+		 * Falls eine selektierte Bewerbung übergeben wurde und jetzt
+		 * dargestellt werden soll
 		 */
 		if (shouldUpdate) {
 			if (changeHeadline != null) {
@@ -103,7 +111,11 @@ public class ApplicationForm extends Form {
 
 							public void onSuccess(Void result) {
 								Window.alert("Die Bewerbung wurde erfolgreich geändert");
-								renderFormSuccess();
+								if (editCallback != null) {
+									editCallback.run();
+								} else {
+									renderFormSuccess();
+								}
 							}
 						});
 					}
@@ -123,7 +135,11 @@ public class ApplicationForm extends Form {
 
 							public void onSuccess(Void result) {
 								Window.alert("Die Bewerbung wurde erfolgreich gelöscht");
-								renderFormSuccess();
+								if (deleteCallback != null) {
+									deleteCallback.run();
+								} else {
+									renderFormSuccess();
+								}
 							}
 						});
 					}
@@ -141,14 +157,16 @@ public class ApplicationForm extends Form {
 					if (textInput.getText().length() == 0) {
 						Window.alert("Bitte geben Sie einen Bewerbungstext ein");
 					} else {
-						worketplaceAdministration.createApplication(textInput.getText(), new AsyncCallback<Application>() {
+						worketplaceAdministration.createApplication(textInput.getText(),
+								new AsyncCallback<Application>() {
 									public void onFailure(Throwable caught) {
 										Window.alert(
 												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
 									}
 
 									public void onSuccess(Application result) {
-										Window.alert("Die Bewerbung auf die Ausschreibung \"" + result.getCallTitle() + "\" wurde erstellt");
+										Window.alert("Die Bewerbung auf die Ausschreibung \"" + result.getCallTitle()
+												+ "\" wurde erstellt");
 										renderFormSuccess();
 									}
 								});

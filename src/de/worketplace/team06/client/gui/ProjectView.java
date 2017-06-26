@@ -56,9 +56,8 @@ public class ProjectView extends View {
 		callSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				// Marketplace m1 = allProjectsSsm.getSelectedObject();
-				// mainPanel.setItem(new
-				// MarketplaceForm(m1, false, true));
+				Call selectedCall = callSsm.getSelectedObject();
+				mainPanel.setForm(new CallForm(selectedCall, false, true, null, null));
 			}
 		});
 
@@ -77,8 +76,7 @@ public class ProjectView extends View {
 		final Button newButton = new Button("Neue Ausschreibung hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-//				MainPanel tmpMainPanel = mainPanel;
-//				tmpMainPanel.setForm(new MarketplaceForm(null, false, true, null, null));
+				mainPanel.setForm(new CallForm(null, false, true, null, null));
 			}
 		});
 		root.add(newButton);
