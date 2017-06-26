@@ -18,16 +18,17 @@ public class TestReportG {
 		ReportGeneratorImpl reportGen = new ReportGeneratorImpl();
 		reportGen.init();
 
-		ShowAllCallsReport(reportGen);
+		ShowReport(reportGen);
 	
 	}
 	
-	public static void ShowAllCallsReport(ReportGeneratorImpl gen){
+	public static void ShowReport(ReportGeneratorImpl gen){
 		Person p = new Person();
 		p.setGoogleID("G3000");
-		//PlainTextReportWriter writer = new PlainTextReportWriter();
-		HTMLReportWriter writer = new HTMLReportWriter();
-		writer.process(gen.createAllCallsReport(p));
+		PlainTextReportWriter writer = new PlainTextReportWriter();
+		//HTMLReportWriter writer = new HTMLReportWriter();
+		//writer.process(gen.createAllCallsReport(p));
+		writer.process(gen.createAllApplicationsForCallsOfUserReport(p));
 		System.out.println(writer.getReportText());
 	}
 

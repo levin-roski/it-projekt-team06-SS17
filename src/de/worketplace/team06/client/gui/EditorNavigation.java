@@ -19,41 +19,41 @@ public class EditorNavigation extends VerticalPanel {
 		this.add(menu);
 		final SafeHtml image = new SafeHtml() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public String asString() {
-				// TODO Auto-generated method stub
 				return "<img src=\"/logo.png\" style=\"width: 225px;\">";
 			}
 		};
 
 		menu.addItem(new MenuItem(image, new Command() {
 			public void execute() {
-				// TODO Anzeige generieren
-				// RootPanel.get("content").clear();
-				// RootPanel.get("content").add(alleNutzerAnzeigen);
-				// Window.Location.replace("home.html");
+				mainPanel.setView(new MyOverview());
 			}
 		}));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Mein Bereich", new Command() {
 			public void execute() {
+				mainPanel.setView(new MyOverview());
+			}
+		}));
+		menu.addSeparator();
+		menu.addItem(new MenuItem("Marktplätze", new Command() {
+			public void execute() {
+				mainPanel.setView(new MarketplaceOverview());
+			}
+		}));
+		menu.addSeparator();
+		MenuBar optionenMenu = new MenuBar(true);
+		optionenMenu.setAnimationEnabled(true);
+		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {
+			public void execute() {
 				// TODO Anzeige generieren
 				// RootPanel.get("content").clear();
 				// RootPanel.get("content").add(alleNutzerAnzeigen);
 				// Window.Location.replace("home.html");
 			}
 		}));
-		menu.addSeparator();
-		menu.addItem(new MenuItem("Marktplätze", new Command() {
-			public void execute() {
-				mainPanel.setOverview(new SearchMarketplace());
-			}
-		}));
-		menu.addSeparator();
-		MenuBar optionenMenu = new MenuBar(true);
-		optionenMenu.setAnimationEnabled(true);
-		optionenMenu.addItem(new MenuItem("Mein Profil", new Command() {
+		optionenMenu.addItem(new MenuItem("Mein Partnerprofil", new Command() {
 			public void execute() {
 				// TODO Anzeige generieren
 				// RootPanel.get("content").clear();

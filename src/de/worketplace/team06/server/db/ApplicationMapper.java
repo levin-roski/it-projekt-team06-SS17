@@ -51,8 +51,8 @@ public class ApplicationMapper {
 	/**
 	 * Durch ApplicationMapper.applicationMapper wird die folgende Methode aufgerufen.
 	 * Durch sie wird die Singleton-Eigenschaft sichergestellt, in dem sie dafür sorgt, dass nur eine 
-	 * Instanz von DBConnection existiert.
-	 * Die Instantiierung der DBConnection sollte stets durch den Aufruf dieser Methode erfolgen.
+	 * Instanz von ApplicationMapper existiert.
+	 * Die Instantiierung von ApplicationMapper sollte stets durch den Aufruf dieser Methode erfolgen.
 	 * 
 	 * @return ApplicationMapper-Objekt.
 	 */
@@ -99,7 +99,12 @@ public class ApplicationMapper {
 		return null;
 	}
 			
-	
+	/**
+	 * Methode zur Suche nach allen Bewerbungen, die in der Datenbank
+	 * gespeichert sind.
+	 * 
+	 * @return Vector<Application> mit allen Application-Objekten.
+	 */
 	public Vector<Application> findAll() {
 		Connection con = DBConnection.connection();
 		

@@ -21,10 +21,10 @@ body {
 }
 
 .main-panel-overview {
-	margin: 10px 10px 0 18px;
+	padding: 10px 10px 0 18px;
 }
 
-.main-panel-item {
+.main-panel-form {
 	border-left: 1px solid #e0e0e0;
 	padding: 10px 10px 0 10px;
 }
@@ -54,4 +54,9 @@ button {
 	margin: 9px 6px 0 0 !important;
 	font-size: 10px !important;
 	font-weight: bold !important;
+}
+
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td,
+.gwt-Anchor {
+	cursor: pointer;	
 }

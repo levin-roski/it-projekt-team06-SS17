@@ -243,7 +243,7 @@ import de.worketplace.team06.shared.bo.Team;
 			
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, "
+			ResultSet rs = stmt.executeQuery("SELECT id, created, title, description, projectleader_id, "
 					+ "start_date, end_date, marketplace_id "
 					+ " FROM project WHERE marketplace_id ='" + marketplaceID + "'ORDER BY id");
 			
@@ -257,7 +257,7 @@ import de.worketplace.team06.shared.bo.Team;
         		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
         		proj.setCreated(rs.getTimestamp("created"));
-        		proj.setMarketplaceID(rs.getInt("marektplace_id"));
+        		proj.setMarketplaceID(rs.getInt("marketplace_id"));
         		
         		result.add(proj);	
 			}

@@ -11,12 +11,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 import de.worketplace.team06.client.ClientsideSettings;
+import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
-public class testRpcGetAllMarketplaces extends Page {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
+public class testRpcGetAllMarketplaces extends View {
 	public testRpcGetAllMarketplaces () {
 		final Label searchMarketplace = new Label("Alle Marktplätze");
 
@@ -53,5 +52,17 @@ public class testRpcGetAllMarketplaces extends Page {
 		root.add(flexTable);
 		
 		this.add(root);
+	}
+
+	@Override
+	public void setBreadcrumb() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void loadData() {
+		// TODO Auto-generated method stub
+		
 	}
 }
