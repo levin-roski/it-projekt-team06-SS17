@@ -1192,8 +1192,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * Auslesen aller Projekte für einen Marktplatz
 	 */
 	@Override
-	public Vector<Project> getProjectsFor(Integer marketplaceID) throws IllegalArgumentException {
-		return this.projectMapper.findByMarketplaceID(marketplaceID);
+	public Vector<Project> getProjectsFor(Marketplace marketplace) throws IllegalArgumentException {
+		return this.projectMapper.findByMarketplaceID(marketplace.getID());
 	}
 	
 
