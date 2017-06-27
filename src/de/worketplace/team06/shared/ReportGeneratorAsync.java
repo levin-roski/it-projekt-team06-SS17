@@ -9,6 +9,7 @@ import de.worketplace.team06.shared.report.AllApplicationsOfUserToCallsReport;
 import de.worketplace.team06.shared.report.AllCallsMatchingWithUserReport;
 import de.worketplace.team06.shared.report.AllCallsReport;
 import de.worketplace.team06.shared.report.AllEnrollmentsOfApplicantReport;
+import de.worketplace.team06.shared.report.AllInterrelationsOfAllApplicantsOfUserReport;
 import de.worketplace.team06.shared.report.AllInterrelationsOfApplicantReport;
 
 /**
@@ -41,7 +42,11 @@ public interface ReportGeneratorAsync {
 
 	void createAllInterrelationsOfApplicantReport(OrgaUnit applicant,
 			AsyncCallback<AllInterrelationsOfApplicantReport> callback);
+
+	void createAllInterrelationsOfAllApplicantsOfUserReport(OrgaUnit o,
+			AsyncCallback<AllInterrelationsOfAllApplicantsOfUserReport> callback);
 	
 	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
+
 
 }
