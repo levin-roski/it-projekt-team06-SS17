@@ -287,7 +287,7 @@ public class CallMapper {
 	}
 
 	/**
-	 * loeschen einer Ausschreibung aus der Datenbank 
+	 * Loeschen eines Call-Objektes aus der Datenbank mit der entsprechenden übergebenen ID.
 	 * @param c
 	 */
 	
