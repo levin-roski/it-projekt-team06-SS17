@@ -21,12 +21,15 @@ import de.worketplace.team06.shared.bo.Project;
 public class MyOverview extends View {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
+	
 	private final CellTable<Project> myProjectsTable = new CellTable<Project>();
 	private final CellTable<Call> myCallsTable = new CellTable<Call>();
 	private final CellTable<Application> myApplicationsTable = new CellTable<Application>();
 	private final CellTable<Application> applicationsTable = new CellTable<Application>();
+	final CellTable<Application> myProjectApplicationsTable = new CellTable<Application>();
 
 	public MyOverview() {
+		// für Tabelle myProjects
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Project> myProjectsSsm = new SingleSelectionModel<Project>();
@@ -94,6 +97,7 @@ public class MyOverview extends View {
 
 		myProjectsTable.setWidth("100%", true);
 
+		// für Tabelle myCalls
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Call> myCallsSsm = new SingleSelectionModel<Call>();
@@ -160,6 +164,7 @@ public class MyOverview extends View {
 
 		myCallsTable.setWidth("100%", true);
 
+		// für Tabelle myApplications
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Application> myApplicationsSsm = new SingleSelectionModel<Application>();
@@ -202,6 +207,7 @@ public class MyOverview extends View {
 
 		myApplicationsTable.setWidth("100%", true);
 
+		// für Tabelle applications
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Application> applicationsSsm = new SingleSelectionModel<Application>();
@@ -225,9 +231,10 @@ public class MyOverview extends View {
 
 		applicationsTable.setWidth("100%", true);
 
-		// erstellen der Tabelle Meine Projekt-Beteiligungen
-		final CellTable<Application> myProjectApplicationsTable = new CellTable<Application>();
 
+
+		
+		// für Tabelle myProjectApllications
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Application> myProjectApplicationsSsm = new SingleSelectionModel<Application>();
