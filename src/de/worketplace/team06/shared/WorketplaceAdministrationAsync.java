@@ -20,7 +20,7 @@ public interface WorketplaceAdministrationAsync {
 	void applyFor(Call call, OrgaUnit applicantOrgaUnit, String applicationText,
 			AsyncCallback<Application> callback);
 
-	void checkExistence(String googleID, AsyncCallback<Boolean> callback);
+//	void checkExistence(String googleID, AsyncCallback<Boolean> callback);
 
 	
 
