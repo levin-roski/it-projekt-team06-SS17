@@ -145,21 +145,21 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return test;
 	}
 
-	/**
-	 *  
-	 */
-	@Override
-	public boolean checkExistence(String googleID) throws IllegalArgumentException {
-		Integer temp = null;
-		if (orgaUnitMapper.findID(googleID) != 0){
-			temp = orgaUnitMapper.findID(googleID);
-			return true;
-		}
-		else{
-			temp = null;
-			return false;
-		}
-	}
+//	/** 
+//	 *  Wird nicht benötigt ! GetOrgaUnitFor(LoginInfo logininfo) ist ausreichend ! 
+//	 */
+//	@Override
+//	public boolean checkExistence(String googleID) throws IllegalArgumentException {
+//		Integer temp = null;
+//		if (orgaUnitMapper.findID(googleID) != 0){
+//			temp = orgaUnitMapper.findID(googleID);
+//			return true;
+//		}
+//		else{
+//			temp = null;
+//			return false;
+//		}
+//	}
 
 	
 	
