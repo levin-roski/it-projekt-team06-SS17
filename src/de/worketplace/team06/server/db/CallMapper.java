@@ -181,7 +181,7 @@ public class CallMapper {
 	 * @param callID
 	 * @return vector<Call> mit allen Call-Objekten, die ähnliche Partnerprofile haben.
 	 */	
-	public Vector<Call> findCallForSimilarPartnerProfile(Integer callID) {
+/*	public Vector<Call> findCallForSimilarPartnerProfile(Integer callID) {
 		Connection con = DBConnection.connection();
 		Vector<Call> result = new Vector<Call>();
 		
@@ -194,7 +194,7 @@ public class CallMapper {
 					+ "INNER JOIN projektmarktplatz.'property' "
 					+ "AND projektmarktplatz.'orgaunit'.partnerprofile.property.name = call.partnerprofile.property.name "
 					+ "ORDER BY call.id");
-			// unfertig
+			// Erste Überlegung für SQL Statement, TODO: Besprechen wie Anforderung 3) anders gelöst werden kann bzw. Statement miteinander erarbeiten
 			while (rs.next()) {
 				Call c = new Call();
 			}
@@ -206,7 +206,7 @@ public class CallMapper {
 		}
 		return result;
 	}
-	
+*/	
 	/**
 	 * Methode zur Suche nach Ausschreibungen anhand einer projectID.
 	 * Da diese eindeutig ist wird genau ein Objekt zurückgegeben.
