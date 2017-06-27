@@ -3,6 +3,28 @@ package de.worketplace.team06.server.db;
 import java.sql.*;
 import java.util.Vector;
 import de.worketplace.team06.shared.bo.*;
+/**
+ * Die Mapper-Klasse PersonMapper bildet Person-Objekte als Datensätze
+ * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
+ * können mit deren Hilfe Objekte erzeugt, verändert, gelöscht und ausgelesen werden.
+ * Das Mapping erfolgt bidirektional: Objekte können in Datensätze und Datensätze in 
+ * Objekte umgewandelt werden.
+ * 
+ * @see ApplicationMapper
+ * @see CallMapper
+ * @see EnrollmentMapper
+ * @see MarketplaceMapper
+ * @see OrganisationMapper
+ * @see OrgaUnitMapper
+ * @see PartnerProfileMapper
+ * @see ProjectMapper
+ * @see PropertyMapper
+ * @see RatingMapper
+ * @see TeamMapper
+ * 
+ * @author Patrick
+ * @author Theresa
+ */
 
 public class PersonMapper {
 	
@@ -36,12 +58,13 @@ public class PersonMapper {
 	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
 	 * dafür, dass nur eine einzige Instanz der PersonMapper-Klasse existiert. 
 	 * PersonMapper sollte nicht über den New-Operator, sondern über den 
-	 * Aufruf dieser statischen Methode.
+	 * Aufruf dieser statischen Methode genutzt werden.
 	 * 
 	 * @return PersonMapper
 	 * @author Thies
 	 * @author Theresa
 	 */
+	
 	public static PersonMapper personMapper() {
 		if (personMapper == null) {
 			personMapper = new PersonMapper();
@@ -66,10 +89,11 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			/** 
+			/*
 			 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
-			 *wird dann um 1 erhoet und an an p vergeben
+			 * wird dann um 1 erhoeht und an an p vergeben.
 			*/
+			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");
 			
 			if (rs.next()) {
@@ -78,8 +102,10 @@ public class PersonMapper {
 				
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				/**
-				 * Einfuegeoption, damit das neue Person-Tupel in die Datenbank eingefuegt werden kann
+				/*
+				 * Einfuegeoption, damit das neue Person-Tupel in die Datenbank eingefuegt werden kann.
+				 * Das Person-Tupel wird zunächst in Organisationseinheit eingefügt, um dann in Person 
+				 * hinzugefügt werden zu können, da Person eine Organisationseinheit ist.
 				 */
 				stmt.executeUpdate("INSERT INTO orgaunit (id, created, google_id, description, type) "
 									+ "VALUES (" + p.getID() + ",'" + p.getCreated() + "','" 
@@ -99,7 +125,6 @@ public class PersonMapper {
 				con.rollback();
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  finally {
@@ -111,7 +136,6 @@ public class PersonMapper {
 			try {
 				con.setAutoCommit(true);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -121,14 +145,20 @@ public class PersonMapper {
 	
 	/**
 	 * Diese Methode findet ein Person-Objekt, anhand der übergebenen Google-ID 
+	 * 
 	 * @param googleID
 	 * @return Person-Objekt 
+	 * @author Theresa
 	 */
 	public Person findByGoogleID(String googleID) {
 		Connection con = DBConnection.connection();
 		
 		try {						
 			Statement stmt = con.createStatement();
+			
+			/* Tabellen orgaunit und person werden miteinander verbunden, da Person 
+			 * immer zu einer Organisationseinheit gehört.
+			*/ 
 			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
 											+ "ON orgaunit.id = person.id "
 											+ "WHERE orgaunit.google_id='" + googleID + "'");		
@@ -162,13 +192,14 @@ public class PersonMapper {
      * 
      * @param orgaUnit 
      * @return Person
+     * @author Theresa
      */
 	public void update(Person p) {
 		Connection con = DBConnection.connection();
 
 	    try {
 	    	Statement stmt = con.createStatement();
-	    	//Updaten einer Person :) 
+	    	// Tabelle orgaunit und person, da Person eine Organisationseinheit ist.
 	    	stmt.executeUpdate("UPDATE orgaunit, person SET"
 	    						+ " orgaunit.description='" + p.getDescription() +
 	    						"', orgaunit.partnerprofile_id= " + p.getPartnerProfileID() +
@@ -189,7 +220,9 @@ public class PersonMapper {
 	
 	/**
      * Loeschen eines Person-Objektes aus der Datenbank
+     * 
      * @param person
+     * @author Theresa
      */
 	
 	public void delete(Person p) {
@@ -209,12 +242,14 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Suchen einer Person mit vorgegebener PersonID. Duch die Eindeutigkeit der ID, 
+	 * Suchen einer Person mit vorgegebener PersonID. Durch die Eindeutigkeit der ID, 
 	 * wird genau ein Objekt zurück gegeben. 
 	 * 
 	 * @param ouid
 	 * @return Person-Objekt, das der übergebenen ID entspricht
+	 * @author Theresa
 	 */
+	
 	public Person findByID(Integer ouid) {
 		Connection con = DBConnection.connection();
 		
@@ -223,11 +258,10 @@ public class PersonMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
 											+ "ON orgaunit.id = person.id "
 											+ "WHERE orgaunit.id = " + ouid);	
-			/**
+			/*
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
-			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
+			 * dann wird geprueft, ob für diese ID ein Tupel in der Datenbank vorhanden ist
 			 */
-			
 			
 			if (rs.next()) {
 				Person p = new Person();

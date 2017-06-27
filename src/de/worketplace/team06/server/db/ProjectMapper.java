@@ -11,6 +11,29 @@ import java.util.*;
 import de.worketplace.team06.shared.bo.Project;
 import de.worketplace.team06.shared.bo.Team;
 
+/**
+ * Die Mapper-Klasse ProjectMapper bildet Project-Objekte als Datensätze
+ * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
+ * können mit deren Hilfe Objekte erzeugt, verändert, gelöscht und ausgelesen werden.
+ * Das Mapping erfolgt bidirektional: Objekte können in Datensätze und Datensätze in 
+ * Objekte umgewandelt werden.
+ * 
+ * @see ApplicationMapper
+ * @see CallMapper
+ * @see EnrollmentMapper
+ * @see MarketplaceMapper
+ * @see OrganisationMapper
+ * @see OrgaUnitMapper
+ * @see PartnerProfileMapper
+ * @see PersonMapper
+ * @see PropertyMapper
+ * @see RatingMapper
+ * @see TeamMapper
+ * 
+ * @author Patrick
+ * @author Theresa
+ */
+
  public class ProjectMapper {
 	 /**
 	     * Die Klasse ProjectMapper wird nur einmal instantiiert. Man spricht hierbei
@@ -24,15 +47,20 @@ import de.worketplace.team06.shared.bo.Team;
 	     * @author Theresa
 	     */
 	private static ProjectMapper projectMapper = null;
+	
+	/**
+	 * Darstellung von Datum wird durch diese Methode vereinfacht und vereinheitlicht. 
+	 * wird aufgerufen, wenn Startdatum und Enddatum neu angelegt oder verändert werden.
+	 * 
+	 * @author Theresa
+	 */
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	 
 	/**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   */
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
-	   * neue Instanzen dieser Klasse zu erzeugen.
+	   * @author Thies
 	   */
 	protected ProjectMapper(){
 		
@@ -41,9 +69,11 @@ import de.worketplace.team06.shared.bo.Team;
 	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
 	 * dafür, dass nur eine einzige Instanz der ProjectMapper-Klasse existiert. 
 	 * ProjectMapper sollte nicht über den New-Operator, sondern über den 
-	 * Aufruf dieser statischen Methode.
+	 * Aufruf dieser statischen Methode aufgerufen werden.
 	 * 
 	 * @return ProjectMapper
+	 * @author Thies
+	 * @author Theresa
 	 */
 	public static ProjectMapper projectMapper(){
 		if (projectMapper == null){
@@ -52,11 +82,12 @@ import de.worketplace.team06.shared.bo.Team;
 		return projectMapper; 
 	}
 	/**
-	 * Suchen eines Projects mit vorgegebener ProjectID. Duch die Eindeutigkeit der ID, 
+	 * Suchen eines Project mit vorgegebener ProjectID. Durch die Eindeutigkeit der ID 
 	 * wird genau ein Objekt zurück gegeben. 
 	 * 
 	 * @param proj
 	 * @return Project-Objekt, das der übergebenen ID entspricht
+	 * @author Theresa
 	 */
 	public Project findByID(Integer projectID) {
 		
@@ -67,10 +98,9 @@ import de.worketplace.team06.shared.bo.Team;
 		  	ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, "
 		  			+ "start_date, end_date, marketplace_id "
 		  			+ "FROM project WHERE ID=" + projectID);
-		  	/**
+		  	/*
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
-			 * ProjectOwner ausgeklammert. Wird nicht benutzt.
 			 */
 		  	if (rs.next()){
 		  		Project proj = new Project();
@@ -78,7 +108,6 @@ import de.worketplace.team06.shared.bo.Team;
 		  		proj.setTitle(rs.getString("title"));
 		  		proj.setDescription(rs.getString("description"));
 		  		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-//		  		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
 		  		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
 		  		proj.setMarketplaceID(rs.getInt("marketplace_id"));
@@ -93,6 +122,12 @@ import de.worketplace.team06.shared.bo.Team;
 		return null;
 	}
   
+	/**
+	 * Diese Methode findet alle Project-Objekte in der Datenbank.
+	 * 
+	 * @return Vektor <Project>
+	 * @author Theresa
+	 */
     public Vector<Project> findAll() {
         Connection con = DBConnection.connection();
         Vector<Project> result = new Vector<Project>();
@@ -102,7 +137,7 @@ import de.worketplace.team06.shared.bo.Team;
         	
         	ResultSet rs = stmt.executeQuery("SELECT id, title, description, "
         			+ "projectleader_id, start_date, end_date, created,  "
-        	+ "FROM project ");
+        		+ "FROM project ");
         	
         	while (rs.next()){
         		Project proj = new Project();
@@ -110,7 +145,6 @@ import de.worketplace.team06.shared.bo.Team;
         		proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
         		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-//        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
         		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
         		proj.setCreated(rs.getTimestamp("created"));
@@ -125,12 +159,13 @@ import de.worketplace.team06.shared.bo.Team;
     }
     
     /**
-     * Einfuegen eines Project-Objektes in die Datenbank. Dabei wird auch der Primaerschluessel
+     * Einfuegen eines Project-Objekt in die Datenbank. Dabei wird auch der Primaerschluessel
      * des uebergebenen Objektes geprueft und ggf. berichtigt.
      * 
      * @param proj
      * @return Project
      * @throws  
+     * @author Theresa
      */
     public Project insert (Project proj) {
         Connection con = DBConnection.connection();
@@ -140,20 +175,16 @@ import de.worketplace.team06.shared.bo.Team;
         	String enddate = sdf.format(proj.getEndDate());
         	
         	Statement stmt = con.createStatement();
-        	/** 
+        	/*
 			 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
-			 * wird dann um 1 erhoet und an an proj vergeben
+			 * wird dann um 1 erhoeht und an an proj vergeben
 			*/
         	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM project ");
         	
         	if (rs.next()){
         	proj.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
-        	
-        	/**
-			 * Einfuegeoption, damit das neue Team-Tupel in die Datenbank eingefuegt werden kann
-			 * ProjectOwner ausgeklammert. Wird nicht benutzt.
-			 */
+			//Einfuegeoption, damit das neue Project-Tupel in die Datenbank eingefuegt werden kann.
         	stmt.executeUpdate("INSERT INTO project (id, created, title, description, projectleader_id, start_date, end_date, marketplace_id) " 
         	+ "VALUES (" 
         	+ proj.getID() + ",'" 
@@ -161,7 +192,6 @@ import de.worketplace.team06.shared.bo.Team;
         	+ proj.getTitle() + "','" 
         	+ proj.getDescription() + "','"
         	+ proj.getProjectLeaderID() + "','"
-//        	+ proj.getProjectOwnerID() + "','"
         	+ startdate + "','"
         	+ enddate + "','"
         	+ proj.getMarketplaceID() + "')");
@@ -173,12 +203,13 @@ import de.worketplace.team06.shared.bo.Team;
     
     return proj;
     } 
+    
     /**
      * Methode ermoeglicht, dass ein Project-Objekt in der Datenbank aktualisiert werden kann.
-     * ProjectOwner ausgeklammert. Wird nicht benutzt.
      * 
      * @param proj
      * @return Project
+     * @author Theresa
      */
     public Project update(Project proj) {
         Connection con = DBConnection.connection();
@@ -193,7 +224,6 @@ import de.worketplace.team06.shared.bo.Team;
         	+ "SET title=\"" + proj.getTitle() + "\", " 
         	+ "SET description=\"" + proj.getDescription() + "\", "
         	+ "SET projectleader_id=\"" + proj.getProjectLeaderID() + "\", "
-//        	+ "SET projectowner_id=\"" + proj.getProjectOwnerID() + "\", "
         	+ "SET start_date=\"" + startdate + "\", "
         	+ "SET end_date=\"" + enddate + "\", "
         	+ "WHERE id=" + proj.getID());
@@ -206,8 +236,10 @@ import de.worketplace.team06.shared.bo.Team;
     }
     
     /**
-     * Loeschen eines Project-Objektes aus der Datenbank
+     * Loeschen eines Project-Objektes aus der Datenbank.
+     * 
      * @param proj
+     * @author Theresa
      */
     public void delete(Project proj) {
         Connection con = DBConnection.connection();
@@ -222,11 +254,11 @@ import de.worketplace.team06.shared.bo.Team;
         }
     }
     /**
-	 * Diese Methode findet ein Project-Objekt, anhand der übergebenen Marketplace-ID. 
-	 * ProjectOwner ausgeklammert. Wird nicht benutzt.
+	 * Diese Methode findet ein Project-Objekt anhand der übergebenen Marketplace-ID. 
 	 * 
 	 * @param marketplaceID
 	 * @return Project-Objekt 
+	 * @author Theresa
 	 */
 	public Vector<Project> findByMarketplaceID(Integer marketplaceID) {
 		
@@ -235,7 +267,6 @@ import de.worketplace.team06.shared.bo.Team;
 		Vector<Project> result = new Vector<Project>();
 		
 		try {
-			
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, created, title, description, projectleader_id, "
@@ -248,7 +279,6 @@ import de.worketplace.team06.shared.bo.Team;
 				proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
         		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-//        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
         		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
         		proj.setCreated(rs.getTimestamp("created"));
@@ -263,58 +293,16 @@ import de.worketplace.team06.shared.bo.Team;
 		return result;
 	}
 	
-	/**
-	 * Diese Methode gibt alle Project-Objekte als Vektor zurück, die die selbe projectOwnerID haben.
-	 * Ausgeklammert. Wird nicht benutzt.
-	 * 
-	 * @param projectOwnerID
-	 * @return Vector<Project> result
-	 * 
-	 * @author Patrick
-	 */
-
-/*	
-	public Vector<Project> findByProjectOwnerID(int projectOwnerID) {
-		Connection con = DBConnection.connection();
-		
-		Vector<Project> result = new Vector<Project>();
-		
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, description, projectleader_id, projectowner_id, "
-					+ "start_date, end_date, marketplace_id "
-					+ " FROM project WHERE projectowner_id ='" + projectOwnerID + "'ORDER BY id");
-			
-			while (rs.next()){
-				Project proj = new Project();
-				proj.setID(rs.getInt("id"));
-				proj.setTitle(rs.getString("title"));
-        		proj.setDescription(rs.getString("description"));
-        		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
-        		proj.setStartDate(sdf.parse(rs.getString("start_date")));
-        		proj.setEndDate(sdf.parse(rs.getString("end_date")));
-        		proj.setCreated(rs.getTimestamp("created"));
-        		proj.setMarketplaceID(rs.getInt("marektplace_id"));
-        		
-        		result.add(proj);	
-			}
-		} catch (SQLException | ParseException e2) {
-			e2.printStackTrace();
-		}
-		
-		return result;
-	}
-*/
 	
 	/**
-	 * Diese Methode gibt alle Project-Objekte als Vektor zurück, die die selbe projectLeaderID haben.
-	 * Ausgeklammert. Wird nicht benutzt.
+	 * Diese Methode findet ein Project-Objekt anhand der übergebenen ProjectLeader-ID und gibt
+	 * die Project-Objekte als Vektor zurück. 
 	 * 
 	 * @param projectOwnerID
 	 * @return Vector<Project> result
 	 * 
 	 * @author Patrick
+	 * @author Theresa
 	 */
 	
 	public Vector<Project> findByProjectLeaderID(Integer projectLeaderID) {
@@ -334,7 +322,6 @@ import de.worketplace.team06.shared.bo.Team;
 				proj.setTitle(rs.getString("title"));
         		proj.setDescription(rs.getString("description"));
         		proj.setProjectLeaderID(rs.getInt("projectleader_id"));
-//        		proj.setProjectOwnerID(rs.getInt("projectowner_id"));
         		proj.setStartDate(sdf.parse(rs.getString("start_date")));
         		proj.setEndDate(sdf.parse(rs.getString("end_date")));
         		proj.setCreated(rs.getTimestamp("created"));

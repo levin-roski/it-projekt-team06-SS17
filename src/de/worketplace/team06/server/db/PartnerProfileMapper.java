@@ -35,10 +35,22 @@ public class PartnerProfileMapper {
 	 /**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
+	   * 
+	   * @author Thies
 	   */
 	protected PartnerProfileMapper(){
 		
 	}
+	/**
+	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
+	 * dafür, dass nur eine einzige Instanz der PartnerProfile-Klasse existiert. 
+	 * PartnerProfileMapper sollte nicht über den New-Operator, sondern über den 
+	 * Aufruf dieser statischen Methode genutzt werden.
+	 * 
+	 * @return PartnerProfileMapper
+	 * @author Thies
+	 * @author Theresa
+	 */
 	
 	public static PartnerProfileMapper partnerProfileMapper(){
 		if (partnerProfileMapper == null){
@@ -46,6 +58,15 @@ public class PartnerProfileMapper {
 		}
 		return partnerProfileMapper; 
 	}
+	
+	/**
+	 * Suchen eines Partnerprofile mit vorgegebener PartnerProfileID. Durch die Eindeutigkeit der ID, 
+	 * wird genau ein Objekt zurück gegeben. 
+	 * 
+	 * @param id
+	 * @return Partnerprofile-Objekt, das der uebergebenen ID entspricht
+	 * @author Theresa
+	 */
 	
 	public PartnerProfile findById (Integer id){
     	Connection con = DBConnection.connection();
@@ -71,10 +92,10 @@ public class PartnerProfileMapper {
     }
 	
 	/**
-	 * 
-	 * 
+	 * Dies Methode findet alle PartnerProfile-Objekte in der Datenbank.
 	 * 
 	 * @return Vektor<PartnerProfile>
+	 * @author Theresa
 	 */
 	
     public Vector<PartnerProfile> findAll() {
@@ -85,7 +106,6 @@ public class PartnerProfileMapper {
         	Statement stmt = con.createStatement();
         	
         	ResultSet rs = stmt.executeQuery("SELECT * FROM partnerprofile ORDER BY id");
-        	//noch vervollständigen 
  
         	if (rs.next()){
         		PartnerProfile part = new PartnerProfile();
@@ -103,6 +123,15 @@ public class PartnerProfileMapper {
         return result ;
     }
     
+    /**
+     * Einfuegen eines PartnerProfile-Objektes in die Datenbank. Dabei wird auch der Primaerschluessel
+	 * des uebergebenen Objektes geprueft und ggf. berichtigt.
+	 * 
+     * @param part
+     * @return partnerprofile
+     * @author Theresa
+     * @author Thies
+     */
     
     public PartnerProfile insert (PartnerProfile part) {
         Connection con = DBConnection.connection();
@@ -110,12 +139,17 @@ public class PartnerProfileMapper {
         try {
         	Statement stmt = con.createStatement();
         	
+        	/*
+			 *Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
+			 *wird dann um 1 erhoeht und an an part vergeben
+			*/
+        	
         	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM partnerprofile ");
         	
         	if (rs.next()){
         	part.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
-        	
+			// Einfuegeoption, damit das neue PartnerProfile-Tupel in die Datenbank eingefuegt werden kann.
         	stmt.executeUpdate("INSERT INTO partnerprofile (id, last_edit, created) " 
         	+ "VALUES (" 
         	+ part.getID() + ",'" 
@@ -130,6 +164,13 @@ public class PartnerProfileMapper {
     return part;
     } 
     
+    /**
+     * Methode ermoeglicht, dass ein Person-Objekt in der Datenbank aktualisiert werden kann.
+     * 
+     * @param part
+     * @return PartnerProfile
+     * @author Theresa
+     */
     public PartnerProfile update(PartnerProfile part) {
         Connection con = DBConnection.connection();
         
@@ -146,6 +187,13 @@ public class PartnerProfileMapper {
         return part;
     }
 
+    /**
+     * Loeschen eines PartnerProfile-Objektes aus der Datenbank.
+     * 
+     * @param part
+     * @author Theresa
+     */
+    
     public void delete(PartnerProfile part) {
         Connection con = DBConnection.connection();
         
@@ -159,20 +207,4 @@ public class PartnerProfileMapper {
         	e.printStackTrace();
         }
     }
-
-//	public PartnerProfile findPartnerProfileByID(Integer partnerProfileID) {
-//		 Connection con = DBConnection.connection();
-//	        
-//	        try {
-//	        	Statement stmt = con.createStatement();
-//	        	
-//	        	stmt.executeUpdate();
-//	        	
-//	        }
-//	        catch (SQLException e){
-//	        	e.printStackTrace();
-//	        }
-//		return null;
-//	}
-	
 }
