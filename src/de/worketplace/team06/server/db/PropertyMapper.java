@@ -231,7 +231,7 @@ public class PropertyMapper {
         	
         	stmt.executeUpdate("UPDATE property " 
         	+ "SET value=\"" + prop.getValue() + "\", "
-        	+ "created=\"" +  prop.getCreated() + "\" " 
+        	+ "created=\"" +  prop.getCreated() + "\", " 
         	+ "name=\"" +  prop.getName() + "\" " 
         	+ "WHERE id=" + prop.getID());
         }

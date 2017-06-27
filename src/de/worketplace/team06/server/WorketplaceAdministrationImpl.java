@@ -1,8 +1,6 @@
 package de.worketplace.team06.server;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
@@ -11,15 +9,32 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.worketplace.team06.shared.*;
-//import de.worketplace.team06.shared.WorketplaceAdministration;
-import de.worketplace.team06.shared.bo.*;
-import de.worketplace.team06.client.NotLoggedInException;
-import de.worketplace.team06.client.UserChangedException;
-import de.worketplace.team06.client.WindowAlertException;
-import de.worketplace.team06.server.db.*;
-
-
+import de.worketplace.team06.server.db.ApplicationMapper;
+import de.worketplace.team06.server.db.CallMapper;
+import de.worketplace.team06.server.db.EnrollmentMapper;
+import de.worketplace.team06.server.db.MarketplaceMapper;
+import de.worketplace.team06.server.db.OrgaUnitMapper;
+import de.worketplace.team06.server.db.OrganisationMapper;
+import de.worketplace.team06.server.db.PartnerProfileMapper;
+import de.worketplace.team06.server.db.PersonMapper;
+import de.worketplace.team06.server.db.ProjectMapper;
+import de.worketplace.team06.server.db.PropertyMapper;
+import de.worketplace.team06.server.db.RatingMapper;
+import de.worketplace.team06.server.db.TeamMapper;
+import de.worketplace.team06.shared.WorketplaceAdministration;
+import de.worketplace.team06.shared.bo.Application;
+import de.worketplace.team06.shared.bo.Call;
+import de.worketplace.team06.shared.bo.Enrollment;
+import de.worketplace.team06.shared.bo.LoginInfo;
+import de.worketplace.team06.shared.bo.Marketplace;
+import de.worketplace.team06.shared.bo.OrgaUnit;
+import de.worketplace.team06.shared.bo.Organisation;
+import de.worketplace.team06.shared.bo.PartnerProfile;
+import de.worketplace.team06.shared.bo.Person;
+import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Property;
+import de.worketplace.team06.shared.bo.Rating;
+import de.worketplace.team06.shared.bo.Team;
 
 public class WorketplaceAdministrationImpl extends RemoteServiceServlet implements WorketplaceAdministration{
 
@@ -684,7 +699,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 */
 		o.setID(1);
 		
-		return this.orgaMapper.insert(o);
+		o = this.orgaMapper.insert(o);
+		
+		PartnerProfile pp = createPartnerProfileFor(o);
+		o.setPartnerProfileID(pp.getID());
+		
+		this.orgaMapper.update(o);
+		
+		return o;
 	}
 	
 	/**
@@ -697,13 +719,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 * Löschen einer Organisation aus der Datenbank
-	 * @throws WindowAlertException 
+	 * Löschen einer Organisation aus der Datenbank 
 	 */
 	@Override
-	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException, WindowAlertException {
-		
-		
+	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException {
 //		Vector<Marketplace> markets = getMarketplacesFor(organisation);
 		Vector<Enrollment> enrollments = getEnrollmentFor(organisation);
 		Vector<Application> applications = getApplicationsFor(organisation);
@@ -957,7 +976,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 */
 		p.setID(1);
 		
-		return this.personMapper.insert(p);
+		p = this.personMapper.insert(p);
+		
+		PartnerProfile pp = createPartnerProfileFor(p);
+		p.setPartnerProfileID(pp.getID());
+		
+		this.personMapper.update(p);
+		
+		return p;
 	}
 	
 	/**
@@ -969,11 +995,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 * Löschen einer Person aus der Datenbank
-	 * @throws WindowAlertException 
+	 * Löschen einer Person aus der Datenbank 
 	 */
 	@Override
-	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException {
+	public void deletePerson(Person person) throws IllegalArgumentException {
 		
 //		Vector<Marketplace> markets = getMarketplacesFor(person);
 		
@@ -1019,7 +1044,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 
 		return this.personMapper.findByGoogleID(googleID);
 	}
-
+	
+	/**
+	 * Auslesen einer Person aus der Datenbank
+	 */
+	@Override
+	public Person getPersonByID(Integer personid){
+		return this.personMapper.findByID(personid);
+	}
 	
 	
 	/*
@@ -1404,7 +1436,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 */
 		t.setID(1);
 		
-		return this.teamMapper.insert(t);
+		t = this.teamMapper.insert(t);
+		
+		PartnerProfile pp = createPartnerProfileFor(t);
+		t.setPartnerProfileID(pp.getID());
+		
+		this.teamMapper.update(t);
+		
+		return t;
 	}
 		
 	/**
@@ -1416,13 +1455,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	}
 	
 	/**
-	 * Löschen eines Teams aus der Datenbank
-	 * @throws WindowAlertException 
+	 * Löschen eines Teams aus der Datenbank 
 	 */
 	
 	
 	@Override
-	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException{		
+	public void deleteTeam(Team team) throws IllegalArgumentException {		
 		
 //		Vector<Marketplace> markets = getMarketplacesFor(team);
 		Vector<Enrollment> enrollments = getEnrollmentFor(team);
@@ -1474,20 +1512,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * -- USER LOGIN Überprüfen --
 	 * ---------------------------
 	 */
-	
-	private void checkLoggedIn() throws NotLoggedInException, UserChangedException {
-	    User temp = getUser();
-		if (temp == null) {
-	      throw new NotLoggedInException("Not logged in.");
-	    }
-//	    else
-//	    {
-//	    if (!temp.equals(user)){
-//	    	throw new UserChangedException("User has changed");
-//	    }
-//	    }
-	  }
-	
+		
 	private User getUser() {
 	    UserService userService = UserServiceFactory.getUserService();
 	    return userService.getCurrentUser();

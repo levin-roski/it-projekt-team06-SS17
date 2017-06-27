@@ -13,18 +13,16 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Project;
 
 public class MyOverview extends View {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
 	private final CellTable<Project> myProjectsTable = new CellTable<Project>();
 	private final CellTable<Call> myCallsTable = new CellTable<Call>();
 	private final CellTable<Application> myApplicationsTable = new CellTable<Application>();
 	private final CellTable<Application> applicationsTable = new CellTable<Application>();
+	final CellTable<Application> myProjectApplicationsTable = new CellTable<Application>();
 
 	public MyOverview() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
