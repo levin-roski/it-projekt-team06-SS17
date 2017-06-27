@@ -42,7 +42,10 @@ public class TestReportG {
 		//HTMLReportWriter writer = new HTMLReportWriter();
 		//writer.process(gen.createAllCallsReport());
 		//writer.process(gen.createAllCallsOfUserReport(testuser));
-		writer.process(gen.createAllApplicationsForCallsOfUserReport(o));
+		//writer.process(gen.createAllApplicationsForCallsOfUserReport(o));
+		
+		writer.process(gen.createAllInterrelationsOfAllApplicantsOfUserReport(o));
+		
 		System.out.println(writer.getReportText());
 	}
 
