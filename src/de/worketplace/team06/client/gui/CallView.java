@@ -137,6 +137,6 @@ public class CallView extends View {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setSecondBreadcrumb(this, "Marktplatz-Details");		
+		ClientsideSettings.setSecondBreadcrumb(this, "Ausschreibungs-Details");		
 	}
 }

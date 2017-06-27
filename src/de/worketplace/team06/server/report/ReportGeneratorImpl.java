@@ -17,9 +17,9 @@ import de.worketplace.team06.server.WorketplaceAdministrationImpl;
 import de.worketplace.team06.shared.bo.*;
 import de.worketplace.team06.shared.report.*;
 import de.worketplace.team06.server.db.*;
-import de.worketplace.team06.client.NotLoggedInException;
-import de.worketplace.team06.client.UserChangedException;
-import de.worketplace.team06.client.WindowAlertException;
+//import de.worketplace.team06.client.NotLoggedInException;
+//import de.worketplace.team06.client.UserChangedException;
+//import de.worketplace.team06.client.WindowAlertException;
 
 
 /**
@@ -145,7 +145,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	
 	/**
-	 * Methode zum Generieren eines Reports für alle Bewerbungen auf Ausschreibungen, die dem übergebenenen Benutzer zugeordnet sind.
+	 * Methode zum Generieren eines Reports für alle eingehenden Bewerbungen auf Ausschreibungen, die dem übergebenenen Benutzer zugeordnet sind.
 	 */
 	@Override
 	public AllApplicationsForCallsOfUserReport createAllApplicationsForCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
@@ -189,5 +189,50 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
+	/**
+	 * Methode zum Generieren eines Reports für alle ausgehenden Bewerbungen vom User auf bestehende Ausschreibungen.
+	 */
+	public AllApplicationsOfUserToCallsReport createAllApplicationsOfUserToCallsReport(OrgaUnit o) throws IllegalArgumentException {
+		
+		//Erstellung einer Instanz des Reports
+		AllApplicationsOfUserToCallsReport report = new AllApplicationsOfUserToCallsReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Alle eingehenden Bewerbungen auf Ausschreibungen des Benutzers");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Deadline"));
+		headline.addColumn(new Column("Bewerbungstext"));
+		headline.addColumn(new Column("Status"));
+		headline.addColumn(new Column("Rating"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		Vector<Application> applications = wpadmin.getApplicationsFor(o);
+		for(Application a : applications){
+			Call c = wpadmin.getCallByID(a.getCallID());
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(c.getTitle()));
+			rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(a.getText()));
+			rowToAdd.addColumn(new Column(a.getStatusString()));
+			Rating r = wpadmin.getRatingFor(a);
+			rowToAdd.addColumn(new Column(r.getRating().toString()));
+			report.addRow(rowToAdd);
+		}
+		
+		return report;
+	}
+	
+	
+	@Override
+	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
+		return wpadmin.getOrgaUnitFor(loginInfo);
+	}
 	
 }

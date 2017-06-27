@@ -27,4 +27,6 @@ public interface ReportGeneratorAsync {
 	void createAllApplicationsForCallsOfUserReport(OrgaUnit o,
 			AsyncCallback<AllApplicationsForCallsOfUserReport> callback);
 
+	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
+
 }
