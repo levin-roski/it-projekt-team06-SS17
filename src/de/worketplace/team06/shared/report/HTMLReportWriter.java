@@ -129,6 +129,12 @@ public class HTMLReportWriter extends ReportWriter {
 	}
 	
 	@Override
+	public void process(AllCallsOfUserReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public void process(AllCallsMatchingWithUserReport r) {
 		// TODO Auto-generated method stub
 		
@@ -153,5 +159,29 @@ public class HTMLReportWriter extends ReportWriter {
 	 */
 	public String getReportText() {
 	  return this.getHeader() + this.reportText + this.getTrailer();
+	}
+
+	@Override
+	public void process(AllApplicationsOfApplicantReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void process(AllEnrollmentsOfApplicantReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void process(AllInterrelationsOfApplicantReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void process(AllInterrelationsOfAllApplicantsOfUserReport r) {
+		// TODO Auto-generated method stub
+		
 	}
 }
