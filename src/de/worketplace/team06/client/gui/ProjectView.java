@@ -73,14 +73,16 @@ public class ProjectView extends View {
 		root.add(callTable);
 		callTable.setWidth("100%", true);
 
-		final Button newButton = new Button("Neue Ausschreibung hinzufügen");
-		newButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				mainPanel.setForm(new CallForm(null, false, true, null, null));
-			}
-		});
-		root.add(newButton);
-
+		if (currentProject.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
+			final Button newButton = new Button("Neue Ausschreibung hinzufügen");
+			newButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					mainPanel.setForm(new CallForm(null, false, true, null, null));
+				}
+			});
+			root.add(newButton);	
+		}
+		
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Enrollment> enrollmentSsm = new SingleSelectionModel<Enrollment>();
