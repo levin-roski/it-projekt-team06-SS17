@@ -23,12 +23,12 @@ import de.worketplace.team06.shared.bo.Marketplace;
  * @author Roski
  */
 public class RateApplicationForm extends Form {
-	private Label Label = new Label("Bewertung");
+	private Label nameLabel = new Label("Bewertung");
 	private ListBox ratingList = new ListBox();
 	private Label descriptionLabel = new Label("Beschreibung");
 	private TextBox descriptionInput = new TextBox();
 	private boolean shouldUpdate = false;
-	private Application toChangeMarketplace;
+	private Application toChangeApplication;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
 
@@ -37,19 +37,19 @@ public class RateApplicationForm extends Form {
 	 * dann bewertet werden kann. null übergeben, falls ein neuer
 	 * Marktplatz erstellt werden soll.
 	 * 
-	 * @param pToChangeMarketplace
+	 * @param pToChangeApplication
 	 *            Marketplace, der im Formular angezeigt werden soll
 	 * @param pHeadline
 	 *            Falls true wird dem Formular eine Überschrift vorangehängt
 	 */
-	public RateApplicationForm(Marketplace pToChangeMarketplace, final boolean pHeadline) {
-		if (pToChangeMarketplace != null) {
+	public RateApplicationForm(Application pToChangeApplication, final boolean pHeadline) {
+		if (pToChangeApplication != null) {
 			shouldUpdate = true;
-			this.toChangeMarketplace = pToChangeMarketplace;
+			this.toChangeApplication = pToChangeApplication;
 		}
 		if (pHeadline) {
-			changeHeadline = createHeadline("Marktplatz bearbeiten", true);
-			addHeadline = createHeadline("Marktplatz hinzufügen", true);
+			changeHeadline = createHeadline("Bewerbung bearbeiten", true);
+			addHeadline = createHeadline("Bewerbung hinzufügen", true);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class RateApplicationForm extends Form {
 	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
 	 * Marktplatz erstellt werden soll.
 	 * 
-	 * @param pToChangeMarketplace
+	 * @param pToChangeApplication
 	 *            Marketplace, der im Formular angezeigt werden soll
 	 * @param pHeadline
 	 *            Falls true wird dem Formular eine Überschrift vorangehängt
@@ -66,12 +66,12 @@ public class RateApplicationForm extends Form {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public RateApplicationForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final boolean pClosingHeadline,
+	public RateApplicationForm(Application pToChangeApplication, final boolean pHeadline, final boolean pClosingHeadline,
 			final Callback editCallback, final Callback deleteCallback) {
-		this(pToChangeMarketplace, pHeadline);
+		this(pToChangeApplication, pHeadline);
 		if (pClosingHeadline) {
-			changeHeadline = createHeadlineWithCloseButton("Marktplatz bearbeiten", true);
-			addHeadline = createHeadlineWithCloseButton("Marktplatz hinzufügen", true);
+			changeHeadline = createHeadlineWithCloseButton("Bewerbung bearbeiten", true);
+			addHeadline = createHeadlineWithCloseButton("Bewerbung hinzufügen", true);
 		}
 
 		/*
@@ -94,25 +94,25 @@ public class RateApplicationForm extends Form {
 			if (changeHeadline != null) {
 				root.add(changeHeadline);
 			}
-			ratingList.setText(toChangeMarketplace.getTitle());
-			descriptionInput.setText(toChangeMarketplace.getDescription());
-			final Button saveButton = new Button("Änderungen speichern");
+			ratingList.setText(toChangeApplication.getTitle());
+			descriptionInput.setText(toChangeApplication.getDescription());
+			final Button saveButton = new Button("Speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (ratingList.getText().length() == 0) {
-						Window.alert("Bitte vergeben Sie einen Namen");
+						Window.alert("Bitte vergeben eine Bewertung");
 					} else if (descriptionInput.getText().length() == 0) {
-						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
+						Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
 					} else {
-						toChangeMarketplace.setTitle(ratingList.getText());
-						toChangeMarketplace.setDescription(descriptionInput.getText());
-						worketplaceAdministration.saveMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+						toChangeApplication.setTitle(ratingList.getText());
+						toChangeApplication.setDescription(descriptionInput.getText());
+						worketplaceAdministration.saveMarketplace(toChangeApplication, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
 							}
 
 							public void onSuccess(Void result) {
-								Window.alert("Der Marktplatz wurde erfolgreich geändert");
+								Window.alert("Die Bewerbung wurde erfolgreich bewertet");
 								if (editCallback != null) {
 									editCallback.run();
 								} else {
@@ -125,18 +125,18 @@ public class RateApplicationForm extends Form {
 			});
 			final VerticalPanel panel = new VerticalPanel();
 			panel.add(saveButton);
-			final Button deleteButton = new Button("Diesen Marktplatz entfernen");
+			final Button deleteButton = new Button("Diese Bewertung entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					final boolean confirmDelete = Window.confirm("Möchten Sie den Marktplatz wirklich löschen?");
+					final boolean confirmDelete = Window.confirm("Möchten Sie die Bewertung wirklich löschen?");
 					if (confirmDelete) {
-						worketplaceAdministration.deleteMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+						worketplaceAdministration.deleteMarketplace(toChangeApplication, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
 							}
 
 							public void onSuccess(Void result) {
-								Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
+								Window.alert("Die Bewertung wurde erfolgreich gelöscht");
 								if (deleteCallback != null) {
 									deleteCallback.run();
 								} else {
@@ -153,7 +153,7 @@ public class RateApplicationForm extends Form {
 			if (addHeadline != null) {
 				root.add(addHeadline);
 			}
-			final Button saveButton = new Button("Neuen Marktplatz anlegen");
+			final Button saveButton = new Button("Bewertung anlegen");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (ratingList.getText().length() == 0) {
