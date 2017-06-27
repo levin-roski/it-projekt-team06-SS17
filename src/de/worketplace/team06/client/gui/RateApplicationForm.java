@@ -33,12 +33,12 @@ public class RateApplicationForm extends Form {
 	private HorizontalPanel addHeadline;
 
 	/**
-	 * Im Konstruktor kann eine Bewerbung übergeben werden, die dann bewertet
-	 * werden kann. null übergeben, falls ein neuer Marktplatz erstellt werden
-	 * soll.
+	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die
+	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
+	 * Bewertung erstellt werden soll.
 	 * 
 	 * @param pToChangeRating
-	 *            Marketplace, der im Formular angezeigt werden soll
+	 *            Rating, das im Formular angezeigt werden soll
 	 * @param pHeadline
 	 *            Falls true wird dem Formular eine Überschrift vorangehängt
 	 */
@@ -54,12 +54,12 @@ public class RateApplicationForm extends Form {
 	}
 
 	/**
-	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der
-	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
-	 * Marktplatz erstellt werden soll.
+	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die
+	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
+	 * Bewertung erstellt werden soll.
 	 * 
 	 * @param pToChangeRating
-	 *            Marketplace, der im Formular angezeigt werden soll
+	 *            Bewertung, die im Formular angezeigt werden soll
 	 * @param pHeadline
 	 *            Falls true wird dem Formular eine Überschrift vorangehängt
 	 * @param pClosingHeadline
@@ -87,7 +87,7 @@ public class RateApplicationForm extends Form {
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*
-		 * Falls ein selektierter Marktplatz übergeben wurde und jetzt
+		 * Falls eine selektierte Bewerbung übergeben wurde und jetzt
 		 * dargestellt werden soll
 		 */
 		if (shouldUpdate) {
