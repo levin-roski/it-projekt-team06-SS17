@@ -699,7 +699,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 */
 		o.setID(1);
 		
-		return this.orgaMapper.insert(o);
+		o = this.orgaMapper.insert(o);
+		
+		PartnerProfile pp = createPartnerProfileFor(o);
+		o.setPartnerProfileID(pp.getID());
+		
+		this.orgaMapper.update(o);
+		
+		return o;
 	}
 	
 	/**
@@ -969,7 +976,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 */
 		p.setID(1);
 		
-		return this.personMapper.insert(p);
+		p = this.personMapper.insert(p);
+		
+		PartnerProfile pp = createPartnerProfileFor(p);
+		p.setPartnerProfileID(pp.getID());
+		
+		this.personMapper.update(p);
+		
+		return p;
 	}
 	
 	/**
@@ -1030,7 +1044,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 
 		return this.personMapper.findByGoogleID(googleID);
 	}
-
+	
+	/**
+	 * Auslesen einer Person aus der Datenbank
+	 */
+	@Override
+	public Person getPersonByID(Integer personid){
+		return this.personMapper.findByID(personid);
+	}
 	
 	
 	/*
@@ -1415,7 +1436,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 */
 		t.setID(1);
 		
-		return this.teamMapper.insert(t);
+		t = this.teamMapper.insert(t);
+		
+		PartnerProfile pp = createPartnerProfileFor(t);
+		t.setPartnerProfileID(pp.getID());
+		
+		this.teamMapper.update(t);
+		
+		return t;
 	}
 		
 	/**
