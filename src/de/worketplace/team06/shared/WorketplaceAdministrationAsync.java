@@ -162,5 +162,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void getApplicationCountFor(Call c, AsyncCallback<Integer> callback);
 
+	void getPersonByID(Integer personid, AsyncCallback<Person> callback);
+
 	
 }
