@@ -24,6 +24,7 @@ import de.worketplace.team06.shared.bo.Project;
 public class ProjectView extends View {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
+	
 	// erstellen der Tabelle Ausschreibungen
 	private final CellTable<Call> callTable = new CellTable<Call>();
 	// erstellen der Tabelle Beteiligungen
