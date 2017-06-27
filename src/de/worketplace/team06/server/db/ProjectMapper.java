@@ -82,7 +82,7 @@ import de.worketplace.team06.shared.bo.Team;
 		return projectMapper; 
 	}
 	/**
-	 * Suchen eines Project mit vorgegebener ProjectID. Durch die Eindeutigkeit der ID 
+	 * Auslesen eines Project-Objektes anhand übergebener ProjectID. Durch die Eindeutigkeit der ID 
 	 * wird genau ein Objekt zurück gegeben. 
 	 * 
 	 * @param proj
@@ -123,7 +123,7 @@ import de.worketplace.team06.shared.bo.Team;
 	}
   
 	/**
-	 * Diese Methode findet alle Project-Objekte in der Datenbank.
+	 * Auslesen aller Project-Objekte in der Datenbank.
 	 * 
 	 * @return Vektor <Project>
 	 * @author Theresa
@@ -254,10 +254,10 @@ import de.worketplace.team06.shared.bo.Team;
         }
     }
     /**
-	 * Diese Methode findet ein Project-Objekt anhand der übergebenen Marketplace-ID. 
+	 * Auslesen eines Project-Objekts anhand der übergebenen MarketplaceID.
 	 * 
 	 * @param marketplaceID
-	 * @return Project-Objekt 
+	 * @return Vektor<Project>
 	 * @author Theresa
 	 */
 	public Vector<Project> findByMarketplaceID(Integer marketplaceID) {
@@ -295,12 +295,10 @@ import de.worketplace.team06.shared.bo.Team;
 	
 	
 	/**
-	 * Diese Methode findet ein Project-Objekt anhand der übergebenen ProjectLeader-ID und gibt
-	 * die Project-Objekte als Vektor zurück. 
+	 * Auslesen der Project-Objekte aus der Datenbank anhand der übergebenen ProjectLeader-ID.
 	 * 
 	 * @param projectOwnerID
-	 * @return Vector<Project> result
-	 * 
+	 * @return Vector<Project> 
 	 * @author Patrick
 	 * @author Theresa
 	 */

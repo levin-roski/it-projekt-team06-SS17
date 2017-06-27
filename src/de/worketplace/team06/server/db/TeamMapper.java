@@ -134,7 +134,7 @@ import de.worketplace.team06.shared.bo.*;
 	    }
 	    
 		/**
-		 * Diese Methode findet ein Team-Objekt, anhand der übergebenen Google-ID. 
+		 * Auslesen eines Team-Objekts aus der Datenbank anhand der übergebenen GoogleID.
 		 * 
 		 * @param googleID 
 		 * @return Team-Objekt 
@@ -197,8 +197,8 @@ import de.worketplace.team06.shared.bo.*;
 		}
 	
 		/**
-		 * Suchen eines Teams mit vorgegebener TeamID. Durch die Eindeutigkeit der ID 
-		 * wird genau ein Objekt zurück gegeben. 
+		 * Auslesen eines Team-Objektes aus der Datenbank anhand übergebeneer TeamID. 
+		 * Durch die Eindeutigkeit der ID wird genau ein Objekt zurück gegeben. 
 		 * 
 		 * @param ouid
 		 * @return Team-Objekt, das der übergebenen ID entspricht
@@ -239,7 +239,7 @@ import de.worketplace.team06.shared.bo.*;
 		}	    
 
 	    /**
-	     * Loeschen eines Team-Objektes aus der Datenbank.
+	     * Loeschen eines Team-Objekts aus der Datenbank.
 	     * 
 	     * @param team
 	     * @author Theresa

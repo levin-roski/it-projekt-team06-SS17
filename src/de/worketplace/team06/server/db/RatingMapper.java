@@ -75,10 +75,10 @@ public class RatingMapper {
 	}
 	
 	/**
-	 * Suchen einer Bewertung mit vorgegebener RatingID. Durch die Eindeutigkeit der ID
+	 * Auslesen einer bestimmten Bewertung. Durch die Eindeutigkeit der ID
 	 * wird genau ein Objekt zurück gegeben. 
 	 * 
-	 * @param ratingID
+	 * @param r
 	 * @return Rating-Objekt, das der übergebenen ID entspricht
 	 * @author Theresa
 	 */
@@ -235,7 +235,7 @@ public class RatingMapper {
     
     
     /**
-	 * Diese Methode findet ein Rating-Objekt anhand der übergebenen ApplicationID.
+	 * Auslesen eines Ratin-Objekts anhand der übergebenen ApplicationID.
 	 * 
 	 * @param ApplicationID
 	 * @return Rating-Objekt 
