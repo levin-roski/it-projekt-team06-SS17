@@ -31,6 +31,17 @@ import de.worketplace.team06.shared.bo.Project;
  */
 public class PartnerProfileMapper {
 
+	/**
+     * Die Klasse PartnerProfileMapper wird nur einmal instanziiert. Man spricht hierbei
+     * von einem sogenannten <b>Singleton</b>.
+     * <p>
+     * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+     * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+     * einzige Instanz dieser Klasse.
+     * 
+     * @author Thies
+     * @author Theresa
+     */
 	private static PartnerProfileMapper partnerProfileMapper = null;
 	 /**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>

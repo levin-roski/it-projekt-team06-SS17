@@ -34,7 +34,7 @@ import de.worketplace.team06.shared.bo.Rating;
 public class RatingMapper {
 	
 	/**
-     * Die Klasse RatingMapper wird nur einmal instantiiert. Man spricht hierbei
+     * Die Klasse RatingMapper wird nur einmal instanziiert. Man spricht hierbei
      * von einem sogenannten <b>Singleton</b>.
      * <p>
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für

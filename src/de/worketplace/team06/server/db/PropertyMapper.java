@@ -35,7 +35,7 @@ import de.worketplace.team06.shared.bo.Property;
 
 public class PropertyMapper {
 	/**
-     * Die Klasse PropertyMapper wird nur einmal instantiiert. Man spricht hierbei
+     * Die Klasse PropertyMapper wird nur einmal instanziiert. Man spricht hierbei
      * von einem sogenannten <b>Singleton</b>.
      * <p>
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für

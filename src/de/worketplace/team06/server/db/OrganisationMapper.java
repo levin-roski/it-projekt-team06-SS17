@@ -8,10 +8,32 @@ import java.util.*;
 
 import de.worketplace.team06.shared.bo.*;
 
+/**
+ * Die Mapper-Klasse OrganisationMapper bildet Organisation-Objekte als Datensätze
+ * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
+ * können mit deren Hilfe Objekte erzeugt, verändert, gelöscht und ausgelesen werden.
+ * Das Mapping erfolgt bidirektional: Objekte können in Datensätze und Datensätze in 
+ * Objekte umgewandelt werden.
+ * 
+ * @see ApplicationMapper
+ * @see CallMapper
+ * @see EnrollmentMapper
+ * @see MarketplaceMapper
+ * @see OrgaUnitMapper
+ * @see PartnerProfileMapper
+ * @see PersonMapper
+ * @see ProjectMapper
+ * @see PropertyMapper
+ * @see RatingMapper
+ * @see TeamMapper
+ * 
+ * @author Patrick
+ * @author Theresa
+ */
 public class OrganisationMapper {
 	
 	/**
-     * Die Klasse OrganisationMapper wird nur einmal instantiiert. Man spricht hierbei
+     * Die Klasse OrganisationMapper wird nur einmal instanziiert. Man spricht hierbei
      * von einem sogenannten <b>Singleton</b>.
      * <p>
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
@@ -39,7 +61,7 @@ public class OrganisationMapper {
 	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
 	 * dafür, dass nur eine einzige Instanz der OrganisationMapper-Klasse existiert. 
 	 * OrganisationMapper sollte nicht über den New-Operator, sondern über den 
-	 * Aufruf dieser statischen Methode.
+	 * Aufruf dieser statischen Methode ausgeführt werden.
 	 * 
 	 * @return OrganisationMapper
 	 * @author Thies
@@ -62,8 +84,6 @@ public class OrganisationMapper {
 	 * @throws  
 	 * @author Thies 
 	 * @author Theresa
-     * @param orgaUnit 
-     * @return
      */
 	
     public Organisation insert (Organisation o) {
@@ -71,12 +91,10 @@ public class OrganisationMapper {
     	Connection con = DBConnection.connection();
 		try {
 			Statement stmt = con.createStatement();
-			
-			/** 
+			/* 
 			 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
-			 *wird dann um 1 erhoet und an an o vergeben
+			 * wird dann um 1 erhoeht und an an o vergeben
 			*/
-			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM orgaunit ");
 			
 			if (rs.next()) {
@@ -85,10 +103,7 @@ public class OrganisationMapper {
 		
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				
-				/**
-				 * Einfuegeoption, damit das neue Organisation-Tupel in die Datenbank eingefuegt werden kann
-				 */
+				// Einfuegeoption, damit das neue Organisation-Tupel in die Datenbank eingefuegt werden kann
 				stmt.executeUpdate("INSERT INTO orgaunit (id, created, google_id, description, type) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getGoogleID() +  "','" + o.getDescription() +  "','" + o.getType() + "')");
 				stmt.executeUpdate("INSERT INTO organisation (id, created, name, street, zipcode, city) " + "VALUES (" + o.getID() + ",'" + o.getCreated() + "','" + o.getName() + "','" + o.getStreet() + "'," + o.getZipcode() + ",'" + o.getCity() + "')");
 				con.commit();
@@ -100,7 +115,6 @@ public class OrganisationMapper {
 				con.rollback();
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  finally {
@@ -112,7 +126,6 @@ public class OrganisationMapper {
 			try {
 				con.setAutoCommit(true);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -121,16 +134,18 @@ public class OrganisationMapper {
     }
     
     /**
-	 * Diese Methode findet ein Organisation-Objekt, anhand der übergebenen Google-ID 
+	 * Auslesen eines Organisation-Objektes anhand der übergebenen GoogleID.
 	 * 
 	 * @param googleID 
 	 * @return Organisation-Objekt 
+	 * @author Theresa
 	 */
 	public Organisation findByGoogleID(String googleID) {
 		Connection con = DBConnection.connection();
 		
 		try {						
 			Statement stmt = con.createStatement();
+			// Verbinden der Tabellen orgaunit und organisation, da jede Organisation eine Organisationseinheit ist
 			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN organisation ON"
 					+ " orgaunit.id = organisation.id WHERE orgaunit.google_id ='" + googleID + "'");		
 			
@@ -162,13 +177,13 @@ public class OrganisationMapper {
      * 
      * @param orgaUnit 
      * @return Organisation
+     * @author Theresa
      */
 	public void update(Organisation o) {
 		Connection con = DBConnection.connection();
 
 	    try {
 	    	Statement stmt = con.createStatement();
-	    	//Updaten einer Person :) 
 	    	stmt.executeUpdate("UPDATE orgaunit, organisation SET"
 	    						+ " orgaunit.description='" + o.getDescription() +
 	    						"', orgaunit.partnerprofile_id= " + o.getPartnerProfileID() +
@@ -186,15 +201,16 @@ public class OrganisationMapper {
 	}
     
     /**
-     * Löschen eines Organisations-Objektes aus der Datenbank.
+     * Löschen eines Organisation-Objektes aus der Datenbank.
      * 
      * @param orga
+     * @author Theresa
      */
     public void delete(Organisation o) {
 		Connection con = DBConnection.connection();
 	    try {
 	    	Statement stmt = con.createStatement();
-	    	//Löschen der Organisation aus der Tabelle orgaunit und organisation
+	    	//Löschen des Organisation-Objektes aus der Tabelle orgaunit und organisation
 	    	stmt.executeUpdate("DELETE orgaunit, organisation FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.id= " + o.getID());	
 	    }
 	    catch (SQLException e2) {
@@ -208,15 +224,16 @@ public class OrganisationMapper {
 	 * 
 	 * @param ouid
 	 * @return Organisation-Objekt, das der übergebenen ID entspricht
+	 * @author Theresa
 	 */
     public Organisation findByID(Integer ouid) {
     	Connection con = DBConnection.connection();
 		
 		try {						
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.id = " + ouid);		
-			
-			/**
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN "
+					+ "organisation ON orgaunit.id = organisation.id WHERE orgaunit.id = " + ouid);		
+			/*
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
 			 */
@@ -242,101 +259,5 @@ public class OrganisationMapper {
 		}
 		return null;
 	}
-
-
-   /*
-    public Vector<Organisation> findAll() {
-        Connection con = DBConnection.connection();
-        Vector<Organisation> result = new Vector<Organisation>();
-        
-        try{
-        	Statement stmt = con.createStatement();
-        	
-        	ResultSet rs = stmt.executeQuery("SELECT id, street, zipcode, city, created "
-        	+ "FROM Organisation ");
-        	
-        	while (rs.next()){
-        		Organisation o = new Organisation();
-        		o.setID(rs.getInt("id"));
-        		o.setStreet(rs.getString("street"));
-        		o.setZipcode(rs.getInt("zipcode"));
-        		o.setCity(rs.getString("city"));
-        		o.setCreated(rs.getTimestamp("created"));
-        		
-        		result.addElement(o);
-        	}
-        }
-        catch (SQLException e){
-        	e.printStackTrace();
-        }
-        return result ;
-    }
-
-    
-    
-    public Organisation insert (Organisation o) {
-        Connection con = DBConnection.connection();
-        
-        try {
-        	Statement stmt = con.createStatement();
-        	
-        	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM organisation ");
-        	
-        	if (rs.next()){
-        	o.setID(rs.getInt("maxid") + 1);
-        	stmt = con.createStatement();
-        	
-        	stmt.executeUpdate("INSERT INTO project (id, street, zipcode, city) " 
-        	+ "VALUES (" 
-        	+ o.getID() + ", " 
-        	+ o.getStreet() + "','" 
-        	+ o.getZipcode() + "','"
-        	+ o.getCity() + "','"
-        	+ "')");
-        	}
-        }
-       catch (SQLException e){
-    	e.printStackTrace();
-    }
-    
-    return o;
-    } 
-    
-    
-    public Organisation update(Organisation o) {
-        Connection con = DBConnection.connection();
-        
-        try{
-        	Statement stmt = con.createStatement();
-        	
-        	stmt.executeUpdate("UPDATE organisation " 
-        	+ "SET street=\"" + o.getStreet() + "\", " 
-        	+ "SET zipcode=\"" + o.getZipcode() + "\", "
-        	+ "SET city=\"" + o.getCity() + "\", "
-        	+ "WHERE id=" + o.getID());
-        }
-        
-        catch (SQLException e){
-        	e.printStackTrace();
-        } 
-        return o;
-    }
-    
-
-    public void delete(Organisation o) {
-        Connection con = DBConnection.connection();
-        
-        try {
-        	Statement stmt = con.createStatement();
-        	
-        	stmt.executeUpdate("DELETE FROM organisation " + "WHERE id=" + o.getID());
-        }
-        catch (SQLException e){
-        	e.printStackTrace();
-        }
-    }
-    */
-
-
    
 }
