@@ -12,13 +12,18 @@
 	<servlet-mapping>
 		<servlet-name>worketplaceAdministration</servlet-name>
 		<url-pattern>/worketplace/worketplaceAdmin</url-pattern>
-		<url-pattern>/test/worketplaceAdmin</url-pattern>
+		<url-pattern>/report/worketplaceAdmin</url-pattern>
 	</servlet-mapping>
 
-	<!-- Für lokale Tests auskommentieren -->
-	<!-- <security-constraint> <web-resource-collection> <web-resource-name>*</web-resource-name> 
-		<url-pattern>*</url-pattern> </web-resource-collection> <auth-constraint> 
-		<role-name>*</role-name> </auth-constraint> </security-constraint> -->
+	<servlet>
+		<servlet-name>ReportGenerator</servlet-name>
+		<servlet-class>de.worketplace.team06.server.report.ReportGeneratorImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReportGenerator</servlet-name>
+		<url-pattern>/worketplace/reportGenerator</url-pattern>
+		<url-pattern>/report/reportGenerator</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>loginService</servlet-name>
@@ -28,13 +33,14 @@
 	<servlet-mapping>
 		<servlet-name>loginService</servlet-name>
 		<url-pattern>/worketplace/login</url-pattern>
-		<url-pattern>/home/login</url-pattern>
+		<url-pattern>/report/login</url-pattern>
 	</servlet-mapping>
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>worketplace.html</welcome-file>
+		<welcome-file>report.html</welcome-file>
 	</welcome-file-list>
 
 </web-app>

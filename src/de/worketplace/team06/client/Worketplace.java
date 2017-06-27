@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MainPanel;
-import de.worketplace.team06.client.gui.MarketplaceOverview;
+import de.worketplace.team06.client.gui.MarketplaceOverView;
 import de.worketplace.team06.client.gui.MarketplaceView;
 import de.worketplace.team06.client.gui.MyOverview;
 import de.worketplace.team06.client.gui.OrgaUnitFormView;
@@ -104,7 +104,7 @@ public class Worketplace implements EntryPoint {
 		// Parse the history token
 		try {
 			if (historyToken.substring(0, 12).equals("Marktplaetze")) {
-				mainPanel.setView(new MarketplaceOverview());
+				mainPanel.setView(new MarketplaceOverView());
 			} else if (historyToken.equals("Mein-Nutzer")) {
 				mainPanel.setView(new OrgaUnitFormView(null));
 			} else if (historyToken.substring(0, 18).equals("Marktplatz-Details")) {
@@ -118,7 +118,7 @@ public class Worketplace implements EntryPoint {
 							@Override
 							public void onSuccess(Marketplace result) {
 								ClientsideSettings.setCurrentMarketplaceId(result.getID());
-								ClientsideSettings.setFirstBreadcrumb(new MarketplaceOverview(), "Marktplätze");
+								ClientsideSettings.setFirstBreadcrumb(new MarketplaceOverView(), "Marktplätze");
 								mainPanel.setView(new MarketplaceView(result));
 							}
 						});
@@ -127,14 +127,14 @@ public class Worketplace implements EntryPoint {
 				final String[] ids = historyToken.substring(15).split("-");
 
 				class RpcWrapper {
-					protected MarketplaceOverview tokenMov;
+					protected MarketplaceOverView tokenMov;
 					protected MarketplaceView tokenMv;
 					protected ProjectView tokenPv;
 					protected int checkRpcTimerCounter = 1;
 					protected Timer t;
 
 					public RpcWrapper(final String[] ids) {
-						tokenMov = new MarketplaceOverview();
+						tokenMov = new MarketplaceOverView();
 
 						Worketplace.this.worketplaceAdministration.getMarketplaceByID(Integer.parseInt(ids[1]),
 								new AsyncCallback<Marketplace>() {
@@ -151,7 +151,7 @@ public class Worketplace implements EntryPoint {
 						t = new Timer() {
 							public void run() {
 								RpcWrapper.this.checkRpcTimerCounter++;
-								if (RpcWrapper.this.tokenMov instanceof MarketplaceOverview
+								if (RpcWrapper.this.tokenMov instanceof MarketplaceOverView
 										&& RpcWrapper.this.tokenMv instanceof MarketplaceView) {
 									Worketplace.this.worketplaceAdministration.getProjectByID(Integer.parseInt(ids[0]),
 											new AsyncCallback<Project>() {
