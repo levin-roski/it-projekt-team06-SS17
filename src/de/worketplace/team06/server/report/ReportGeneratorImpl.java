@@ -221,16 +221,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
+	
 	/**
 	 * Methode zum Generieren eines Reports für alle ausgehenden Bewerbungen vom User auf bestehende Ausschreibungen.
 	 */
+	@Override
 	public AllApplicationsOfUserToCallsReport createAllApplicationsOfUserToCallsReport(OrgaUnit o) throws IllegalArgumentException {
 		
 		//Erstellung einer Instanz des Reports
 		AllApplicationsOfUserToCallsReport report = new AllApplicationsOfUserToCallsReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle eingehenden Bewerbungen auf Ausschreibungen des Benutzers");
+		report.setTitle("Alle ausgehenden Bewerbungen des Benutzers");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -260,6 +262,118 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		return report;
 	}
+	
+	
+	/**
+	 * Methode zum Generieren eines Reports für alle Bewerbungen eines Bewerbers.
+	 */
+	@Override
+	public AllApplicationsOfApplicantReport createAllApplicationsOfApplicantReport (OrgaUnit applicant) throws IllegalArgumentException {
+		
+		//Erstellung einer Instanz des Reports
+		AllApplicationsOfApplicantReport report = new AllApplicationsOfApplicantReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Ausgehende Bewerbungen des Bewerbers");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("Projekt"));
+		headline.addColumn(new Column("Ausschreibung"));
+		headline.addColumn(new Column("Bewerbungstext"));
+		headline.addColumn(new Column("Status"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		Vector<Application> applications = wpadmin.getApplicationsFor(applicant);
+		for(Application a : applications){
+			Call c = wpadmin.getCallByID(a.getCallID());
+			Project p = wpadmin.getProjectByID(c.getProjectID());
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(c.getTitle()));
+			rowToAdd.addColumn(new Column(p.getTitle()));
+			rowToAdd.addColumn(new Column(a.getText()));
+			rowToAdd.addColumn(new Column(a.getStatusString()));
+			report.addRow(rowToAdd);
+		}
+		
+		return report;
+	}
+	
+	
+	/**
+	 * Methode zum Generieren eines Reports für alle Beteiligungen eines Bewerbers.
+	 */
+	@Override
+	public AllEnrollmentsOfApplicantReport createAllEnrollmentsOfApplicantReport (OrgaUnit applicant) throws IllegalArgumentException {
+		AllEnrollmentsOfApplicantReport report = new AllEnrollmentsOfApplicantReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Beteiligungen an Projekten des Bewerbers");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("Projekt"));
+		headline.addColumn(new Column("Beteiligungsbeginn"));
+		headline.addColumn(new Column("Beteiligungsende"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		Vector<Enrollment> enrollments = wpadmin.getEnrollmentFor(applicant);
+		for(Enrollment e : enrollments){
+			Project p = wpadmin.getProjectByID(e.getProjectID());
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(p.getTitle()));
+			rowToAdd.addColumn(new Column(e.getStartDate().toString()));
+			rowToAdd.addColumn(new Column(e.getEndDate().toString()));
+			report.addRow(rowToAdd);
+		}
+		
+		return report;
+	}
+	
+	
+	/**
+	 * Methode zum Generieren eines Reports für alle Verflechtungen eines Bewerbers.
+	 */
+	@Override
+	public AllInterrelationsOfApplicantReport createAllInterrelationsOfApplicantReport (OrgaUnit applicant) throws IllegalArgumentException {
+		AllInterrelationsOfApplicantReport report = new AllInterrelationsOfApplicantReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Verflechtungen des Bewerbers mit der ID " + applicant.getID().toString());
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		report.addSubReport(createAllApplicationsOfApplicantReport(applicant));
+		report.addSubReport(createAllEnrollmentsOfApplicantReport(applicant));
+		
+		return report;
+	}
+	
+	
+//	/**
+//	 * Methode zum Generieren eines Reports für die Verflechtungen aller Bewerber des Users.
+//	 */
+//	@Override
+//	public AllInterrelationsOfAllApplicantsOfUserReport createAllInterrelationsOfAllApplicantsOfUserReport (OrgaUnit o) throws IllegalArgumentException {
+//		AllInterrelationsOfAllApplicantsOfUserReport report = new AllInterrelationsOfAllApplicantsOfUserReport();
+//		
+//		//Setzen des Reporttitels und dem Generierungsdatum
+//		report.setTitle("Alle Verflechtungen der Bewerber");
+//		report.setCreated(new Timestamp(System.currentTimeMillis()));
+//		
+//		Vector<Application>
+//		report.addSubReport(createAllApplicationsOfApplicantReport(applicant));
+//		report.addSubReport(createAllEnrollmentsOfApplicantReport(applicant));
+//		
+//		return report;
+//	}
 	
 	
 	@Override
