@@ -1,8 +1,5 @@
 package de.worketplace.team06.shared;
 
-import java.util.Date;
-import java.util.Vector;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.shared.bo.*;

@@ -1,25 +1,15 @@
 package de.worketplace.team06.server.report;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Vector;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.worketplace.team06.shared.*;
 import de.worketplace.team06.server.WorketplaceAdministrationImpl;
-
+import de.worketplace.team06.shared.ReportGenerator;
+import de.worketplace.team06.shared.WorketplaceAdministration;
 import de.worketplace.team06.shared.bo.*;
 import de.worketplace.team06.shared.report.*;
-import de.worketplace.team06.server.db.*;
-//import de.worketplace.team06.client.NotLoggedInException;
-//import de.worketplace.team06.client.UserChangedException;
-//import de.worketplace.team06.client.WindowAlertException;
 
 
 /**
