@@ -22,6 +22,7 @@ public class MyOverview extends View {
 	private final CellTable<Call> myCallsTable = new CellTable<Call>();
 	private final CellTable<Application> myApplicationsTable = new CellTable<Application>();
 	private final CellTable<Application> applicationsTable = new CellTable<Application>();
+	final CellTable<Application> myProjectApplicationsTable = new CellTable<Application>();
 
 	public MyOverview() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
