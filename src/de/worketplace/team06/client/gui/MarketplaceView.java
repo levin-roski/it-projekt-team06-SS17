@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -17,13 +16,10 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.Project;
 
 public class MarketplaceView extends View {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
 	// erstellen der Tabelle Projekte
 	final CellTable<Project> projectTable = new CellTable<Project>();
 	Marketplace currentMarketplace;

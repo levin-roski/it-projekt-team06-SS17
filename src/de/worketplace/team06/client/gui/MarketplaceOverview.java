@@ -15,12 +15,9 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Marketplace;
 
 public class MarketplaceOverview extends View {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
 	// erstellen der Tabelle Meine Marktplätze
 	private final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 

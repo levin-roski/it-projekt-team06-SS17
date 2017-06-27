@@ -36,7 +36,6 @@ import de.worketplace.team06.shared.bo.Project;
 public class Worketplace implements EntryPoint {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
-	private Logger console = Logger.getLogger("");
 	private MainPanel mainPanel;
 
 	/**
@@ -73,7 +72,7 @@ public class Worketplace implements EntryPoint {
 										ClientsideSettings.setCurrentUser(result);
 										renderApplicationForLoggedIn();
 									} else {
-										mainPanel.setView(new OrgaUnitFormView(null));
+										mainPanel.setView(new OrgaUnitFormView(Worketplace.this));
 									}
 								}
 							});
@@ -184,7 +183,7 @@ public class Worketplace implements EntryPoint {
 						t.scheduleRepeating(400);
 					}
 				}
-				RpcWrapper rw = new RpcWrapper(ids);
+				new RpcWrapper(ids);
 			} else if (historyToken.substring(0, 15).equals("calls")) {
 				// TODO Calls aus Token rendern
 			} else {

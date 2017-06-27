@@ -1,5 +1,8 @@
 package de.worketplace.team06.client.gui;
 
+import org.objectweb.asm.commons.TryCatchBlockSorter;
+import org.objectweb.asm.tree.TryCatchBlockNode;
+
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -189,7 +192,11 @@ public class OrgaUnitFormView extends View {
 											toChangePerson.setFirstName(firstnameInput.getText());
 											toChangePerson.setLastName(lastnameInput.getText());
 											toChangePerson.setStreet(streetInput.getText());
-											toChangePerson.setZipcode(Integer.parseInt(zipcodeInput.getText()));
+											try {
+												toChangePerson.setZipcode(Integer.parseInt(zipcodeInput.getText()));
+											} catch (Exception e) {
+												toChangePerson.setZipcode(null);
+											}
 											toChangePerson.setCity(cityInput.getText());
 											worketplaceAdministration.savePerson(toChangePerson,
 													new AsyncCallback<Void>() {
@@ -265,7 +272,11 @@ public class OrgaUnitFormView extends View {
 								} else {
 									toChangeTeam.setDescription(descriptionInput.getText());
 									toChangeTeam.setName(nameInput.getText());
-									toChangeTeam.setMembercount(Integer.parseInt(countInput.getText()));
+									try {
+										toChangeTeam.setMembercount(Integer.parseInt(countInput.getText()));
+									} catch (Exception e) {
+										toChangeTeam.setMembercount(null);
+									}
 									worketplaceAdministration.saveTeam(toChangeTeam, new AsyncCallback<Void>() {
 										@Override
 										public void onFailure(Throwable caught) {
@@ -356,7 +367,12 @@ public class OrgaUnitFormView extends View {
 											toChangeOrganisation.setDescription(descriptionInput.getText());
 											toChangeOrganisation.setName(nameInput.getText());
 											toChangeOrganisation.setStreet(streetInput.getText());
-											toChangeOrganisation.setZipcode(Integer.parseInt(zipcodeInput.getText()));
+											try {
+												toChangeOrganisation
+														.setZipcode(Integer.parseInt(zipcodeInput.getText()));
+											} catch (Exception e) {
+												toChangeOrganisation.setZipcode(null);
+											}
 											toChangeOrganisation.setCity(cityInput.getText());
 											worketplaceAdministration.saveOrganisation(toChangeOrganisation,
 													new AsyncCallback<Void>() {
@@ -388,7 +404,6 @@ public class OrgaUnitFormView extends View {
 			}
 
 			typeInput.addChangeHandler(new ChangeHandler() {
-
 				public void onChange(ChangeEvent event) {
 					form.clearCell(2, 0);
 					form.clearCell(2, 1);
@@ -407,7 +422,8 @@ public class OrgaUnitFormView extends View {
 					final Button logoutButton = new Button("Logout");
 					logoutButton.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {
-							final boolean confirm = Window.confirm("Möchten Sie sich wirklich abmelden? Ihre aktuellen Eingaben könnten verloren gehen.");
+							final boolean confirm = Window.confirm(
+									"Möchten Sie sich wirklich abmelden? Ihre aktuellen Eingaben könnten verloren gehen.");
 							if (confirm) {
 								Window.Location.replace(ClientsideSettings.getLoginInfo().getLogoutUrl());
 							}
@@ -451,10 +467,15 @@ public class OrgaUnitFormView extends View {
 								} else if (lastnameInput.getText().length() == 0) {
 									Window.alert("Bitte füllen Sie das Feld Nachname");
 								} else {
+									int zipcode = 0;
+									try {
+										zipcode = Integer.parseInt(zipcodeInput.getText());
+									} catch (Exception e) {
+									}
 									worketplaceAdministration.createPerson(firstnameInput.getText(),
-											lastnameInput.getText(), streetInput.getText(),
-											Integer.parseInt(zipcodeInput.getText()), cityInput.getText(),
-											descriptionInput.getText(), ClientsideSettings.getLoginInfo().getGoogleId(),
+											lastnameInput.getText(), streetInput.getText(), zipcode,
+											cityInput.getText(), descriptionInput.getText(),
+											ClientsideSettings.getLoginInfo().getGoogleId(),
 											new AsyncCallback<Person>() {
 												@Override
 												public void onFailure(Throwable caught) {
@@ -492,8 +513,13 @@ public class OrgaUnitFormView extends View {
 								} else if (nameInput.getText().length() == 0) {
 									Window.alert("Bitte füllen Sie das Feld Name");
 								} else {
+									int count = 0;
+									try {
+										count = Integer.parseInt(countInput.getText());
+									} catch (Exception e) {
+									}
 									worketplaceAdministration.createTeam(nameInput.getText(),
-											descriptionInput.getText(), Integer.parseInt(countInput.getText()),
+											descriptionInput.getText(), count,
 											ClientsideSettings.getLoginInfo().getGoogleId(), new AsyncCallback<Team>() {
 												@Override
 												public void onFailure(Throwable caught) {
@@ -543,10 +569,14 @@ public class OrgaUnitFormView extends View {
 								} else if (streetInput1.getText().length() == 0) {
 									Window.alert("Bitte füllen Sie das Feld Nachname");
 								} else {
+									int zipcode = 0;
+									try {
+										zipcode = Integer.parseInt(zipcodeInput1.getText());
+									} catch (Exception e) {
+									}
 									worketplaceAdministration.createOrganisation(nameInput1.getText(),
-											descriptionInput.getText(), streetInput1.getText(),
-											Integer.parseInt(zipcodeInput1.getText()), cityInput1.getText(),
-											ClientsideSettings.getLoginInfo().getGoogleId(),
+											descriptionInput.getText(), streetInput1.getText(), zipcode,
+											cityInput1.getText(), ClientsideSettings.getLoginInfo().getGoogleId(),
 											new AsyncCallback<Organisation>() {
 												@Override
 												public void onFailure(Throwable caught) {
@@ -585,6 +615,7 @@ public class OrgaUnitFormView extends View {
 	protected void runAfterInsert() {
 		Window.alert("Ihr Nutzer wurde erfolgreich erstellt");
 		RootPanel.get("navigation").clear();
+		this.clear();
 		connectedWorketplace.renderApplicationForLoggedIn();
 	}
 }

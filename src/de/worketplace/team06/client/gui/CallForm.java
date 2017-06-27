@@ -1,7 +1,5 @@
 package de.worketplace.team06.client.gui;
 
-import java.util.Date;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -22,7 +20,6 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Call;
-import de.worketplace.team06.shared.bo.Marketplace;
 
 /**
  * Formular für die Darstellung, Bearbeitung und Löschung einer selektierten
