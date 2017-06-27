@@ -1,14 +1,26 @@
 package de.worketplace.team06.shared;
 
+import java.util.Date;
+import java.util.Vector;
 
-import java.util.*;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.worketplace.team06.client.WindowAlertException;
-import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.server.WorketplaceAdministrationImpl;
+import de.worketplace.team06.shared.bo.Application;
+import de.worketplace.team06.shared.bo.BusinessObject;
+import de.worketplace.team06.shared.bo.Call;
+import de.worketplace.team06.shared.bo.Enrollment;
+import de.worketplace.team06.shared.bo.LoginInfo;
+import de.worketplace.team06.shared.bo.Marketplace;
+import de.worketplace.team06.shared.bo.OrgaUnit;
+import de.worketplace.team06.shared.bo.Organisation;
+import de.worketplace.team06.shared.bo.PartnerProfile;
+import de.worketplace.team06.shared.bo.Person;
+import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Property;
+import de.worketplace.team06.shared.bo.Rating;
+import de.worketplace.team06.shared.bo.Team;
 
 /**
  * <p>
@@ -307,11 +319,11 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
 
-	public void deletePerson(Person person) throws IllegalArgumentException, WindowAlertException;
+	public void deletePerson(Person person) throws IllegalArgumentException;
 
-	public void deleteTeam(Team team) throws IllegalArgumentException, WindowAlertException;
+	public void deleteTeam(Team team) throws IllegalArgumentException;
 
-	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException, WindowAlertException;
+	public void deleteOrganisation(Organisation organisation) throws IllegalArgumentException;
 
 	public Marketplace getMarketplaceByID(Integer marketplaceID) throws IllegalArgumentException;
 
