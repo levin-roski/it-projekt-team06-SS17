@@ -101,12 +101,33 @@ public class EnrollmentMapper {
 				Enrollment e = new Enrollment();
 				e.setID(rs.getInt("id"));
 				e.setCreated(rs.getTimestamp("created"));
+				System.out.println(e.getCreated());
+				try{
 				e.setStartDate(sdf.parse(rs.getString("start_date")));
+				}
+				catch(NullPointerException e4){
+				e.setStartDate(null);
+				}
+				try{
 				e.setWorkload(rs.getInt("period"));
-				e.setEndDate(sdf.parse(rs.getString("end_date")));
+				}
+				catch(NullPointerException e5){
+				e.setWorkload(null);
+				}
+				try{
+				e.setEndDate(sdf.parse(rs.getString("start_date")));
+				}
+				catch(NullPointerException e6){
+				e.setEndDate(null);
+				}
 				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				e.setProjectID(rs.getInt("project_id"));
+				try{
 				e.setRatingID(rs.getInt("rating_id"));
+				}
+				catch(NullPointerException e7){
+				e.setRatingID(null);
+				}
 				
 				return e;
 			}
@@ -139,12 +160,33 @@ public class EnrollmentMapper {
 				Enrollment e = new Enrollment();
 				e.setID(rs.getInt("id"));
 				e.setCreated(rs.getTimestamp("created"));
+				System.out.println(e.getCreated());
+				try{
 				e.setStartDate(sdf.parse(rs.getString("start_date")));
+				}
+				catch(NullPointerException e4){
+				e.setStartDate(null);
+				}
+				try{
 				e.setWorkload(rs.getInt("period"));
-				e.setEndDate(sdf.parse(rs.getString("end_date")));
+				}
+				catch(NullPointerException e5){
+				e.setWorkload(null);
+				}
+				try{
+				e.setEndDate(sdf.parse(rs.getString("start_date")));
+				}
+				catch(NullPointerException e6){
+				e.setEndDate(null);
+				}
 				e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				e.setProjectID(rs.getInt("project_id"));
+				try{
 				e.setRatingID(rs.getInt("rating_id"));
+				}
+				catch(NullPointerException e7){
+				e.setRatingID(null);
+				}
 				
 				result.addElement(e);
 			}
@@ -177,12 +219,33 @@ public class EnrollmentMapper {
 					Enrollment e = new Enrollment();
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
+					System.out.println(e.getCreated());
+					try{
 					e.setStartDate(sdf.parse(rs.getString("start_date")));
+					}
+					catch(NullPointerException e4){
+					e.setStartDate(null);
+					}
+					try{
 					e.setWorkload(rs.getInt("period"));
-					e.setEndDate(sdf.parse(rs.getString("end_date")));
+					}
+					catch(NullPointerException e5){
+					e.setWorkload(null);
+					}
+					try{
+					e.setEndDate(sdf.parse(rs.getString("start_date")));
+					}
+					catch(NullPointerException e6){
+					e.setEndDate(null);
+					}
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
+					try{
 					e.setRatingID(rs.getInt("rating_id"));
+					}
+					catch(NullPointerException e7){
+					e.setRatingID(null);
+					}
 				
 				result.addElement(e);
 			}
@@ -218,12 +281,33 @@ public class EnrollmentMapper {
 					Enrollment e = new Enrollment();
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
+					System.out.println(e.getCreated());
+					try{
 					e.setStartDate(sdf.parse(rs.getString("start_date")));
+					}
+					catch(NullPointerException e4){
+					e.setStartDate(null);
+					}
+					try{
 					e.setWorkload(rs.getInt("period"));
+					}
+					catch(NullPointerException e5){
+					e.setWorkload(null);
+					}
+					try{
 					e.setEndDate(sdf.parse(rs.getString("start_date")));
+					}
+					catch(NullPointerException e6){
+					e.setEndDate(null);
+					}
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
+					try{
 					e.setRatingID(rs.getInt("rating_id"));
+					}
+					catch(NullPointerException e7){
+					e.setRatingID(null);
+					}
 				
 				result.addElement(e);
 			}
@@ -258,12 +342,33 @@ public class EnrollmentMapper {
 					Enrollment e = new Enrollment();
 					e.setID(rs.getInt("id"));
 					e.setCreated(rs.getTimestamp("created"));
+					System.out.println(e.getCreated());
+					try{
 					e.setStartDate(sdf.parse(rs.getString("start_date")));
+					}
+					catch(NullPointerException e4){
+					e.setStartDate(null);
+					}
+					try{
 					e.setWorkload(rs.getInt("period"));
+					}
+					catch(NullPointerException e5){
+					e.setWorkload(null);
+					}
+					try{
 					e.setEndDate(sdf.parse(rs.getString("start_date")));
+					}
+					catch(NullPointerException e6){
+					e.setEndDate(null);
+					}
 					e.setOrgaUnitID(rs.getInt("orgaunit_id"));
 					e.setProjectID(rs.getInt("project_id"));
+					try{
 					e.setRatingID(rs.getInt("rating_id"));
+					}
+					catch(NullPointerException e7){
+					e.setRatingID(null);
+					}
 				
 				return e;
 			}
