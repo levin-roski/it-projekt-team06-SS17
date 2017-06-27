@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.ClientsideSettings;
-import de.worketplace.team06.client.ReportGenerator;
+import de.worketplace.team06.client.Report;
 import de.worketplace.team06.client.View;
 import de.worketplace.team06.client.Worketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
@@ -48,7 +48,7 @@ public class OrgaUnitFormView extends View {
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
 	private Worketplace connectedWorketplace;
-	private ReportGenerator connectedReportGenerator;
+	private Report connectedReportGenerator;
 	/*
 	 * Grid mit 9 Zeilen und 2 Spalten für das Formular bereitstellen.
 	 */
@@ -68,8 +68,8 @@ public class OrgaUnitFormView extends View {
 	public <T extends EntryPoint> OrgaUnitFormView(T entryPoint) {
 		if (entryPoint instanceof Worketplace) {
 			connectedWorketplace = (Worketplace) entryPoint;
-		} else if (entryPoint instanceof ReportGenerator) {
-			connectedReportGenerator = (ReportGenerator) entryPoint;
+		} else if (entryPoint instanceof Report) {
+			connectedReportGenerator = (Report) entryPoint;
 		}
 		changeHeadline = createHeadline("Meinen Nutzer bearbeiten", true);
 		addHeadline = createHeadline("Meinen Nutzer erstellen", true);
@@ -619,7 +619,7 @@ public class OrgaUnitFormView extends View {
 		this.clear();
 		if (connectedWorketplace instanceof Worketplace) {
 			connectedWorketplace.renderApplicationForLoggedIn();
-		} else if (connectedReportGenerator instanceof ReportGenerator) {
+		} else if (connectedReportGenerator instanceof Report) {
 			connectedReportGenerator.renderApplicationForLoggedIn();
 		}
 	}

@@ -35,7 +35,7 @@ public class Home implements EntryPoint {
 		final Button reportGeneratorButton = new Button("ReportGenerator");
 		reportGeneratorButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Window.Location.assign("reportGenerator.html");
+				Window.Location.assign("report.html");
 			}
 		});
 		RootPanel.get("reportGeneratorButton").add(reportGeneratorButton);

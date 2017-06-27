@@ -1,31 +1,25 @@
 package de.worketplace.team06.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.worketplace.team06.client.gui.AllCallsReportView;
-import de.worketplace.team06.client.gui.EditorNavigation;
+import de.worketplace.team06.client.gui.HomeReportView;
 import de.worketplace.team06.client.gui.MainPanel;
-import de.worketplace.team06.client.gui.OrgaUnitFormView;
-import de.worketplace.team06.shared.LoginService;
-import de.worketplace.team06.shared.LoginServiceAsync;
+import de.worketplace.team06.client.gui.ReportNavigation;
 import de.worketplace.team06.shared.ReportGeneratorAsync;
-import de.worketplace.team06.shared.bo.LoginInfo;
-import de.worketplace.team06.shared.bo.OrgaUnit;
 
 /**
  * Entry-Point-Klasse des Projekts <b>Worketplace</b>. Diese enhtählt die
  * Funktionalitäten des Report Generators.
  */
-public class ReportGenerator implements EntryPoint {
+public class Report implements EntryPoint {
 	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	private MainPanel mainPanel;
 
@@ -42,35 +36,37 @@ public class ReportGenerator implements EntryPoint {
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		rp.add(mainPanel);
 
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL() + "report.html", new AsyncCallback<LoginInfo>() {
-			public void onFailure(Throwable error) {
-			}
+		renderApplicationForLoggedIn();
 
-			public void onSuccess(LoginInfo result) {
-				ClientsideSettings.setLoginInfo(result);
-				if (result.isLoggedIn()) {
-					reportGenerator.getOrgaUnitFor(ClientsideSettings.getLoginInfo(), new AsyncCallback<OrgaUnit>() {
-						public void onFailure(Throwable caught) {
-							Window.alert(
-									"Ihr Nutzer konnte nicht abgerufen werden, bitte kontaktieren Sie den technischen Support");
-						}
-
-						@Override
-						public void onSuccess(OrgaUnit result) {
-							if (result instanceof OrgaUnit) {
-								ClientsideSettings.setCurrentUser(result);
-								renderApplicationForLoggedIn();
-							} else {
-								mainPanel.setView(new OrgaUnitFormView(ReportGenerator.this));
-							}
-						}
-					});
-				} else {
-					Window.Location.replace(result.getLoginUrl());
-				}
-			}
-		});
+//		LoginServiceAsync loginService = GWT.create(LoginService.class);
+//		loginService.login(GWT.getHostPageBaseURL() + "report.html", new AsyncCallback<LoginInfo>() {
+//			public void onFailure(Throwable error) {
+//			}
+//
+//			public void onSuccess(LoginInfo result) {
+//				ClientsideSettings.setLoginInfo(result);
+//				if (result.isLoggedIn()) {
+//					reportGenerator.getOrgaUnitFor(ClientsideSettings.getLoginInfo(), new AsyncCallback<OrgaUnit>() {
+//						public void onFailure(Throwable caught) {
+//							Window.alert(
+//									"Ihr Nutzer konnte nicht abgerufen werden, bitte kontaktieren Sie den technischen Support");
+//						}
+//
+//						@Override
+//						public void onSuccess(OrgaUnit result) {
+//							if (result instanceof OrgaUnit) {
+//								ClientsideSettings.setCurrentUser(result);
+//								renderApplicationForLoggedIn();
+//							} else {
+//								mainPanel.setView(new OrgaUnitFormView(Report.this));
+//							}
+//						}
+//					});
+//				} else {
+//					Window.Location.replace(result.getLoginUrl());
+//				}
+//			}
+//		});
 	}
 
 	public void renderApplicationForLoggedIn() {
@@ -84,8 +80,9 @@ public class ReportGenerator implements EntryPoint {
 		/*
 		 * Navigationsleiste des Editors
 		 */
-		RootPanel.get("navigation").add(new EditorNavigation());
+		RootPanel.get("navigation").add(new ReportNavigation());
 
+		mainPanel.setView(new HomeReportView());
 		renderUrlToken(null);
 	}
 
@@ -102,7 +99,7 @@ public class ReportGenerator implements EntryPoint {
 			// }
 		} catch (IndexOutOfBoundsException e) {
 			Window.alert("Startseite aufrufen");
-			mainPanel.setView(new AllCallsReportView());
+			mainPanel.setView(new HomeReportView());
 		}
 		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
 	}

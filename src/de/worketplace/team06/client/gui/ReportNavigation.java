@@ -9,10 +9,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.ClientsideSettings;
 
-public class EditorNavigation extends VerticalPanel {
+public class ReportNavigation extends VerticalPanel {
 	MainPanel mainPanel = ClientsideSettings.getMainPanel();
 	
-	public EditorNavigation() {
+	public ReportNavigation() {
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		menu.setAnimationEnabled(true);
@@ -28,37 +28,27 @@ public class EditorNavigation extends VerticalPanel {
 
 		menu.addItem(new MenuItem(logo, new Command() {
 			public void execute() {
-				mainPanel.setView(new MyOverview());
+				mainPanel.setView(new HomeReportView());
 			}
 		}));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Mein Bereich", new Command() {
+		menu.addItem(new MenuItem("Startseite", new Command() {
 			public void execute() {
-				mainPanel.setView(new MyOverview());
+				mainPanel.setView(new HomeReportView());
 			}
 		}));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Marktplätze", new Command() {
+		menu.addItem(new MenuItem("AllCallsReportView", new Command() {
 			public void execute() {
-				mainPanel.setView(new MarketplaceOverView());
+				mainPanel.setView(new AllCallsReportView());
 			}
 		}));
 		menu.addSeparator();
 		MenuBar optionenMenu = new MenuBar(true);
 		optionenMenu.setAnimationEnabled(true);
-		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {
+		optionenMenu.addItem(new MenuItem("Zum Worketplace Editor", new Command() {
 			public void execute() {
-				mainPanel.setView(new OrgaUnitFormView(null));
-			}
-		}));
-		optionenMenu.addItem(new MenuItem("Mein Partnerprofil", new Command() {
-			public void execute() {
-				mainPanel.setView(new OrgaUnitPartnerProfileView());
-			}
-		}));
-		optionenMenu.addItem(new MenuItem("Zum Report Generator", new Command() {
-			public void execute() {
-				 Window.Location.replace("report.html");
+				 Window.Location.replace("worketplace.html");
 			}
 		}));
 		optionenMenu.addItem(new MenuItem("Logout", new Command() {

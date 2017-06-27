@@ -152,6 +152,6 @@ public class HTMLReportWriter extends ReportWriter {
 	 * @return ein String im HTML-Format
 	 */
 	public String getReportText() {
-	  return this.getHeader() + this.reportText + this.getTrailer();
+	  return this.reportText;
 	}
 }
