@@ -123,7 +123,7 @@ import de.worketplace.team06.shared.bo.Team;
 	}
   
 	/**
-	 * Diese Methode findet alle Project-Objekte in der Datenbank.
+	 * Diese Methode findet alle Project-Objekte in der Datenbank und gibt diese aus.
 	 * 
 	 * @return Vektor <Project>
 	 * @author Theresa
@@ -254,7 +254,7 @@ import de.worketplace.team06.shared.bo.Team;
         }
     }
     /**
-	 * Diese Methode findet ein Project-Objekt anhand der übergebenen Marketplace-ID. 
+	 * Diese Methode findet ein Project-Objekt anhand der übergebenen Marketplace-ID und gibt dies aus. 
 	 * 
 	 * @param marketplaceID
 	 * @return Project-Objekt 
