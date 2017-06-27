@@ -20,6 +20,8 @@ import de.worketplace.team06.shared.report.AllInterrelationsOfApplicantReport;
  * @author thies
  */
 public interface ReportGeneratorAsync {
+	
+	void init(AsyncCallback<Void> callback);
 
 	void createAllCallsReport(AsyncCallback<AllCallsReport> callback);
 	
@@ -41,7 +43,5 @@ public interface ReportGeneratorAsync {
 			AsyncCallback<AllInterrelationsOfApplicantReport> callback);
 	
 	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
-
-
 
 }
