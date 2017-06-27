@@ -6,7 +6,11 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
+import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
+
 public abstract class Form extends Page {
+	protected WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
+			.getWorketplaceAdministration();
 	protected HorizontalPanel createHeadlineWithCloseButton(final String text, boolean isFirstPageElement) {
 		HorizontalPanel hp = new HorizontalPanel();
 		HTML sh = new HTML();

@@ -10,8 +10,6 @@ import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 
 public abstract class Page extends VerticalPanel {
-	protected WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
 	protected OrgaUnit currentUser = ClientsideSettings.getCurrentUser();
 	protected MainPanel mainPanel = ClientsideSettings.getMainPanel();
 	protected final DateTimeFormat simpleDateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");

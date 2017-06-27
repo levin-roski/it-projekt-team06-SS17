@@ -1,7 +1,5 @@
 package de.worketplace.team06.client;
 
-import java.util.logging.Logger;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
