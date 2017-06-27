@@ -53,10 +53,7 @@ public class EditorNavigation extends VerticalPanel {
 		}));
 		optionenMenu.addItem(new MenuItem("Mein Partnerprofil", new Command() {
 			public void execute() {
-				// TODO Anzeige generieren
-				// RootPanel.get("content").clear();
-				// RootPanel.get("content").add(alleNutzerAnzeigen);
-				// Window.Location.replace("home.html");
+				mainPanel.setView(new OrgaUnitPartnerProfileView());
 			}
 		}));
 		optionenMenu.addItem(new MenuItem("Zum Report Generator", new Command() {
