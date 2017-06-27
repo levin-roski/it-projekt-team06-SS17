@@ -131,7 +131,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllCallsReport report = new AllCallsReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle Ausschreibungen");
+		report.setTitle("Alle eigenen Ausschreibungen");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
