@@ -103,7 +103,7 @@ public class RateApplicationForm extends Form {
 			}
 			ratingInput.setSelectedIndex(indexToFind);
 			descriptionInput.setText(toChangeRating.getRatingStatement());
-			final Button saveButton = new Button("Speichern");
+			final Button saveButton = new Button("Änderungen speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (ratingInput.getSelectedValue().length() == 0) {
@@ -198,9 +198,10 @@ public class RateApplicationForm extends Form {
 		ratingInput.addItem("0.4");
 		ratingInput.addItem("0.5");
 		ratingInput.addItem("0.6");
-		ratingInput.addItem("0.5");
-		ratingInput.addItem("0.5");
-		ratingInput.addItem("0.5");
+		ratingInput.addItem("0.7");
+		ratingInput.addItem("0.8");
+		ratingInput.addItem("0.9");
+		ratingInput.addItem("1.0");
 		ratingInput.setVisibleItemCount(1);
 		ratingInput.setFocus(true);
 	}

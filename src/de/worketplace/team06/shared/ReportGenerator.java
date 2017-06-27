@@ -13,6 +13,7 @@ import de.worketplace.team06.shared.report.AllApplicationsOfUserToCallsReport;
 import de.worketplace.team06.shared.report.AllCallsMatchingWithUserReport;
 import de.worketplace.team06.shared.report.AllCallsReport;
 import de.worketplace.team06.shared.report.AllEnrollmentsOfApplicantReport;
+import de.worketplace.team06.shared.report.AllInterrelationsOfAllApplicantsOfUserReport;
 import de.worketplace.team06.shared.report.AllInterrelationsOfApplicantReport;
 
 /**
@@ -41,6 +42,9 @@ public interface ReportGenerator extends RemoteService {
 	public AllEnrollmentsOfApplicantReport createAllEnrollmentsOfApplicantReport(OrgaUnit applicant) throws IllegalArgumentException;
 
 	public AllInterrelationsOfApplicantReport createAllInterrelationsOfApplicantReport(OrgaUnit applicant)
+			throws IllegalArgumentException;
+	
+	public AllInterrelationsOfAllApplicantsOfUserReport createAllInterrelationsOfAllApplicantsOfUserReport(OrgaUnit o)
 			throws IllegalArgumentException;
 	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;

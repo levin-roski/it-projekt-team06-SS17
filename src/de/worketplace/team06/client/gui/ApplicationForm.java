@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -26,9 +27,7 @@ import de.worketplace.team06.shared.bo.Application;
  */
 public class ApplicationForm extends Form {
 	private Label textLabel = new Label("Bewerbungstext");
-	private TextBox textInput = new TextBox();
-	private Label statusLabel = new Label("Bewerbungsstatus");
-	private Label bewertungLabel = new Label("Bewerbungsbewertung");
+	private TextArea textInput = new TextArea();
 	private boolean shouldUpdate = false;
 	private Application toChangeApplication;
 	private HorizontalPanel changeHeadline;
@@ -84,8 +83,6 @@ public class ApplicationForm extends Form {
 		form.setWidth("100%");
 		form.setWidget(0, 0, textLabel);
 		form.setWidget(0, 1, textInput);
-		form.setWidget(1, 0, statusLabel);
-		form.setWidget(1, 1, bewertungLabel);
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*

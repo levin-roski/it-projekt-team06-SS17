@@ -357,23 +357,31 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	
-//	/**
-//	 * Methode zum Generieren eines Reports für die Verflechtungen aller Bewerber des Users.
-//	 */
-//	@Override
-//	public AllInterrelationsOfAllApplicantsOfUserReport createAllInterrelationsOfAllApplicantsOfUserReport (OrgaUnit o) throws IllegalArgumentException {
-//		AllInterrelationsOfAllApplicantsOfUserReport report = new AllInterrelationsOfAllApplicantsOfUserReport();
-//		
-//		//Setzen des Reporttitels und dem Generierungsdatum
-//		report.setTitle("Alle Verflechtungen der Bewerber");
-//		report.setCreated(new Timestamp(System.currentTimeMillis()));
-//		
-//		Vector<Application>
-//		report.addSubReport(createAllApplicationsOfApplicantReport(applicant));
-//		report.addSubReport(createAllEnrollmentsOfApplicantReport(applicant));
-//		
-//		return report;
-//	}
+	/**
+	 * Methode zum Generieren eines Reports für die Verflechtungen aller Bewerber des Users.
+	 */
+	@Override
+	public AllInterrelationsOfAllApplicantsOfUserReport createAllInterrelationsOfAllApplicantsOfUserReport (OrgaUnit o) throws IllegalArgumentException {
+		AllInterrelationsOfAllApplicantsOfUserReport report = new AllInterrelationsOfAllApplicantsOfUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Alle Verflechtungen der Bewerber");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		for(Project p : projects){
+			Vector<Call> calls = wpadmin.getCallsFor(p);
+			for(Call c : calls){
+				Vector<Application> applications = wpadmin.getApplicationsFor(c);
+				for(Application a : applications){
+					OrgaUnit applicant = wpadmin.getOrgaUnitById(a.getOrgaUnitID());
+					report.addSubReport(createAllInterrelationsOfApplicantReport(applicant));
+				}
+			}
+		}
+		
+		return report;
+	}
 	
 	
 	@Override
