@@ -1018,7 +1018,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 
 		return this.personMapper.findByGoogleID(googleID);
 	}
-
+	
+	/**
+	 * Auslesen einer Person aus der Datenbank
+	 */
+	@Override
+	public Person getPersonByID(Integer personid){
+		return this.personMapper.findByID(personid);
+	}
 	
 	
 	/*

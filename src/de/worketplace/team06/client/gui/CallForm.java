@@ -2,6 +2,8 @@ package de.worketplace.team06.client.gui;
 
 import java.util.Date;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -23,6 +25,8 @@ import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Marketplace;
+import de.worketplace.team06.shared.bo.Person;
+import de.worketplace.team06.shared.bo.Project;
 
 /**
  * Formular für die Darstellung, Bearbeitung und Löschung einer selektierten
@@ -36,8 +40,8 @@ public class CallForm extends Form {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
 			.getWorketplaceAdministration();
 
-	private Label nameLabel = new Label("Name");
-	private TextBox nameInput = new TextBox();
+	private Label titleLabel = new Label("Titel");
+	private TextBox titleInput = new TextBox();
 	private Label descriptionLabel = new Label("Beschreibung");
 	private TextBox descriptionInput = new TextBox();
 	private Label deadlineLabel = new Label("Bewerbungsfrist");
@@ -45,12 +49,15 @@ public class CallForm extends Form {
 	private Label statusLabel = new Label("Status");
 	private ListBox statusInput = new ListBox();
 	private Label callerIDLabel = new Label("Ausschreibender");
-	private ListBox callerOutput = new ListBox();
+	private TextBox callerInputFirstName = new TextBox();
+	private TextBox callerInputLastName = new TextBox();
 	private Boolean shouldUpdate = false;
 	private Call toChangeCall;
+	private Person caller;
+	private Boolean permissionToChange = false;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
-
+	
 	/**
 	 * Im Konstruktor kann eine selektierte Ausschreibung übergeben werden, die
 	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
@@ -85,7 +92,7 @@ public class CallForm extends Form {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public CallForm(Call pToChangeCall, final boolean pHeadline, final Boolean pClosingHeadline,
+	public CallForm(final Call pToChangeCall, final boolean pHeadline, final Boolean pClosingHeadline,
 			final Callback editCallback, final Callback deleteCallback) {
 		this(pToChangeCall, pHeadline);
 		if (pClosingHeadline) {
@@ -99,8 +106,8 @@ public class CallForm extends Form {
 		 */
 		Grid form = new Grid(6, 2);
 		form.setWidth("100%");
-		form.setWidget(0, 0, nameLabel);
-		form.setWidget(0, 1, nameInput);
+		form.setWidget(0, 0, titleLabel);
+		form.setWidget(0, 1, titleInput);
 		form.setWidget(1, 0, descriptionLabel);
 		form.setWidget(1, 1, descriptionInput);
 		form.setWidget(2, 0, deadlineLabel);
@@ -108,38 +115,81 @@ public class CallForm extends Form {
 		form.setWidget(3, 0, statusLabel);
 		form.setWidget(3, 1, statusInput);
 		form.setWidget(4, 0, callerIDLabel);
-		form.setWidget(4, 1, callerOutput);
+		form.setWidget(5, 0, callerInputFirstName);
+		form.setWidget(5, 1, callerInputLastName);
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
+		
+		
+		if (toChangeCall != null){
+		worketplaceAdministration.getProjectByID(pToChangeCall.getProjectID(), new AsyncCallback<Project>() {
+			public void onFailure(Throwable caught) {
+				Window.alert("Es trat ein Fehler beim abrufen des Projektleiters auf. ");
+			}
+
+			public void onSuccess(Project result) {
+				
+				if(result.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
+					permissionToChange = true;
+				}
+				
+			}
+		});
+		}
+		
+		
+		
 
 		/*
 		 * Falls eine selektiertee Ausschreibung übergeben wurde und jetzt
 		 * dargestellt werden soll
+		 * 
 		 */
 		if (shouldUpdate) {
 			if (changeHeadline != null) {
 				root.add(changeHeadline);
 			}
-			nameInput.setText(toChangeCall.getTitle());
+			titleInput.setText(toChangeCall.getTitle());
 			descriptionInput.setText(toChangeCall.getDescription());
 			deadlineInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
 			deadlineInput.setValue(toChangeCall.getDeadline());
-			statusInput.addItem("Abgelehnt");
 			statusInput.addItem("Laufend");
 			statusInput.addItem("Erfolgreich");
-			statusInput.setVisibleItemCount(1);
+			statusInput.addItem("Abgelehnt");
+			statusInput.setVisibleItemCount(toChangeCall.getStatus());
+			worketplaceAdministration.getPersonByID(toChangeCall.getCallerID(), new AsyncCallback<Person>() {
+				public void onFailure(Throwable caught) {
+					Window.alert("Es trat ein Fehler beim abrufen der Ausschreibenden Person auf. ");
+				}
 
+				public void onSuccess(Person result) {
+					callerInputFirstName.setValue(result.getFirstName());
+					callerInputLastName.setValue(result.getLastName());
+					callerInputFirstName.isReadOnly();
+					callerInputLastName.isReadOnly();
+				}
+			});
+			
+			
+			
+			
+			if(permissionToChange == true){
 			final Button saveButton = new Button("Änderungen speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					if (nameInput.getText().length() == 0) {
-						Window.alert("Bitte vergeben Sie einen Namen");
+					if (titleInput.getText().length() == 0) {
+						Window.alert("Bitte vergeben Sie einen Titel ein");
 					} else if (descriptionInput.getText().length() == 0) {
 						Window.alert("Bitte vergeben Sie eine Beschreibung");
-					} else {
+					} else if (deadlineInput.getValue() == null){
+						Window.alert("Bitte vergeben Sie eine Bewerbungsfrist");
+					} 
+					else {
 						// TODO ergänzen
-						toChangeCall.setTitle(nameInput.getText());
+						toChangeCall.setTitle(titleInput.getText());
 						toChangeCall.setDescription(descriptionInput.getText());
+						toChangeCall.setDeadline(deadlineInput.getValue());
+						toChangeCall.setStatus(statusInput.getSelectedIndex());
 						worketplaceAdministration.saveCall(toChangeCall, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
@@ -156,9 +206,11 @@ public class CallForm extends Form {
 						});
 					}
 				}
-			});
+			});}
+			
 			final VerticalPanel panel = new VerticalPanel();
 			panel.add(saveButton);
+			
 			final Button deleteButton = new Button("Diesen Marktplatz entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {

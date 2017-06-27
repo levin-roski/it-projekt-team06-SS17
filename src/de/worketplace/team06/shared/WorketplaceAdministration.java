@@ -352,4 +352,6 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Integer getApplicationCountFor(Call c);
 
+	Person getPersonByID(Integer personid);
+
 }
