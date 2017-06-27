@@ -780,19 +780,20 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		String type = orgaUnitMapper.findTypeByGoogleID(loginInfo.getGoogleId());
         
-        switch(type){ 
-        case "Person": 
-        	Person p = this.personMapper.findByGoogleID(loginInfo.getGoogleId());
-        	return p;
-		case "Team": 
-        	Team t = this.teamMapper.findByGoogleID(loginInfo.getGoogleId());
-            return t;
-		case "Organisation": 
-        	Organisation o = this.orgaMapper.findByGoogleID(loginInfo.getGoogleId());
-        	return o; 
-        }
+		if (type instanceof String) {
+			switch(type){ 
+	        case "Person": 
+	        	Person p = this.personMapper.findByGoogleID(loginInfo.getGoogleId());
+	        	return p;
+			case "Team": 
+	        	Team t = this.teamMapper.findByGoogleID(loginInfo.getGoogleId());
+	            return t;
+			case "Organisation": 
+	        	Organisation o = this.orgaMapper.findByGoogleID(loginInfo.getGoogleId());
+	        	return o; 
+	        }
+		}
 		return null;
-		//return this.orgaUnitMapper.findByGoogleID(loginInfo.getGoogleId());
 	}
 	
 	@Override
