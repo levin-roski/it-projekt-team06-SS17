@@ -1,8 +1,5 @@
 package de.worketplace.team06.shared;
 
-import java.util.Date;
-import java.util.Vector;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.shared.bo.*;
@@ -20,7 +17,9 @@ import de.worketplace.team06.shared.report.AllCallsReport;
  */
 public interface ReportGeneratorAsync {
 
-	void createAllCallsReport(OrgaUnit o, AsyncCallback<AllCallsReport> callback);
+	void createAllCallsReport(AsyncCallback<AllCallsReport> callback);
+	
+	void createAllCallsOfUserReport(OrgaUnit o, AsyncCallback<AllCallsReport> callback);
 
 	void createAllCallsMatchingWithUserReport(OrgaUnit o, AsyncCallback<AllCallsMatchingWithUserReport> callback);
 

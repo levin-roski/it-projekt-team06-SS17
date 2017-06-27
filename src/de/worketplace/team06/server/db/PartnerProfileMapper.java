@@ -71,7 +71,7 @@ public class PartnerProfileMapper {
 	}
 	
 	/**
-	 * Suchen eines Partnerprofile mit vorgegebener PartnerProfileID. Durch die Eindeutigkeit der ID, 
+	 * Auslesen eines PartnerProfil-Objekts anhand der übergebenen ID. Durch die Eindeutigkeit der ID
 	 * wird genau ein Objekt zurück gegeben. 
 	 * 
 	 * @param id
@@ -103,7 +103,7 @@ public class PartnerProfileMapper {
     }
 	
 	/**
-	 * Dies Methode findet alle PartnerProfile-Objekte in der Datenbank.
+	 * Auslesen aller PartnerProfile-Objekte aus der Datenbank.
 	 * 
 	 * @return Vektor<PartnerProfile>
 	 * @author Theresa

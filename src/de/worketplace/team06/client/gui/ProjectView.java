@@ -128,6 +128,7 @@ public class ProjectView extends View {
 		enrollmentTable.setWidth("100%", true);
 
 		this.add(root);
+		loadData();
 	}
 
 	@Override

@@ -1,25 +1,15 @@
 package de.worketplace.team06.server.report;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Vector;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.worketplace.team06.shared.*;
 import de.worketplace.team06.server.WorketplaceAdministrationImpl;
-
+import de.worketplace.team06.shared.ReportGenerator;
+import de.worketplace.team06.shared.WorketplaceAdministration;
 import de.worketplace.team06.shared.bo.*;
 import de.worketplace.team06.shared.report.*;
-import de.worketplace.team06.server.db.*;
-//import de.worketplace.team06.client.NotLoggedInException;
-//import de.worketplace.team06.client.UserChangedException;
-//import de.worketplace.team06.client.WindowAlertException;
 
 
 /**
@@ -44,9 +34,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 */
 	@Override
 	public void init() throws IllegalArgumentException {
-	    /*
-	     * Intantiierung von einer WorketplaceAdministrationImpl zum internen Gebrauch
-	     */
 	    WorketplaceAdministrationImpl impl = new WorketplaceAdministrationImpl();
 	    impl.init();
 	    this.wpadmin = impl;
@@ -93,10 +80,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	*/
 	
 	/**
-	 * Methode zum Generieren eines Reports für alle Ausschreibungen der übergebenen Organisationseinheit.
+	 * Methode zum Generieren eines Reports für alle Ausschreibungen
 	 */
 	@Override
-	public AllCallsReport createAllCallsReport(OrgaUnit o) throws IllegalArgumentException {
+	public AllCallsReport createAllCallsReport() throws IllegalArgumentException {
 		
 		//Erstellung einer Instanz des Reports
 		AllCallsReport report = new AllCallsReport();
@@ -132,6 +119,51 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		return report;
 	}
+	
+	
+	/**
+	 * Methode zum Generieren eines Reports für alle Ausschreibungen der übergebenen Organisationseinheit
+	 */
+	@Override
+	public AllCallsReport createAllCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		
+		//Erstellung einer Instanz des Reports
+		AllCallsReport report = new AllCallsReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Alle eigenen Ausschreibungen");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("Titel"));
+		headline.addColumn(new Column("Beschreibung"));
+		headline.addColumn(new Column("Projekt"));
+		headline.addColumn(new Column("Deadline"));
+		headline.addColumn(new Column("Status"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		for (Project p : projects){
+			Vector<Call> calls = wpadmin.getCallsFor(p);
+			for (Call c : calls){
+				Row rowToAdd = new Row();
+				rowToAdd.addColumn(new Column(c.getTitle()));
+				rowToAdd.addColumn(new Column(c.getDescription()));
+				rowToAdd.addColumn(new Column(p.getTitle()));
+				rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+				rowToAdd.addColumn(new Column(c.getStatusString()));
+				report.addRow(rowToAdd);
+			}
+		}
+		
+		return report;
+	}
+	
 	
 	
 	/**

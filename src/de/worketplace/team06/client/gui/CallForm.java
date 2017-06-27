@@ -112,7 +112,7 @@ public class CallForm extends Form {
 		form.setWidget(3, 0, statusLabel);
 		form.setWidget(3, 1, statusInput);
 		form.setWidget(4, 0, callerIDLabel);
-		form.setWidget(5, 0, callerInputFirstName);
+		form.setWidget(4, 1, callerInputFirstName);
 		form.setWidget(5, 1, callerInputLastName);
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
@@ -279,8 +279,8 @@ public class CallForm extends Form {
 		}
 		
 		if(permissionToChange == false){
-			titleInput.isReadOnly();
-			descriptionInput.isReadOnly();
+			titleInput.setEnabled(false);
+			descriptionInput.setEnabled(false);
 			deadlineInput.setEnabled(false);
 			statusInput.setEnabled(false);
 			callerInputFirstName.setEnabled(false);

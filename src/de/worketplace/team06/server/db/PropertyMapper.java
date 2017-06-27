@@ -73,7 +73,7 @@ public class PropertyMapper {
 		return propertyMapper; 
 	}
 	/**
-	 * Suchen einer Property mit vorgegebener PropertyID. Durch die Eindeutigkeit der ID, 
+	 * Auslesen eines Property-Objekts anhand übergebener PropertyID. Durch die Eindeutigkeit der ID
 	 * wird genau ein Objekt zurück gegeben. 
 	 * 
 	 * @param prop
@@ -139,10 +139,11 @@ public class PropertyMapper {
     }
     
     /**
-	 * Diese Methode findet ein Property-Objekt anhand der übergebenen PartnerProfile-ID.
+	 * Auslesen eines Property-Objekts anhand der übergebenen PartnerProfile-ID.
+	 * Die Eigenschaften werden aus dem jeweiligen Partnerprofil ausgelesen. 
 	 * 
 	 * @param partnerProfileID 
-	 * @return Property-Objekt
+	 * @return Vektor<Property>
 	 * @author Theresa
 	 */
 	public Vector<Property> findByPartnerProfileID(Integer partnerProfileID) {
