@@ -24,7 +24,7 @@ import de.worketplace.team06.shared.bo.Marketplace;
  */
 public class RateApplicationForm extends Form {
 	private Label nameLabel = new Label("Bewertung");
-	private ListBox ratingList = new ListBox();
+	private ListBox ratingInput = new ListBox();
 	private Label descriptionLabel = new Label("Beschreibung");
 	private TextBox descriptionInput = new TextBox();
 	private boolean shouldUpdate = false;
@@ -32,6 +32,7 @@ public class RateApplicationForm extends Form {
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
 
+	
 	/**
 	 * Im Konstruktor kann eine Bewerbung übergeben werden, die
 	 * dann bewertet werden kann. null übergeben, falls ein neuer
@@ -81,7 +82,7 @@ public class RateApplicationForm extends Form {
 		Grid form = new Grid(3, 2);
 		form.setWidth("100%");
 		form.setWidget(0, 0, nameLabel);
-		form.setWidget(0, 1, ratingList);
+		form.setWidget(0, 1, ratingInput);
 		form.setWidget(1, 0, descriptionLabel);
 		form.setWidget(1, 1, descriptionInput);
 		final VerticalPanel root = new VerticalPanel();
@@ -94,17 +95,17 @@ public class RateApplicationForm extends Form {
 			if (changeHeadline != null) {
 				root.add(changeHeadline);
 			}
-			ratingList.setText(toChangeApplication.getTitle());
+			ratingInput.setText(toChangeApplication.getTitle());
 			descriptionInput.setText(toChangeApplication.getDescription());
 			final Button saveButton = new Button("Speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					if (ratingList.getText().length() == 0) {
+					if (ratingInput.getText().length() == 0) {
 						Window.alert("Bitte vergeben eine Bewertung");
 					} else if (descriptionInput.getText().length() == 0) {
 						Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
 					} else {
-						toChangeApplication.setTitle(ratingList.getText());
+						toChangeApplication.setTitle(ratingInput.getName());
 						toChangeApplication.setDescription(descriptionInput.getText());
 						worketplaceAdministration.saveMarketplace(toChangeApplication, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
@@ -130,7 +131,7 @@ public class RateApplicationForm extends Form {
 				public void onClick(ClickEvent event) {
 					final boolean confirmDelete = Window.confirm("Möchten Sie die Bewertung wirklich löschen?");
 					if (confirmDelete) {
-						worketplaceAdministration.deleteMarketplace(toChangeApplication, new AsyncCallback<Void>() {
+						worketplaceAdministration.deleteApplication(toChangeApplication, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
 							}
@@ -156,12 +157,12 @@ public class RateApplicationForm extends Form {
 			final Button saveButton = new Button("Bewertung anlegen");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					if (ratingList.getText().length() == 0) {
+					if (ratingInput.getName().length() == 0) {
 						Window.alert("Bitte vergeben Sie einen Namen");
 					} else if (descriptionInput.getText().length() == 0) {
 						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
 					} else {
-						worketplaceAdministration.createMarketplace(ratingList.getText(), descriptionInput.getText(),
+						worketplaceAdministration.createMarketplace(ratingInput.getName(), descriptionInput.getText(),
 								new AsyncCallback<Marketplace>() {
 									public void onFailure(Throwable caught) {
 										Window.alert(
@@ -179,6 +180,13 @@ public class RateApplicationForm extends Form {
 			form.setWidget(2, 1, saveButton);
 		}
 		root.add(form);
-		ratingList.setFocus(true);
+
+		ratingInput.addItem("0.1");
+		ratingInput.addItem("0.2");
+		ratingInput.addItem("0.3");
+		ratingInput.addItem("0.4");
+		ratingInput.addItem("0.5");
+		ratingInput.setVisibleItemCount(1);
+		ratingInput.setFocus(true);
 	}
 }
