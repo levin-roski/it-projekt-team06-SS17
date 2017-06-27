@@ -261,7 +261,9 @@ public class CallMapper {
 		
 		try {						
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM projektmarktplatz.`call` WHERE projektmarktplatz.`call`.id = " + callID);		
+			ResultSet rs = stmt.executeQuery("SELECT id, created, title, description, deadline, "
+					+ "project_id, orgaunit_id, partnerprofile_id, status "
+					+ "FROM projektmarktplatz.`call` WHERE projektmarktplatz.`call`.id = " + callID);		
 			
 			if (rs.next()) {
 				Call c = new Call();
