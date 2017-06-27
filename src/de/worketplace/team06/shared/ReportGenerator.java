@@ -18,7 +18,9 @@ import de.worketplace.team06.shared.report.AllCallsReport;
 @RemoteServiceRelativePath("worketplaceAdmin")
 public interface ReportGenerator extends RemoteService {
 
-	public AllCallsReport createAllCallsReport(OrgaUnit o) throws IllegalArgumentException;
+	public AllCallsReport createAllCallsReport() throws IllegalArgumentException;
+	
+	public AllCallsReport createAllCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException;
 
 	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException;
 
@@ -26,5 +28,6 @@ public interface ReportGenerator extends RemoteService {
 			throws IllegalArgumentException;
 
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
+
 
 }

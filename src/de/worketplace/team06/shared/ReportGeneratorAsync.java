@@ -17,7 +17,9 @@ import de.worketplace.team06.shared.report.AllCallsReport;
  */
 public interface ReportGeneratorAsync {
 
-	void createAllCallsReport(OrgaUnit o, AsyncCallback<AllCallsReport> callback);
+	void createAllCallsReport(AsyncCallback<AllCallsReport> callback);
+	
+	void createAllCallsOfUserReport(OrgaUnit o, AsyncCallback<AllCallsReport> callback);
 
 	void createAllCallsMatchingWithUserReport(OrgaUnit o, AsyncCallback<AllCallsMatchingWithUserReport> callback);
 

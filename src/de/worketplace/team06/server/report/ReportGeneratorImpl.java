@@ -80,10 +80,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	*/
 	
 	/**
-	 * Methode zum Generieren eines Reports für alle Ausschreibungen der übergebenen Organisationseinheit.
+	 * Methode zum Generieren eines Reports für alle Ausschreibungen
 	 */
 	@Override
-	public AllCallsReport createAllCallsReport(OrgaUnit o) throws IllegalArgumentException {
+	public AllCallsReport createAllCallsReport() throws IllegalArgumentException {
 		
 		//Erstellung einer Instanz des Reports
 		AllCallsReport report = new AllCallsReport();
@@ -119,6 +119,51 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		return report;
 	}
+	
+	
+	/**
+	 * Methode zum Generieren eines Reports für alle Ausschreibungen der übergebenen Organisationseinheit
+	 */
+	@Override
+	public AllCallsReport createAllCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		
+		//Erstellung einer Instanz des Reports
+		AllCallsReport report = new AllCallsReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Alle Ausschreibungen");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("Titel"));
+		headline.addColumn(new Column("Beschreibung"));
+		headline.addColumn(new Column("Projekt"));
+		headline.addColumn(new Column("Deadline"));
+		headline.addColumn(new Column("Status"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		for (Project p : projects){
+			Vector<Call> calls = wpadmin.getCallsFor(p);
+			for (Call c : calls){
+				Row rowToAdd = new Row();
+				rowToAdd.addColumn(new Column(c.getTitle()));
+				rowToAdd.addColumn(new Column(c.getDescription()));
+				rowToAdd.addColumn(new Column(p.getTitle()));
+				rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+				rowToAdd.addColumn(new Column(c.getStatusString()));
+				report.addRow(rowToAdd);
+			}
+		}
+		
+		return report;
+	}
+	
 	
 	
 	/**
