@@ -56,7 +56,8 @@ public class OrgaUnitFormView extends View {
 	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der
 	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
 	 * Marktplatz erstellt werden soll.
-	 * @param worketplace 
+	 * 
+	 * @param worketplace
 	 * 
 	 * @param pClosingHeadline
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
@@ -387,6 +388,7 @@ public class OrgaUnitFormView extends View {
 			}
 
 			typeInput.addChangeHandler(new ChangeHandler() {
+
 				public void onChange(ChangeEvent event) {
 					form.clearCell(2, 0);
 					form.clearCell(2, 1);
@@ -402,6 +404,15 @@ public class OrgaUnitFormView extends View {
 					form.clearCell(7, 1);
 
 					final Button saveButton = new Button("Neuen Nutzer anlegen");
+					final Button logoutButton = new Button("Logout");
+					logoutButton.addClickHandler(new ClickHandler() {
+						public void onClick(ClickEvent event) {
+							final boolean confirm = Window.confirm("Möchten Sie sich wirklich abmelden? Ihre aktuellen Eingaben könnten verloren gehen.");
+							if (confirm) {
+								Window.Location.replace(ClientsideSettings.getLoginInfo().getLogoutUrl());
+							}
+						}
+					});
 
 					String type = typeInput.getSelectedValue();
 					switch (type) {
@@ -460,6 +471,7 @@ public class OrgaUnitFormView extends View {
 							}
 						});
 						form.setWidget(7, 1, saveButton);
+						form.setWidget(8, 1, logoutButton);
 						break;
 
 					case "Team":
@@ -498,6 +510,7 @@ public class OrgaUnitFormView extends View {
 							}
 						});
 						form.setWidget(4, 1, saveButton);
+						form.setWidget(5, 1, logoutButton);
 						break;
 
 					case "Organisation":
@@ -550,6 +563,7 @@ public class OrgaUnitFormView extends View {
 							}
 						});
 						form.setWidget(6, 1, saveButton);
+						form.setWidget(7, 1, logoutButton);
 						break;
 					}
 				}

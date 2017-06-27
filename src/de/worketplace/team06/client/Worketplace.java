@@ -27,7 +27,6 @@ import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.LoginInfo;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
-import de.worketplace.team06.shared.bo.Organisation;
 import de.worketplace.team06.shared.bo.Project;
 
 /**
@@ -61,8 +60,23 @@ public class Worketplace implements EntryPoint {
 			public void onSuccess(LoginInfo result) {
 				ClientsideSettings.setLoginInfo(result);
 				if (result.isLoggedIn()) {
-					worketplaceAdministration.checkExistence(result.getGoogleId(),
-							new CheckExistenceLoginInfoCallback());
+					worketplaceAdministration.getOrgaUnitFor(ClientsideSettings.getLoginInfo(),
+							new AsyncCallback<OrgaUnit>() {
+								public void onFailure(Throwable caught) {
+									Window.alert(
+											"Ihr Nutzer konnte nicht abgerufen werden, bitte kontaktieren Sie den technischen Support");
+								}
+
+								@Override
+								public void onSuccess(OrgaUnit result) {
+									if (result instanceof OrgaUnit) {
+										ClientsideSettings.setCurrentUser(result);
+										renderApplicationForLoggedIn();
+									} else {
+										mainPanel.setView(new OrgaUnitFormView(null));
+									}
+								}
+							});
 				} else {
 					Window.Location.replace(result.getLoginUrl());
 				}
@@ -82,7 +96,7 @@ public class Worketplace implements EntryPoint {
 		 * Navigationsleiste des Editors
 		 */
 		RootPanel.get("navigation").add(new EditorNavigation());
-		
+
 		renderUrlToken(null);
 	}
 
@@ -180,34 +194,5 @@ public class Worketplace implements EntryPoint {
 			mainPanel.setView(new MyOverview());
 		}
 		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
-	}
-
-	class CheckExistenceLoginInfoCallback implements AsyncCallback<Boolean> {
-		@Override
-		public void onFailure(Throwable caught) {
-			mainPanel.setView(new OrgaUnitFormView(Worketplace.this));
-		}
-
-		@Override
-		public void onSuccess(Boolean userStatus) {
-			if (userStatus) {
-				worketplaceAdministration.getOrgaUnitFor(ClientsideSettings.getLoginInfo(),
-						new AsyncCallback<OrgaUnit>() {
-							public void onFailure(Throwable caught) {
-								Window.alert(
-										"Ihr Nutzeraccount konnte nicht abgerufen werden, bitte kontaktieren Sie den technischen Support");
-							}
-
-							@Override
-							public void onSuccess(OrgaUnit result) {
-								ClientsideSettings.setCurrentUser(result);
-								renderApplicationForLoggedIn();
-							}
-						});
-			} else {
-				Window.alert("Sie besitzen noch keinen Nutzer, bitte erstellen Sie über folgende Maske einen neuen");
-				mainPanel.setView(new OrgaUnitFormView(null));
-			}
-		}
 	}
 }
