@@ -29,32 +29,41 @@ import de.worketplace.team06.shared.bo.*;
 
 public class ApplicationMapper {
 	
-    /**
-     * Die Instatiierung der Klasse ApplicationMapper erfolgt nur einmal.
-     * Dies wird auch als Singleton bezeichnet.
-     * Durch den Bezeichner static ist die Variable nur einmal für jede Instanz der Klasse vorhanden.
-     * Sie speichert die einzige Instanz der Klasse.
+	/**
+     * Die Klasse ApplicationMapper wird nur einmal instanziiert. Man spricht hierbei
+     * von einem sogenannten <b>Singleton</b>.
+     * <p>
+     * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+     * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+     * einzige Instanz dieser Klasse.
      * 
-     * @see ApplicationMapper#applicationMapper()
+     * @author Thies
+     * @author Patrick
+     * @author Theresa
      */
 	
 	private static ApplicationMapper applicationMapper = null;
 	
 	/**
-	 * Der geschützte Konstruktor verhindert das Erzeugen neuer Instanzen
-	 * der Klasse, sollte schon eine Instanz vorhanden sein.
-	 */
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   * 
+	   * @author Thies 
+	   */
 	protected ApplicationMapper() {
 		
 	}
 	
 	/**
-	 * Durch ApplicationMapper.applicationMapper wird die folgende Methode aufgerufen.
-	 * Durch sie wird die Singleton-Eigenschaft sichergestellt, in dem sie dafür sorgt, dass nur eine 
-	 * Instanz von ApplicationMapper existiert.
-	 * Die Instantiierung von ApplicationMapper sollte stets durch den Aufruf dieser Methode erfolgen.
+	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
+	 * dafür, dass nur eine einzige Instanz der ApplicationMapper-Klasse existiert. 
+	 * ApplicationMapper sollte nicht über den New-Operator, sondern über den 
+	 * Aufruf dieser statischen Methode aufgerufen werden.
 	 * 
-	 * @return ApplicationMapper-Objekt.
+	 * @return EnrollmentMapper
+	 * @author Thies
+	 * @author Patrick
+	 * @author Theresa
 	 */
 	public static ApplicationMapper applicationMapper() {
 		if (applicationMapper == null) {
@@ -71,6 +80,7 @@ public class ApplicationMapper {
 	 * @param id
 	 * @return Application-Objekt, das der übergebenen ID entspricht bzw. null, 
 	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
+	 * @author Patrick
 	 */
 	public Application findByID(Integer id) {
 		Connection con = DBConnection.connection();
@@ -104,6 +114,7 @@ public class ApplicationMapper {
 	 * gespeichert sind.
 	 * 
 	 * @return Vector<Application> mit allen Application-Objekten.
+	 * @author Patrick
 	 */
 	public Vector<Application> findAll() {
 		Connection con = DBConnection.connection();
@@ -134,7 +145,15 @@ public class ApplicationMapper {
 		}
 		return result;
 	}
-	
+	/**
+	 * Suchen und auslesen der Bewerbungen anhand der übergebenen RatingID. Alle Bewerbungen, die zu 
+	 * einer bestimmten Bewertung gehören, werden ausgelesen.
+	 * 
+	 * @param rID
+	 * @return
+	 * @author Patrick
+	 * @author Theresa
+	 */
 	public Application findByRatingID(Integer rID) {
 		Connection con = DBConnection.connection();
 		
@@ -162,7 +181,15 @@ public class ApplicationMapper {
 		return null;
 	}
 	
-	
+	/**
+	 * Suchen und auslesen der Bewerbungen anhand der übergebenen OrgaUnitID. Alle Bewerbungen, die zu 
+	 * einer bestimmten Organisationseinheit gehören, werden ausgelesen.
+	 * 
+	 * @param orgaUnitID
+	 * @return
+	 * @author Theresa
+	 * @author Patrick
+	 */
 	public Vector<Application> findByOrgaUnitID (Integer orgaUnitID) {
 		
 		Connection con = DBConnection.connection();
@@ -196,6 +223,15 @@ public class ApplicationMapper {
 		return result;
 	}
 	
+	/**
+	 * Suchen und auslesen der Bewerbungen anhand der übergebenen CallID. Alle Bewerbungen, die zu 
+	 * einer bestimmten Ausschreibung gehören, werden ausgelesen. 
+	 * 
+	 * @param callID
+	 * @return
+	 * @author Theresa
+	 * @author Patrick
+	 */
 	public Vector<Application> findByCallID (Integer callID) {
 		
 		Connection con = DBConnection.connection();
@@ -230,13 +266,24 @@ public class ApplicationMapper {
 	}
 	
 	
-	
+	/**
+	 * Einfuegen eines Application-Objekts in die Datenbank. Dabei wird auch der Primaerschluessel
+	 * des uebergebenen Objektes geprueft und ggf. berichtigt.
+	 * 
+	 * @param a
+	 * @return
+	 * @author Theresa
+	 * @author Patrick
+	 */
 	public Application insert(Application a) {
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
-			
+			/*
+			 *Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
+			 *wird dann um 1 erhoeht und an an a vergeben
+			*/
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM application ");
 			
 			if (rs.next()) {
@@ -244,7 +291,7 @@ public class ApplicationMapper {
 				a.setID(rs.getInt("maxid") + 1);
 				
 				stmt = con.createStatement();
-				
+				// Einfuegeoption, damit das neue PartnerProfile-Tupel in die Datenbank eingefuegt werden kann.
 				stmt.executeUpdate("INSERT INTO application (id, created, text, call_id, orgaunit_id, status) " + "VALUES (" + a.getID() + ",'" + a.getCreated() + "','" + a.getText() + "'," + a.getCallID() + "," + a.getOrgaUnitID()+ "," + a.getStatus() + ")");
 			}
 		}
@@ -254,7 +301,14 @@ public class ApplicationMapper {
 		return a;
 	}
 	
-	
+	/**
+	 * Methode ermoeglicht, dass ein Application-Objekt in der Datenbank aktualisiert werden kann.
+	 * 
+	 * @param a
+	 * @return
+	 * @author Theresa
+	 * @author Patrick
+	 */
 	public Application update(Application a) {
 		Connection con = DBConnection.connection();
 		
@@ -270,7 +324,13 @@ public class ApplicationMapper {
 		return a;
 	}
 	
-	
+	/**
+	 * Loeschen eines Application-Objekts in der Datenbank.
+	 * 
+	 * @param a
+	 * @author Theresa
+	 * @author Patrick
+	 */
 	public void delete(Application a) {
 		Connection con = DBConnection.connection();
 		
@@ -285,20 +345,55 @@ public class ApplicationMapper {
 		}
 	}
 	
-	
+	/**
+	 * Auslesen des zugehoerigen Person-Objekts zu einer gegebenen Bewerbung. 
+	 * 
+	 * @param a die Bewerbung, deren Person wir auslesen möchten 
+	 * @return ein Objekt, das die Person zu der Bewerbung darstellt
+	 * @author Thies
+	 * @author Theresa
+	 */
 	public Person getSourcePerson(Application a) {
+		//Bedienen am PersonMapper
 		return PersonMapper.personMapper().findByID(a.getOrgaUnitID());
 	}
 
+	/**
+	 * Auslesen des zugehoerigen Organisation-Objekts zu einer gegebenen Bewerbung.
+	 * 
+	 * @param a die Bewerbung, deren Organisation wir auslesen möchten
+	 * @return ein Objekt, das die Organisation zu der Bewerbung darstellt
+	 * @author Thies
+	 * @author Theresa
+	 */
 	public Organisation getSourceOrganisation(Application a) {
+		//Bedienen am OrganisationMapper
 		return OrganisationMapper.organisationMapper().findByID(a.getOrgaUnitID());
 	}
 	
+	/**
+	 * Auslesen des zugehoerigen Team-Objekts zu einer gegebenen Bewerbung.
+	 * 
+	 * @param a die Bewebung, deren Team wir auslesen moechten
+	 * @return ein Objekt, das das Team zu der Bewerbung darstellt
+	 * @author Thies
+	 * @author Theresa
+	 */
 	public Team getSourceTeam(Application a) {
+		//Bedienen am TeamMapper
 		return TeamMapper.teamMapper().findByID(a.getOrgaUnitID());
 	}
-
+	
+	/**
+	 * Auslesen des zugehörigen Call-Objekts zu einer gegebenen Bewerbung.
+	 * 
+	 * @param a die Bewerbung, deren Ausschreibung wir auslesen möchten
+	 * @return ein Objekt, das die Ausschreibung zu der Bewerbung darstellt
+	 * @author Thies
+	 * @author Theresa
+	 */
 	public Call getSourceCall(Application a) {
+		//Bedienen am CallMapper
 		return CallMapper.callMapper().findByID(a.getCallID());
 	}
 	

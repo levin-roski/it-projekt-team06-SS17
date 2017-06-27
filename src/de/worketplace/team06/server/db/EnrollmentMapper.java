@@ -383,7 +383,7 @@ public class EnrollmentMapper {
 	}
 	
 	/**
-	 * Auslesen des zugehörigen Person-Objekts zu einer gegebenen Beteiligung. 
+	 * Auslesen des zugehoerigen Person-Objekts zu einer gegebenen Beteiligung. 
 	 * 
 	 * @param e die Beteiligung, deren Person wir auslesen möchten 
 	 * @return ein Objekt, das die Person zu der Beteiligung darstellt
@@ -396,7 +396,7 @@ public class EnrollmentMapper {
 	}
 
 	/**
-	 * Auslesen des zugehörigen Organisation-Objekts zu einer gegebenen Beteiligung.
+	 * Auslesen des zugehoerigen Organisation-Objekts zu einer gegebenen Beteiligung.
 	 * 
 	 * @param e die Beteiligung, deren Organisation wir auslesen möchten
 	 * @return ein Objekt, das die Organisation zu der Beteiligung darstellt
@@ -409,11 +409,12 @@ public class EnrollmentMapper {
 	}
 	
 	/**
-	 * Auslesen des zugehörigen Team-Objekts zu einer gegebenen Beteiligung.
+	 * Auslesen des zugehoerigen Team-Objekts zu einer gegebenen Beteiligung.
 	 * 
-	 * @param e die Beteiligung, deren Team wir auslesen möchten
+	 * @param e die Beteiligung, deren Team wir auslesen moechten
 	 * @return ein Objekt, das das Team zu der Beteiligung darstellt
 	 * @author Thies
+	 * @author Theresa
 	 */
 	public Team getSourceTeam(Enrollment e) {
 		//Bedienen am TeamMapper
@@ -421,10 +422,12 @@ public class EnrollmentMapper {
 	}
 	
 	/**
-	 * Auslesen des zugehörigen Project-Objekts zu einer gegebenen Beteiligung.
+	 * Auslesen des zugehoerigen Project-Objekts zu einer gegebenen Beteiligung.
 	 * 
-	 * @param e die Beteiligung, deren Projekt wir auslesen möchten
+	 * @param e die Beteiligung, deren Projekt wir auslesen moechten
 	 * @return ein Objekt, das das Projekt zu der Beteiligung darstellt
+	 * @author Thies
+	 * @author Theresa
 	 */
 	public Project getSourceProject(Enrollment e) {
 		//Bedienen am ProjectMapper
