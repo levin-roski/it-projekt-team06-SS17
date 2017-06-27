@@ -34,9 +34,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 */
 	@Override
 	public void init() throws IllegalArgumentException {
-	    /*
-	     * Intantiierung von einer WorketplaceAdministrationImpl zum internen Gebrauch
-	     */
 	    WorketplaceAdministrationImpl impl = new WorketplaceAdministrationImpl();
 	    impl.init();
 	    this.wpadmin = impl;
