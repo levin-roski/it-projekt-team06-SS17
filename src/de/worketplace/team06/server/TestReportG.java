@@ -27,8 +27,9 @@ public class TestReportG {
 		p.setGoogleID("G3000");
 		PlainTextReportWriter writer = new PlainTextReportWriter();
 		//HTMLReportWriter writer = new HTMLReportWriter();
-		//writer.process(gen.createAllCallsReport(p));
-		writer.process(gen.createAllApplicationsForCallsOfUserReport(p));
+		writer.process(gen.createAllCallsReport());
+		writer.process(gen.createAllCallsOfUserReport(p));
+		//writer.process(gen.createAllApplicationsForCallsOfUserReport(p));
 		System.out.println(writer.getReportText());
 	}
 
