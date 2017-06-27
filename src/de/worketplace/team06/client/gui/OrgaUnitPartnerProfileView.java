@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -13,25 +14,32 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.PartnerProfile;
 import de.worketplace.team06.shared.bo.Property;
 
-public class PartnerProfileView extends View {
+public class OrgaUnitPartnerProfileView extends View {
 	// erstellen der Tabelle Projekte
 	final CellTable<Property> propertyTable = new CellTable<Property>();
 	PartnerProfile currentPartnerProfile;
 
-	public PartnerProfileView(PartnerProfile pCurrentPartnerProfile) {
-		super();
-		
-		currentPartnerProfile = pCurrentPartnerProfile;
+	public OrgaUnitPartnerProfileView() {
+		worketplaceAdministration.getPartnerProfileFor(ClientsideSettings.getCurrentUser(), new AsyncCallback<PartnerProfile>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(PartnerProfile result) {
+				currentPartnerProfile = result;
+				loadData();
+			}
+		});
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.setWidth("100%");
-		root.add(createHeadline("Marktplatz-Details", true));
+		root.add(createHeadline("Ihr Partnerprofil", true));
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
@@ -47,61 +55,32 @@ public class PartnerProfileView extends View {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Property selectedProperty = propertySsm.getSelectedObject();
-				mainPanel.setView(new PropertyForm(selectedProperty));
+				mainPanel.setForm(new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
 			}
 		});
 
 		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
 		// Daten aus der Datenbank
-		TextColumn<Property> projectsTitleColumn = new TextColumn<Property>() {
+		TextColumn<Property> propertyTitleColumn = new TextColumn<Property>() {
 			@Override
 			public String getValue(Property object) {
-				return object.getTitle();
+				return object.getName();
 			}
 		};
-		propertyTable.addColumn(projectsTitleColumn, "Name");
+		propertyTable.addColumn(propertyTitleColumn, "Eigenschaften-Name");
 
-		// Muss eigentlich Int (bzw. Row counter) wiedergeben
-		// TextColumn<Property> projectsCounterColumn = new TextColumn<Property>()
-		// {
-		// @Override
-		// public String getValue(Property object) {
-		// // TODO Anzahl offene Ausschreibungen
-		// return object.getDescription();
-		// }
-		// };
-		// projectTable.addColumn(projectsCounterColumn, "Anzahl Offene
-		// Ausschreibungen");
-
-		TextColumn<Property> projectsDescriptionColumn = new TextColumn<Property>() {
+		TextColumn<Property> propertyValueColumn = new TextColumn<Property>() {
 			@Override
 			public String getValue(Property object) {
-				return object.getDescription();
+				return object.getValue();
 			}
 		};
-		propertyTable.addColumn(projectsDescriptionColumn, "Beschreibung");
+		propertyTable.addColumn(propertyValueColumn, "Eigenschaften-Name");
 
-		TextColumn<Property> projectsStartColumn = new TextColumn<Property>() {
-			@Override
-			public String getValue(Property object) {
-				return simpleDateFormat.format(object.getStartDate());
-			}
-		};
-		propertyTable.addColumn(projectsStartColumn, "Start");
-
-		TextColumn<Property> projectsEndColumn = new TextColumn<Property>() {
-			@Override
-			public String getValue(Property object) {
-				return simpleDateFormat.format(object.getEndDate());
-			}
-		};
-		propertyTable.addColumn(projectsEndColumn, "Ende");
-
-		root.add(createSecondHeadline("Projekte auf diesem Marktplatz"));
 		root.add(propertyTable);
 		propertyTable.setWidth("100%", true);
 
-		final Button newButton = new Button("Neues Projekt hinzufügen");
+		final Button newButton = new Button("Neue Eigenschaft hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				mainPanel.setForm(new PropertyForm(null, false, true, null, null, currentPartnerProfile));
@@ -110,12 +89,12 @@ public class PartnerProfileView extends View {
 		root.add(newButton);
 
 		this.add(root);
-		loadData();
 	}
 
 	@Override
 	public void loadData() {
-		worketplaceAdministration.getPropertysFor(currentPartnerProfile, new AsyncCallback<Vector<Property>>() {
+		Window.alert(currentPartnerProfile.getID().toString());
+		worketplaceAdministration.getAllPropertiesFor(currentPartnerProfile, new AsyncCallback<Vector<Property>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 			}
