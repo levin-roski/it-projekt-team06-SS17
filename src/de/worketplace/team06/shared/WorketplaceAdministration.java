@@ -45,13 +45,13 @@ public interface WorketplaceAdministration extends RemoteService {
      */
     public void init() throws IllegalArgumentException;
 
-    /**
-     * Abfragen ob der User existiert.
-     * 
-     * @param googleID die zu abfragende ID eines Users
-     * @return
-     */
-    public boolean checkExistence(String googleID) throws IllegalArgumentException;
+//    /**
+//     * Abfragen ob der User existiert.
+//     * 
+//     * @param googleID die zu abfragende ID eines Users
+//     * @return
+//     */
+//    public boolean checkExistence(String googleID) throws IllegalArgumentException;
 
     /**
      * Speichern eines Objekts vom Typ Person (Subklasse von OrgaUnit)
