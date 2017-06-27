@@ -25,7 +25,6 @@ public class MarketplaceView extends View {
 	Marketplace currentMarketplace;
 
 	public MarketplaceView(Marketplace pCurrentMarketplace) {
-		super();
 		currentMarketplace = pCurrentMarketplace;
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());

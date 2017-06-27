@@ -16,7 +16,6 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Enrollment;
 import de.worketplace.team06.shared.bo.Project;

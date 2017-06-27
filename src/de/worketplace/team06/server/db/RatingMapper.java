@@ -7,12 +7,34 @@ import java.sql.Statement;
 import java.util.*;
 
 import de.worketplace.team06.shared.bo.Rating;
+/**
+ * Die Mapper-Klasse RatingMapper bildet Rating-Objekte als Datensätze
+ * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
+ * können mit deren Hilfe Objekte erzeugt, verändert, gelöscht und ausgelesen werden.
+ * Das Mapping erfolgt bidirektional: Objekte können in Datensätze und Datensätze in 
+ * Objekte umgewandelt werden.
+ * 
+ * @see ApplicationMapper
+ * @see CallMapper
+ * @see EnrollmentMapper
+ * @see MarketplaceMapper
+ * @see OrganisationMapper
+ * @see OrgaUnitMapper
+ * @see PartnerProfileMapper
+ * @see PersonMapper
+ * @see ProjectMapper
+ * @see PropertyMapper
+ * @see TeamMapper
+ * 
+ * @author Patrick
+ * @author Theresa
+ */
 
 
 public class RatingMapper {
 	
 	/**
-     * Die Klasse RatingMapper wird nur einmal instantiiert. Man spricht hierbei
+     * Die Klasse RatingMapper wird nur einmal instanziiert. Man spricht hierbei
      * von einem sogenannten <b>Singleton</b>.
      * <p>
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
@@ -38,7 +60,7 @@ public class RatingMapper {
 	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
 	 * dafür, dass nur eine einzige Instanz der RatingMapper-Klasse existiert. 
 	 * RatingMapper sollte nicht über den New-Operator, sondern über den 
-	 * Aufruf dieser statischen Methode.
+	 * Aufruf dieser statischen Methode ausgeführt werden.
 	 * 
 	 * @return RatingMapper
 	 * @author Thies
@@ -53,28 +75,22 @@ public class RatingMapper {
 	}
 	
 	/**
-	 * Suchen einer Bewertung mit vorgegebener RatiingID. Duch die Eindeutigkeit der ID, 
+	 * Suchen einer Bewertung mit vorgegebener RatingID. Durch die Eindeutigkeit der ID
 	 * wird genau ein Objekt zurück gegeben. 
 	 * 
 	 * @param ratingID
 	 * @return Rating-Objekt, das der übergebenen ID entspricht
+	 * @author Theresa
 	 */
 
 	public Rating findById (Integer id){
     	Connection con = DBConnection.connection();
-    	/**
-    	 * Verbindung zur Datenbank herstellen 
-    	 */
     	
-    	try{
-    		/**
-    		 * leeres SQL-Statement wird angelegt 
-    		 */
-    		
+    	try{    		
     		Statement stmt= con.createStatement();
     		ResultSet rs = stmt.executeQuery
     				("SELECT id, statement, created, rating FROM rating " + "WHERE id= " + id);
-    		/**
+    		/*
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
 			 */
@@ -94,14 +110,13 @@ public class RatingMapper {
     }
 	
 	/**
-	 * Auslesen aller Bewertungen 
-	 * @return
+	 * Auslesen aller Bewertungen aus der Datenbank.
+	 *  
+	 * @return Vektor<Rating>
+	 * @author Theresa
 	 */
-  
     public Vector<Rating> findAll() {
-    	 /**
-         * Verbindung zur Datenbank herstellen
-         */
+    	
         Connection con = DBConnection.connection();
         Vector<Rating> result = new Vector<Rating>();
         
@@ -136,28 +151,23 @@ public class RatingMapper {
      * @author Thies 
      * @author Theresa
      */
-    
     public Rating insert (Rating r) {
-    	/**
-         * Verbindung zur Datenbank herstellen
-         */
+ 
         Connection con = DBConnection.connection();
         
         try {
         	Statement stmt = con.createStatement();
         	
-        	/** 
+        	/*
 			 * Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
-			 *wird dann um 1 erhoet und an an t vergeben
+			 * wird dann um 1 erhoeht und an an r vergeben
 			*/
         	ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM rating ");
         	
         	if (rs.next()){
         	r.setID(rs.getInt("maxid") + 1);
         	stmt = con.createStatement();
-        	/**
-			 * Einfuegeoption, damit das neue Rating-Tupel in die Datenbank eingefuegt werden kann
-			 */
+			// Einfuegeoption, damit das neue Rating-Tupel in die Datenbank eingefuegt werden kann
         	stmt.executeUpdate("INSERT INTO rating (id, created, statement, rating) " 
         	+ "VALUES (" 
         		+ r.getID() + ", '"
@@ -179,12 +189,11 @@ public class RatingMapper {
      * 
      * @param r 
      * @return Rating
+     * @author Theresa
      */
     
     public Rating update(Rating r) {
-    	/**
-         * Verbindung zur Datenbank herstellen
-         */
+
         Connection con = DBConnection.connection();
         
         try{
@@ -204,14 +213,14 @@ public class RatingMapper {
     }
     
     /**
-     * Loeschen eines Rating-Objektes aus der Datenbank
+     * Loeschen eines Rating-Objektes aus der Datenbank.
+     * 
      * @param rating
+     * @author Theresa
      */
 
     public void delete(Rating r) {
-    	/**
-         * Verbindung zur Datenbank herstellen
-         */
+
         Connection con = DBConnection.connection();
         
         try {
@@ -226,21 +235,20 @@ public class RatingMapper {
     
     
     /**
-	 * Diese Methode findet ein Rating-Objekt, anhand der übergebenen Application-ID 
+	 * Diese Methode findet ein Rating-Objekt anhand der übergebenen ApplicationID.
 	 * 
 	 * @param ApplicationID
 	 * @return Rating-Objekt 
+	 * @author Theresa
 	 */
     
     public Rating findRatingByApplicationID(Integer applicationID){
-    	/**
-         * Verbindung zur Datenbank herstellen
-         */
+
     	Connection con = DBConnection.connection();
     	
     	try{
     		Statement stmt = con.createStatement();
-    		
+    		// Verbinden der Tabellen rating und application, da Rating-Objekt nach ApplicationID gesucht wird
     		ResultSet rs = stmt.executeQuery("SELECT * FROM rating INNER JOIN application " + 
     		"ON application.rating_id = rating.id WHERE application.id = " + applicationID);
     		
