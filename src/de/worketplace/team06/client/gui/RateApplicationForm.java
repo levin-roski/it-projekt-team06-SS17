@@ -15,63 +15,63 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Application;
-import de.worketplace.team06.shared.bo.Marketplace;
+import de.worketplace.team06.shared.bo.Rating;
 
 /**
- * Formular für die Bewertung einer Bewerbung. 
+ * Formular für die Bewertung einer Bewerbung.
  * 
  * @author Roski
  */
 public class RateApplicationForm extends Form {
 	private Label nameLabel = new Label("Bewertung");
-	private ListBox ratingList = new ListBox();
-	private Label descriptionLabel = new Label("Beschreibung");
+	private ListBox ratingInput = new ListBox();
+	private Label descriptionLabel = new Label("Bewertungstext");
 	private TextBox descriptionInput = new TextBox();
 	private boolean shouldUpdate = false;
-	private Application toChangeApplication;
+	private Rating toChangeRating;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
 
 	/**
-	 * Im Konstruktor kann eine Bewerbung übergeben werden, die
-	 * dann bewertet werden kann. null übergeben, falls ein neuer
-	 * Marktplatz erstellt werden soll.
+	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die
+	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
+	 * Bewertung erstellt werden soll.
 	 * 
-	 * @param pToChangeApplication
-	 *            Marketplace, der im Formular angezeigt werden soll
+	 * @param pToChangeRating
+	 *            Rating, das im Formular angezeigt werden soll
 	 * @param pHeadline
 	 *            Falls true wird dem Formular eine Überschrift vorangehängt
 	 */
-	public RateApplicationForm(Application pToChangeApplication, final boolean pHeadline) {
-		if (pToChangeApplication != null) {
+	public RateApplicationForm(Rating pToChangeRating, final boolean pHeadline) {
+		if (pToChangeRating != null) {
 			shouldUpdate = true;
-			this.toChangeApplication = pToChangeApplication;
+			this.toChangeRating = pToChangeRating;
 		}
 		if (pHeadline) {
-			changeHeadline = createHeadline("Bewerbung bearbeiten", true);
-			addHeadline = createHeadline("Bewerbung hinzufügen", true);
+			changeHeadline = createHeadline("Bewertung bearbeiten", true);
+			addHeadline = createHeadline("Bewertung hinzufügen", true);
 		}
 	}
 
 	/**
-	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der
-	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
-	 * Marktplatz erstellt werden soll.
+	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die
+	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
+	 * Bewertung erstellt werden soll.
 	 * 
-	 * @param pToChangeApplication
-	 *            Marketplace, der im Formular angezeigt werden soll
+	 * @param pToChangeRating
+	 *            Bewertung, die im Formular angezeigt werden soll
 	 * @param pHeadline
 	 *            Falls true wird dem Formular eine Überschrift vorangehängt
 	 * @param pClosingHeadline
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public RateApplicationForm(Application pToChangeApplication, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback) {
-		this(pToChangeApplication, pHeadline);
+	public RateApplicationForm(Rating pToChangeRating, final boolean pHeadline, final boolean pClosingHeadline,
+			final Callback editCallback, final Callback deleteCallback, final Application currentApplication) {
+		this(pToChangeRating, pHeadline);
 		if (pClosingHeadline) {
-			changeHeadline = createHeadlineWithCloseButton("Bewerbung bearbeiten", true);
-			addHeadline = createHeadlineWithCloseButton("Bewerbung hinzufügen", true);
+			changeHeadline = createHeadlineWithCloseButton("Bewertung bearbeiten", true);
+			addHeadline = createHeadlineWithCloseButton("Bewertung hinzufügen", true);
 		}
 
 		/*
@@ -81,38 +81,47 @@ public class RateApplicationForm extends Form {
 		Grid form = new Grid(3, 2);
 		form.setWidth("100%");
 		form.setWidget(0, 0, nameLabel);
-		form.setWidget(0, 1, ratingList);
+		form.setWidget(0, 1, ratingInput);
 		form.setWidget(1, 0, descriptionLabel);
 		form.setWidget(1, 1, descriptionInput);
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*
-		 * Falls ein selektierter Marktplatz übergeben wurde und jetzt
+		 * Falls eine selektierte Bewerbung übergeben wurde und jetzt
 		 * dargestellt werden soll
 		 */
 		if (shouldUpdate) {
 			if (changeHeadline != null) {
 				root.add(changeHeadline);
 			}
-			ratingList.setText(toChangeApplication.getTitle());
-			descriptionInput.setText(toChangeApplication.getDescription());
+			int indexToFind = -1;
+			for (int i = 0; i < ratingInput.getItemCount(); i++) {
+				if (ratingInput.getItemText(i).equals(toChangeRating.getRating().toString())) {
+					indexToFind = i;
+					break;
+				}
+			}
+			ratingInput.setSelectedIndex(indexToFind);
+			descriptionInput.setText(toChangeRating.getRatingStatement());
 			final Button saveButton = new Button("Speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					if (ratingList.getText().length() == 0) {
+					if (ratingInput.getSelectedValue().length() == 0) {
 						Window.alert("Bitte vergeben eine Bewertung");
 					} else if (descriptionInput.getText().length() == 0) {
 						Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
+					} else if (ratingInput.getSelectedValue() == "Bitte wählen") {
+						Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
 					} else {
-						toChangeApplication.setTitle(ratingList.getText());
-						toChangeApplication.setDescription(descriptionInput.getText());
-						worketplaceAdministration.saveMarketplace(toChangeApplication, new AsyncCallback<Void>() {
+						toChangeRating.setRating(Float.parseFloat(ratingInput.getName()));
+						toChangeRating.setRatingStatement(descriptionInput.getText());
+						worketplaceAdministration.saveRating(toChangeRating, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
 							}
 
 							public void onSuccess(Void result) {
-								Window.alert("Die Bewerbung wurde erfolgreich bewertet");
+								Window.alert("Die Bewertung wurde erfolgreich bewertet");
 								if (editCallback != null) {
 									editCallback.run();
 								} else {
@@ -130,7 +139,7 @@ public class RateApplicationForm extends Form {
 				public void onClick(ClickEvent event) {
 					final boolean confirmDelete = Window.confirm("Möchten Sie die Bewertung wirklich löschen?");
 					if (confirmDelete) {
-						worketplaceAdministration.deleteMarketplace(toChangeApplication, new AsyncCallback<Void>() {
+						worketplaceAdministration.deleteRating(toChangeRating, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
 							}
@@ -156,20 +165,23 @@ public class RateApplicationForm extends Form {
 			final Button saveButton = new Button("Bewertung anlegen");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					if (ratingList.getText().length() == 0) {
-						Window.alert("Bitte vergeben Sie einen Namen");
+					if (ratingInput.getSelectedValue().length() == 0) {
+						Window.alert("Bitte vergeben Sie eine Bewertung");
 					} else if (descriptionInput.getText().length() == 0) {
-						Window.alert("Bitte beschreiben Sie Ihren Marktplatz genauer");
+						Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
 					} else {
-						worketplaceAdministration.createMarketplace(ratingList.getText(), descriptionInput.getText(),
-								new AsyncCallback<Marketplace>() {
+						worketplaceAdministration.rateApplication(currentApplication,
+								Float.parseFloat(ratingInput.getSelectedValue()), descriptionInput.getText(),
+								new AsyncCallback<Rating>() {
+									@Override
 									public void onFailure(Throwable caught) {
 										Window.alert(
 												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
 									}
 
-									public void onSuccess(Marketplace result) {
-										Window.alert("Der Marktplatz \"" + result.getTitle() + "\" wurde erstellt");
+									@Override
+									public void onSuccess(Rating result) {
+										Window.alert("Die Bewerbung wurde Bewertet");
 										renderFormSuccess();
 									}
 								});
@@ -179,6 +191,17 @@ public class RateApplicationForm extends Form {
 			form.setWidget(2, 1, saveButton);
 		}
 		root.add(form);
-		ratingList.setFocus(true);
+
+		ratingInput.addItem("0.1");
+		ratingInput.addItem("0.2");
+		ratingInput.addItem("0.3");
+		ratingInput.addItem("0.4");
+		ratingInput.addItem("0.5");
+		ratingInput.addItem("0.6");
+		ratingInput.addItem("0.5");
+		ratingInput.addItem("0.5");
+		ratingInput.addItem("0.5");
+		ratingInput.setVisibleItemCount(1);
+		ratingInput.setFocus(true);
 	}
 }

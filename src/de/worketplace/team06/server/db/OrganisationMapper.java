@@ -219,8 +219,8 @@ public class OrganisationMapper {
 	}
     
     /**
-	 * Suchen einer Organisation mit vorgegebener OrganisationID. Durch die Eindeutigkeit der ID
-	 * wird genau ein Objekt zurück gegeben. 
+	 * Auslesen eines Organisation-Objekts anhand übergebener ID.
+	 * Durch die Eindeutigkeit der ID wird genau ein Objekt zurück gegeben. 
 	 * 
 	 * @param ouid
 	 * @return Organisation-Objekt, das der übergebenen ID entspricht

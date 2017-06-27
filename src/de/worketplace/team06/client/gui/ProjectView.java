@@ -36,7 +36,7 @@ public class ProjectView extends View {
 		root.add(new ProjectForm(currentProject, false, false, null, new Callback() {
 			@Override
 			public void run() {
-				mainPanel.setView(new MarketplaceOverview());
+				mainPanel.setView(new MarketplaceOverView());
 			}
 		}, null));
 
@@ -128,6 +128,7 @@ public class ProjectView extends View {
 		enrollmentTable.setWidth("100%", true);
 
 		this.add(root);
+		loadData();
 	}
 
 	@Override

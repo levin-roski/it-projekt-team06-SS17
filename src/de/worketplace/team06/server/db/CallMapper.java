@@ -31,35 +31,48 @@ import de.worketplace.team06.shared.bo.*;
 
 public class CallMapper {
 	
-    /**
-     * Die Instatiierung der Klasse CallMapper erfolgt nur einmal.
-     * Dies wird auch als Singleton bezeichnet.
-     * Durch den Bezeichner static ist die Variable nur einmal für jede Instanz der Klasse vorhanden.
-     * Sie speichert die einzige Instanz der Klasse.
+	/**
+     * Die Klasse CallMapper wird nur einmal instanziiert. Man spricht hierbei
+     * von einem sogenannten <b>Singleton</b>.
+     * <p>
+     * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+     * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+     * einzige Instanz dieser Klasse.
      * 
-     * @see CallMapper#callMapper()
+     * @author Thies
+     * @author Theresa
      */
 	
 	private static CallMapper callMapper = null;
 	
+	/**
+	 * Darstellung von Datum wird durch diese Methode vereinfacht und vereinheitlicht. 
+	 * wird aufgerufen, wenn Startdatum und Enddatum neu angelegt oder verändert werden.
+	 * 
+	 * @author Theresa
+	 */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	/**
-	 * Der geschützte Konstruktor verhindert das Erzeugen neuer Instanzen
-	 * der Klasse, sollte schon eine Instanz vorhanden sein.
-	 */
-	
+	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   * 
+	   * @author Thies 
+	   */
 	protected CallMapper() {
 		
 	}
 	
 	/**
-	 * Durch CallMapper.callMapper wird die folgende Methode aufgerufen.
-	 * Durch sie wird die Singleton-Eigenschaft sichergestellt, in dem sie dafür sorgt, dass nur eine 
-	 * Instanz von CallMapper existiert.
-	 * Die Instantiierung von CallMapper sollte stets durch den Aufruf dieser Methode erfolgen.
+	 * Diese Methode stellt sicher, dass die Singleton-Eigenschaft gegeben ist. Sie sorgt
+	 * dafür, dass nur eine einzige Instanz der CallMapper-Klasse existiert. 
+	 * CallMapper sollte nicht über den New-Operator, sondern über den 
+	 * Aufruf dieser statischen Methode aufgerufen werden.
 	 * 
-	 * @return ApplicationMapper-Objekt.
+	 * @return CallMapper
+	 * @author Thies
+	 * @author Theresa
+	 * @author Patrick
 	 */
 	public static CallMapper callMapper() {
 		if (callMapper == null) {
@@ -71,9 +84,11 @@ public class CallMapper {
 
 
 	/**
-	 * Ausschreibung aktualisieren
+	 * Methode ermoeglicht, dass ein Enrollment-Objekt in der Datenbank aktualisiert werden kann.
+	 * 
 	 * @param c
-	 * @return
+	 * @author Theresa
+	 * @author Patrick
 	 */
 	
 	public void update(Call c) {
@@ -99,9 +114,13 @@ public class CallMapper {
 	}
 
 	/**
-	 * Ausschreibung in der Datenbank anlegen 
+	 * Einfuegen eines Enrollment-Objektes in die Datenbank. Dabei wird auch der Primaerschluessel
+	 * des uebergebenen Objektes geprueft und ggf. berichtigt.
+	 * 
 	 * @param c
 	 * @return
+	 * @author Theresa
+	 * @author Patrick
 	 */
 	
 	public Call insert(Call c) {
@@ -111,12 +130,17 @@ public class CallMapper {
 			String deadline = sdf.format(c.getDeadline());
 			
 			Statement stmt = con.createStatement();
+			/*
+			 *Abfragen des hoechsten Primaerschluesselwertes, die aktuelle ID 
+			 *wird dann um 1 erhoeht und an an c vergeben
+			*/
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM projektmarktplatz.`call`");			
 			if (rs.next()) {
 				
 				c.setID(rs.getInt("maxid") + 1);
 		
 				stmt = con.createStatement();
+				// Einfuegeoption, damit das neue Call-Tupel in die Datenbank eingefuegt werden kann.
 				stmt.executeUpdate("INSERT INTO projektmarktplatz.`call` (id, created, title, description, deadline, orgaunit_id, project_id, status) " 
 				+ "VALUES (" + c.getID() + ",'" + c.getCreated() + "','" 
 				+ c.getTitle() + "','" + c.getDescription() +  "','" 
@@ -133,10 +157,11 @@ public class CallMapper {
 	}
 
 	/**
-	 * Methode zur Suche nach allen Ausschreibungen, die in der Datenbank
-	 * gespeichert sind.
+	 * Auslesen aller Call-Objekten aus der Datenbank.
 	 * 
 	 * @return Vector<Call> mit allen Call-Objekten.
+	 * @author Patrick
+	 * @author Theresa
 	 */
 	
 	public Vector<Call> findAll() {
@@ -208,12 +233,13 @@ public class CallMapper {
 	}
 */	
 	/**
-	 * Methode zur Suche nach Ausschreibungen anhand einer projectID.
+	 * Auslesen von Ausschreibungen anhand einer übergebenen projectID.
 	 * Da diese eindeutig ist wird genau ein Objekt zurückgegeben.
 	 * 
 	 * @param projectID
 	 * @return Call-Objekt, das der übergebenen projectID entspricht bzw. null, 
 	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
+	 * @author Patrick 
 	 */
 	
 	public Vector<Call> findByProjectID(Integer projectID) {
@@ -253,6 +279,7 @@ public class CallMapper {
 	 * @param callID
 	 * @return Call-Objekt, das der übergebenen ID entspricht bzw. null, 
 	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
+	 * @author Patrick
 	 */
 	
 	public Call findByID(Integer callID) {
@@ -289,6 +316,7 @@ public class CallMapper {
 	/**
 	 * Loeschen eines Call-Objektes aus der Datenbank mit der entsprechenden übergebenen ID.
 	 * @param c
+	 * @author Patrick
 	 */
 	
 	public void delete(Call c) {

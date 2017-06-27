@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-import de.worketplace.team06.client.WindowAlertException;
+
 import de.worketplace.team06.shared.bo.*;
 
 public class Test {
@@ -20,8 +20,9 @@ public class Test {
 		
 //		fillDatabaseWithExamples(admin);
 		
+		testOfFindByProjectID(admin);
 		
-		testOfGetProjectsFor(admin);
+//		testOfGetProjectsFor(admin);
 		
 //		testOfDeleteRating(admin);
 //		testOfDeleteApplication(admin);
@@ -401,6 +402,21 @@ public static void testOfGetProjectsFor(WorketplaceAdministrationImpl admin){
 //		
 //	}
 	
+/*
+ * Call Methoden
+ */
+
+
+public static void testOfFindByProjectID(WorketplaceAdministrationImpl admin){
+	
+	Project pro = admin.getProjectByID(2);
+	Vector<Enrollment> allenrollsforpro = admin.getEnrollmentFor(pro);
+	
+	for (Enrollment e : allenrollsforpro){
+		System.out.println("Startdatum: " + e.getStartDate());
+	}
+}
+
 	
 
 	/*

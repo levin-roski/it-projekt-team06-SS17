@@ -59,6 +59,14 @@ public class ClientsideSettings {
 		return worketplaceAdministration;
 	}
 
+	public static ReportGeneratorAsync getReportGenerator() {
+		if (reportGenerator == null) {
+			reportGenerator = GWT.create(ReportGenerator.class);
+		}
+
+		return reportGenerator;
+	}
+
 	public static OrgaUnit getCurrentUser() {
 		return currentUser;
 	}
@@ -73,18 +81,6 @@ public class ClientsideSettings {
 
 	public static MainPanel getMainPanel() {
 		return mainPanel;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static ReportGeneratorAsync getReportGenerator() {
-		if (reportGenerator == null) {
-			reportGenerator = GWT.create(ReportGenerator.class);
-		}
-
-		return reportGenerator;
 	}
 
 	public static View getCurrentView() {
@@ -178,7 +174,7 @@ public class ClientsideSettings {
 		}
 		return breadcrumbs;
 	}
-	
+
 	public static View getBreadcrumbFirstLevel() {
 		return BreadcrumbFirstLevel;
 	}
@@ -194,7 +190,7 @@ public class ClientsideSettings {
 	public static View getBreadcrumbFourthLevel() {
 		return BreadcrumbFourthLevel;
 	}
-	
+
 	public static int getCurrentMarketplaceId() {
 		return currentMarketplaceId;
 	}

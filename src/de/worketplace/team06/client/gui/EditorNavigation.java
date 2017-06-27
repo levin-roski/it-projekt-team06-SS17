@@ -40,7 +40,7 @@ public class EditorNavigation extends VerticalPanel {
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Marktplätze", new Command() {
 			public void execute() {
-				mainPanel.setView(new MarketplaceOverview());
+				mainPanel.setView(new MarketplaceOverView());
 			}
 		}));
 		menu.addSeparator();

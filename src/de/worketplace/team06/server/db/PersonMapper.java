@@ -144,7 +144,7 @@ public class PersonMapper {
 	}
 	
 	/**
-	 * Diese Methode findet ein Person-Objekt, anhand der übergebenen Google-ID 
+	 * Auslesen eines Person-Objekts aus der Datenbank anhand der übergebenen Google-ID. 
 	 * 
 	 * @param googleID
 	 * @return Person-Objekt 
@@ -242,7 +242,7 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Suchen einer Person mit vorgegebener PersonID. Durch die Eindeutigkeit der ID, 
+	 * Auslesen eines Person-Objekts anhand der übergebenen ID. Durch die Eindeutigkeit der ID, 
 	 * wird genau ein Objekt zurück gegeben. 
 	 * 
 	 * @param ouid
