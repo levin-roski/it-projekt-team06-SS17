@@ -2,8 +2,6 @@ package de.worketplace.team06.client.gui;
 
 import java.util.Date;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -104,7 +102,7 @@ public class CallForm extends Form {
 		 * Grid mit 6 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
-		Grid form = new Grid(6, 2);
+		Grid form = new Grid(7, 2);
 		form.setWidth("100%");
 		form.setWidget(0, 0, titleLabel);
 		form.setWidget(0, 1, titleInput);
@@ -157,11 +155,11 @@ public class CallForm extends Form {
 			statusInput.addItem("Erfolgreich");
 			statusInput.addItem("Abgelehnt");
 			statusInput.setVisibleItemCount(toChangeCall.getStatus());
+			
 			worketplaceAdministration.getPersonByID(toChangeCall.getCallerID(), new AsyncCallback<Person>() {
 				public void onFailure(Throwable caught) {
 					Window.alert("Es trat ein Fehler beim abrufen der Ausschreibenden Person auf. ");
 				}
-
 				public void onSuccess(Person result) {
 					callerInputFirstName.setValue(result.getFirstName());
 					callerInputLastName.setValue(result.getLastName());
@@ -172,9 +170,9 @@ public class CallForm extends Form {
 			
 			
 			
-			
-			if(permissionToChange == true){
 			final Button saveButton = new Button("Änderungen speichern");
+			if(permissionToChange == true){
+			
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (titleInput.getText().length() == 0) {
@@ -209,12 +207,14 @@ public class CallForm extends Form {
 			});}
 			
 			final VerticalPanel panel = new VerticalPanel();
-			panel.add(saveButton);
 			
-			final Button deleteButton = new Button("Diesen Marktplatz entfernen");
+			if (permissionToChange == true){
+			panel.add(saveButton);
+			final Button deleteButton = new Button("Diese Ausschreibung entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					final boolean confirmDelete = Window.confirm("Möchten Sie den Marktplatz wirklich löschen?");
+					final boolean confirmDelete = Window.confirm("Möchten Sie die Ausschreibung löschen?"
+							+ "Es werden damit alle zugehörigen Bewerbungen und deren Bewertungen gelöscht.");
 					if (confirmDelete) {
 						worketplaceAdministration.deleteCall(toChangeCall, new AsyncCallback<Void>() {
 							public void onFailure(Throwable caught) {
@@ -234,40 +234,61 @@ public class CallForm extends Form {
 				}
 			});
 			panel.add(deleteButton);
-			form.setWidget(5, 1, panel);
+			}
+			
+			form.setWidget(6, 1, panel);
 		} else {
 			if (addHeadline != null) {
 				root.add(addHeadline);
 			}
 			final Button saveButton = new Button("Neue Ausschreibung anlegen");
+			if (permissionToChange == true){
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					if (nameInput.getText().length() == 0) {
-						Window.alert("Bitte vergeben Sie einen Namen");
+					if (titleInput.getText().length() == 0) {
+						Window.alert("Bitte vergeben Sie einen Titel");
 					} else if (descriptionInput.getText().length() == 0) {
-						Window.alert("Bitte vergeben Sie eine Beschreibung");
-					} else {
+						Window.alert("Bitte vergeben Sie eine Beschreibung");	
+					} else if (deadlineInput.getValue() == null){
+						Window.alert("Bitte vergeben Sie eine Bewerbungsfrist");
+					} 
+					else {
 						// TODO ergänzen
-						// worketplaceAdministration.createCall(nameInput.getText(),
-						// descriptionInput.getText(), new
-						// AsyncCallback<Marketplace>() {
-						// public void onFailure(Throwable caught) {
-						// Window.alert(
-						// "Es trat ein Fehler beim Speichern auf, bitte
-						// versuchen Sie es erneut");
-						// }
-						//
-						// public void onSuccess(Marketplace result) {
-						// Window.alert("Der Marktplatz \"" + result.getTitle()
-						// + "\" wurde erstellt");
-						// }
-						// });
+						toChangeCall.setTitle(titleInput.getText());
+						toChangeCall.setDescription(descriptionInput.getText());
+						toChangeCall.setDeadline(deadlineInput.getValue());
+						toChangeCall.setStatus(statusInput.getSelectedIndex());
+						worketplaceAdministration.saveCall(toChangeCall, new AsyncCallback<Void>() {
+							public void onFailure(Throwable caught) {
+								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+							}
+
+							public void onSuccess(Void result) {
+								Window.alert("Die Ausschreibung wurde erfolgreich geändert");
+								if (editCallback != null) {
+									editCallback.run();
+								} else {
+									renderFormSuccess();
+								}
+							}
+						});
 					}
 				}
 			});
-			form.setWidget(5, 1, saveButton);
+			form.setWidget(6, 1, saveButton);
+			}
+		}
+		
+		if(permissionToChange == false){
+			titleInput.isReadOnly();
+			descriptionInput.isReadOnly();
+			deadlineInput.setEnabled(false);
+			statusInput.setEnabled(false);
+			callerInputFirstName.setEnabled(false);
+			callerInputLastName.setEnabled(false);
+
 		}
 		root.add(form);
-		nameInput.setFocus(true);
+		titleInput.setFocus(true);
 	}
 }
