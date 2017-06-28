@@ -41,6 +41,7 @@ public class ProjectForm extends Form {
 	private ListBox projectLeaderInput = new ListBox();
 	private Boolean shouldUpdate = false;
 	private Project toChangeProject;
+	private Person projectLeader;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
 
@@ -81,7 +82,7 @@ public class ProjectForm extends Form {
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
 	public ProjectForm(Project pToChangeProject, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback, final Marketplace addToMarketplacer) {
+			final Callback editCallback, final Callback deleteCallback, final Marketplace addToMarketplace) {
 		this(pToChangeProject, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Projekt bearbeiten", true);
@@ -92,7 +93,7 @@ public class ProjectForm extends Form {
 		 * Grid mit 5 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
-		Grid form = new Grid(5, 2);
+		Grid form = new Grid(6, 2);
 		form.setWidth("100%");
 		form.setWidget(0, 0, nameLabel);
 		form.setWidget(0, 1, nameInput);
@@ -102,6 +103,8 @@ public class ProjectForm extends Form {
 		form.setWidget(2, 1, startDateInput);
 		form.setWidget(3, 0, endDateLabel);
 		form.setWidget(3, 1, endDateInput);
+		form.setWidget(4, 0, projectLeaderLabel);
+		form.setWidget(4, 1, projectLeaderInput);
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*
@@ -116,6 +119,17 @@ public class ProjectForm extends Form {
 			beschreibungInput.setText(toChangeProject.getDescription());
 			startDateInput.setValue(toChangeProject.getStartDate());
 			endDateInput.setValue(toChangeProject.getEndDate());
+			if (projectLeader == null){
+			worketplaceAdministration.getPersonByID(toChangeProject.getProjectLeaderID(), new AsyncCallback<Person>() {
+				public void onFailure(Throwable caught){
+					Window.alert("Es trat ein Fehler beim auslesen des Projektleiters auf");
+				}
+				public void onSuccess(Person result){
+					projectLeaderInput.setValue(0,result.getFirstName() + " " + result.getLastName());
+					projectLeader = result;
+				}
+			});
+			}
 			final Button saveButton = new Button("Änderungen speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
