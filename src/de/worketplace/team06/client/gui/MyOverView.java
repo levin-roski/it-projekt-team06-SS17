@@ -17,14 +17,14 @@ import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Project;
 
-public class MyOverview extends View {
+public class MyOverView extends View {
 	private final CellTable<Project> myProjectsTable = new CellTable<Project>();
 	private final CellTable<Call> myCallsTable = new CellTable<Call>();
 	private final CellTable<Application> myApplicationsTable = new CellTable<Application>();
 	private final CellTable<Application> applicationsTable = new CellTable<Application>();
 	final CellTable<Application> myProjectApplicationsTable = new CellTable<Application>();
 
-	public MyOverview() {
+	public MyOverView() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Project> myProjectsSsm = new SingleSelectionModel<Project>();

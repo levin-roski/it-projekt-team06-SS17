@@ -93,7 +93,6 @@ public class OrgaUnitPartnerProfileView extends View {
 
 	@Override
 	public void loadData() {
-		Window.alert(currentPartnerProfile.getID().toString());
 		worketplaceAdministration.getAllPropertiesFor(currentPartnerProfile, new AsyncCallback<Vector<Property>>() {
 			@Override
 			public void onFailure(Throwable caught) {

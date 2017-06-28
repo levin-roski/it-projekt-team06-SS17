@@ -14,6 +14,7 @@ public class EditorNavigation extends VerticalPanel {
 	
 	public EditorNavigation() {
 		MenuBar menu = new MenuBar();
+		ClientsideSettings.setCurrentNavigation(menu);
 		menu.setAutoOpen(true);
 		menu.setAnimationEnabled(true);
 		this.setWidth("100%");
@@ -28,13 +29,13 @@ public class EditorNavigation extends VerticalPanel {
 
 		menu.addItem(new MenuItem(logo, new Command() {
 			public void execute() {
-				mainPanel.setView(new MyOverview());
+				mainPanel.setView(new MyOverView());
 			}
 		}));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Mein Bereich", new Command() {
 			public void execute() {
-				mainPanel.setView(new MyOverview());
+				mainPanel.setView(new MyOverView());
 			}
 		}));
 		menu.addSeparator();
