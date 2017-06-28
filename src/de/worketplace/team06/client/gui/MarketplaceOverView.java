@@ -18,7 +18,7 @@ import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Marketplace;
 
 public class MarketplaceOverView extends View {
-	// erstellen der Tabelle Meine Marktplätze
+	// erstellen der Tabelle Meine Marktplätze 
 	private final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
 	public MarketplaceOverView() {
