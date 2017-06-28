@@ -44,7 +44,7 @@ public class MainPanel extends DockLayoutPanel {
 		ClientsideSettings.setCurrentView(viewItem);
 		if (viewItem instanceof MarketplaceOverView) {
 			History.newItem("Marktplaetze");
-		} else if (viewItem instanceof MyOverview) {
+		} else if (viewItem instanceof MyOverView) {
 			History.newItem("");
 		} else if (viewItem instanceof MarketplaceView) {
 			History.newItem("Marktplatz-Details" + ClientsideSettings.getCurrentMarketplaceId());

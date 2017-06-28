@@ -9,7 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import de.worketplace.team06.client.gui.AllCallsReportView;
 import de.worketplace.team06.client.gui.HomeReportView;
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.ReportNavigation;

@@ -16,7 +16,7 @@ import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.MarketplaceOverView;
 import de.worketplace.team06.client.gui.MarketplaceView;
-import de.worketplace.team06.client.gui.MyOverview;
+import de.worketplace.team06.client.gui.MyOverView;
 import de.worketplace.team06.client.gui.OrgaUnitFormView;
 import de.worketplace.team06.client.gui.ProjectView;
 import de.worketplace.team06.shared.LoginService;
@@ -112,7 +112,7 @@ public class Worketplace implements EntryPoint {
 						new AsyncCallback<Marketplace>() {
 							@Override
 							public void onFailure(Throwable caught) {
-								mainPanel.setView(new MyOverview());
+								mainPanel.setView(new MyOverView());
 							}
 
 							@Override
@@ -157,7 +157,7 @@ public class Worketplace implements EntryPoint {
 											new AsyncCallback<Project>() {
 												@Override
 												public void onFailure(Throwable caught) {
-													Worketplace.this.mainPanel.setView(new MyOverview());
+													Worketplace.this.mainPanel.setView(new MyOverView());
 												}
 
 												@Override
@@ -172,7 +172,7 @@ public class Worketplace implements EntryPoint {
 								} else if (RpcWrapper.this.checkRpcTimerCounter == 25) {
 									RpcWrapper.this.t.cancel();
 									RpcWrapper.this.checkRpcTimerCounter = 1;
-									Worketplace.this.mainPanel.setView(new MyOverview());
+									Worketplace.this.mainPanel.setView(new MyOverView());
 								}
 							}
 						};
@@ -185,10 +185,10 @@ public class Worketplace implements EntryPoint {
 			} else if (historyToken.substring(0, 15).equals("calls")) {
 				// TODO Calls aus Token rendern
 			} else {
-				mainPanel.setView(new MyOverview());
+				mainPanel.setView(new MyOverView());
 			}
 		} catch (IndexOutOfBoundsException e) {
-			mainPanel.setView(new MyOverview());
+			mainPanel.setView(new MyOverView());
 		}
 		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
 	}

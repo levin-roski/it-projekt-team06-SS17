@@ -54,7 +54,12 @@ public class ProjectView extends View {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Call selectedCall = callSsm.getSelectedObject();
+<<<<<<< HEAD
 				mainPanel.setForm(new CallForm(selectedCall, false, true, null, null, currentProject));
+=======
+				ClientsideSettings.setCurrentCallId(selectedCall.getID());
+				mainPanel.setView(new CallView(selectedCall));
+>>>>>>> refs/heads/master
 			}
 		});
 

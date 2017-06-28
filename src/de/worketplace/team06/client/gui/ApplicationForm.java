@@ -9,14 +9,13 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Application;
+import de.worketplace.team06.shared.bo.Call;
 
 /**
  * Formular für die Darstellung, Bearbeitung und Löschung einer selektierten
@@ -26,7 +25,7 @@ import de.worketplace.team06.shared.bo.Application;
  * @author Patrick
  */
 public class ApplicationForm extends Form {
-	private Label textLabel = new Label("Bewerbungstext");
+	private Label textLabel = new Label("Ihr Bewerbungstext");
 	private TextArea textInput = new TextArea();
 	private boolean shouldUpdate = false;
 	private Application toChangeApplication;
@@ -50,7 +49,7 @@ public class ApplicationForm extends Form {
 		}
 		if (pHeadline) {
 			changeHeadline = createHeadline("Bewerbung bearbeiten", true);
-			addHeadline = createHeadline("Auf Projekt bewerben", true);
+			addHeadline = createHeadline("Auf Ausschreibung bewerben", true);
 		}
 	}
 
@@ -68,21 +67,21 @@ public class ApplicationForm extends Form {
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
 	public ApplicationForm(Application pToChangeApplication, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback) {
+			final Callback editCallback, final Callback deleteCallback, final Call currentCall) {
 		this(pToChangeApplication, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Bewerbung bearbeiten", true);
-			addHeadline = createHeadlineWithCloseButton("Auf Projekt bewerben", true);
+			addHeadline = createHeadlineWithCloseButton("Auf Ausschreibung bewerben", true);
 		}
 
 		/*
-		 * Grid mit 3 Zeilen und 2 Spalten für das Formular bereitstellen.
-		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
+		 * Grid mit 4 Zeilen und 1 Spalte für das Formular bereitstellen. Danach
+		 * nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
-		Grid form = new Grid(3, 2);
+		Grid form = new Grid(4, 1);
 		form.setWidth("100%");
 		form.setWidget(0, 0, textLabel);
-		form.setWidget(0, 1, textInput);
+		form.setWidget(1, 0, textInput);
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*
@@ -143,26 +142,26 @@ public class ApplicationForm extends Form {
 				}
 			});
 			panel.add(deleteButton);
-			form.setWidget(2, 1, panel);
+			form.setWidget(2, 0, panel);
 		} else {
 			if (addHeadline != null) {
 				root.add(addHeadline);
 			}
-			final Button saveButton = new Button("Auf Projekt bewerben");
+			final Button saveButton = new Button("Auf Ausschreibung bewerben");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (textInput.getText().length() == 0) {
 						Window.alert("Bitte geben Sie einen Bewerbungstext ein");
 					} else {
-						worketplaceAdministration.createApplication(textInput.getText(),
-								new AsyncCallback<Application>() {
+						worketplaceAdministration.applyFor(currentCall, ClientsideSettings.getCurrentUser(),
+								textInput.getText(), new AsyncCallback<Application>() {
 									public void onFailure(Throwable caught) {
 										Window.alert(
 												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
 									}
 
 									public void onSuccess(Application result) {
-										Window.alert("Die Bewerbung auf die Ausschreibung \"" + result.getCallTitle()
+										Window.alert("Die Bewerbung auf die Ausschreibung \"" + currentCall.getTitle()
 												+ "\" wurde erstellt");
 										renderFormSuccess();
 									}
@@ -170,7 +169,7 @@ public class ApplicationForm extends Form {
 					}
 				}
 			});
-			form.setWidget(2, 1, saveButton);
+			form.setWidget(2, 0, saveButton);
 		}
 		root.add(form);
 	}

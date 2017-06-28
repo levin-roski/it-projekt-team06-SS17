@@ -17,14 +17,13 @@ import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Project;
 
-public class MyOverview extends View {
+public class MyOverView extends View {
 	private final CellTable<Project> myProjectsTable = new CellTable<Project>();
 	private final CellTable<Call> myCallsTable = new CellTable<Call>();
 	private final CellTable<Application> myApplicationsTable = new CellTable<Application>();
-	private final CellTable<Application> applicationsTable = new CellTable<Application>();
-	final CellTable<Application> myProjectApplicationsTable = new CellTable<Application>();
+	private final CellTable<Application> applicationsToMeTable = new CellTable<Application>();
 
-	public MyOverview() {
+	public MyOverView() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Project> myProjectsSsm = new SingleSelectionModel<Project>();
@@ -57,14 +56,16 @@ public class MyOverview extends View {
 		myProjectsTable.addColumn(projectsTitleColumn, "Name");
 
 		// Muss eigentlich Int (bzw. Row counter) wiedergeben
-//		TextColumn<Project> projectsCounterColumn = new TextColumn<Project>() {
-//			@Override
-//			public String getValue(Project object) {
-//				// TODO Anzahl offene Ausschreibungen
-//				return object.getDescription();
-//			}
-//		};
-//		myProjectsTable.addColumn(projectsCounterColumn, "Anzahl Offene Ausschreibungen");
+		// TextColumn<Project> projectsCounterColumn = new TextColumn<Project>()
+		// {
+		// @Override
+		// public String getValue(Project object) {
+		// // TODO Anzahl offene Ausschreibungen
+		// return object.getDescription();
+		// }
+		// };
+		// myProjectsTable.addColumn(projectsCounterColumn, "Anzahl Offene
+		// Ausschreibungen");
 
 		TextColumn<Project> projectsDescriptionColumn = new TextColumn<Project>() {
 			@Override
@@ -105,11 +106,11 @@ public class MyOverview extends View {
 		myCallsSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				// m1 = allMarketplaceSsm.getSelectedObject();
-				// Page page = new SearchProject(m1);
-				// RootPanel.get("Anzeige").clear();
-				// RootPanel.get("Anzeige").add(page);
-				Window.alert("Element geklickt");
+				if (myCallsSsm.getSelectedObject() != null) {
+					Call selectedCall = myCallsSsm.getSelectedObject();
+					mainPanel.setForm(new CallForm(selectedCall, false, true, null, null));
+					myCallsSsm.clear();
+				}
 			}
 		});
 
@@ -171,11 +172,11 @@ public class MyOverview extends View {
 		myApplicationsSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				// m1 = allMarketplaceSsm.getSelectedObject();
-				// Page page = new SearchProject(m1);
-				// RootPanel.get("Anzeige").clear();
-				// RootPanel.get("Anzeige").add(page);
-				Window.alert("Element geklickt");
+				if (myApplicationsSsm.getSelectedObject() != null) {
+					Application selectedApplication = myApplicationsSsm.getSelectedObject();
+					mainPanel.setForm(new ApplicationForm(selectedApplication, false, true, null, null, null));
+					myApplicationsSsm.clear();
+				}
 			}
 		});
 
@@ -202,29 +203,26 @@ public class MyOverview extends View {
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
-		final SingleSelectionModel<Application> applicationsSsm = new SingleSelectionModel<Application>();
+		final SingleSelectionModel<Application> applicationsToMeSsm = new SingleSelectionModel<Application>();
 
 		// Das SingleSelectionModel wird der Tabelle Meine Marktplätze
 		// hinzugefügt
-		applicationsTable.setSelectionModel(applicationsSsm);
+		applicationsToMeTable.setSelectionModel(applicationsToMeSsm);
 
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-		applicationsSsm.addSelectionChangeHandler(new Handler() {
+		applicationsToMeSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				// m1 = allMarketplaceSsm.getSelectedObject();
-				// Page page = new SearchProject(m1);
-				// RootPanel.get("Anzeige").clear();
-				// RootPanel.get("Anzeige").add(page);
-				Window.alert("Element geklickt");
+//				if (applicationsToMeSsm.getSelectedObject() != null) {
+//					Application selectedApplication = applicationsToMeSsm.getSelectedObject();
+//					mainPanel.setForm(new RateApplicationForm(pToChangeRating, pHeadline, pClosingHeadline, editCallback, deleteCallback, currentApplication) ApplicationForm(selectedApplication, false, true, null, null, null));
+//					applicationsToMeSsm.clear();
+//				} TODO Per RPC das zugehörige Rating einholen
 			}
 		});
 
-		applicationsTable.setWidth("100%", true);
-
-		// erstellen der Tabelle Meine Projekt-Beteiligungen
-		final CellTable<Application> myProjectApplicationsTable = new CellTable<Application>();
+		applicationsToMeTable.setWidth("100%", true);
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
@@ -232,50 +230,21 @@ public class MyOverview extends View {
 
 		// Das SingleSelectionModel wird der Tabelle Meine Marktplätze
 		// hinzugefügt
-		applicationsTable.setSelectionModel(myProjectApplicationsSsm);
-
-		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
-		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-		myProjectApplicationsSsm.addSelectionChangeHandler(new Handler() {
-			@Override
-			public void onSelectionChange(SelectionChangeEvent event) {
-				// m1 = allMarketplaceSsm.getSelectedObject();
-				// Page page = new SearchProject(m1);
-				// RootPanel.get("Anzeige").clear();
-				// RootPanel.get("Anzeige").add(page);
-				Window.alert("Element geklickt");
-			}
-		});
-
-		myProjectApplicationsTable.setWidth("100%", true);
-
-		// worketplaceAdministration.getAllMarketplaces(new
-		// AsyncCallback<Vector<Marketplace>>() {
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// Window.alert("Hat nicht funtioniert!");
-		// }
-		//
-		// public void onSuccess(Vector<Marketplace> results) {
-		// myMarketplacesTable.setRowData(0, results);
-		// myMarketplacesTable.setRowCount(results.size(), true);
-		// Window.alert("Funktioniert!");
-		// }
-		// });
+		applicationsToMeTable.setSelectionModel(myProjectApplicationsSsm);
 
 		VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.add(createHeadline("Mein Bereich", true));
 		root.add(createSecondHeadline("Meine Projekte"));
 		root.add(myProjectsTable);
-		root.add(createSecondHeadline("Ausshreibungen von mir"));
+		root.add(createSecondHeadline("Ausschreibungen von mir"));
 		root.add(myCallsTable);
 		root.add(createSecondHeadline("Bewerbungen von mir"));
 		root.add(myApplicationsTable);
-		root.add(createSecondHeadline("Mitarbeiter-Beteiligungen an meinen Projekten"));
-		root.add(applicationsTable);
+		root.add(createSecondHeadline("Bewerbungen an mich"));
+		root.add(applicationsToMeTable);
+		root.add(createSecondHeadline("Mitarbeiter Beteiligungen an meinen Projekten"));
 		root.add(createSecondHeadline("Meine Projekt-Beteiligungen"));
-		root.add(myProjectApplicationsTable);
 
 		this.add(root);
 		loadData();
@@ -303,6 +272,7 @@ public class MyOverview extends View {
 
 								@Override
 								public void onSuccess(Vector<Call> results2) {
+									Window.alert(String.valueOf(results2.size()));
 									myCalls.addAll(results2);
 									for (Call call : results2) {
 										worketplaceAdministration.getApplicationsFor(call,
@@ -324,8 +294,8 @@ public class MyOverview extends View {
 				});
 		myCallsTable.setRowData(0, myCalls);
 		myCallsTable.setRowCount(myCalls.size(), true);
-		applicationsTable.setRowData(0, applicationsToMe);
-		applicationsTable.setRowCount(applicationsToMe.size(), true);
+		applicationsToMeTable.setRowData(0, applicationsToMe);
+		applicationsToMeTable.setRowCount(applicationsToMe.size(), true);
 		worketplaceAdministration.getApplicationsFor(ClientsideSettings.getCurrentUser(),
 				new AsyncCallback<Vector<Application>>() {
 					@Override
