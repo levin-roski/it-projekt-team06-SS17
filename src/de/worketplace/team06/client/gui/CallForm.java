@@ -89,8 +89,9 @@ public class CallForm extends Form {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
+	
 	public CallForm(final Call pToChangeCall, final boolean pHeadline, final Boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback) {
+			final Callback editCallback, final Callback deleteCallback, final Project currentProject) {
 		this(pToChangeCall, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Ausschreibung bearbeiten", true);
@@ -129,9 +130,20 @@ public class CallForm extends Form {
 				if(result.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
 					permissionToChange = true;
 				}
+				else{
+					permissionToChange = false;
+				}
 				
 			}
 		});
+		}
+		else{
+			if(currentProject.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()){
+				permissionToChange = true;
+			}
+			else{
+				permissionToChange = false;
+			}
 		}
 		
 		
@@ -257,12 +269,12 @@ public class CallForm extends Form {
 						toChangeCall.setDescription(descriptionInput.getText());
 						toChangeCall.setDeadline(deadlineInput.getValue());
 						toChangeCall.setStatus(statusInput.getSelectedIndex());
-						worketplaceAdministration.saveCall(toChangeCall, new AsyncCallback<Void>() {
+						worketplaceAdministration.createCall(currentProject, callerPerson, title, description, deadline, new AsyncCallback<Call>(){
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
 							}
 
-							public void onSuccess(Void result) {
+							public void onSuccess(Call result) {
 								Window.alert("Die Ausschreibung wurde erfolgreich geändert");
 								if (editCallback != null) {
 									editCallback.run();
@@ -277,7 +289,14 @@ public class CallForm extends Form {
 			form.setWidget(6, 1, saveButton);
 			}
 		}
-		
+		if (toChangeCall == null){
+			statusLabel.setVisible(false);
+			statusInput.setVisible(false);
+			callerIDLabel.setVisible(false);
+			callerInputFirstName.setVisible(false);
+			callerInputLastName.setVisible(false);
+			
+		}
 		if(permissionToChange == false){
 			titleInput.setEnabled(false);
 			descriptionInput.setEnabled(false);

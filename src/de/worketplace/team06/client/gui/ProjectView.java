@@ -54,7 +54,7 @@ public class ProjectView extends View {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Call selectedCall = callSsm.getSelectedObject();
-				mainPanel.setForm(new CallForm(selectedCall, false, true, null, null));
+				mainPanel.setForm(new CallForm(selectedCall, false, true, null, null, currentProject));
 			}
 		});
 
@@ -74,7 +74,7 @@ public class ProjectView extends View {
 			final Button newButton = new Button("Neue Ausschreibung hinzufügen");
 			newButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					mainPanel.setForm(new CallForm(null, false, true, null, null));
+					mainPanel.setForm(new CallForm(null, false, true, null, null, currentProject));
 				}
 			});
 			root.add(newButton);	

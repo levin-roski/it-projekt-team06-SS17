@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -36,6 +37,8 @@ public class ProjectForm extends Form {
 	private DateBox startDateInput = new DateBox();
 	private Label endDateLabel = new Label("Enddatum");
 	private DateBox endDateInput = new DateBox();
+	private Label projectLeaderLabel = new Label("Projektleiter");
+	private ListBox projectLeaderInput = new ListBox();
 	private Boolean shouldUpdate = false;
 	private Project toChangeProject;
 	private HorizontalPanel changeHeadline;
@@ -78,7 +81,7 @@ public class ProjectForm extends Form {
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
 	public ProjectForm(Project pToChangeProject, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback, final Marketplace addToMarketplace) {
+			final Callback editCallback, final Callback deleteCallback, final Marketplace addToMarketplacer) {
 		this(pToChangeProject, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Projekt bearbeiten", true);
