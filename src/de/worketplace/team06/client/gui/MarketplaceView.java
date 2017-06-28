@@ -33,7 +33,7 @@ public class MarketplaceView extends View {
 		root.add(new MarketplaceForm(currentMarketplace, false, false, null, new Callback() {
 			@Override
 			public void run() {
-				mainPanel.setView(new MarketplaceOverview());
+				mainPanel.setView(new MarketplaceOverView());
 			}
 		}));
 

@@ -208,7 +208,7 @@ public class ApplicationMapper {
 				a.setCreated(rs.getTimestamp("created"));
 				a.setText(rs.getString("text"));
 				a.setCallID(rs.getInt("call_id"));
-				a.setOrgaUnitID(rs.getInt("organisation_id"));
+				a.setOrgaUnitID(rs.getInt("orgaunit_id"));
 				a.setRatingID(rs.getInt("rating_id"));
 				a.setStatus(rs.getInt("status"));
 				

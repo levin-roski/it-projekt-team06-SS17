@@ -1,5 +1,6 @@
 package de.worketplace.team06.client.gui;
 
+import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -20,6 +21,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.ClientsideSettings;
+import de.worketplace.team06.client.Report;
 import de.worketplace.team06.client.View;
 import de.worketplace.team06.client.Worketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
@@ -46,6 +48,7 @@ public class OrgaUnitFormView extends View {
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
 	private Worketplace connectedWorketplace;
+	private Report connectedReportGenerator;
 	/*
 	 * Grid mit 9 Zeilen und 2 Spalten für das Formular bereitstellen.
 	 */
@@ -56,15 +59,17 @@ public class OrgaUnitFormView extends View {
 	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls ein neuer
 	 * Marktplatz erstellt werden soll.
 	 * 
-	 * @param worketplace
+	 * @param entryPoint
 	 * 
 	 * @param pClosingHeadline
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public OrgaUnitFormView(Worketplace worketplace) {
-		if (worketplace instanceof Worketplace) {
-			connectedWorketplace = worketplace;
+	public <T extends EntryPoint> OrgaUnitFormView(T entryPoint) {
+		if (entryPoint instanceof Worketplace) {
+			connectedWorketplace = (Worketplace) entryPoint;
+		} else if (entryPoint instanceof Report) {
+			connectedReportGenerator = (Report) entryPoint;
 		}
 		changeHeadline = createHeadline("Meinen Nutzer bearbeiten", true);
 		addHeadline = createHeadline("Meinen Nutzer erstellen", true);
@@ -610,8 +615,12 @@ public class OrgaUnitFormView extends View {
 
 	protected void runAfterInsert() {
 		Window.alert("Ihr Nutzer wurde erfolgreich erstellt");
-		RootPanel.get("navigation").clear();
+		RootPanel.get("navigation").clear(true);
 		this.clear();
-		connectedWorketplace.renderApplicationForLoggedIn();
+		if (connectedWorketplace instanceof Worketplace) {
+			connectedWorketplace.renderApplicationForLoggedIn();
+		} else if (connectedReportGenerator instanceof Report) {
+			connectedReportGenerator.renderApplicationForLoggedIn();
+		}
 	}
 }

@@ -42,7 +42,7 @@ public class MainPanel extends DockLayoutPanel {
 		this.getWidget(0).setStyleName("main-panel-overview");
 		this.getWidget(0).setHeight("100%");
 		ClientsideSettings.setCurrentView(viewItem);
-		if (viewItem instanceof MarketplaceOverview) {
+		if (viewItem instanceof MarketplaceOverView) {
 			History.newItem("Marktplaetze");
 		} else if (viewItem instanceof MyOverview) {
 			History.newItem("");

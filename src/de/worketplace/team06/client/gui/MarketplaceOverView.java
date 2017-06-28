@@ -17,11 +17,11 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Marketplace;
 
-public class MarketplaceOverview extends View {
+public class MarketplaceOverView extends View {
 	// erstellen der Tabelle Meine Marktplätze
 	private final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
-	public MarketplaceOverview() {
+	public MarketplaceOverView() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();
