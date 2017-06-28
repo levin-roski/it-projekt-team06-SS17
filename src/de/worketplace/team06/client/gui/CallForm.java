@@ -1,7 +1,5 @@
 package de.worketplace.team06.client.gui;
 
-import java.util.Date;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -22,7 +20,6 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Call;
-import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.Person;
 import de.worketplace.team06.shared.bo.Project;
 
@@ -89,7 +86,7 @@ public class CallForm extends Form {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public CallForm(final Call pToChangeCall, final boolean pHeadline, final Boolean pClosingHeadline,
+	public CallForm(final Call pToChangeCall, final boolean pHeadline, final boolean pClosingHeadline,
 			final Callback editCallback, final Callback deleteCallback) {
 		this(pToChangeCall, pHeadline);
 		if (pClosingHeadline) {

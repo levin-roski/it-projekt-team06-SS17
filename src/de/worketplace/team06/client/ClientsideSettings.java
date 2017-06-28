@@ -3,14 +3,16 @@ package de.worketplace.team06.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 
 import de.worketplace.team06.client.gui.MainPanel;
-import de.worketplace.team06.shared.*;
+import de.worketplace.team06.shared.ReportGenerator;
+import de.worketplace.team06.shared.ReportGeneratorAsync;
+import de.worketplace.team06.shared.WorketplaceAdministration;
+import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.LoginInfo;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 

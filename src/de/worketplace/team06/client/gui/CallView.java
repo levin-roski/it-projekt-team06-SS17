@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -14,129 +13,116 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Call;
-import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.PartnerProfile;
-import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Property;
 
 public class CallView extends View {
-	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
-			.getWorketplaceAdministration();
-	
 	// erstellen der Tabelle Projekte
-	final CellTable<PartnerProfile> partnerProfileTable = new CellTable<PartnerProfile>();
-	Call currentCall;
+	final CellTable<Property> propertyTable = new CellTable<Property>();
+	final Call currentCall;
+	PartnerProfile currentPartnerProfile;
 
 	public CallView(Call pCurrentCall) {
-		super();
 		currentCall = pCurrentCall;
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.setWidth("100%");
 		root.add(createHeadline("Ausschreibungs-Details", true));
 		root.add(new CallForm(currentCall, false, false, null, null));
-
-//		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
-//		// Item zur selben Zeit ausgewählt sein kann
-//		final SingleSelectionModel<Project> partnerProfileSsm = new SingleSelectionModel<Project>();
-//
-//		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
-//		// Item zur selben Zeit ausgewählt sein kann
-//		partnerProfileTable.setSelectionModel(partnerProfileSsm);
-//
-//		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
-//		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-//		partnerProfileSsm.addSelectionChangeHandler(new Handler() {
-//			@Override
-//			public void onSelectionChange(SelectionChangeEvent event) {
-//				Project selectedProject = partnerProfileSsm.getSelectedObject();
-//				ClientsideSettings.setCurrentProjectId(selectedProject.getID());
-//				mainPanel.setView(new ProjectView(selectedProject));
-//			}
-//		}); TODO
-
-		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
-		// Daten aus der Datenbank
-		TextColumn<Project> projectsTitleColumn = new TextColumn<Project>() {
-			@Override
-			public String getValue(Project object) {
-				return object.getTitle();
-			}
-		};
-		partnerProfileTable.addColumn(projectsTitleColumn, "Name");
-
-		// Muss eigentlich Int (bzw. Row counter) wiedergeben
-//		TextColumn<Project> projectsCounterColumn = new TextColumn<Project>() {
-//			@Override
-//			public String getValue(Project object) {
-//				// TODO Anzahl offene Ausschreibungen
-//				return object.getDescription();
-//			}
-//		};
-//		projectTable.addColumn(projectsCounterColumn, "Anzahl Offene Ausschreibungen");
-
-		TextColumn<PartnerProfile> partnerProfileAttributesColumn = new TextColumn<PartnerProfile>() {
-			@Override
-			public String getValue(PartnerProfile object) {
-//				return object.get(); TODO
-			}
-		};
-		partnerProfileTable.addColumn(partnerProfileAttributesColumn, "Eigenschaft");
-
-		TextColumn<PartnerProfile> partnerProfileValueColumn = new TextColumn<PartnerProfile>() {
-			@Override
-			public String getValue(PartnerProfile object) {
-//				return object.get(); TODO
-			}
-		};
-		partnerProfileTable.addColumn(partnerProfileValueColumn, "Wert");
-
-
-		root.add(createSecondHeadline("Partnerprofil dieser Ausschreibung"));
-		root.add(partnerProfileTable);
-		partnerProfileTable.setWidth("100%", true);
-
-		final Button firstButton = new Button("Eigenschaft hinzufügen");
-		firstButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-//				mainPanel.setForm(new CallForm(null, false, true, null, null, currentCall)); TODO
-			}
-		});
-		root.add(firstButton);
 		
-		final Button secondButton = new Button("Auf Ausschreibung bewerben");
-		secondButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-//				mainPanel.setForm(new CallForm(null, false, true, null, null, currentCall)); TODO
-			}
-		});
-		root.add(secondButton);
-
-		this.add(root);
-		loadData();
-	}
-
-	@Override
-	public void loadData() {
-		worketplaceAdministration.getPartnerProfileFor(currentCall, new AsyncCallback<Vector<Call>>() {
+		worketplaceAdministration.getPartnerProfileFor(currentCall, new AsyncCallback<PartnerProfile>() {
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(Vector<Call> results) {
-				partnerProfileTable.setRowData(0, results);
-				partnerProfileTable.setRowCount(results.size(), true);
+			public void onSuccess(PartnerProfile result) {
+				currentPartnerProfile = result;
+				
+				// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+				// Item zur selben Zeit ausgewählt sein kann
+				final SingleSelectionModel<Property> propertySsm = new
+				SingleSelectionModel<Property>();
+				
+				// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+				// Item zur selben Zeit ausgewählt sein kann
+				propertyTable.setSelectionModel(propertySsm);
+				
+				// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
+				// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
+				propertySsm.addSelectionChangeHandler(new Handler() {
+					@Override
+					public void onSelectionChange(SelectionChangeEvent event) {
+					Property selectedProperty = propertySsm.getSelectedObject();
+					mainPanel.setForm(new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
+				}
+				});
+
+				// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
+				// Daten aus der Datenbank
+				TextColumn<Property> propertyTitleColumn = new TextColumn<Property>() {
+					@Override
+					public String getValue(Property object) {
+						return object.getName();
+					}
+				};
+				propertyTable.addColumn(propertyTitleColumn, "Name");
+
+				TextColumn<Property> propertyValueColumn = new TextColumn<Property>() {
+					@Override
+					public String getValue(Property object) {
+						 return object.getValue();
+					}
+				};
+				propertyTable.addColumn(propertyValueColumn, "Eigenschaften-Name");
+
+				root.add(createSecondHeadline("Partnerprofil dieser Ausschreibung"));
+				root.add(propertyTable);
+				propertyTable.setWidth("100%", true);
+
+				final Button addButton = new Button("Eigenschaft hinzufügen");
+				addButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						mainPanel.setForm(new PropertyForm(null, false, true, null, null, currentPartnerProfile));
+					}
+				});
+				root.add(addButton);
+
+				final Button secondButton = new Button("Auf diese Ausschreibung bewerben");
+				secondButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						mainPanel.setForm(new ApplicationForm(null, false, true, null, null, currentCall));
+						// currentProperty)); TODO
+					}
+				});
+				root.add(secondButton);
+
+				CallView.this.add(root);
+				loadData();
+			}
+		});
+	}
+
+	@Override
+	public void loadData() {
+		worketplaceAdministration.getAllPropertiesFor(currentPartnerProfile, new AsyncCallback<Vector<Property>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(Vector<Property> results) {
+				propertyTable.setRowData(0, results);
+				propertyTable.setRowCount(results.size(), true);
 			}
 		});
 	}
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setSecondBreadcrumb(this, "Ausschreibungs-Details");		
+		ClientsideSettings.setFourthBreadcrumb(this, "Ausschreibungs-Details");
 	}
 }
