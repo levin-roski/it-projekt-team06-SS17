@@ -475,7 +475,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	/**
-	 * Methode zum Generieren eines Reports für die Anzahl aller Bewerbungen des Users und dessen Stati (FanIn-Analyse)
+	 * Methode zum Generieren eines Reports für die Anzahl aller Bewerbungen aller Teilnehmer und dessen Stati (FanIn-Analyse)
+	 * Die OrgaUnit wird übergeben, damit ggf. noch Header/Impressum-Daten hinzugefügt werden können.
 	 */
 	@Override
 	public FanInOfApplicationsOfUserReport createFanInOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
@@ -537,7 +538,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	/**
-	 * Methode zum Generieren eines Reports für die Anzahl aller Ausschreibungen des Users und dessen Stati (FanOut-Analyse)
+	 * Methode zum Generieren eines Reports für die Anzahl aller Ausschreibungen aller Teilnehmer und dessen Stati (FanOut-Analyse)
+	 * Die OrgaUnit wird übergeben, damit ggf. noch Header/Impressum-Daten hinzugefügt werden können.
 	 */
 	@Override
 	public FanOutOfCallsOfUserReport createFanOutOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
