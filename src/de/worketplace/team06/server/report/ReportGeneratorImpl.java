@@ -498,7 +498,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 */
 	@Override
 	public FanInFanOutOfUserReport createFanInFanOutOfUserReport(OrgaUnit o) throws IllegalArgumentException {
-		return null;
+		FanInFanOutOfUserReport report = new FanInFanOutOfUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("FanIn-FanOut-Analyse für : " + getNameForOrgaUnit(o));
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Hinzufügen der einzelnen Reports
+		report.addSubReport(createFanInOfApplicationsOfUserReport(o));
+		report.addSubReport(createFanOutOfCallsOfUserReport(o));
+		
+		return report;
 	}
 	
 	/**
