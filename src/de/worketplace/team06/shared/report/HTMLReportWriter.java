@@ -228,14 +228,14 @@ public class HTMLReportWriter extends ReportWriter {
 	}
 	
 	@Override
-	public void process(FanInOfCallsOfUserReport r) {
-		// TODO Auto-generated method stub
+	public void process(FanInOfApplicationsOfUserReport r) {
+		simpleReportProcess(r);
 		
 	}
 
 	@Override
-	public void process(FanOutOfApplicationsOfUserReport r) {
-		// TODO Auto-generated method stub
+	public void process(FanOutOfCallsOfUserReport r) {
+		simpleReportProcess(r);
 		
 	}
 	
