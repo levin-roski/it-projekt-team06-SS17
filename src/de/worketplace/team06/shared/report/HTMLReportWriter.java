@@ -97,9 +97,11 @@ public class HTMLReportWriter extends ReportWriter {
 		
 		result.append("<H1>" + r.getTitle() + "</H1>");
 		result.append("<table><tr>");
-		result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td>");
+		if (r.getHeaderData() != null){
+			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("</tr><tr><td>" + r.getCreated().toString() + "</td></tr></table>");
+		result.append("<tr><td>" + r.getCreated().toString() + "</td></tr></table>");
 
 		Vector<Row> rows = r.getRows();
 		result.append("<table>");
