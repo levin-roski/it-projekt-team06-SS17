@@ -507,8 +507,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
 		allOrgaUnits = wpadmin.getAllOrgaUnits();
 		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		for (OrgaUnit ou : allOrgaUnits){
-			//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 			Vector<Application> applications = wpadmin.getApplicationsFor(ou);
 			for (Application a : applications){
 				switch (a.getStatus()){
@@ -570,8 +570,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
 		allOrgaUnits = wpadmin.getAllOrgaUnits();
 		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		for (OrgaUnit ou : allOrgaUnits){
-			//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 			Vector<Project> projects = wpadmin.getProjectsForLeader(ou);
 			for (Project p : projects){
 				Vector<Call> calls = wpadmin.getCallsFor(p);
