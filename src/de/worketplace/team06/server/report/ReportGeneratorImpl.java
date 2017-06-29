@@ -490,6 +490,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
 		headline.addColumn(new Column("Name"));
+		headline.addColumn(new Column("Typ"));
 		headline.addColumn(new Column("laufend"));
 		headline.addColumn(new Column("abgelehnt"));
 		headline.addColumn(new Column("angenommen"));
@@ -501,30 +502,36 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Integer assumed = 0;
 		Integer rejected = 0;
 		
+		//Alle Organisations-Einheiten aus der Datenbank auslesen
 		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
 		allOrgaUnits = wpadmin.getAllOrgaUnits();
-		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
-		Vector<Application> applications = wpadmin.getApplicationsFor(o);
-		for (Application a : applications){
-			switch (a.getStatus()){
-			case 0:
-				ongoing++;
-				break;
-			case 1:
-				assumed++;
-				break;
-			case 2:
-				rejected++;
-				break;
+		
+		for (OrgaUnit ou : allOrgaUnits){
+			//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+			Vector<Application> applications = wpadmin.getApplicationsFor(ou);
+			for (Application a : applications){
+				switch (a.getStatus()){
+				case 0:
+					ongoing++;
+					break;
+				case 1:
+					assumed++;
+					break;
+				case 2:
+					rejected++;
+					break;
+				}
 			}
-		}
 
-		Row rowToAdd = new Row();
-		rowToAdd.addColumn(new Column(getNameForOrgaUnit(o)));
-		rowToAdd.addColumn(new Column(ongoing.toString()));
-		rowToAdd.addColumn(new Column(assumed.toString()));
-		rowToAdd.addColumn(new Column(rejected.toString()));
-		report.addRow(rowToAdd);
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(getNameForOrgaUnit(ou)));
+			rowToAdd.addColumn(new Column(ou.getType()));
+			rowToAdd.addColumn(new Column(ongoing.toString()));
+			rowToAdd.addColumn(new Column(assumed.toString()));
+			rowToAdd.addColumn(new Column(rejected.toString()));
+			report.addRow(rowToAdd);
+			
+		}
 		
 		return report;
 	}
@@ -545,6 +552,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
 		headline.addColumn(new Column("Name"));
+		headline.addColumn(new Column("Typ"));
 		headline.addColumn(new Column("laufend"));
 		headline.addColumn(new Column("erfolgreich besetzt"));
 		headline.addColumn(new Column("laufend"));
@@ -556,31 +564,39 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Integer successful = 0;
 		Integer canceled = 0;
 		
-		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
-		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
-		for (Project p : projects){
-			Vector<Call> calls = wpadmin.getCallsFor(p);
-			for (Call c : calls){
-				switch (c.getStatus()){
-				case 0:
-					ongoing++;
-					break;
-				case 1:
-					successful++;
-					break;
-				case 2:
-					canceled++;
-					break;
+		//Alle Organisations-Einheiten aus der Datenbank auslesen
+		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
+		allOrgaUnits = wpadmin.getAllOrgaUnits();
+		
+		for (OrgaUnit ou : allOrgaUnits){
+			//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+			Vector<Project> projects = wpadmin.getProjectsForLeader(ou);
+			for (Project p : projects){
+				Vector<Call> calls = wpadmin.getCallsFor(p);
+				for (Call c : calls){
+					switch (c.getStatus()){
+					case 0:
+						ongoing++;
+						break;
+					case 1:
+						successful++;
+						break;
+					case 2:
+						canceled++;
+						break;
+					}
 				}
 			}
+
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(getNameForOrgaUnit(ou)));
+			rowToAdd.addColumn(new Column(ou.getType()));
+			rowToAdd.addColumn(new Column(ongoing.toString()));
+			rowToAdd.addColumn(new Column(successful.toString()));
+			rowToAdd.addColumn(new Column(canceled.toString()));
+			report.addRow(rowToAdd);
 		}
 
-		Row rowToAdd = new Row();
-		rowToAdd.addColumn(new Column(getNameForOrgaUnit(o)));
-		rowToAdd.addColumn(new Column(ongoing.toString()));
-		rowToAdd.addColumn(new Column(successful.toString()));
-		rowToAdd.addColumn(new Column(canceled.toString()));
-		report.addRow(rowToAdd);
 		
 		return report;
 	}
@@ -594,7 +610,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanInFanOutOfUserReport report = new FanInFanOutOfUserReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("FanIn-FanOut-Analyse für : " + getNameForOrgaUnit(o));
+		report.setTitle("FanIn-FanOut-Analyse für alle Teilnehmer");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		//Hinzufügen der einzelnen Reports
