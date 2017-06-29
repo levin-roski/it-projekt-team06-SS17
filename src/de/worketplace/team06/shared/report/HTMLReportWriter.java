@@ -241,7 +241,34 @@ public class HTMLReportWriter extends ReportWriter {
 	
 	@Override
 	public void process(FanInFanOutOfUserReport r) {
-		// TODO Auto-generated method stub
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<table><tr>");
+		if (r.getHeaderData() != null){
+			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+		}
+		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
+		result.append("<tr><td>" + r.getCreated().toString() + "</td></tr></table>");
+
+		for (int i = 0; i < r.getNumSubReports(); i++) {
+
+			if (r.getSubReportAt(i) instanceof FanInOfApplicationsOfUserReport){
+				FanInOfApplicationsOfUserReport subReport = (FanInOfApplicationsOfUserReport) r.getSubReportAt(i);
+				this.process(subReport);
+				
+			} else if (r.getSubReportAt(i) instanceof FanOutOfCallsOfUserReport){
+				FanOutOfCallsOfUserReport subReport = (FanOutOfCallsOfUserReport) r.getSubReportAt(i);
+				this.process(subReport);
+			}
+			
+		    result.append(this.reportText + "\n");
+
+		    this.resetReportText();
+		}
+		this.reportText = result.toString();
 		
 	}
 	
