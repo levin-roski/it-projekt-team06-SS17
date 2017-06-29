@@ -73,12 +73,42 @@ public class PlainTextReportWriter extends ReportWriter {
 
 	@Override
 	public void process(AllApplicationsOfApplicantReport r) {
-		simpleReportProcess(r);
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		result.append("Sub-Reporttitel: " + r.getTitle() + "\n");
+		
+		Vector<Row> allRows = r.getRows();
+		
+		for (Row rowToAppend : allRows){
+			for (int i = 0; i < rowToAppend.getNumColumns(); i++) {
+				result.append(rowToAppend.getColumnAt(i) + "\t ; \t");
+		    }
+
+			result.append("\n");			
+		}
+		
+		this.reportText = result.toString();
 	}
 
 	@Override
 	public void process(AllEnrollmentsOfApplicantReport r) {
-		simpleReportProcess(r);
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		result.append("Sub-Reporttitel: " + r.getTitle() + "\n");
+		
+		Vector<Row> allRows = r.getRows();
+		
+		for (Row rowToAppend : allRows){
+			for (int i = 0; i < rowToAppend.getNumColumns(); i++) {
+				result.append(rowToAppend.getColumnAt(i) + "\t ; \t");
+		    }
+
+			result.append("\n");			
+		}
+		
+		this.reportText = result.toString();
 	}
 
 	@Override
@@ -99,6 +129,7 @@ public class PlainTextReportWriter extends ReportWriter {
 			if (r.getSubReportAt(i) instanceof AllApplicationsOfApplicantReport){
 				AllApplicationsOfApplicantReport subReport = (AllApplicationsOfApplicantReport) r.getSubReportAt(i);
 				this.process(subReport);
+				
 			} else if (r.getSubReportAt(i) instanceof AllEnrollmentsOfApplicantReport){
 				AllEnrollmentsOfApplicantReport subReport = (AllEnrollmentsOfApplicantReport) r.getSubReportAt(i);
 				this.process(subReport);
@@ -113,6 +144,7 @@ public class PlainTextReportWriter extends ReportWriter {
 		     */
 		    this.resetReportText();
 		}
+		this.reportText = result.toString();
 		
 	}
 
