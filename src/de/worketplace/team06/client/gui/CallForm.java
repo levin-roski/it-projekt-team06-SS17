@@ -1,6 +1,7 @@
 package de.worketplace.team06.client.gui;
 
 import java.util.Date;
+import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -51,7 +52,9 @@ public class CallForm extends Form {
 	private TextBox callerInputLastName = new TextBox();
 	private Boolean shouldUpdate = false;
 	private Call toChangeCall;
-	private Boolean permissionToChange = false;
+	private Person projectLeader;
+	private Project project;
+	private Boolean permissionToChange;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
 
@@ -91,13 +94,19 @@ public class CallForm extends Form {
 	 */
 	
 	public CallForm(final Call pToChangeCall, final boolean pHeadline, final Boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback, final Project currentProject) {
+			final Callback editCallback, final Callback deleteCallback) {
 		this(pToChangeCall, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Ausschreibung bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Ausschreibung hinzufügen", true);
 		}
 
+		if (pToChangeCall != null){
+		 getObjects(pToChangeCall);
+		 }
+		 
+		 
+		
 		/*
 		 * Grid mit 6 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
@@ -119,35 +128,8 @@ public class CallForm extends Form {
 		this.add(root);
 		
 		
-		if (toChangeCall != null){
-		worketplaceAdministration.getProjectByID(pToChangeCall.getProjectID(), new AsyncCallback<Project>() {
-			public void onFailure(Throwable caught) {
-				Window.alert("Es trat ein Fehler beim abrufen des Projektleiters auf. ");
-			}
-
-			public void onSuccess(Project result) {
-				
-				if(result.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
-					permissionToChange = true;
-				}
-				else{
-					permissionToChange = false;
-				}
-				
-			}
-		});
-		}
-		else{
-			if(currentProject.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()){
-				permissionToChange = true;
-			}
-			else{
-				permissionToChange = false;
-			}
-		}
-		
-		
-		
+	
+	
 
 		/*
 		 * Falls eine selektiertee Ausschreibung übergeben wurde und jetzt
@@ -167,22 +149,7 @@ public class CallForm extends Form {
 			statusInput.addItem("Abgelehnt");
 			statusInput.setVisibleItemCount(toChangeCall.getStatus());
 			
-			worketplaceAdministration.getPersonByID(toChangeCall.getCallerID(), new AsyncCallback<Person>() {
-				public void onFailure(Throwable caught) {
-					Window.alert("Es trat ein Fehler beim abrufen der Ausschreibenden Person auf. ");
-				}
-				public void onSuccess(Person result) {
-					callerInputFirstName.setValue(result.getFirstName());
-					callerInputLastName.setValue(result.getLastName());
-					callerInputFirstName.isReadOnly();
-					callerInputLastName.isReadOnly();
-				}
-			});
-			
-			
-			
 			final Button saveButton = new Button("Änderungen speichern");
-			if(permissionToChange == true){
 			
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
@@ -215,11 +182,11 @@ public class CallForm extends Form {
 						});
 					}
 				}
-			});}
+			});
 			
 			final VerticalPanel panel = new VerticalPanel();
 			
-			if (permissionToChange == true){
+			
 			panel.add(saveButton);
 			final Button deleteButton = new Button("Diese Ausschreibung entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
@@ -245,15 +212,33 @@ public class CallForm extends Form {
 				}
 			});
 			panel.add(deleteButton);
-			}
+			
 			
 			form.setWidget(6, 1, panel);
+			
+			
+//			while(projectLeader == null){
+//			}
+			callerInputFirstName.setValue(projectLeader.getFirstName());
+			callerInputLastName.setValue(projectLeader.getLastName());
+			callerInputFirstName.isReadOnly();
+			callerInputLastName.isReadOnly();
+			
+			
+//			while(permissionToChange == null){
+//			}
+			if (permissionToChange == false){
+				titleInput.setEnabled(false);
+				descriptionInput.setEnabled(false);
+				deadlineInput.setEnabled(false);
+				statusInput.setEnabled(false);
+			}
 		} else {
 			if (addHeadline != null) {
 				root.add(addHeadline);
 			}
 			final Button saveButton = new Button("Neue Ausschreibung anlegen");
-			if (permissionToChange == true){
+			
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (titleInput.getText().length() == 0) {
@@ -264,12 +249,12 @@ public class CallForm extends Form {
 						Window.alert("Bitte vergeben Sie eine Bewerbungsfrist");
 					} 
 					else {
-						// TODO ergänzen
 						toChangeCall.setTitle(titleInput.getText());
 						toChangeCall.setDescription(descriptionInput.getText());
-						toChangeCall.setDeadline(deadlineInput.getValue());
-						toChangeCall.setStatus(statusInput.getSelectedIndex());
-						worketplaceAdministration.createCall(currentProject, callerPerson, title, description, deadline, new AsyncCallback<Call>(){
+						toChangeCall.setDeadline(deadlineInput.getValue());	
+//						while (project == null || projectLeader == null ){
+//						}
+						worketplaceAdministration.createCall(project, projectLeader, toChangeCall.getTitle(), toChangeCall.getDescription(), toChangeCall.getDeadline(), new AsyncCallback<Call>(){
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
 							}
@@ -287,7 +272,7 @@ public class CallForm extends Form {
 				}
 			});
 			form.setWidget(6, 1, saveButton);
-			}
+			
 		}
 		if (toChangeCall == null){
 			statusLabel.setVisible(false);
@@ -308,5 +293,44 @@ public class CallForm extends Form {
 		}
 		root.add(form);
 		titleInput.setFocus(true);
+	}
+
+	
+	//Async Call um Projekt und Person als Variablen zu setzen. 
+	
+	private void getObjects(Call pToChangeCall) {
+		worketplaceAdministration.getProjectByID(pToChangeCall.getProjectID(), new AsyncCallback<Project>(){
+			public void onFailure(Throwable caught) {
+				Window.alert("Es trat ein Fehler beim abrufen des Projekts auf");
+			}
+			public void onSuccess(Project result) {
+				project = result;
+				Window.alert(result.getTitle());
+			}
+		});
+		
+		worketplaceAdministration.getPersonByID(pToChangeCall.getCallerID(), new AsyncCallback<Person>(){
+			
+			public void onFailure(Throwable caught) {
+				Window.alert("Es trat ein Fehler beim abrufen des Projektleiters auf");
+			}
+			public void onSuccess(Person result) {
+				projectLeader = result;
+				Window.alert(result.getFirstName());
+				setPermissions();
+			}
+			
+		});
+		
+	}
+	private void setPermissions() {
+		
+		if(projectLeader.getID() == ClientsideSettings.getCurrentUser().getID()) {
+			permissionToChange = true;
+		}
+		else{
+			permissionToChange = false;
+		}
+		
 	}
 }

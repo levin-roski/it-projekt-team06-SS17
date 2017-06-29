@@ -1053,6 +1053,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.personMapper.findByID(personid);
 	}
 	
+	@Override
+	public Vector<Person> getAllPersons(){
+		return this.personMapper.findAll();
+	}
+	
 	
 	/*
 	 * --------------------------

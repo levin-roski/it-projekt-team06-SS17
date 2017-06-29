@@ -285,6 +285,43 @@ public class PersonMapper {
 			return null;
 		}
 		return null;
+	}
+
+	public Vector<Person> findAll() {
+		Connection con = DBConnection.connection();
+		Vector<Person> result = new Vector<Person>();
+		
+		try {						
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN person "
+											+ "ON orgaunit.id = person.id");	
+			/*
+			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
+			 * dann wird geprueft, ob für diese ID ein Tupel in der Datenbank vorhanden ist
+			 */
+			
+			while (rs.next()) {
+				Person p = new Person();
+				p.setID(rs.getInt("id"));
+				p.setCreated(rs.getTimestamp("created"));
+				p.setGoogleID(rs.getString("google_id"));
+				p.setDescription(rs.getString("description"));
+				p.setPartnerProfileID(rs.getInt("partnerprofile_id"));
+				p.setType(rs.getString("type"));
+				
+				p.setFirstName(rs.getString("firstname"));
+				p.setLastName(rs.getString("lastname"));
+				p.setStreet(rs.getString("street"));
+				p.setZipcode(rs.getInt("zipcode"));
+				p.setCity(rs.getString("city"));
+				result.addElement(p);
+			}			
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return result;
 	}	
 
 }

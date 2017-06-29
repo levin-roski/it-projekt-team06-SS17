@@ -164,5 +164,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void getPersonByID(Integer personid, AsyncCallback<Person> callback);
 
+	void getAllPersons(AsyncCallback<Vector<Person>> callback);
+
 	
 }
