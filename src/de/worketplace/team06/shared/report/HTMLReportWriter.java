@@ -179,7 +179,7 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + r.getCreated().toString() + "</td></tr></table>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
 
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
@@ -212,7 +212,7 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + r.getCreated().toString() + "</td></tr></table>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
 
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
@@ -251,7 +251,7 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + r.getCreated().toString() + "</td></tr></table>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
 
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
@@ -289,7 +289,7 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + r.getCreated().toString() + "</td></tr></table>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
 
 		Vector<Row> rows = r.getRows();
 		result.append("<table>");
