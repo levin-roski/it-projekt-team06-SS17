@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.worketplace.team06.client.gui.CallView;
 import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.MarketplaceOverView;
@@ -22,6 +23,7 @@ import de.worketplace.team06.client.gui.ProjectView;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
+import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.LoginInfo;
 import de.worketplace.team06.shared.bo.Marketplace;
 import de.worketplace.team06.shared.bo.OrgaUnit;
@@ -182,8 +184,100 @@ public class Worketplace implements EntryPoint {
 					}
 				}
 				new RpcWrapper(ids);
-			} else if (historyToken.substring(0, 15).equals("calls")) {
-				// TODO Calls aus Token rendern
+			} else if (historyToken.substring(0, 22).equals("Ausschreibungs-Details")) {
+				// Split callID to ids[0], projectID to ids[1] and marketplaceID to ids[2]
+				final String[] ids = historyToken.substring(22).split("-");
+
+				class RpcWrapper {
+					protected MarketplaceOverView tokenMov;
+					protected MarketplaceView tokenMv;
+					protected ProjectView tokenPv;
+					protected CallView tokenCv;
+					protected int checkRpcTimerCounter = 1;
+					protected Timer t;
+					protected int checkRpcTimerCounter2 = 1;
+					protected Timer t2;
+
+					public RpcWrapper(final String[] ids) {
+						tokenMov = new MarketplaceOverView();
+
+						Worketplace.this.worketplaceAdministration.getMarketplaceByID(Integer.parseInt(ids[2]),
+								new AsyncCallback<Marketplace>() {
+									@Override
+									public void onFailure(Throwable caught) {
+									}
+
+									@Override
+									public void onSuccess(Marketplace result) {
+										ClientsideSettings.setCurrentMarketplaceId(result.getID());
+										RpcWrapper.this.tokenMv = new MarketplaceView(result);
+									}
+								});
+						t = new Timer() {
+							public void run() {
+								RpcWrapper.this.checkRpcTimerCounter++;
+								if (RpcWrapper.this.tokenMov instanceof MarketplaceOverView
+										&& RpcWrapper.this.tokenMv instanceof MarketplaceView) {
+									Worketplace.this.worketplaceAdministration.getProjectByID(Integer.parseInt(ids[1]),
+											new AsyncCallback<Project>() {
+												@Override
+												public void onFailure(Throwable caught) {
+													Worketplace.this.mainPanel.setView(new MyOverView());
+												}
+
+												@Override
+												public void onSuccess(Project result) {
+													ClientsideSettings.setCurrentProjectId(result.getID());
+													RpcWrapper.this.tokenPv = new ProjectView(result);
+												}
+											});
+									RpcWrapper.this.t.cancel();
+									RpcWrapper.this.checkRpcTimerCounter = 1;
+									t2 = new Timer() {
+										public void run() {
+											RpcWrapper.this.checkRpcTimerCounter2++;
+											if (RpcWrapper.this.tokenMov instanceof MarketplaceOverView
+													&& RpcWrapper.this.tokenMv instanceof MarketplaceView
+													&& RpcWrapper.this.tokenPv instanceof ProjectView) {
+												Worketplace.this.worketplaceAdministration.getCallByID(Integer.parseInt(ids[0]),
+														new AsyncCallback<Call>() {
+															@Override
+															public void onFailure(Throwable caught) {
+																Worketplace.this.mainPanel.setView(new MyOverView());
+															}
+
+															@Override
+															public void onSuccess(Call result) {
+																ClientsideSettings.setCurrentCallId(result.getID());
+																RpcWrapper.this.tokenCv = new CallView(result);
+																Worketplace.this.mainPanel.setView(tokenCv);
+															}
+														});
+												RpcWrapper.this.t2.cancel();
+												RpcWrapper.this.checkRpcTimerCounter2 = 1;
+											} else if (RpcWrapper.this.checkRpcTimerCounter2 == 25) {
+												RpcWrapper.this.t2.cancel();
+												RpcWrapper.this.checkRpcTimerCounter2 = 1;
+												Worketplace.this.mainPanel.setView(new MyOverView());
+											}
+										}
+									};
+									// Schedule the timer to check if all RPC calls finished
+									// each 400 milliseconds
+									t2.scheduleRepeating(400);
+								} else if (RpcWrapper.this.checkRpcTimerCounter == 25) {
+									RpcWrapper.this.t.cancel();
+									RpcWrapper.this.checkRpcTimerCounter = 1;
+									Worketplace.this.mainPanel.setView(new MyOverView());
+								}
+							}
+						};
+						// Schedule the timer to check if all RPC calls finished
+						// each 400 milliseconds
+						t.scheduleRepeating(400);
+					}
+				}
+				new RpcWrapper(ids);
 			} else {
 				mainPanel.setView(new MyOverView());
 			}

@@ -95,7 +95,6 @@ public class CallView extends View {
 				secondButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						mainPanel.setForm(new ApplicationForm(null, false, true, null, null, currentCall));
-						// currentProperty)); TODO
 					}
 				});
 				root.add(secondButton);

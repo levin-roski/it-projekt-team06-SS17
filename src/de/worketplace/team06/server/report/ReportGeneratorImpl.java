@@ -133,7 +133,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllCallsReport report = new AllCallsReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle eigenen Ausschreibungen");
+		report.setTitle("Alle eigenen Ausschreibungen für " + getNameForOrgaUnit(o));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -256,7 +256,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsForCallsOfUserReport report = new AllApplicationsForCallsOfUserReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle Bewerbungen auf Ausschreibungen des Benutzers");
+		report.setTitle("Alle Bewerbungen auf Ausschreibungen für " + getNameForOrgaUnit(o));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -302,7 +302,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUserToCallsReport report = new AllApplicationsOfUserToCallsReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle ausgehenden Bewerbungen des Benutzers");
+		report.setTitle("Alle ausgehenden Bewerbungen für " + getNameForOrgaUnit(o));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -344,7 +344,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfApplicantReport report = new AllApplicationsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Ausgehende Bewerbungen des Bewerbers");
+		report.setTitle("Ausgehende Bewerbungen für den Bewerber: " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -382,7 +382,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllEnrollmentsOfApplicantReport report = new AllEnrollmentsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Beteiligungen an Projekten des Bewerbers");
+		report.setTitle("Beteiligungen an Projekten für den Bewerber: " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -417,7 +417,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllInterrelationsOfApplicantReport report = new AllInterrelationsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Verflechtungen des Bewerbers mit der ID " + applicant.getID().toString());
+		report.setTitle("Verflechtungen des Bewerbers: " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		report.addSubReport(createAllApplicationsOfApplicantReport(applicant));
@@ -453,10 +453,167 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
+	/**
+	 * Methode zum Generieren eines Reports für die Anzahl aller Bewerbungen des Users und dessen Stati (FanIn-Analyse)
+	 */
+	@Override
+	public FanInOfApplicationsOfUserReport createFanInOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		
+		FanInOfApplicationsOfUserReport report = new FanInOfApplicationsOfUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("FanIn: Anzahl der Bewerbungen");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("Name"));
+		headline.addColumn(new Column("laufend"));
+		headline.addColumn(new Column("abgelehnt"));
+		headline.addColumn(new Column("angenommen"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		Integer ongoing = 0;
+		Integer assumed = 0;
+		Integer rejected = 0;
+		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+		Vector<Application> applications = wpadmin.getApplicationsFor(o);
+		for (Application a : applications){
+			switch (a.getStatus()){
+			case 0:
+				ongoing++;
+				break;
+			case 1:
+				assumed++;
+				break;
+			case 2:
+				rejected++;
+				break;
+			}
+		}
+
+		Row rowToAdd = new Row();
+		rowToAdd.addColumn(new Column(getNameForOrgaUnit(o)));
+		rowToAdd.addColumn(new Column(ongoing.toString()));
+		rowToAdd.addColumn(new Column(assumed.toString()));
+		rowToAdd.addColumn(new Column(rejected.toString()));
+		report.addRow(rowToAdd);
+		
+		return report;
+	}
 	
+	/**
+	 * Methode zum Generieren eines Reports für die Anzahl aller Ausschreibungen des Users und dessen Stati (FanOut-Analyse)
+	 */
+	@Override
+	public FanOutOfCallsOfUserReport createFanOutOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		
+		FanOutOfCallsOfUserReport report = new FanOutOfCallsOfUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("FanOut: Anzahl der Ausschreibungen");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("Name"));
+		headline.addColumn(new Column("laufend"));
+		headline.addColumn(new Column("erfolgreich besetzt"));
+		headline.addColumn(new Column("laufend"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		Integer ongoing = 0;
+		Integer successful = 0;
+		Integer canceled = 0;
+		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		for (Project p : projects){
+			Vector<Call> calls = wpadmin.getCallsFor(p);
+			for (Call c : calls){
+				switch (c.getStatus()){
+				case 0:
+					ongoing++;
+					break;
+				case 1:
+					successful++;
+					break;
+				case 2:
+					canceled++;
+					break;
+				}
+			}
+		}
+
+		Row rowToAdd = new Row();
+		rowToAdd.addColumn(new Column(getNameForOrgaUnit(o)));
+		rowToAdd.addColumn(new Column(ongoing.toString()));
+		rowToAdd.addColumn(new Column(successful.toString()));
+		rowToAdd.addColumn(new Column(canceled.toString()));
+		report.addRow(rowToAdd);
+		
+		return report;
+	}
+	
+	/**
+	 * Methode zum Generieren eines Reports für einen zusammengesetzen Report aus
+	 * <code>FanInOfApplicationsOfUserReport</code> und <code>FanOutOfCallsOfUserReport</code> (FanIn-FanOut-Analyse
+	 */
+	@Override
+	public FanInFanOutOfUserReport createFanInFanOutOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		FanInFanOutOfUserReport report = new FanInFanOutOfUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("FanIn-FanOut-Analyse für : " + getNameForOrgaUnit(o));
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Hinzufügen der einzelnen Reports
+		report.addSubReport(createFanInOfApplicationsOfUserReport(o));
+		report.addSubReport(createFanOutOfCallsOfUserReport(o));
+		
+		return report;
+	}
+	
+	/**
+	 * Methode um die entsprechende Organisations-Einheit zu den übergebenen Login-Informationen zurückzugeben
+	 * @param LoginInfo loginInfo
+	 */
 	@Override
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
 		return wpadmin.getOrgaUnitFor(loginInfo);
+	}
+	
+	/**
+	 * Methode um den Namen je nach Typ der Organisations-Einheit zurückzugeben (interner Gebrauch für Reports)
+	 * @param OrgaUnit o
+	 * @return String name
+	 */
+	private String getNameForOrgaUnit(OrgaUnit o){
+		String name = "";
+		String googleID = o.getGoogleID();
+		
+		if (o instanceof Person){
+			Person p = wpadmin.getPersonByGoogleID(googleID);
+			name = p.getFirstName() + " " + p.getLastName();
+		} else if (o instanceof Team){
+			Team t = wpadmin.getTeamByGoogleID(googleID);
+			name = t.getName();
+		} else if (o instanceof Organisation){
+			Organisation org = wpadmin.getOrganisationByGoogleID(googleID);
+			name = org.getName();
+		} else {
+			name = "Es muss sich wohl um ein unbekanntes Objekt ohne Namen handeln...";
+		}
+		
+		//Zurückgeben des Namens als String
+		return name;
 	}
 	
 }

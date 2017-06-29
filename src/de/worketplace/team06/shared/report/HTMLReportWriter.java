@@ -90,35 +90,49 @@ public class HTMLReportWriter extends ReportWriter {
 	
 	@Override
 	public void process(AllCallsReport r) {
+		simpleReportProcess(r);
+	}
 	
+	@Override
+	public void process(AllCallsOfUserReport r) {
+		simpleReportProcess(r);
+		
+	}
+	
+	@Override
+	public void process(AllCallsMatchingWithUserReport r) {
+		simpleReportProcess(r);
+		
+	}
+	
+	@Override
+	public void process(AllApplicationsForCallsOfUserReport r) {
+		simpleReportProcess(r);
+		
+	}
+	
+	@Override
+	public void process(AllApplicationsOfUserToCallsReport r) {
+		simpleReportProcess(r);
+		
+	}
+
+	@Override
+	public void process(AllApplicationsOfApplicantReport r) {
 		this.resetReportText();
-	
+		
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
-		result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData()) + "</b></td>");
-		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("</tr><tr><td></td><td>" + r.getCreated().toString() + "</td></tr></table>");
+		result.append("<H2>" + r.getTitle() + "</H2>");
+		result.append("<table><tr>");
 
 		Vector<Row> rows = r.getRows();
-		result.append("<table style=\"width:400px\">");
-
+		result.append("<table>");
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.elementAt(i);
 		    result.append("<tr>");
 		    for (int j = 0; j < row.getNumColumns(); j++) {
-		    	if (i == 0) {
-		    		result.append("<td style=\"background:silver;font-weight:bold\">" + row.getColumnAt(j) + "</td>");
-		    	}
-		    	else {
-		        	if (i > 1) {
-		            result.append("<td style=\"border-top:1px solid silver\">" + row.getColumnAt(j) + "</td>");
-		        	}
-		        	else {
-		        		result.append("<td valign=\"top\">" + row.getColumnAt(j) + "</td>");
-		        	}
-		        }
+		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
 		    }
 		    result.append("</tr>");
 		}
@@ -127,31 +141,171 @@ public class HTMLReportWriter extends ReportWriter {
 		this.reportText = result.toString();
 		
 	}
-	
+
 	@Override
-	public void process(AllCallsOfUserReport r) {
-		// TODO Auto-generated method stub
+	public void process(AllEnrollmentsOfApplicantReport r) {
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<H2>" + r.getTitle() + "</H2>");
+		result.append("<table><tr>");
+
+		Vector<Row> rows = r.getRows();
+		result.append("<table>");
+		for (int i = 0; i < rows.size(); i++) {
+			Row row = rows.elementAt(i);
+		    result.append("<tr>");
+		    for (int j = 0; j < row.getNumColumns(); j++) {
+		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
+		    }
+		    result.append("</tr>");
+		}
+		
+		result.append("</table>");
+		this.reportText = result.toString();
+		
+	}
+
+	@Override
+	public void process(AllInterrelationsOfApplicantReport r) {
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<table><tr>");
+		if (r.getHeaderData() != null){
+			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+		}
+		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
+
+		for (int i = 0; i < r.getNumSubReports(); i++) {
+
+			if (r.getSubReportAt(i) instanceof AllApplicationsOfApplicantReport){
+				AllApplicationsOfApplicantReport subReport = (AllApplicationsOfApplicantReport) r.getSubReportAt(i);
+				this.process(subReport);
+				
+			} else if (r.getSubReportAt(i) instanceof AllEnrollmentsOfApplicantReport){
+				AllEnrollmentsOfApplicantReport subReport = (AllEnrollmentsOfApplicantReport) r.getSubReportAt(i);
+				this.process(subReport);
+			}
+			
+		    result.append(this.reportText + "\n");
+
+		    this.resetReportText();
+		}
+		this.reportText = result.toString();
 		
 	}
 	
 	@Override
-	public void process(AllCallsMatchingWithUserReport r) {
-		// TODO Auto-generated method stub
+	public void process(AllInterrelationsOfAllApplicantsOfUserReport r) {
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<table><tr>");
+		if (r.getHeaderData() != null){
+			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+		}
+		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
+
+		for (int i = 0; i < r.getNumSubReports(); i++) {
+
+			AllInterrelationsOfApplicantReport subReport = (AllInterrelationsOfApplicantReport) r.getSubReportAt(i);
+			this.process(subReport);
+				
+		    result.append(this.reportText + "\n");
+
+		    this.resetReportText();
+		}
+		this.reportText = result.toString();
+
+	}
+	
+	@Override
+	public void process(FanInOfApplicationsOfUserReport r) {
+		simpleReportProcess(r);
+		
+	}
+
+	@Override
+	public void process(FanOutOfCallsOfUserReport r) {
+		simpleReportProcess(r);
 		
 	}
 	
 	@Override
-	public void process(AllApplicationsForCallsOfUserReport r) {
-		// TODO Auto-generated method stub
+	public void process(FanInFanOutOfUserReport r) {
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<table><tr>");
+		if (r.getHeaderData() != null){
+			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+		}
+		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
+
+		for (int i = 0; i < r.getNumSubReports(); i++) {
+
+			if (r.getSubReportAt(i) instanceof FanInOfApplicationsOfUserReport){
+				FanInOfApplicationsOfUserReport subReport = (FanInOfApplicationsOfUserReport) r.getSubReportAt(i);
+				this.process(subReport);
+				
+			} else if (r.getSubReportAt(i) instanceof FanOutOfCallsOfUserReport){
+				FanOutOfCallsOfUserReport subReport = (FanOutOfCallsOfUserReport) r.getSubReportAt(i);
+				this.process(subReport);
+			}
+			
+		    result.append(this.reportText + "\n");
+
+		    this.resetReportText();
+		}
+		this.reportText = result.toString();
 		
 	}
 	
-	@Override
-	public void process(AllApplicationsOfUserToCallsReport r) {
-		// TODO Auto-generated method stub
+	/**
+	 * Einheitliche Methode zum Erstellen von SimpleReports in HTML-Format.
+	 * Da die Logik der Erstellung von SimpleReports und der Aufbaue identisch ist,
+	 * genügt jeweils der Aufruf dieser Methode.
+	 * @param r
+	 */
+	private void simpleReportProcess(SimpleReport r){
+		this.resetReportText();
 		
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<table><tr>");
+		if (r.getHeaderData() != null){
+			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+		}
+		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
+
+		Vector<Row> rows = r.getRows();
+		result.append("<table>");
+		for (int i = 0; i < rows.size(); i++) {
+			Row row = rows.elementAt(i);
+		    result.append("<tr>");
+		    for (int j = 0; j < row.getNumColumns(); j++) {
+		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
+		    }
+		    result.append("</tr>");
+		}
+		
+		result.append("</table>");
+		this.reportText = result.toString();
 	}
-  
+	
 	/**
 	 * Auslesen des Ergebnisses der zuletzt aufgerufenen Prozessierungsmethode.
 	 * 
@@ -161,27 +315,4 @@ public class HTMLReportWriter extends ReportWriter {
 	  return this.reportText;
 	}
 
-	@Override
-	public void process(AllApplicationsOfApplicantReport r) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void process(AllEnrollmentsOfApplicantReport r) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void process(AllInterrelationsOfApplicantReport r) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void process(AllInterrelationsOfAllApplicantsOfUserReport r) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -7,14 +7,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.worketplace.team06.shared.bo.*;
-import de.worketplace.team06.shared.report.AllApplicationsForCallsOfUserReport;
-import de.worketplace.team06.shared.report.AllApplicationsOfApplicantReport;
-import de.worketplace.team06.shared.report.AllApplicationsOfUserToCallsReport;
-import de.worketplace.team06.shared.report.AllCallsMatchingWithUserReport;
-import de.worketplace.team06.shared.report.AllCallsReport;
-import de.worketplace.team06.shared.report.AllEnrollmentsOfApplicantReport;
-import de.worketplace.team06.shared.report.AllInterrelationsOfAllApplicantsOfUserReport;
-import de.worketplace.team06.shared.report.AllInterrelationsOfApplicantReport;
+import de.worketplace.team06.shared.report.*;
+
 
 /**
  * @author Toby
@@ -47,8 +41,13 @@ public interface ReportGenerator extends RemoteService {
 	public AllInterrelationsOfAllApplicantsOfUserReport createAllInterrelationsOfAllApplicantsOfUserReport(OrgaUnit o)
 			throws IllegalArgumentException;
 	
+	public FanInOfApplicationsOfUserReport createFanInOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException;
+	
+	public FanOutOfCallsOfUserReport createFanOutOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException;
+
+	public FanInFanOutOfUserReport createFanInFanOutOfUserReport(OrgaUnit o) throws IllegalArgumentException;
+	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
 
 
-	
 }

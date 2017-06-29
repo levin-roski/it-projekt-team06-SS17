@@ -11,9 +11,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.Enrollment;
 
 /**
@@ -99,8 +97,8 @@ public class EnrollmentForm extends Form {
 		if (changeHeadline != null) {
 			root.add(changeHeadline);
 		}
-		nameInput.setText(toChangeEnrollment.getTitle());
-		beschreibungInput.setText(toChangeEnrollment.getDescription());
+//		nameInput.setText(toChangeEnrollment.getTitle());
+//		beschreibungInput.setText(toChangeEnrollment.getDescription());
 		final Button saveButton = new Button("Änderungen speichern");
 		saveButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -111,9 +109,9 @@ public class EnrollmentForm extends Form {
 				} else if (endDateInput.getText().length() == 0) {
 					Window.alert("Bitte geben Sie ein Enddatum an");
 				} else {
-					toChangeEnrollment.setStartDate(startDateInput.getText());
-					toChangeEnrollment.setPeriod(periodInput.getText());
-					toChangeEnrollment.setEndDate(endDateInput.getText());
+//					toChangeEnrollment.setStartDate(startDateInput.getText());
+//					toChangeEnrollment.setPeriod(periodInput.getText());
+//					toChangeEnrollment.setEndDate(endDateInput.getText());
 
 					worketplaceAdministration.saveEnrollment(toChangeEnrollment, new AsyncCallback<Void>() {
 						public void onFailure(Throwable caught) {

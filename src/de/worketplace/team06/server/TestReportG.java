@@ -38,13 +38,17 @@ public class TestReportG {
 			Organisation org = (Organisation) o;
 		}
 		
-		PlainTextReportWriter writer = new PlainTextReportWriter();
-		//HTMLReportWriter writer = new HTMLReportWriter();
+		//PlainTextReportWriter writer = new PlainTextReportWriter();
+		HTMLReportWriter writer = new HTMLReportWriter();
 		//writer.process(gen.createAllCallsReport());
 		//writer.process(gen.createAllCallsOfUserReport(testuser));
 		//writer.process(gen.createAllApplicationsForCallsOfUserReport(o));
 		
-		writer.process(gen.createAllInterrelationsOfAllApplicantsOfUserReport(o));
+		//writer.process(gen.createAllInterrelationsOfApplicantReport(o));
+		//writer.process(gen.createAllInterrelationsOfAllApplicantsOfUserReport(o));
+		//writer.process(gen.createFanInOfApplicationsOfUserReport(o));
+		//writer.process(gen.createFanOutOfCallsOfUserReport(o));
+		writer.process(gen.createFanInFanOutOfUserReport(o));
 		
 		System.out.println(writer.getReportText());
 	}

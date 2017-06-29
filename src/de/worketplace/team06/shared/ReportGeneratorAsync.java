@@ -3,14 +3,7 @@ package de.worketplace.team06.shared;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.shared.bo.*;
-import de.worketplace.team06.shared.report.AllApplicationsForCallsOfUserReport;
-import de.worketplace.team06.shared.report.AllApplicationsOfApplicantReport;
-import de.worketplace.team06.shared.report.AllApplicationsOfUserToCallsReport;
-import de.worketplace.team06.shared.report.AllCallsMatchingWithUserReport;
-import de.worketplace.team06.shared.report.AllCallsReport;
-import de.worketplace.team06.shared.report.AllEnrollmentsOfApplicantReport;
-import de.worketplace.team06.shared.report.AllInterrelationsOfAllApplicantsOfUserReport;
-import de.worketplace.team06.shared.report.AllInterrelationsOfApplicantReport;
+import de.worketplace.team06.shared.report.*;
 
 /**
  * Das asynchrone Gegenstück des Interface {@link ReportGenerator}. Es wird
@@ -46,7 +39,12 @@ public interface ReportGeneratorAsync {
 	void createAllInterrelationsOfAllApplicantsOfUserReport(OrgaUnit o,
 			AsyncCallback<AllInterrelationsOfAllApplicantsOfUserReport> callback);
 	
-	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
+	void createFanInOfApplicationsOfUserReport(OrgaUnit o, AsyncCallback<FanInOfApplicationsOfUserReport> callback);
+	
+	void createFanOutOfCallsOfUserReport(OrgaUnit o, AsyncCallback<FanOutOfCallsOfUserReport> callback);
 
+	void createFanInFanOutOfUserReport(OrgaUnit o, AsyncCallback<FanInFanOutOfUserReport> callback);
+	
+	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
 
 }

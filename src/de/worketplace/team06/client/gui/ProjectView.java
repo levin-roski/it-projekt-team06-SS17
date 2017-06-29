@@ -54,8 +54,6 @@ public class ProjectView extends View {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Call selectedCall = callSsm.getSelectedObject();
-				mainPanel.setForm(new CallForm(selectedCall, false, true, null, null));
-
 				ClientsideSettings.setCurrentCallId(selectedCall.getID());
 				mainPanel.setView(new CallView(selectedCall));
 
@@ -97,8 +95,8 @@ public class ProjectView extends View {
 		enrollmentSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				 Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
-				 mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
+//				 Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
+//				 mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
 			}
 		});
 
