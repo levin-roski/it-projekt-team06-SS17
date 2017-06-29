@@ -131,7 +131,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllCallsReport report = new AllCallsReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle eigenen Ausschreibungen");
+		report.setTitle("Alle eigenen Ausschreibungen für " + getNameForOrgaUnit(o));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -186,7 +186,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsForCallsOfUserReport report = new AllApplicationsForCallsOfUserReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle Bewerbungen auf Ausschreibungen des Benutzers");
+		report.setTitle("Alle Bewerbungen auf Ausschreibungen für " + getNameForOrgaUnit(o));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -232,7 +232,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUserToCallsReport report = new AllApplicationsOfUserToCallsReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle ausgehenden Bewerbungen des Benutzers");
+		report.setTitle("Alle ausgehenden Bewerbungen für " + getNameForOrgaUnit(o));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -274,7 +274,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfApplicantReport report = new AllApplicationsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Ausgehende Bewerbungen des Bewerbers");
+		report.setTitle("Ausgehende Bewerbungen für den Bewerber: " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -312,7 +312,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllEnrollmentsOfApplicantReport report = new AllEnrollmentsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Beteiligungen an Projekten des Bewerbers");
+		report.setTitle("Beteiligungen an Projekten für den Bewerber: " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		Row headline = new Row();
@@ -347,7 +347,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllInterrelationsOfApplicantReport report = new AllInterrelationsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Verflechtungen des Bewerbers mit der ID " + applicant.getID().toString());
+		report.setTitle("Verflechtungen des Bewerbers: " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		report.addSubReport(createAllApplicationsOfApplicantReport(applicant));
@@ -383,6 +383,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
+	/**
+	 * Methode zum Generieren eines Reports für die Anzahl aller Bewerbungen des Users und dessen Stati (FanIn-Analyse)
+	 */
 	@Override
 	public FanInOfApplicationsOfUserReport createFanInOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
 		
@@ -395,7 +398,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Row headline = new Row();
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
-		headline.addColumn(new Column("User ID"));
+		headline.addColumn(new Column("Name"));
 		headline.addColumn(new Column("laufend"));
 		headline.addColumn(new Column("abgelehnt"));
 		headline.addColumn(new Column("angenommen"));
@@ -424,7 +427,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 
 		Row rowToAdd = new Row();
-		rowToAdd.addColumn(new Column(o.getID().toString()));
+		rowToAdd.addColumn(new Column(getNameForOrgaUnit(o)));
 		rowToAdd.addColumn(new Column(ongoing.toString()));
 		rowToAdd.addColumn(new Column(assumed.toString()));
 		rowToAdd.addColumn(new Column(rejected.toString()));
@@ -433,6 +436,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
+	/**
+	 * Methode zum Generieren eines Reports für die Anzahl aller Ausschreibungen des Users und dessen Stati (FanOut-Analyse)
+	 */
 	@Override
 	public FanOutOfCallsOfUserReport createFanOutOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
 		
@@ -445,7 +451,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Row headline = new Row();
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
-		headline.addColumn(new Column("User ID"));
+		headline.addColumn(new Column("Name"));
 		headline.addColumn(new Column("laufend"));
 		headline.addColumn(new Column("erfolgreich besetzt"));
 		headline.addColumn(new Column("laufend"));
@@ -477,7 +483,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 
 		Row rowToAdd = new Row();
-		rowToAdd.addColumn(new Column(o.getID().toString()));
+		rowToAdd.addColumn(new Column(getNameForOrgaUnit(o)));
 		rowToAdd.addColumn(new Column(ongoing.toString()));
 		rowToAdd.addColumn(new Column(successful.toString()));
 		rowToAdd.addColumn(new Column(canceled.toString()));
@@ -486,11 +492,19 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
+	/**
+	 * Methode zum Generieren eines Reports für einen zusammengesetzen Report aus
+	 * <code>FanInOfApplicationsOfUserReport</code> und <code>FanOutOfCallsOfUserReport</code> (FanIn-FanOut-Analyse
+	 */
 	@Override
 	public FanInFanOutOfUserReport createFanInFanOutOfUserReport(OrgaUnit o) throws IllegalArgumentException {
 		return null;
 	}
 	
+	/**
+	 * Methode um die entsprechende Organisations-Einheit zu den übergebenen Login-Informationen zurückzugeben
+	 * @param LoginInfo loginInfo
+	 */
 	@Override
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
 		return wpadmin.getOrgaUnitFor(loginInfo);
