@@ -46,8 +46,9 @@ public class TestReportG {
 		
 		//writer.process(gen.createAllInterrelationsOfApplicantReport(o));
 		//writer.process(gen.createAllInterrelationsOfAllApplicantsOfUserReport(o));
-		writer.process(gen.createFanInOfApplicationsOfUserReport(o));
+		//writer.process(gen.createFanInOfApplicationsOfUserReport(o));
 		//writer.process(gen.createFanOutOfCallsOfUserReport(o));
+		writer.process(gen.createFanInFanOutOfUserReport(o));
 		
 		System.out.println(writer.getReportText());
 	}
