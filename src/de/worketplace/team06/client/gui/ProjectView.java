@@ -97,8 +97,8 @@ public class ProjectView extends View {
 		enrollmentSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				 Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
-				 mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
+//				 Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
+//				 mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
 			}
 		});
 
