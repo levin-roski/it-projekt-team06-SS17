@@ -179,6 +179,24 @@ public class PlainTextReportWriter extends ReportWriter {
 		
 	}
 	
+	@Override
+	public void process(FanInOfCallsOfUserReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void process(FanOutOfApplicationsOfUserReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void process(FanInFanOutOfUserReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	private void simpleReportProcess(SimpleReport r){
 		this.resetReportText();
 		
@@ -213,6 +231,5 @@ public class PlainTextReportWriter extends ReportWriter {
 	  public String getReportText() {
 	    return this.getHeader() + this.reportText + this.getTrailer();
 	  }
-
   
 }

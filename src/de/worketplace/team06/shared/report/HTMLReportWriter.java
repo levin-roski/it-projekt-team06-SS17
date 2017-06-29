@@ -199,7 +199,7 @@ public class HTMLReportWriter extends ReportWriter {
 		this.reportText = result.toString();
 		
 	}
-
+	
 	@Override
 	public void process(AllInterrelationsOfAllApplicantsOfUserReport r) {
 		this.resetReportText();
@@ -225,6 +225,24 @@ public class HTMLReportWriter extends ReportWriter {
 		}
 		this.reportText = result.toString();
 
+	}
+	
+	@Override
+	public void process(FanInOfCallsOfUserReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void process(FanOutOfApplicationsOfUserReport r) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void process(FanInFanOutOfUserReport r) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/**
@@ -269,4 +287,5 @@ public class HTMLReportWriter extends ReportWriter {
 	public String getReportText() {
 	  return this.reportText;
 	}
+
 }
