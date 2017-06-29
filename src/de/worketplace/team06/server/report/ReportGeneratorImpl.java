@@ -519,18 +519,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		String name = "";
 		String googleID = o.getGoogleID();
 		
-		//Je nach Typ wird der Variable 'name' der enrsprechende Name aus der Datenbank zugewiesen
-		switch (o.getType()){
-		case "Person":
+		if (o instanceof Person){
 			Person p = wpadmin.getPersonByGoogleID(googleID);
 			name = p.getFirstName() + " " + p.getLastName();
-		case "Team":
+		} else if (o instanceof Team){
 			Team t = wpadmin.getTeamByGoogleID(googleID);
 			name = t.getName();
-		case "Organisation":
+		} else if (o instanceof Organisation){
 			Organisation org = wpadmin.getOrganisationByGoogleID(googleID);
 			name = org.getName();
-		default:
+		} else {
 			name = "Es muss sich wohl um ein unbekanntes Objekt ohne Namen handeln...";
 		}
 		
