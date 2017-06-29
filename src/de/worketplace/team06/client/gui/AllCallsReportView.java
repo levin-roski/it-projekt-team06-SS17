@@ -15,6 +15,8 @@ public class AllCallsReportView extends ReportView {
 			}
 
 			public void onSuccess(AllCallsReport result) {
+				//Window.alert("Success");
+				//Window.alert(result.getTitle());
 				writer.process(result);
 				AllCallsReportView.this.append(writer.getReportText());
 			}
