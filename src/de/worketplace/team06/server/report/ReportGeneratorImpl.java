@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.report;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -168,11 +170,100 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	/**
 	 * 
+	 * @param o
+	 * @return 
 	 */
 	@Override
 	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException {
-		//TODO: Überlegung, wie die Partnerprofile verglichen werden. Ggf. DB "like"
-		return null;
+		
+		//Partnerprofil des angemeldeten Users auslesen
+		PartnerProfile pp = wpadmin.createPartnerProfileFor(o);
+		
+		//Alle Eigenschaften des angemeldeten Users in einen Vektor einlesen
+		Vector<Property> allPropsOfOu = wpadmin.getAllPropertiesFor(pp);
+		
+		//Alle Ausschreibungen in einen Vektor einlesen
+		Vector<Call> allCalls = wpadmin.getAllCalls();
+		
+		//Vektor für die zutreffenden Ausschreibungen instanziieren
+		Vector<Call> matchingCalls = new Vector<Call>();
+		
+		//Erstellung einer Instanz des Reports
+		AllCallsMatchingWithUserReport report = new AllCallsMatchingWithUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Alle interessanten Ausschreibungen für den Benutzer");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften 
+		headline.addColumn(new Column("Titel"));
+		headline.addColumn(new Column("Bewerbungsfrist"));
+		headline.addColumn(new Column("Projektname"));
+		headline.addColumn(new Column("Status"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+	
+		/*
+		 * Innerhalb der verschachtelten Schleifen werden die Eigenschaften der Ausschreibungen(PartnerProfile)
+		 * mit dein Eigenschaften der OrgaUnit(PartnerProfil) verglichen und bei einem Treffer dem Vektor
+		 * matchingCalls hinzugefügt. Ebenso wird bei jedem Treffer überprüft, ob die Ausschreibung bereits
+		 * zum matchingCalls Vektor hinzugefügt wurde oder nicht. Wenn Ja wird nur der MatchingCount dieser
+		 * Instanz erhöht. 
+		 */
+		for(Call c : allCalls){
+			PartnerProfile tempPartnerProfile = wpadmin.getPartnerProfileFor(c);
+			Vector<Property> tempProperties = wpadmin.getAllPropertiesFor(tempPartnerProfile);
+			
+			for (Property prop : tempProperties){
+				for (Property prop2 : allPropsOfOu){
+					if (prop.getValue() == prop2.getValue() && prop.getName() == prop2.getName()){
+						if(!matchingCalls.contains(c)){
+							matchingCalls.addElement(c);
+							c.setMatchingCount(1);
+						}
+						else{
+							int temp = c.getMatchingCount();
+							temp++;
+							c.setMatchingCount(temp);
+						}
+					}
+				}
+			}
+		}
+		
+		
+		/*
+		 * Die Lokale Klasse bildet die Differenz der Größe MatchingCount. Die Klasse stellt eine 
+		 * einfache Möglichkeit dar eine Rückgabe <0, =0 oder >0 zu bekommen. (Funktioniert 
+		 * allerdings nicht mit Fließkommazahlen) Da wir die Ausgabe 
+		 * reverse sortieren wollen rechnen wir call2 - call1. 
+		 */
+		class CallComparator implements Comparator<Call>
+		{
+		  @Override public int compare( Call call1, Call call2 )
+		  {
+		    return call2.getMatchingCount() - call1.getMatchingCount();
+		  }
+		}
+		
+		// Mit dem CallComparator-Objekt lässt sich der Vector nach dem MatchingCount sortieren
+		Collections.sort(matchingCalls, new CallComparator());
+		
+		for (Call call : matchingCalls){
+			Project proj = wpadmin.getProjectByID(call.getProjectID());
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(call.getTitle()));
+			rowToAdd.addColumn(new Column(call.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(proj.getTitle()));
+			rowToAdd.addColumn(new Column(call.getStatusString()));
+			report.addRow(rowToAdd);
+		}
+		
+		
+		return report;
 	}
 	
 	
