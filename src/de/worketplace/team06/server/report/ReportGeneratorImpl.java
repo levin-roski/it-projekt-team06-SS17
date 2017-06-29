@@ -383,6 +383,20 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
+	@Override
+	public FanInOfCallsOfUserReport createFanInOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		return null;	
+	}
+	
+	@Override
+	public FanOutOfApplicationsOfUserReport createFanOutOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		return null;
+	}
+	
+	@Override
+	public FanInFanOutOfUserReport createFanInFanOutOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		return null;
+	}
 	
 	@Override
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {

@@ -11,6 +11,9 @@ import de.worketplace.team06.shared.report.AllCallsReport;
 import de.worketplace.team06.shared.report.AllEnrollmentsOfApplicantReport;
 import de.worketplace.team06.shared.report.AllInterrelationsOfAllApplicantsOfUserReport;
 import de.worketplace.team06.shared.report.AllInterrelationsOfApplicantReport;
+import de.worketplace.team06.shared.report.FanInFanOutOfUserReport;
+import de.worketplace.team06.shared.report.FanInOfCallsOfUserReport;
+import de.worketplace.team06.shared.report.FanOutOfApplicationsOfUserReport;
 
 /**
  * Das asynchrone Gegenstück des Interface {@link ReportGenerator}. Es wird
@@ -46,7 +49,12 @@ public interface ReportGeneratorAsync {
 	void createAllInterrelationsOfAllApplicantsOfUserReport(OrgaUnit o,
 			AsyncCallback<AllInterrelationsOfAllApplicantsOfUserReport> callback);
 	
-	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
+	void createFanInOfCallsOfUserReport(OrgaUnit o, AsyncCallback<FanInOfCallsOfUserReport> callback);
+	
+	void createFanOutOfApplicationsOfUserReport(OrgaUnit o, AsyncCallback<FanOutOfApplicationsOfUserReport> callback);
 
+	void createFanInFanOutOfUserReport(OrgaUnit o, AsyncCallback<FanInFanOutOfUserReport> callback);
+	
+	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
 
 }

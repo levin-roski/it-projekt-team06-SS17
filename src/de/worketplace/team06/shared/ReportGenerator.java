@@ -15,6 +15,9 @@ import de.worketplace.team06.shared.report.AllCallsReport;
 import de.worketplace.team06.shared.report.AllEnrollmentsOfApplicantReport;
 import de.worketplace.team06.shared.report.AllInterrelationsOfAllApplicantsOfUserReport;
 import de.worketplace.team06.shared.report.AllInterrelationsOfApplicantReport;
+import de.worketplace.team06.shared.report.FanInFanOutOfUserReport;
+import de.worketplace.team06.shared.report.FanInOfCallsOfUserReport;
+import de.worketplace.team06.shared.report.FanOutOfApplicationsOfUserReport;
 
 /**
  * @author Toby
@@ -47,8 +50,12 @@ public interface ReportGenerator extends RemoteService {
 	public AllInterrelationsOfAllApplicantsOfUserReport createAllInterrelationsOfAllApplicantsOfUserReport(OrgaUnit o)
 			throws IllegalArgumentException;
 	
+	public FanInOfCallsOfUserReport createFanInOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException;
+	
+	public FanOutOfApplicationsOfUserReport createFanOutOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException;
+
+	public FanInFanOutOfUserReport createFanInFanOutOfUserReport(OrgaUnit o) throws IllegalArgumentException;
+	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
 
-
-	
 }
