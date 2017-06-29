@@ -786,6 +786,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.orgaMapper.findByGoogleID(googleID);
 	}
 	
+	@Override
+	public Vector<Organisation> getAllOrganisations(){
+		return this.orgaMapper.findAll();
+	}
+	
 	
 	
 	/*
@@ -794,10 +799,34 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * ---------------------------------
 	 */
 	
+	/**
+	 * Auslesen eines Vectors mit allen OrgaUnits
+	 * @param void
+	 * @return allOrgaUnits
+	 */
 	@Override
 	public Vector<OrgaUnit> getAllOrgaUnits() {
-		// TODO Auto-generated method stub
-		return null;
+		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
+		Vector<Person> allPersons = getAllPersons();
+		Vector<Team> allTeams = getAllTeams();
+		Vector<Organisation> allOrganisations = getAllOrganisations();
+		
+		if (allPersons != null){
+		for(Person p : allPersons){
+			allOrgaUnits.addElement(p);
+		}
+		}
+		if (allTeams != null){
+		for(Team t : allTeams){
+			allTeams.addElement(t);
+		}
+		}
+		if (allOrganisations != null){
+		for(Organisation o : allOrganisations){
+			allOrganisations.addElement(o);
+		}
+		}
+		return allOrgaUnits;
 	}
 	
 	@Override
@@ -1509,6 +1538,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Team getTeamByGoogleID(String googleID){
 
 		return this.teamMapper.findByGoogleID(googleID);
+	}
+	
+	@Override
+	public Vector<Team> getAllTeams(){
+		return this.teamMapper.findAll();
 	}
 	
 

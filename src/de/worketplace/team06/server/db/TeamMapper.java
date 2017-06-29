@@ -257,6 +257,35 @@ import de.worketplace.team06.shared.bo.*;
 					  e2.printStackTrace();		
 		    }
 			
+		}
+
+		public Vector<Team> findAll() {
+			Connection con = DBConnection.connection();
+			Vector<Team> allTeams = new Vector<Team>();
+			
+			try {						
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN team ON orgaunit.id = team.id");		
+				
+				while (rs.next()) {
+					Team t = new Team();
+					t.setID(rs.getInt("id"));
+					t.setCreated(rs.getTimestamp("created"));
+					t.setGoogleID(rs.getString("google_id"));
+					t.setDescription(rs.getString("description"));
+					t.setPartnerProfileID(rs.getInt("partnerprofile_id"));
+					t.setType(rs.getString("type"));
+					
+					t.setName(rs.getString("team_name"));
+					t.setMembercount(rs.getInt("membercount"));
+					allTeams.addElement(t);
+				}			
+			}
+			catch (SQLException e2) {
+				e2.printStackTrace();
+				return null;
+			}
+			return allTeams;
 		}	
 }
 	

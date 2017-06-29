@@ -259,5 +259,38 @@ public class OrganisationMapper {
 		}
 		return null;
 	}
+
+	public Vector<Organisation> findAll() {
+		Connection con = DBConnection.connection();
+		Vector<Organisation> allOrganisations = new Vector<Organisation>();
+		
+		try {						
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM orgaunit INNER JOIN "
+					+ "organisation ON orgaunit.id = organisation.id");		
+		
+			while (rs.next()) {
+				Organisation o = new Organisation();
+				o.setID(rs.getInt("id"));
+				o.setCreated(rs.getTimestamp("created"));
+				o.setGoogleID(rs.getString("google_id"));
+				o.setDescription(rs.getString("description"));
+				o.setPartnerProfileID(rs.getInt("partnerprofile_id"));
+				o.setType(rs.getString("type"));
+				
+				o.setName(rs.getString("name"));
+				o.setStreet(rs.getString("street"));
+				o.setZipcode(rs.getInt("zipcode"));
+				o.setCity("city");
+				
+				allOrganisations.addElement(o);
+			}			
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return allOrganisations;
+	}
    
 }
