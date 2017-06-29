@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.MenuBar;
 
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.shared.ReportGenerator;
@@ -48,7 +47,6 @@ public class ClientsideSettings {
 	private static int currentMarketplaceId;
 	private static int currentProjectId;
 	private static int currentCallId;
-	private static MenuBar currentNavigation;
 
 	// private static ReportGeneratorAsync reportGenerator = null;
 
@@ -226,13 +224,5 @@ public class ClientsideSettings {
 
 	public static void setLoginInfo(LoginInfo loginInfo) {
 		ClientsideSettings.loginInfo = loginInfo;
-	}
-
-	public static MenuBar getCurrentNavigation() {
-		return currentNavigation;
-	}
-
-	public static void setCurrentNavigation(MenuBar currentNavigation) {
-		ClientsideSettings.currentNavigation = currentNavigation;
 	}
 }

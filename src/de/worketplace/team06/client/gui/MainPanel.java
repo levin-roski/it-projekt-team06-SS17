@@ -54,8 +54,19 @@ public class MainPanel extends DockLayoutPanel {
 		} else if (viewItem instanceof CallView) {
 			History.newItem("Ausschreibungs-Details" + ClientsideSettings.getCurrentCallId() + "-"
 					+ ClientsideSettings.getCurrentProjectId() + "-" + ClientsideSettings.getCurrentMarketplaceId());
+		} else if (viewItem instanceof HomeReportView) {
+			History.newItem("Startseite");
+		} else if (viewItem instanceof AllCallsReportView) {
+			History.newItem("Alle-Ausschreibungen");
+		} else if (viewItem instanceof AllCallsMatchingWithUserReportView) {
+			History.newItem("Passende-Ausschreibungen-zu-meinem-Partnerprofil");
+		} else if (viewItem instanceof FanInOfApplicationsOfUserReportView) {
+			History.newItem("Anzahl-meiner-Bewerbungen-nach-Status-(Fan-In)");
+		} else if (viewItem instanceof FanInFanOutOfUserReportView) {
+			History.newItem("Fan-In-Fan-Out-Analyse");
+		} else if (viewItem instanceof FanInFanOutOfUserReportView) {
+			History.newItem("Fan-In-Fan-Out-Analyse");
 		}
-		// TODO Auch ReportGenerator Seiten hinzufügen!
 	}
 
 	public <T extends Widget> void setForm(T formItem) {

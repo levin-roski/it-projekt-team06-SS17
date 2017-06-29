@@ -5,19 +5,19 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.ReportView;
-import de.worketplace.team06.shared.report.AllCallsReport;
+import de.worketplace.team06.shared.report.FanInOfApplicationsOfUserReport;
 
-public class AllCallsReportView extends ReportView {
-	public AllCallsReportView() {
+public class FanInOfApplicationsOfUserReportView extends ReportView {
+	public FanInOfApplicationsOfUserReportView() {
 		this.add(ClientsideSettings.getBreadcrumbs());
-		reportGenerator.createAllCallsReport(new AsyncCallback<AllCallsReport>() {
+		reportGenerator.createFanInOfApplicationsOfUserReport(ClientsideSettings.getCurrentUser(), new AsyncCallback<FanInOfApplicationsOfUserReport>() {
 			public void onFailure(Throwable caught) {
 				Window.alert("Der Report konnte nicht geladen werden, bitte versuchen Sie es erneut");
 			}
 
-			public void onSuccess(AllCallsReport result) {
+			public void onSuccess(FanInOfApplicationsOfUserReport result) {
 				writer.process(result);
-				AllCallsReportView.this.append(writer.getReportText());
+				FanInOfApplicationsOfUserReportView.this.append(writer.getReportText());
 			}
 		});
 	}
@@ -28,6 +28,6 @@ public class AllCallsReportView extends ReportView {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setFirstBreadcrumb(this, "Alle Ausschreibungen");
+		ClientsideSettings.setFirstBreadcrumb(this, "Anzahl meiner Bewerbungen nach Status (Fan-In)");
 	}
 }

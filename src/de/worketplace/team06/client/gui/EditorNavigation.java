@@ -14,7 +14,6 @@ public class EditorNavigation extends VerticalPanel {
 	
 	public EditorNavigation() {
 		MenuBar menu = new MenuBar();
-		ClientsideSettings.setCurrentNavigation(menu);
 		menu.setAutoOpen(true);
 		menu.setAnimationEnabled(true);
 		this.setWidth("100%");
