@@ -501,6 +501,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Integer assumed = 0;
 		Integer rejected = 0;
 		
+		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
+		allOrgaUnits = wpadmin.getAllOrgaUnits();
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		Vector<Application> applications = wpadmin.getApplicationsFor(o);
 		for (Application a : applications){

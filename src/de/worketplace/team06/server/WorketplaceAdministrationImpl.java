@@ -795,6 +795,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	
 	@Override
+	public Vector<OrgaUnit> getAllOrgaUnits() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
 		
 		String type = orgaUnitMapper.findTypeByGoogleID(loginInfo.getGoogleId());
