@@ -90,33 +90,7 @@ public class HTMLReportWriter extends ReportWriter {
 	
 	@Override
 	public void process(AllCallsReport r) {
-	
-		this.resetReportText();
-	
-		StringBuffer result = new StringBuffer();
-		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
-		if (r.getHeaderData() != null){
-			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
-		}
-		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + r.getCreated().toString() + "</td></tr></table>");
-
-		Vector<Row> rows = r.getRows();
-		result.append("<table>");
-		for (int i = 0; i < rows.size(); i++) {
-			Row row = rows.elementAt(i);
-		    result.append("<tr>");
-		    for (int j = 0; j < row.getNumColumns(); j++) {
-		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
-		    }
-		    result.append("</tr>");
-		}
-		
-		result.append("</table>");
-		this.reportText = result.toString();
-		
+		simpleReportProcess(r);
 	}
 	
 	@Override
@@ -174,5 +148,33 @@ public class HTMLReportWriter extends ReportWriter {
 	public void process(AllInterrelationsOfAllApplicantsOfUserReport r) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void simpleReportProcess(SimpleReport r){
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<table><tr>");
+		if (r.getHeaderData() != null){
+			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+		}
+		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
+		result.append("<tr><td>" + r.getCreated().toString() + "</td></tr></table>");
+
+		Vector<Row> rows = r.getRows();
+		result.append("<table>");
+		for (int i = 0; i < rows.size(); i++) {
+			Row row = rows.elementAt(i);
+		    result.append("<tr>");
+		    for (int j = 0; j < row.getNumColumns(); j++) {
+		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
+		    }
+		    result.append("</tr>");
+		}
+		
+		result.append("</table>");
+		this.reportText = result.toString();
 	}
 }
