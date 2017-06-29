@@ -27,9 +27,9 @@ public abstract class ReportWriter {
 	
 	public abstract void process(AllInterrelationsOfAllApplicantsOfUserReport r);
 	
-	public abstract void process(FanInOfCallsOfUserReport r);
+	public abstract void process(FanInOfApplicationsOfUserReport r);
 	
-	public abstract void process(FanOutOfApplicationsOfUserReport r);
+	public abstract void process(FanOutOfCallsOfUserReport r);
 	
 	public abstract void process(FanInFanOutOfUserReport r);
 	

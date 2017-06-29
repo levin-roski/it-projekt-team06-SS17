@@ -384,13 +384,112 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	@Override
-	public FanInOfCallsOfUserReport createFanInOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
-		return null;	
+	public FanInOfApplicationsOfUserReport createFanInOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		
+		FanInOfApplicationsOfUserReport report = new FanInOfApplicationsOfUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("FanIn: Anzahl der Bewerbungen");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("User ID"));
+		headline.addColumn(new Column("laufend"));
+		headline.addColumn(new Column("abgelehnt"));
+		headline.addColumn(new Column("angenommen"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		Integer ongoing = 0;
+		Integer assumed = 0;
+		Integer rejected = 0;
+		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+		Vector<Application> applications = wpadmin.getApplicationsFor(o);
+		for (Application a : applications){
+			switch (a.getStatus()){
+			case 0:
+				ongoing++;
+				break;
+			case 1:
+				assumed++;
+				break;
+			case 2:
+				rejected++;
+				break;
+			}
+		}
+
+		try {
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(ongoing.toString()));
+			rowToAdd.addColumn(new Column(assumed.toString()));
+			rowToAdd.addColumn(new Column(rejected.toString()));
+			report.addRow(rowToAdd);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return report;
 	}
 	
 	@Override
-	public FanOutOfApplicationsOfUserReport createFanOutOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
-		return null;
+	public FanOutOfCallsOfUserReport createFanOutOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
+		
+		FanOutOfCallsOfUserReport report = new FanOutOfCallsOfUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("FanOut: Anzahl der Ausschreibungen");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
+		headline.addColumn(new Column("User ID"));
+		headline.addColumn(new Column("laufend"));
+		headline.addColumn(new Column("erfolgreich besetzt"));
+		headline.addColumn(new Column("laufend"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+		
+		Integer ongoing = 0;
+		Integer successful = 0;
+		Integer canceled = 0;
+		
+		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
+		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		for (Project p : projects){
+			Vector<Call> calls = wpadmin.getCallsFor(p);
+			for (Call c : calls){
+				switch (c.getStatus()){
+				case 0:
+					ongoing++;
+					break;
+				case 1:
+					successful++;
+					break;
+				case 2:
+					canceled++;
+					break;
+				}
+			}
+		}
+
+		try {
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(ongoing.toString()));
+			rowToAdd.addColumn(new Column(successful.toString()));
+			rowToAdd.addColumn(new Column(canceled.toString()));
+			report.addRow(rowToAdd);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return report;
 	}
 	
 	@Override
