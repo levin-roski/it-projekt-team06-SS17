@@ -170,14 +170,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	/**
 	 * 
+	 * @param o
+	 * @return 
 	 */
 	@Override
 	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException {
 		
+		//Partnerprofil des angemeldeten Users auslesen
 		PartnerProfile pp = wpadmin.createPartnerProfileFor(o);
+		
+		//Alle Eigenschaften des angemeldeten Users in einen Vektor einlesen
 		Vector<Property> allPropsOfOu = wpadmin.getAllPropertiesFor(pp);
+		
+		//Alle Ausschreibungen in einen Vektor einlesen
+		Vector<Call> allCalls = wpadmin.getAllCalls();
+		
+		//Vektor für die zutreffenden Ausschreibungen instanziieren
 		Vector<Call> matchingCalls = new Vector<Call>();
-	
+		
 		//Erstellung einer Instanz des Reports
 		AllCallsMatchingWithUserReport report = new AllCallsMatchingWithUserReport();
 		
@@ -195,10 +205,14 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Kopfzeile dem Report hinzufügen
 		report.addRow(headline);
-		
-		
-		Vector<Call> allCalls = wpadmin.getAllCalls();
-		
+	
+		/*
+		 * Innerhalb der verschachtelten Schleifen werden die Eigenschaften der Ausschreibungen(PartnerProfile)
+		 * mit dein Eigenschaften der OrgaUnit(PartnerProfil) verglichen und bei einem Treffer dem Vektor
+		 * matchingCalls hinzugefügt. Ebenso wird bei jedem Treffer überprüft, ob die Ausschreibung bereits
+		 * zum matchingCalls Vektor hinzugefügt wurde oder nicht. Wenn Ja wird nur der MatchingCount dieser
+		 * Instanz erhöht. 
+		 */
 		for(Call c : allCalls){
 			PartnerProfile tempPartnerProfile = wpadmin.getPartnerProfileFor(c);
 			Vector<Property> tempProperties = wpadmin.getAllPropertiesFor(tempPartnerProfile);
@@ -220,6 +234,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			}
 		}
 		
+		
+		/*
+		 * Die Lokale Klasse bildet die Differenz der Größe MatchingCount. Die Klasse stellt eine 
+		 * einfache Möglichkeit dar eine Rückgabe <0, =0 oder >0 zu bekommen. (Funktioniert 
+		 * allerdings nicht mit Fließkommazahlen) Da wir die Ausgabe 
+		 * reverse sortieren wollen rechnen wir call2 - call1. 
+		 */
 		class CallComparator implements Comparator<Call>
 		{
 		  @Override public int compare( Call call1, Call call2 )
@@ -228,7 +249,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		  }
 		}
 		
-	
+		// Mit dem CallComparator-Objekt lässt sich der Vector nach dem MatchingCount sortieren
 		Collections.sort(matchingCalls, new CallComparator());
 		
 		for (Call call : matchingCalls){
@@ -242,7 +263,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 		
 		
-		return null;
+		return report;
 	}
 	
 	
