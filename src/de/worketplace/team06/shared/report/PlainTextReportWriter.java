@@ -175,6 +175,7 @@ public class PlainTextReportWriter extends ReportWriter {
 		     */
 		    this.resetReportText();
 		}
+		this.reportText = result.toString();
 		
 	}
 	
