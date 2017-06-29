@@ -97,8 +97,9 @@ public class EnrollmentForm extends Form {
 		if (changeHeadline != null) {
 			root.add(changeHeadline);
 		}
-//		nameInput.setText(toChangeEnrollment.getTitle());
-//		beschreibungInput.setText(toChangeEnrollment.getDescription());
+		startDateInput.setValue(toChangeEnrollment.getStartDate().toString());
+		periodInput.setValue(toChangeEnrollment.getWorkload().toString());
+		endDateInput.setValue(toChangeEnrollment.getEndDate().toString());
 		final Button saveButton = new Button("Änderungen speichern");
 		saveButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -109,9 +110,9 @@ public class EnrollmentForm extends Form {
 				} else if (endDateInput.getText().length() == 0) {
 					Window.alert("Bitte geben Sie ein Enddatum an");
 				} else {
-//					toChangeEnrollment.setStartDate(startDateInput.getText());
-//					toChangeEnrollment.setPeriod(periodInput.getText());
-//					toChangeEnrollment.setEndDate(endDateInput.getText());
+					toChangeEnrollment.setStartDate(startDateInput.getValue());
+					toChangeEnrollment.setWorkload(periodInput.getValue());
+					toChangeEnrollment.setEndDate(endDateInput.getValue());
 
 					worketplaceAdministration.saveEnrollment(toChangeEnrollment, new AsyncCallback<Void>() {
 						public void onFailure(Throwable caught) {
