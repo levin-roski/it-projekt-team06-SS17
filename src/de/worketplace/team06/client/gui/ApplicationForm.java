@@ -82,6 +82,7 @@ public class ApplicationForm extends Form {
 		form.setWidth("100%");
 		form.setWidget(0, 0, textLabel);
 		form.setWidget(1, 0, textInput);
+		textInput.setSize("100%", "150px");
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*

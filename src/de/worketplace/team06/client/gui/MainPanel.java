@@ -51,8 +51,11 @@ public class MainPanel extends DockLayoutPanel {
 		} else if (viewItem instanceof ProjectView) {
 			History.newItem("Projekt-Details" + ClientsideSettings.getCurrentProjectId() + "-"
 					+ ClientsideSettings.getCurrentMarketplaceId());
+		} else if (viewItem instanceof CallView) {
+			History.newItem("Ausschreibungs-Details" + ClientsideSettings.getCurrentCallId() + "-"
+					+ ClientsideSettings.getCurrentProjectId() + "-" + ClientsideSettings.getCurrentMarketplaceId());
 		}
-		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
+		// TODO Auch ReportGenerator Seiten hinzufügen!
 	}
 
 	public <T extends Widget> void setForm(T formItem) {
