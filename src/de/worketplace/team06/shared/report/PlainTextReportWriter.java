@@ -180,13 +180,13 @@ public class PlainTextReportWriter extends ReportWriter {
 	}
 	
 	@Override
-	public void process(FanInOfCallsOfUserReport r) {
+	public void process(FanInOfApplicationsOfUserReport r) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void process(FanOutOfApplicationsOfUserReport r) {
+	public void process(FanOutOfCallsOfUserReport r) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -221,7 +221,6 @@ public class PlainTextReportWriter extends ReportWriter {
 		
 		this.reportText = result.toString();
 	}
-	
 	
 	  /**
 	   * Auslesen des Ergebnisses der zuletzt aufgerufenen Prozessierungsmethode.
