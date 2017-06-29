@@ -423,15 +423,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			}
 		}
 
-		try {
-			Row rowToAdd = new Row();
-			rowToAdd.addColumn(new Column(ongoing.toString()));
-			rowToAdd.addColumn(new Column(assumed.toString()));
-			rowToAdd.addColumn(new Column(rejected.toString()));
-			report.addRow(rowToAdd);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Row rowToAdd = new Row();
+		rowToAdd.addColumn(new Column(o.getID().toString()));
+		rowToAdd.addColumn(new Column(ongoing.toString()));
+		rowToAdd.addColumn(new Column(assumed.toString()));
+		rowToAdd.addColumn(new Column(rejected.toString()));
+		report.addRow(rowToAdd);
 		
 		return report;
 	}
@@ -479,15 +476,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			}
 		}
 
-		try {
-			Row rowToAdd = new Row();
-			rowToAdd.addColumn(new Column(ongoing.toString()));
-			rowToAdd.addColumn(new Column(successful.toString()));
-			rowToAdd.addColumn(new Column(canceled.toString()));
-			report.addRow(rowToAdd);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Row rowToAdd = new Row();
+		rowToAdd.addColumn(new Column(o.getID().toString()));
+		rowToAdd.addColumn(new Column(ongoing.toString()));
+		rowToAdd.addColumn(new Column(successful.toString()));
+		rowToAdd.addColumn(new Column(canceled.toString()));
+		report.addRow(rowToAdd);
 		
 		return report;
 	}
