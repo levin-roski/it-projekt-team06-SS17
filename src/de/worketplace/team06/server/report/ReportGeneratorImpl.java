@@ -496,4 +496,32 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return wpadmin.getOrgaUnitFor(loginInfo);
 	}
 	
+	/**
+	 * Methode um den Namen je nach Typ der Organisations-Einheit zurückzugeben (interner Gebrauch für Reports)
+	 * @param OrgaUnit o
+	 * @return String name
+	 */
+	private String getNameForOrgaUnit(OrgaUnit o){
+		String name = "";
+		String googleID = o.getGoogleID();
+		
+		//Je nach Typ wird der Variable 'name' der enrsprechende Name aus der Datenbank zugewiesen
+		switch (o.getType()){
+		case "Person":
+			Person p = wpadmin.getPersonByGoogleID(googleID);
+			name = p.getFirstName() + " " + p.getLastName();
+		case "Team":
+			Team t = wpadmin.getTeamByGoogleID(googleID);
+			name = t.getName();
+		case "Organisation":
+			Organisation org = wpadmin.getOrganisationByGoogleID(googleID);
+			name = org.getName();
+		default:
+			name = "Es muss sich wohl um ein unbekanntes Objekt ohne Namen handeln...";
+		}
+		
+		//Zurückgeben des Namens als String
+		return name;
+	}
+	
 }
