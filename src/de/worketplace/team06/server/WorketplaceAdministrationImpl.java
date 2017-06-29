@@ -811,21 +811,21 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Vector<Team> allTeams = getAllTeams();
 		Vector<Organisation> allOrganisations = getAllOrganisations();
 		
-		if (allPersons != null){
+		
 		for(Person p : allPersons){
 			allOrgaUnits.addElement(p);
 		}
-		}
-		if (allTeams != null){
+		
+		
 		for(Team t : allTeams){
-			allTeams.addElement(t);
+			allOrgaUnits.addElement(t);
 		}
-		}
-		if (allOrganisations != null){
+		
+		
 		for(Organisation o : allOrganisations){
-			allOrganisations.addElement(o);
+			allOrgaUnits.add(o);
 		}
-		}
+		
 		return allOrgaUnits;
 	}
 	
