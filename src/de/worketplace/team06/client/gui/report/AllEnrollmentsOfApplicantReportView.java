@@ -16,6 +16,7 @@ import de.worketplace.team06.shared.report.AllEnrollmentsOfApplicantReport;
 public class AllEnrollmentsOfApplicantReportView extends ReportView {
 	public AllEnrollmentsOfApplicantReportView() {
 		this.add(ClientsideSettings.getBreadcrumbs());
+		this.add(new HTML("<h2>Bitte wählen Sie den Bewerber, für den der Report generiert werden soll</h2>"));
 		final HTMLPanel report = new HTMLPanel("");
 		if (ClientsideSettings.getCurrentUser().getType() == "Person") {
 			this.add(getAllApplicantsOfCurrentUserInput(new Callback() {
@@ -24,8 +25,10 @@ public class AllEnrollmentsOfApplicantReportView extends ReportView {
 					class RpcWrapper {
 						protected Timer t;
 						protected OrgaUnit selectedOrgaUnit;
+
 						public RpcWrapper() {
-							worketplaceAdministration.getOrgaUnitById(Integer.parseInt(((ListBox) parameter).getSelectedValue()),
+							worketplaceAdministration.getOrgaUnitById(
+									Integer.parseInt(((ListBox) parameter).getSelectedValue()),
 									new AsyncCallback<OrgaUnit>() {
 										@Override
 										public void onFailure(Throwable caught) {
@@ -42,7 +45,8 @@ public class AllEnrollmentsOfApplicantReportView extends ReportView {
 										reportGenerator.createAllEnrollmentsOfApplicantReport(selectedOrgaUnit,
 												new AsyncCallback<AllEnrollmentsOfApplicantReport>() {
 													public void onFailure(Throwable caught) {
-														Window.alert("Der Report konnte nicht geladen werden, bitte versuchen Sie es erneut");
+														Window.alert(
+																"Der Report konnte nicht geladen werden, bitte versuchen Sie es erneut");
 													}
 
 													public void onSuccess(AllEnrollmentsOfApplicantReport result) {
@@ -53,13 +57,14 @@ public class AllEnrollmentsOfApplicantReportView extends ReportView {
 												});
 										RpcWrapper.this.t.cancel();
 									}
-									}
-								};
-							// Schedule the timer to check if all RPC calls finished
+								}
+							};
+							// Schedule the timer to check if all RPC calls
+							// finished
 							// each 400 milliseconds
 							t.scheduleRepeating(400);
-							};
-						}
+						};
+					}
 					new RpcWrapper();
 				};
 
@@ -70,6 +75,7 @@ public class AllEnrollmentsOfApplicantReportView extends ReportView {
 		} else {
 			this.add(new HTML("<h2>Dieser Bericht ist nur für Personen zugänglich</h2>"));
 		}
+		this.add(report);
 	}
 
 	@Override

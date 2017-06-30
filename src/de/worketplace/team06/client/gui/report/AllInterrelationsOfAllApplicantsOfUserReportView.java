@@ -16,6 +16,7 @@ import de.worketplace.team06.shared.report.AllInterrelationsOfAllApplicantsOfUse
 public class AllInterrelationsOfAllApplicantsOfUserReportView extends ReportView {
 	public AllInterrelationsOfAllApplicantsOfUserReportView() {
 		this.add(ClientsideSettings.getBreadcrumbs());
+		this.add(new HTML("<h2>Bitte wählen Sie den Bewerber, für den der Report generiert werden soll</h2>"));
 		final HTMLPanel report = new HTMLPanel("");
 		if (ClientsideSettings.getCurrentUser().getType() == "Person") {
 			this.add(getAllApplicantsOfCurrentUserInput(new Callback() {
@@ -76,6 +77,7 @@ public class AllInterrelationsOfAllApplicantsOfUserReportView extends ReportView
 		} else {
 			this.add(new HTML("<h2>Dieser Bericht ist nur für Personen zugänglich</h2>"));
 		}
+		this.add(report);
 	}
 
 	@Override
