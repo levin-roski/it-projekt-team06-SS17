@@ -72,18 +72,17 @@ button {
 
 /* Styles für Anzeige von Reports */
 
-table {
+table.content, td.rcontent {
+    width: 70%;
+    border: 1px solid #ddd;
     border-collapse: collapse;
     font-family: 'Open Sans';
 }
 
-table.content, td {
-    width: 70%;
-    border: 1px solid #ddd;
-}
-
 table.headerdata {
     width: inherit;
+    border-collapse: collapse;
+    font-family: 'Open Sans';
 }
 
 td.tdheaderdata {
@@ -91,6 +90,8 @@ td.tdheaderdata {
     padding-left: 10px;
     padding-bottom: 0px;
     padding-top: 0px;
+    border-collapse: collapse;
+    font-family: 'Open Sans';
 }
 
 tr.theader {
@@ -101,13 +102,13 @@ tr.theader {
     font-size: 18px;
 }
 
-tr, td {
+tr.rcontent, td.rcontent {
     padding: 10px;
     text-align: left;
     font-size: 12px;
 }
 
-tr:nth-child(even) {
+tr.rcontent:nth-child(even) {
     background-color: #f2f2f2;
 }
 

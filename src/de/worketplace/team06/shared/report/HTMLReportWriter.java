@@ -296,11 +296,11 @@ public class HTMLReportWriter extends ReportWriter {
 			if(i == 0){
 				result.append("<tr class=\"theader\">");
 			} else {
-				result.append("<tr>");
+				result.append("<tr class=\"rcontent\">");
 			}
 			
 		    for (int j = 0; j < row.getNumColumns(); j++) {
-		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
+		    	result.append("<td class=\"rcontent\">" + row.getColumnAt(j) + "</td>");
 		    }
 			result.append("</tr>");
 		}
@@ -334,11 +334,11 @@ public class HTMLReportWriter extends ReportWriter {
 			if(i == 0){
 				result.append("<tr class=\"theader\">");
 			} else {
-				result.append("<tr>");
+				result.append("<tr class=\"rcontent\">");
 			}
 			
 		    for (int j = 0; j < row.getNumColumns(); j++) {
-		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
+		    	result.append("<td class=\"rcontent\">" + row.getColumnAt(j) + "</td>");
 		    }
 			result.append("</tr>");
 		}
