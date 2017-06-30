@@ -86,7 +86,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * Methode zum Generieren eines Reports für alle Ausschreibungen
 	 */
 	@Override
-	public AllCallsReport createAllCallsReport() throws IllegalArgumentException {
+	public AllCallsReport createAllCallsReport(OrgaUnit o) throws IllegalArgumentException {
 		
 		//Erstellung einer Instanz des Reports
 		AllCallsReport report = new AllCallsReport();
@@ -94,6 +94,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Setzen des Reporttitels und dem Generierungsdatum
 		report.setTitle("Alle Ausschreibungen");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
 		
 		Row headline = new Row();
 		
@@ -134,8 +141,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllCallsReport report = new AllCallsReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle eigenen Ausschreibungen für " + getNameForOrgaUnit(o));
+		report.setTitle("Alle eigenen Ausschreibungen");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
 		
 		Row headline = new Row();
 		
@@ -195,6 +209,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Setzen des Reporttitels und dem Generierungsdatum
 		report.setTitle("Alle interessanten Ausschreibungen für den Benutzer");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
 		
 		Row headline = new Row();
 		
@@ -281,6 +302,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle Bewerbungen auf Ausschreibungen für " + getNameForOrgaUnit(o));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
+		
 		Row headline = new Row();
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
@@ -326,6 +354,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Setzen des Reporttitels und dem Generierungsdatum
 		report.setTitle("Alle ausgehenden Bewerbungen für " + getNameForOrgaUnit(o));
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
 		
 		Row headline = new Row();
 		
@@ -460,6 +495,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle Verflechtungen der Bewerber");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
+		
 		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
 		for(Project p : projects){
 			Vector<Call> calls = wpadmin.getCallsFor(p);
@@ -487,6 +529,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Setzen des Reporttitels und dem Generierungsdatum
 		report.setTitle("FanIn: Anzahl der Bewerbungen");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
 		
 		Row headline = new Row();
 		
@@ -550,6 +599,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Setzen des Reporttitels und dem Generierungsdatum
 		report.setTitle("FanOut: Anzahl der Ausschreibungen");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
 		
 		Row headline = new Row();
 		
@@ -615,6 +671,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Setzen des Reporttitels und dem Generierungsdatum
 		report.setTitle("FanIn-FanOut-Analyse für alle Teilnehmer");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + report.getDateForTS()));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + report.getTimeForTS()));
+		report.setHeaderData(headerData);
 		
 		//Hinzufügen der einzelnen Reports
 		report.addSubReport(createFanInOfApplicationsOfUserReport(o));
