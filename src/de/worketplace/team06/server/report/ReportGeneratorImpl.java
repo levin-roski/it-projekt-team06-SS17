@@ -657,4 +657,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return name;
 	}
 	
+	@Override
+	public Vector<OrgaUnit> getAllApplicantsForAllCallsFrom(Person person){
+		Vector<OrgaUnit> applicants = new Vector<OrgaUnit>();
+		Vector<Project> projects = wpadmin.getAllProjects();
+		
+		for (Project pro : projects){
+			if (pro.getProjectLeaderID() == person.getID()){
+				Vector<Call> calls = wpadmin.getCallsFor(pro);
+				for (Call c : calls){
+					Vector<Application> apps = wpadmin.getApplicationsFor(c);
+					for (Application a : apps){
+						OrgaUnit o = wpadmin.getOrgaUnitById(a.getOrgaUnitID());
+						applicants.addElement(o);
+					}
+				}
+			}
+		}
+		return applicants;
+	}
+	
 }

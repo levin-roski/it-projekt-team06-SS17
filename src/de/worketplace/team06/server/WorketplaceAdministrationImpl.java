@@ -877,26 +877,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * -- METHODEN für OrgaUnit --
 	 * ---------------------------------
 	 */
-	@Override
-	public Vector<OrgaUnit> getAllApplicantsForAllCallsFrom(Person person){
-		Vector<OrgaUnit> applicants = new Vector<OrgaUnit>();
-		Vector<Project> projects = getAllProjects();
-		
-		for (Project pro : projects){
-			if (pro.getProjectLeaderID() == person.getID()){
-				Vector<Call> calls = getCallsFor(pro);
-				for (Call c : calls){
-					Vector<Application> apps = getApplicationsFor(c);
-					for (Application a : apps){
-						OrgaUnit o = getOrgaUnitById(a.getOrgaUnitID());
-						applicants.addElement(o);
-					}
-				}
-			}
-		}
-		return applicants;
-	}
-	
 	
 	
 	/**

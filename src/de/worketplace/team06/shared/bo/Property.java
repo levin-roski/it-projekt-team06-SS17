@@ -80,5 +80,31 @@ public class Property extends BusinessObject {
 		this.partnerProfileID = ppid;
 		
 	}
+    
+    public boolean equals(Property p) {
+    	 /*
+         * Abfragen, ob ein Objekt ungleich NULL ist und ob ein Objekt gecastet
+         * werden kann, sind immer wichtig!
+         */
+        if (p != null && p instanceof Property) {
+        	Property bo = (Property) p;
+          try {
+            if (bo.getName().equals(this.name) && bo.getValue().equals(this.value))
+              return true;
+          }
+          catch (IllegalArgumentException e) {
+            /*
+             * Wenn irgendetwas schief geht, dann geben wir sicherheitshalber false
+             * zurück.
+             */
+            return false;
+          }
+        }
+        /*
+         * Wenn bislang keine Gleichheit bestimmt werden konnte, dann müssen
+         * schließlich false zurückgeben.
+         */
+        return false;
+    }
 
 }
