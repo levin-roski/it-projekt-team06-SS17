@@ -274,6 +274,35 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.appMapper.findByCallID(call.getID());
 	}
 	
+	   /**
+		 * Auslesen aller eingehender Bewerbungen für die Projekte, in denen
+		 * die Person Projektleiter ist.
+		 * @param Person projectleader
+		 * @return Vector<Application> result
+		 */
+		@Override
+		public Vector<Application> getApplicationsFor(Person projectleader){
+			Vector<Application> result = new Vector<Application>();
+			Vector<Project> projects = getAllProjects();
+			
+			/*
+			 * In den verschachtelten Schleifen werden die Bewerbungen ermittelt, die indirekt
+			 * an den Projektleiter gerichtet sind und dem Vector result hinzugefügt. 
+			 */
+			for(Project p : projects){
+				if (p.getProjectLeaderID() == projectleader.getID()){
+					Vector<Call> calls = getCallsFor(p);
+					for (Call c : calls){
+						Vector<Application> apps = getApplicationsFor(c);
+						for (Application a : apps){
+							result.addElement(a);
+						}
+					}
+				}
+			}
+			return result;
+		}
+	    
 	/**
 	 * 
 	 */
