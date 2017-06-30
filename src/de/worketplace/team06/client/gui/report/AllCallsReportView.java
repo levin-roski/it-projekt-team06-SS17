@@ -11,7 +11,7 @@ import de.worketplace.team06.shared.report.AllCallsReport;
 public class AllCallsReportView extends ReportView {
 	public AllCallsReportView() {
 		this.add(ClientsideSettings.getBreadcrumbs());
-		reportGenerator.createAllCallsReport(new AsyncCallback<AllCallsReport>() {
+		reportGenerator.createAllCallsReport(ClientsideSettings.getCurrentUser(), new AsyncCallback<AllCallsReport>() {
 			public void onFailure(Throwable caught) {
 				Window.alert("Der Report konnte nicht geladen werden, bitte versuchen Sie es erneut");
 			}
