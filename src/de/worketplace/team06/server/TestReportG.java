@@ -23,6 +23,7 @@ public class TestReportG {
 	}
 	
 	public static void ShowReport(ReportGeneratorImpl gen){
+		
 		LoginInfo login = new LoginInfo();
 		login.setGoogleId("G3000");
 		login.setEmailAddress("test@mail.de");
@@ -51,6 +52,7 @@ public class TestReportG {
 		writer.process(gen.createFanInFanOutOfUserReport(o));
 		
 		System.out.println(writer.getReportText());
+		
 	}
 
 }
