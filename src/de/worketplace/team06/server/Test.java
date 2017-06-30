@@ -20,41 +20,37 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-		Vector<Call> allcalls = new Vector<Call>();
+		testreportblub(admin);
 		
-		Call c1 = new Call();
-		c1.setTitle("Blub");
-		c1.setMatchingCount(3);
-		allcalls.addElement(c1);
+//		Person pers1 = admin.getPersonByID(7);
+//		
+//		PartnerProfile pp1 = admin.getPartnerProfileFor(pers1);
+//		
+//		System.out.println("Datum PartnerProfile Person:" +  pp1.getCreated());
+//		admin.createProperty(pp1, "Berufserfahrung", "1 Jahr");
+//		admin.createProperty(pp1, "Alter", "22");
+//		
+//		
+//		Call call1 = admin.getCallByID(1);
+//		Call call2 = admin.getCallByID(2);
+//		
+//		PartnerProfile pp2 = admin.getPartnerProfileFor(call1);
+//		PartnerProfile pp3 = admin.getPartnerProfileFor(call2);
+//		
+//		System.out.println("Datum PartnerProfile Call:" +  pp2.getCreated());
+//		System.out.println("Datum PartnerProfile Call2:" +  pp3.getCreated());
+//		
+//		admin.createProperty(pp2, "Berufserfahrung", "1 Jahr");
+//		admin.createProperty(pp2, "Alter", "22");
+//		
+//		admin.createProperty(pp3, "Berufserfahrung", "2 Jahre");
+//		admin.createProperty(pp3, "Alter", "22");
 		
-		Call c2 = new Call();
-		c2.setTitle("Aha");
-		c2.setMatchingCount(1);
-		allcalls.addElement(c2);
-		
-		Call c3 = new Call();
-		c3.setTitle("Lagoo");
-		c3.setMatchingCount(5);
-		allcalls.addElement(c3);
 		
 		
-		for (Call c : allcalls){
-			System.out.println(c.getMatchingCount());
-		}
 		
-		class CallComparator implements Comparator<Call>
-		{
-		  @Override public int compare( Call call1, Call call2 )
-		  {
-		    return call2.getMatchingCount() - call1.getMatchingCount();
-		  }
-		}
 		
-		Collections.sort(allcalls, new CallComparator());
-		
-		for (Call c : allcalls){
-			System.out.println(c.getMatchingCount());
-		}
+
 		
 		
 		
@@ -103,6 +99,93 @@ public class Test {
 //		System.out.println(timestamp);
 //      private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //		String currentTime = sdf.format(m.getCreated());	
+	}
+	
+	
+	public static void testreportblub(WorketplaceAdministrationImpl wpadmin){
+		//Alle Ausschreibungen ausgeben
+		Vector<Call> allCalls = wpadmin.getAllCalls();
+		System.out.println("Alle Calls ausgeben! ");
+		for (Call c : allCalls){
+			System.out.println("Titel : " + c.getTitle() + " | PartnerProfile ID: " +  c.getPartnerProfileID());
+		}
+		System.out.println("___________________________________");
+		System.out.println("");
+		
+		
+		//Person abrufen und ausgeben
+		Person pers1 = wpadmin.getPersonByID(7);
+		System.out.println("Informationen zum Personenobjekt ausgeben");
+		System.out.println("Vorname : " + pers1.getFirstName() + " | PartnerProfile ID der Person : " +pers1.getPartnerProfileID());
+		System.out.println("___________________________________");
+		System.out.println("");
+		
+		
+		//Partnerprofil der Person ausgeben
+		PartnerProfile pp1 = wpadmin.getPartnerProfileFor(pers1);
+		System.out.println("Informationen zum Partnerprofil der Person");
+		System.out.println("ID-Partnerprofil: " + pp1.getID() + " | Erstellungsdatum : " + pp1.getCreated());
+		System.out.println("___________________________________");
+		System.out.println("");
+		
+		
+		//Alle Properties der Person ausgeben
+		Vector<Property> allPropsOfOu = wpadmin.getAllPropertiesFor(pp1);
+		System.out.println("Properties der Person");
+		for (Property p : allPropsOfOu){
+			System.out.println("Name : " + p.getName() + " | Wert :" + p.getValue());
+		}
+		System.out.println("___________________________________");
+		System.out.println("");
+		
+		
+		//Vector für die personalisierten Ausschreibungen für den Benutzer erstellen
+		Vector<Call> matchingCalls = new Vector<Call>();
+		
+		//Alle Ausschreibungen durchlaufen 
+		System.out.println("Verschachtelete Schleifen durchlaufen");
+		for (Call c : allCalls){
+			System.out.print("Ausschreibungstitel : " + c.getTitle());
+			PartnerProfile callPartnerProfile = wpadmin.getPartnerProfileFor(c);
+			System.out.print(" | mit partnerProfileId : " + callPartnerProfile.getID());
+			Vector<Property> callProperties = wpadmin.getAllPropertiesFor(callPartnerProfile);
+			 for (Property p : callProperties){
+				 System.out.println("Vergleich: " + p.getName() + p.getValue());
+			 }
+		}
+		
+		
+
+//		
+//		for(Call c : allCalls){
+//			System.out.println("Callname: " + c.getTitle());
+//			PartnerProfile tempPartnerProfile = wpadmin.getPartnerProfileFor(c);
+//			Vector<Property> tempProperties = wpadmin.getAllPropertiesFor(tempPartnerProfile);
+//			System.out.println("temp Properties index 0" + tempProperties.get(0).getValue());
+//			
+//			
+//			for (Property prop : tempProperties){
+//				for (Property prop2 : allPropsOfOu){
+//					System.out.println("Property Call "+ prop.getValue());
+//					System.out.println("Property OU " + prop.getValue());
+//					if (prop.getValue().equals(prop2)){
+//						System.out.println(prop.getValue() + prop2.getValue());
+//						if(!matchingCalls.contains(c)){
+//							matchingCalls.addElement(c);
+//							c.setMatchingCount(1);
+//						}
+//						else{
+//							int temp = c.getMatchingCount();
+//							temp++;
+//							c.setMatchingCount(temp);
+//						}
+//					}
+//				}
+//			}
+//			
+//			System.out.println("Ausschreibung gematched: " + matchingCalls.get(0).getTitle());
+//			System.out.println("2. Ausschreibung gematched: " + matchingCalls.get(1).getTitle());
+//		}
 	}
 	
 	

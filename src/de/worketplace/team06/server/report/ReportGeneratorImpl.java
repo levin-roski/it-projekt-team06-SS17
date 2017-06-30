@@ -206,8 +206,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return report;
 	}
 	
-	
-	
 	/**
 	 * 
 	 * @param o
@@ -746,6 +744,29 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	/**
+	 * 
+	 */
+	@Override
+	public Vector<OrgaUnit> getAllApplicantsForAllCallsFrom(Person person){
+		Vector<OrgaUnit> applicants = new Vector<OrgaUnit>();
+		Vector<Project> projects = wpadmin.getAllProjects();
+		
+		for (Project pro : projects){
+			if (pro.getProjectLeaderID() == person.getID()){
+				Vector<Call> calls = wpadmin.getCallsFor(pro);
+				for (Call c : calls){
+					Vector<Application> apps = wpadmin.getApplicationsFor(c);
+					for (Application a : apps){
+						OrgaUnit o = wpadmin.getOrgaUnitById(a.getOrgaUnitID());
+						applicants.addElement(o);
+					}
+				}
+			}
+		}
+		return applicants;
+	}
+	
+	/**
 	 * Methode zum extrahieren des Datums eines Date-Objekts und Rückgabe als String
 	 * @param ts
 	 * @return date String
@@ -782,7 +803,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return time;
+		return time;	
 	}
 	
 }

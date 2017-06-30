@@ -1,5 +1,7 @@
 package de.worketplace.team06.shared;
 
+import java.util.Vector;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.shared.bo.*;
@@ -46,5 +48,7 @@ public interface ReportGeneratorAsync {
 	void createFanInFanOutOfUserReport(OrgaUnit o, AsyncCallback<FanInFanOutOfUserReport> callback);
 	
 	void getOrgaUnitFor(LoginInfo loginInfo, AsyncCallback<OrgaUnit> callback);
+
+	void getAllApplicantsForAllCallsFrom(Person person, AsyncCallback<Vector<OrgaUnit>> callback);
 
 }

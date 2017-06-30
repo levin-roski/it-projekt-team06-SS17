@@ -1,11 +1,14 @@
 package de.worketplace.team06.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
-import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.shared.bo.Call;
 
 /**
  * Die Mapper-Klasse CallMapper bildet Call-Objekte als Datensätze

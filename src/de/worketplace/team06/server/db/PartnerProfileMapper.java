@@ -4,10 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.PartnerProfile;
-import de.worketplace.team06.shared.bo.Project;
 /**
  * Die Mapper-Klasse PartnerProfileMapper bildet PartnerProfile-Objekte als Datensätze
  * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden

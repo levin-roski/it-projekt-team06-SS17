@@ -1,9 +1,11 @@
 package de.worketplace.team06.client;
 
+import java.awt.Button;
+
+import javax.swing.text.html.HTML;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
