@@ -380,4 +380,6 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Vector<Call> getCallsFor(Person projectleader);
 
+	public Vector<Enrollment> getEnrollmentsFor(Person projectleader);
+
 }

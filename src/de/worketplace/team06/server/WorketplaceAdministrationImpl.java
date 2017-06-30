@@ -585,6 +585,32 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.enrollMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
 	
+	/**
+	 * Auslesen der Beteiligungsobjekte von allen Projekten, in denen die jeweilige Person
+	 * Projektleiter ist.
+	 * @param Person projectleader
+	 * @return Vector<Enrollment> result
+	 */
+	@Override
+	public Vector<Enrollment> getEnrollmentsFor(Person projectleader){
+		Vector<Enrollment> result = new Vector<Enrollment>();
+		Vector<Project> projects = getAllProjects();
+		/*
+		 * Mit der verschachtelten for Schleife schreiben wir alle Beteiligungen
+		 * unserer Projekte (Projektleiterfunktion) in den result Vektor.
+		 */
+		for (Project p : projects){
+			if (p.getProjectLeaderID() == projectleader.getID()){
+			Vector<Enrollment> enrollments = getEnrollmentFor(p);
+			for (Enrollment e : enrollments){
+				result.addElement(e);
+			}
+			}
+		}
+		return result;
+	}
+    
+	
 	
 	
 	/*

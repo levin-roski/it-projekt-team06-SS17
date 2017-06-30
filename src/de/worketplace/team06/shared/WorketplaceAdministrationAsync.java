@@ -178,4 +178,6 @@ public interface WorketplaceAdministrationAsync {
 
 	void getCallsFor(Person projectleader, AsyncCallback<Vector<Call>> callback);
 
+	void getEnrollmentsFor(Person projectleader, AsyncCallback<Vector<Enrollment>> callback);
+
 }
