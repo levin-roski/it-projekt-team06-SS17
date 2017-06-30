@@ -147,7 +147,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			rowToAdd.addColumn(new Column(c.getTitle()));
 			rowToAdd.addColumn(new Column(c.getDescription()));
 			rowToAdd.addColumn(new Column(p.getTitle()));
-			rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(convertDate(c.getDeadline())));
 			rowToAdd.addColumn(new Column(c.getStatusString()));
 			report.addRow(rowToAdd);
 		}
@@ -197,7 +197,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				rowToAdd.addColumn(new Column(c.getTitle()));
 				rowToAdd.addColumn(new Column(c.getDescription()));
 				rowToAdd.addColumn(new Column(p.getTitle()));
-				rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+				rowToAdd.addColumn(new Column(convertDate(c.getDeadline())));
 				rowToAdd.addColumn(new Column(c.getStatusString()));
 				report.addRow(rowToAdd);
 			}
@@ -315,7 +315,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Project proj = wpadmin.getProjectByID(call.getProjectID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(call.getTitle()));
-			rowToAdd.addColumn(new Column(call.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(convertDate(call.getDeadline())));
 			rowToAdd.addColumn(new Column(proj.getTitle()));
 			rowToAdd.addColumn(new Column(call.getStatusString()));
 			report.addRow(rowToAdd);
@@ -416,7 +416,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Call c = wpadmin.getCallByID(a.getCallID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(c.getTitle()));
-			rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(convertDate(c.getDeadline())));
 			rowToAdd.addColumn(new Column(a.getText()));
 			rowToAdd.addColumn(new Column(a.getStatusString()));
 			Rating r = wpadmin.getRatingFor(a);
@@ -493,8 +493,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Project p = wpadmin.getProjectByID(e.getProjectID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(p.getTitle()));
-			rowToAdd.addColumn(new Column(e.getStartDate().toString()));
-			rowToAdd.addColumn(new Column(e.getEndDate().toString()));
+			rowToAdd.addColumn(new Column(convertDate(e.getStartDate())));
+			rowToAdd.addColumn(new Column(convertDate(e.getEndDate())));
 			report.addRow(rowToAdd);
 		}
 		
@@ -781,7 +781,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	/**
-	 * Methode zum extrahieren des Datums eines Date-Objekts und Rückgabe als String
+	 * Methode zum extrahieren des Datums eines Reports und Rückgabe als String
 	 * @param ts
 	 * @return date String
 	 */
@@ -801,7 +801,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	/**
-	 * Methode zum extrahieren der Uhrzeit eines Date-Objekts und Rückgabe als String
+	 * Methode zum extrahieren der Uhrzeit eines Reports und Rückgabe als String
 	 * @param ts
 	 * @return time String
 	 */
@@ -818,6 +818,26 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			e.printStackTrace();
 		}
 		return time;	
+	}
+	
+	/**
+	 * Methode zum extrahieren des Datums eines Date-Objekts und Rückgabe als String
+	 * @param ts
+	 * @return date String
+	 */
+	public String convertDate(Date d){
+		String date = "Kein Datum gesetzt!";
+		DateFormat df;
+		try {
+			if(d != null){
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+				date = df.format(d);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return date;
 	}
 	
 }
