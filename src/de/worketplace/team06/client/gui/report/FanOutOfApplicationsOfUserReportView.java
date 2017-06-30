@@ -1,6 +1,5 @@
 package de.worketplace.team06.client.gui.report;
 
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -10,6 +9,7 @@ import de.worketplace.team06.shared.report.FanInOfApplicationsOfUserReport;
 
 public class FanOutOfApplicationsOfUserReportView extends ReportView {
 	public FanOutOfApplicationsOfUserReportView() {
+		this.add(ClientsideSettings.getBreadcrumbs());
 		reportGenerator.createFanInOfApplicationsOfUserReport(ClientsideSettings.getCurrentUser(), new AsyncCallback<FanInOfApplicationsOfUserReport>() {
 			public void onFailure(Throwable caught) {
 				Window.alert("Der Report konnte nicht geladen werden, bitte versuchen Sie es erneut");

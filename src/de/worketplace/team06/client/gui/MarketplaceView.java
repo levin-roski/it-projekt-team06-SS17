@@ -36,6 +36,10 @@ public class MarketplaceView extends View {
 			public void run() {
 				mainPanel.setView(new MarketplaceOverView());
 			}
+
+			@Override
+			public <T> void runOnePar(T parameter) {	
+			}
 		}));
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein

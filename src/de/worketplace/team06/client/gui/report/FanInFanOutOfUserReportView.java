@@ -1,6 +1,5 @@
 package de.worketplace.team06.client.gui.report;
 
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

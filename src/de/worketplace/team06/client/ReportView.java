@@ -45,7 +45,7 @@ public abstract class ReportView extends View {
 		allUsers.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				if (callback instanceof Callback) {
-					callback.run();
+					callback.runOnePar(allUsers);
 				}
 			}
 		});

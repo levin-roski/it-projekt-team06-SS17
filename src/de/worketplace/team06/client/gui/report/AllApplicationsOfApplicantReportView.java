@@ -1,6 +1,5 @@
 package de.worketplace.team06.client.gui.report;
 
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -10,6 +9,7 @@ import de.worketplace.team06.shared.report.AllApplicationsOfApplicantReport;
 
 public class AllApplicationsOfApplicantReportView extends ReportView {
 	public AllApplicationsOfApplicantReportView() {
+		this.add(ClientsideSettings.getBreadcrumbs());
 		// TODO Auswahl welchen Bewerbers hinzufügen! Und OnChange dann für
 		// diesen Bewerber anzeigen
 		reportGenerator.createAllApplicationsOfApplicantReport(ClientsideSettings.getCurrentUser(),
