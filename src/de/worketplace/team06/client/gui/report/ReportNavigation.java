@@ -120,6 +120,11 @@ public class ReportNavigation extends VerticalPanel {
 		
 		MenuBar optionenMenu = new MenuBar(true);
 		optionenMenu.setAnimationEnabled(true);
+		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {
+			public void execute() {
+				History.newItem("Mein-Nutzer");
+			}
+		}));
 		optionenMenu.addItem(new MenuItem("Zum Worketplace Editor", new Command() {
 			public void execute() {
 				 Window.Location.replace("worketplace.html");

@@ -60,7 +60,7 @@ public class Report implements EntryPoint {
 								ClientsideSettings.setCurrentUser(result);
 								renderApplicationForLoggedIn();
 							} else {
-								mainPanel.setView(new OrgaUnitFormView(Report.this));
+								mainPanel.setView(new OrgaUnitFormView());
 							}
 						}
 					});
@@ -95,7 +95,10 @@ public class Report implements EntryPoint {
 		try {
 			if (historyToken.equals("Startseite")) {
 				mainPanel.setView(new HomeReportView());
-			} else if (historyToken.equals("Alle-Ausschreibungen")) {
+			} else if (historyToken.equals("Mein-Nutzer")) {
+				mainPanel.setView(new OrgaUnitFormView());
+			}
+			else if (historyToken.equals("Alle-Ausschreibungen")) {
 				mainPanel.setView(new AllCallsReportView());
 			} else if (historyToken.equals("Passende-Ausschreibungen-zu-meinem-Partnerprofil")) {
 				mainPanel.setView(new AllCallsMatchingWithUserReportView());

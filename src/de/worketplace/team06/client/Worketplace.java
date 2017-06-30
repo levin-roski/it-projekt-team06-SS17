@@ -73,7 +73,7 @@ public class Worketplace implements EntryPoint {
 										ClientsideSettings.setCurrentUser(result);
 										renderApplicationForLoggedIn();
 									} else {
-										mainPanel.setView(new OrgaUnitFormView(Worketplace.this));
+										mainPanel.setView(new OrgaUnitFormView());
 									}
 								}
 							});
@@ -109,7 +109,7 @@ public class Worketplace implements EntryPoint {
 			if (historyToken.substring(0, 12).equals("Marktplaetze")) {
 				mainPanel.setView(new MarketplaceOverView());
 			} else if (historyToken.equals("Mein-Nutzer")) {
-				mainPanel.setView(new OrgaUnitFormView(null));
+				mainPanel.setView(new OrgaUnitFormView());
 			} else if (historyToken.equals("Mein-Partnerprofil")) {
 				mainPanel.setView(new OrgaUnitPartnerProfileView());
 			} else if (historyToken.substring(0, 18).equals("Marktplatz-Details")) {
@@ -123,25 +123,20 @@ public class Worketplace implements EntryPoint {
 							@Override
 							public void onSuccess(Marketplace result) {
 								ClientsideSettings.setCurrentMarketplaceId(result.getID());
-								ClientsideSettings.setFirstBreadcrumb(new MarketplaceOverView(), "Marktplätze");
+								mainPanel.setView(new MarketplaceOverView());
 								mainPanel.setView(new MarketplaceView(result));
 							}
 						});
 			} else if (historyToken.substring(0, 15).equals("Projekt-Details")) {
 				// Split projectID to ids[0] and marketplaceID to ids[1]
 				final String[] ids = historyToken.substring(15).split("-");
-
 				class RpcWrapper {
-					protected MarketplaceOverView tokenMov;
-					protected MarketplaceView tokenMv;
-					protected ProjectView tokenPv;
+					protected Marketplace selectedMarketplace;
 					protected int checkRpcTimerCounter = 1;
 					protected Timer t;
 
 					public RpcWrapper(final String[] ids) {
-						tokenMov = new MarketplaceOverView();
-
-						Worketplace.this.worketplaceAdministration.getMarketplaceByID(Integer.parseInt(ids[1]),
+						worketplaceAdministration.getMarketplaceByID(Integer.parseInt(ids[1]),
 								new AsyncCallback<Marketplace>() {
 									@Override
 									public void onFailure(Throwable caught) {
@@ -150,34 +145,34 @@ public class Worketplace implements EntryPoint {
 									@Override
 									public void onSuccess(Marketplace result) {
 										ClientsideSettings.setCurrentMarketplaceId(result.getID());
-										RpcWrapper.this.tokenMv = new MarketplaceView(result);
+										selectedMarketplace = result;
 									}
 								});
 						t = new Timer() {
 							public void run() {
-								RpcWrapper.this.checkRpcTimerCounter++;
-								if (RpcWrapper.this.tokenMov instanceof MarketplaceOverView
-										&& RpcWrapper.this.tokenMv instanceof MarketplaceView) {
-									Worketplace.this.worketplaceAdministration.getProjectByID(Integer.parseInt(ids[0]),
+								checkRpcTimerCounter++;
+								if (selectedMarketplace instanceof Marketplace) {
+									worketplaceAdministration.getProjectByID(Integer.parseInt(ids[0]),
 											new AsyncCallback<Project>() {
 												@Override
 												public void onFailure(Throwable caught) {
-													Worketplace.this.mainPanel.setView(new MyOverView());
+													mainPanel.setView(new MyOverView());
 												}
 
 												@Override
 												public void onSuccess(Project result) {
 													ClientsideSettings.setCurrentProjectId(result.getID());
-													RpcWrapper.this.tokenPv = new ProjectView(result);
-													Worketplace.this.mainPanel.setView(tokenPv);
+													new MarketplaceOverView();
+													new MarketplaceView(selectedMarketplace);
+													mainPanel.setView(new ProjectView(result));
 												}
 											});
-									RpcWrapper.this.t.cancel();
-									RpcWrapper.this.checkRpcTimerCounter = 1;
+									t.cancel();
+									checkRpcTimerCounter = 1;
 								} else if (RpcWrapper.this.checkRpcTimerCounter == 25) {
-									RpcWrapper.this.t.cancel();
-									RpcWrapper.this.checkRpcTimerCounter = 1;
-									Worketplace.this.mainPanel.setView(new MyOverView());
+									t.cancel();
+									checkRpcTimerCounter = 1;
+									mainPanel.setView(new MyOverView());
 								}
 							}
 						};
@@ -188,23 +183,20 @@ public class Worketplace implements EntryPoint {
 				}
 				new RpcWrapper(ids);
 			} else if (historyToken.substring(0, 22).equals("Ausschreibungs-Details")) {
-				// Split callID to ids[0], projectID to ids[1] and marketplaceID to ids[2]
+				// Split callID to ids[0], projectID to ids[1] and marketplaceID
+				// to ids[2]
 				final String[] ids = historyToken.substring(22).split("-");
 
 				class RpcWrapper {
-					protected MarketplaceOverView tokenMov;
-					protected MarketplaceView tokenMv;
-					protected ProjectView tokenPv;
-					protected CallView tokenCv;
+					protected Marketplace selectedMarketplace;
+					protected Project selectedProject;
 					protected int checkRpcTimerCounter = 1;
 					protected Timer t;
 					protected int checkRpcTimerCounter2 = 1;
 					protected Timer t2;
 
 					public RpcWrapper(final String[] ids) {
-						tokenMov = new MarketplaceOverView();
-
-						Worketplace.this.worketplaceAdministration.getMarketplaceByID(Integer.parseInt(ids[2]),
+						worketplaceAdministration.getMarketplaceByID(Integer.parseInt(ids[2]),
 								new AsyncCallback<Marketplace>() {
 									@Override
 									public void onFailure(Throwable caught) {
@@ -213,25 +205,24 @@ public class Worketplace implements EntryPoint {
 									@Override
 									public void onSuccess(Marketplace result) {
 										ClientsideSettings.setCurrentMarketplaceId(result.getID());
-										RpcWrapper.this.tokenMv = new MarketplaceView(result);
+										selectedMarketplace = result;
 									}
 								});
 						t = new Timer() {
 							public void run() {
-								RpcWrapper.this.checkRpcTimerCounter++;
-								if (RpcWrapper.this.tokenMov instanceof MarketplaceOverView
-										&& RpcWrapper.this.tokenMv instanceof MarketplaceView) {
-									Worketplace.this.worketplaceAdministration.getProjectByID(Integer.parseInt(ids[1]),
+								checkRpcTimerCounter++;
+								if (selectedMarketplace instanceof Marketplace) {
+									worketplaceAdministration.getProjectByID(Integer.parseInt(ids[1]),
 											new AsyncCallback<Project>() {
 												@Override
 												public void onFailure(Throwable caught) {
-													Worketplace.this.mainPanel.setView(new MyOverView());
+													mainPanel.setView(new MyOverView());
 												}
 
 												@Override
 												public void onSuccess(Project result) {
 													ClientsideSettings.setCurrentProjectId(result.getID());
-													RpcWrapper.this.tokenPv = new ProjectView(result);
+													selectedProject = result;
 												}
 											});
 									RpcWrapper.this.t.cancel();
@@ -239,39 +230,41 @@ public class Worketplace implements EntryPoint {
 									t2 = new Timer() {
 										public void run() {
 											RpcWrapper.this.checkRpcTimerCounter2++;
-											if (RpcWrapper.this.tokenMov instanceof MarketplaceOverView
-													&& RpcWrapper.this.tokenMv instanceof MarketplaceView
-													&& RpcWrapper.this.tokenPv instanceof ProjectView) {
-												Worketplace.this.worketplaceAdministration.getCallByID(Integer.parseInt(ids[0]),
+											if (selectedMarketplace instanceof Marketplace
+													&& selectedProject instanceof Project) {
+												worketplaceAdministration.getCallByID(Integer.parseInt(ids[0]),
 														new AsyncCallback<Call>() {
 															@Override
 															public void onFailure(Throwable caught) {
-																Worketplace.this.mainPanel.setView(new MyOverView());
+																mainPanel.setView(new MyOverView());
 															}
 
 															@Override
 															public void onSuccess(Call result) {
 																ClientsideSettings.setCurrentCallId(result.getID());
-																RpcWrapper.this.tokenCv = new CallView(result);
-																Worketplace.this.mainPanel.setView(tokenCv);
+																new MarketplaceOverView();
+																new MarketplaceView(selectedMarketplace);
+																new ProjectView(selectedProject);
+																mainPanel.setView(new CallView(result));
 															}
 														});
-												RpcWrapper.this.t2.cancel();
-												RpcWrapper.this.checkRpcTimerCounter2 = 1;
-											} else if (RpcWrapper.this.checkRpcTimerCounter2 == 25) {
-												RpcWrapper.this.t2.cancel();
-												RpcWrapper.this.checkRpcTimerCounter2 = 1;
-												Worketplace.this.mainPanel.setView(new MyOverView());
+												t2.cancel();
+												checkRpcTimerCounter2 = 1;
+											} else if (checkRpcTimerCounter2 == 25) {
+												t2.cancel();
+												checkRpcTimerCounter2 = 1;
+												mainPanel.setView(new MyOverView());
 											}
 										}
 									};
-									// Schedule the timer to check if all RPC calls finished
+									// Schedule the timer to check if all RPC
+									// calls finished
 									// each 400 milliseconds
 									t2.scheduleRepeating(400);
-								} else if (RpcWrapper.this.checkRpcTimerCounter == 25) {
-									RpcWrapper.this.t.cancel();
-									RpcWrapper.this.checkRpcTimerCounter = 1;
-									Worketplace.this.mainPanel.setView(new MyOverView());
+								} else if (checkRpcTimerCounter == 25) {
+									t.cancel();
+									checkRpcTimerCounter = 1;
+									mainPanel.setView(new MyOverView());
 								}
 							}
 						};
@@ -287,6 +280,5 @@ public class Worketplace implements EntryPoint {
 		} catch (IndexOutOfBoundsException e) {
 			mainPanel.setView(new MyOverView());
 		}
-		// TODO Auch tiefere Strukturen wie ProjectView hinzufügen!
 	}
 }

@@ -47,8 +47,6 @@ public class OrgaUnitFormView extends View {
 	private OrgaUnit toChangeOrgaUnit;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
-	private Worketplace connectedWorketplace;
-	private Report connectedReportGenerator;
 	/*
 	 * Grid mit 9 Zeilen und 2 Spalten für das Formular bereitstellen.
 	 */
@@ -65,12 +63,7 @@ public class OrgaUnitFormView extends View {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public <T extends EntryPoint> OrgaUnitFormView(T entryPoint) {
-		if (entryPoint instanceof Worketplace) {
-			connectedWorketplace = (Worketplace) entryPoint;
-		} else if (entryPoint instanceof Report) {
-			connectedReportGenerator = (Report) entryPoint;
-		}
+	public OrgaUnitFormView() {
 		changeHeadline = createHeadline("Meinen Nutzer bearbeiten", true);
 		addHeadline = createHeadline("Meinen Nutzer erstellen", true);
 
@@ -615,13 +608,8 @@ public class OrgaUnitFormView extends View {
 
 	protected void runAfterInsert() {
 		Window.alert("Ihr Nutzer wurde erfolgreich erstellt");
-		RootPanel.get("navigation").clear(true);
-		this.clear();
-		if (connectedWorketplace instanceof Worketplace) {
-			connectedWorketplace.renderApplicationForLoggedIn();
-		} else if (connectedReportGenerator instanceof Report) {
-			connectedReportGenerator.renderApplicationForLoggedIn();
-		}
+		History.newItem("Startseite");
+		Window.Location.reload();
 	}
 
 	@Override
