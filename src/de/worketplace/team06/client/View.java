@@ -12,18 +12,8 @@ public abstract class View extends Page {
 			.getWorketplaceAdministration();
 
 	public View() {
-		this.setBreadcrumb();
-		if (!(History.getToken().equals(this.returnTokenName()))) {
-			if (this instanceof MarketplaceOverView
-					&& ClientsideSettings.getCurrentMarketplaceId() != -1) {
-			} else if (this instanceof MarketplaceView
-					&& ClientsideSettings.getCurrentProjectId() != -1) {
-			} else if (this instanceof ProjectView
-					&& ClientsideSettings.getCurrentCallId() != -1) {
-			} else {
-				History.newItem(this.returnTokenName());
-			}
-		}
+		setBreadcrumb();
+		loadToken();
 	}
 
 	public abstract void setBreadcrumb();
@@ -31,4 +21,18 @@ public abstract class View extends Page {
 	public abstract void loadData();
 
 	public abstract String returnTokenName();
+	
+	public void loadToken() {
+		if (!(History.getToken().equals(this.returnTokenName()))) {
+			if (this instanceof MarketplaceOverView
+					&& ClientsideSettings.getCurrentMarketplaceId() != 0) {
+			} else if (this instanceof MarketplaceView
+					&& ClientsideSettings.getCurrentProjectId() != 0) {
+			} else if (this instanceof ProjectView
+					&& ClientsideSettings.getCurrentCallId() != 0) {
+			} else {
+				History.newItem(this.returnTokenName());
+			}
+		}
+	}
 }

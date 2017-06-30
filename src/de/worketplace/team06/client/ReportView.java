@@ -19,7 +19,7 @@ public abstract class ReportView extends View {
 	
 	protected ListBox getAllApplicantsOfCurrentUserInput(final Callback callback) {
 		ListBox allUsers = new ListBox();
-//		reportGenerator. TODO hier RPC Call und alle Daten holen
+		reportGenerator.getAllApplicantsForAllCallsF
 		allUsers.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				if (callback instanceof Callback) {

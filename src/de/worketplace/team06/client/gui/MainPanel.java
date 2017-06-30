@@ -4,15 +4,12 @@
 package de.worketplace.team06.client.gui;
 
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
-import de.worketplace.team06.client.gui.report.*;
 
 /**
  * 
