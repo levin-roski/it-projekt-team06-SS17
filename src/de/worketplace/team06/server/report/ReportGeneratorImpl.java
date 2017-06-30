@@ -349,7 +349,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Row headline = new Row();
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
-		headline.addColumn(new Column("OrgaUnit Name"));
+		headline.addColumn(new Column("Name"));
 		headline.addColumn(new Column("Bewerbungstext"));
 		headline.addColumn(new Column("Status"));
 		headline.addColumn(new Column("Rating"));
