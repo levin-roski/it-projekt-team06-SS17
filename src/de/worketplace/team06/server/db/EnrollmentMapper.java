@@ -1,11 +1,18 @@
 package de.worketplace.team06.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
-import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.shared.bo.Enrollment;
+import de.worketplace.team06.shared.bo.Organisation;
+import de.worketplace.team06.shared.bo.Person;
+import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Team;
 /**
  * Die Mapper-Klasse MarketplaceMapper bildet Marketplace-Objekte als Datensätze
  * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
