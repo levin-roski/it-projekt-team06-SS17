@@ -6,10 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.Project;
-import de.worketplace.team06.shared.bo.Team;
 
 /**
  * Die Mapper-Klasse ProjectMapper bildet Project-Objekte als Datensätze
