@@ -1,8 +1,8 @@
 package de.worketplace.team06.shared.report;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+
+import java.util.Date;
 
 import de.worketplace.team06.shared.report.Paragraph;
 
@@ -48,7 +48,7 @@ public abstract class Report implements Serializable {
   /**
    * Datum der Erstellung des Berichts.
    */
-  private Timestamp created;
+  private Date created;
 
   /**
    * Auslesen des Impressums.
@@ -109,7 +109,7 @@ public abstract class Report implements Serializable {
    * 
    * @return Datum der Erstellung des Berichts
    */
-  public Timestamp getCreated() {
+  public Date getCreated() {
     return this.created;
   }
 
@@ -120,44 +120,8 @@ public abstract class Report implements Serializable {
    * 
    * @param created Zeitpunkt der Erstellung
    */
-  public void setCreated(Timestamp created) {
+  public void setCreated(Date created) {
     this.created = created;
   }
-  
-	/**
-	 * Methode zum extrahieren des Datums eines Zeitstempels und Rückgabe als String
-	 * @param ts
-	 * @return date String
-	 */
-	public String getDateForTS(){
-		String date = "Kein aktuelles Datum gesetzt!";
-		try {
-			if(this.created != null){
-				date = new SimpleDateFormat("dd.MM.yyyy").format(this.created);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return date;
-	}
-	
-	/**
-	 * Methode zum extrahieren der Uhrzeit eines Zeitstempels und Rückgabe als String
-	 * @param ts
-	 * @return time String
-	 */
-	public String getTimeForTS(){
-		String time = "Keine aktuelle Uhrzeit gesetzt!";
-		try {
-			if (this.created != null){
-				time = new SimpleDateFormat("HH:MM").format(this.created);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return time;
-	}
 
 }
