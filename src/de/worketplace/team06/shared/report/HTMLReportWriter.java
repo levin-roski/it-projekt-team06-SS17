@@ -119,52 +119,12 @@ public class HTMLReportWriter extends ReportWriter {
 
 	@Override
 	public void process(AllApplicationsOfApplicantReport r) {
-		this.resetReportText();
-		
-		StringBuffer result = new StringBuffer();
-		
-		result.append("<H2>" + r.getTitle() + "</H2>");
-		result.append("<table><tr>");
-
-		Vector<Row> rows = r.getRows();
-		result.append("<table>");
-		for (int i = 0; i < rows.size(); i++) {
-			Row row = rows.elementAt(i);
-		    result.append("<tr>");
-		    for (int j = 0; j < row.getNumColumns(); j++) {
-		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
-		    }
-		    result.append("</tr>");
-		}
-		
-		result.append("</table>");
-		this.reportText = result.toString();
-		
+		simpleReportProcessWithoutHeader(r);
 	}
 
 	@Override
 	public void process(AllEnrollmentsOfApplicantReport r) {
-		this.resetReportText();
-		
-		StringBuffer result = new StringBuffer();
-		
-		result.append("<H2>" + r.getTitle() + "</H2>");
-		result.append("<table><tr>");
-
-		Vector<Row> rows = r.getRows();
-		result.append("<table>");
-		for (int i = 0; i < rows.size(); i++) {
-			Row row = rows.elementAt(i);
-		    result.append("<tr>");
-		    for (int j = 0; j < row.getNumColumns(); j++) {
-		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
-		    }
-		    result.append("</tr>");
-		}
-		
-		result.append("</table>");
-		this.reportText = result.toString();
-		
+		simpleReportProcessWithoutHeader(r);
 	}
 
 	@Override
@@ -173,13 +133,14 @@ public class HTMLReportWriter extends ReportWriter {
 		
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
+		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
+		result.append("<br />");
 
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
@@ -206,13 +167,14 @@ public class HTMLReportWriter extends ReportWriter {
 		
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
+		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
+		result.append("<br />");
 		
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
@@ -229,14 +191,12 @@ public class HTMLReportWriter extends ReportWriter {
 	
 	@Override
 	public void process(FanInOfApplicationsOfUserReport r) {
-		simpleReportProcess(r);
-		
+		simpleReportProcessWithoutHeader(r);
 	}
 
 	@Override
 	public void process(FanOutOfCallsOfUserReport r) {
-		simpleReportProcess(r);
-		
+		simpleReportProcessWithoutHeader(r);
 	}
 	
 	@Override
@@ -245,13 +205,14 @@ public class HTMLReportWriter extends ReportWriter {
 		
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
+		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
+		result.append("<br />");
 		
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
@@ -283,25 +244,70 @@ public class HTMLReportWriter extends ReportWriter {
 		
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
+		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		result.append("</table>");
+		result.append("<br />");
 
 		Vector<Row> rows = r.getRows();
 		result.append("<table>");
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.elementAt(i);
-		    result.append("<tr>");
+			
+			//Die erste Zeile der Tabelle wird ein TableHeader, ansonsten eine einfache Zeile
+			if(i == 0){
+				result.append("<tr class=\"theader\">");
+			} else {
+				result.append("<tr>");
+			}
+			
 		    for (int j = 0; j < row.getNumColumns(); j++) {
 		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
 		    }
-		    result.append("</tr>");
+			result.append("</tr>");
 		}
 		
 		result.append("</table>");
+		this.reportText = result.toString();
+	}
+	
+	/**
+	 * Einheitliche Methode zum Erstellen von SimpleReports in HTML-Format.
+	 * Da die Logik der Erstellung von SimpleReports und der Aufbaue identisch ist,
+	 * genügt jeweils der Aufruf dieser Methode.
+	 * @param r
+	 */
+	private void simpleReportProcessWithoutHeader(SimpleReport r){
+		this.resetReportText();
+		
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<h2 class=\"report\">" + r.getTitle() + "</h2>");
+		//result.append("<table class=\"headerdata\"><tr>");
+
+		Vector<Row> rows = r.getRows();
+		result.append("<table>");
+		for (int i = 0; i < rows.size(); i++) {
+			Row row = rows.elementAt(i);
+			
+			//Die erste Zeile der Tabelle wird ein TableHeader, ansonsten eine einfache Zeile
+			if(i == 0){
+				result.append("<tr class=\"theader\">");
+			} else {
+				result.append("<tr>");
+			}
+			
+		    for (int j = 0; j < row.getNumColumns(); j++) {
+		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
+		    }
+			result.append("</tr>");
+		}
+		
+		result.append("</table>");
+		result.append("<br />");
 		this.reportText = result.toString();
 	}
 	
