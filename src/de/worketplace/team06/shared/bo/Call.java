@@ -17,6 +17,7 @@ public class Call extends BusinessObject {
      */
     public Call() {
     	this.setStatus(0);
+    	this.setMatchingCount(0);
     }
 
     /**
@@ -41,6 +42,11 @@ public class Call extends BusinessObject {
      * 1 erfolgreich besetzt
      */
     private Integer status;
+    /**
+     * Variable für das speichern, der übereinstimmenden Properties
+     * mit einem PartnerProfile einer OrgaUnit
+     */
+    private Integer matchingCount;
     
     /**
      * ID für das Projekt
@@ -145,7 +151,14 @@ public class Call extends BusinessObject {
 	public Integer getPartnerProfileID() {
 		return partnerProfileID;
 	}
-
+	
+	/**
+	 * Auslesen des MatchingCounts
+	 * @return matchingCount
+	 */
+	public Integer getMatchingCount() {
+		return matchingCount;
+	}
     /**
      * Setzen der ID für den Projektleiter
      * @param projectLeaderID
@@ -204,6 +217,14 @@ public class Call extends BusinessObject {
 	 */
 	public void setPartnerProfileID(Integer partnerProfileID) {
 		this.partnerProfileID = partnerProfileID;
+	}
+
+	/**
+	 * Setzen des Matching Zählers
+	 * @param matchingCount
+	 */
+	public void setMatchingCount(Integer matchingCount) {
+		this.matchingCount = matchingCount;
 	}
 
 }

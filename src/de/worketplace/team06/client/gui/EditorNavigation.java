@@ -2,6 +2,7 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -14,7 +15,6 @@ public class EditorNavigation extends VerticalPanel {
 	
 	public EditorNavigation() {
 		MenuBar menu = new MenuBar();
-		ClientsideSettings.setCurrentNavigation(menu);
 		menu.setAutoOpen(true);
 		menu.setAnimationEnabled(true);
 		this.setWidth("100%");
@@ -29,19 +29,19 @@ public class EditorNavigation extends VerticalPanel {
 
 		menu.addItem(new MenuItem(logo, new Command() {
 			public void execute() {
-				mainPanel.setView(new MyOverView());
+				History.newItem("Startseite");
 			}
 		}));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Mein Bereich", new Command() {
 			public void execute() {
-				mainPanel.setView(new MyOverView());
+				History.newItem("Startseite");
 			}
 		}));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Marktplätze", new Command() {
 			public void execute() {
-				mainPanel.setView(new MarketplaceOverView());
+				History.newItem("Marktplaetze");
 			}
 		}));
 		menu.addSeparator();
@@ -49,12 +49,12 @@ public class EditorNavigation extends VerticalPanel {
 		optionenMenu.setAnimationEnabled(true);
 		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {
 			public void execute() {
-				mainPanel.setView(new OrgaUnitFormView(null));
+				History.newItem("Mein-Nutzer");
 			}
 		}));
 		optionenMenu.addItem(new MenuItem("Mein Partnerprofil", new Command() {
 			public void execute() {
-				mainPanel.setView(new OrgaUnitPartnerProfileView());
+				History.newItem("Mein-Partnerprofil");
 			}
 		}));
 		optionenMenu.addItem(new MenuItem("Zum Report Generator", new Command() {

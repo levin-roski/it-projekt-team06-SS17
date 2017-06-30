@@ -96,6 +96,8 @@ public class OrgaUnitMapper {
 		}
 		
 	}
+	
+	
 
 	/**
 	 * Auslesen des Types der Organisationseinheit aus der Datenbank. Anhand der übergebenen ID

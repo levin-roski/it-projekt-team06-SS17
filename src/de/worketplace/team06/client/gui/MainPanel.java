@@ -5,12 +5,14 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
+import de.worketplace.team06.client.gui.report.*;
 
 /**
  * 
@@ -42,20 +44,6 @@ public class MainPanel extends DockLayoutPanel {
 		this.getWidget(0).setStyleName("main-panel-overview");
 		this.getWidget(0).setHeight("100%");
 		ClientsideSettings.setCurrentView(viewItem);
-		if (viewItem instanceof MarketplaceOverView) {
-			History.newItem("Marktplaetze");
-		} else if (viewItem instanceof MyOverView) {
-			History.newItem("");
-		} else if (viewItem instanceof MarketplaceView) {
-			History.newItem("Marktplatz-Details" + ClientsideSettings.getCurrentMarketplaceId());
-		} else if (viewItem instanceof ProjectView) {
-			History.newItem("Projekt-Details" + ClientsideSettings.getCurrentProjectId() + "-"
-					+ ClientsideSettings.getCurrentMarketplaceId());
-		} else if (viewItem instanceof CallView) {
-			History.newItem("Ausschreibungs-Details" + ClientsideSettings.getCurrentCallId() + "-"
-					+ ClientsideSettings.getCurrentProjectId() + "-" + ClientsideSettings.getCurrentMarketplaceId());
-		}
-		// TODO Auch ReportGenerator Seiten hinzufügen!
 	}
 
 	public <T extends Widget> void setForm(T formItem) {

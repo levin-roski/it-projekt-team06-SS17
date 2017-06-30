@@ -6,6 +6,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -55,8 +57,7 @@ public class ProjectView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Call selectedCall = callSsm.getSelectedObject();
 				ClientsideSettings.setCurrentCallId(selectedCall.getID());
-				mainPanel.setView(new CallView(selectedCall));
-
+				History.newItem("Ausschreibungs-Details"+selectedCall.getID()+"-"+ClientsideSettings.getCurrentProjectId()+"-"+ClientsideSettings.getCurrentMarketplaceId());
 			}
 		});
 
@@ -79,9 +80,9 @@ public class ProjectView extends View {
 					mainPanel.setForm(new CallForm(null, false, true, null, null));
 				}
 			});
-			root.add(newButton);	
+			root.add(newButton);
 		}
-		
+
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Enrollment> enrollmentSsm = new SingleSelectionModel<Enrollment>();
@@ -95,8 +96,10 @@ public class ProjectView extends View {
 		enrollmentSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-//				 Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
-//				 mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
+				// Enrollment selectedEnrollment =
+				// enrollmentSsm.getSelectedObject();
+				// mainPanel.setForm(new EnrollmentForm(selectedEnrollment,
+				// false, true));
 			}
 		});
 
@@ -162,5 +165,11 @@ public class ProjectView extends View {
 	@Override
 	public void setBreadcrumb() {
 		ClientsideSettings.setThirdBreadcrumb(this, "Projekt-Details");
+	}
+
+	@Override
+	public String returnTokenName() {
+		return "Projekt-Details" + ClientsideSettings.getCurrentProjectId() + "-"
+				+ ClientsideSettings.getCurrentMarketplaceId();
 	}
 }

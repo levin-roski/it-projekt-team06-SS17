@@ -1,5 +1,6 @@
-package de.worketplace.team06.client.gui;
+package de.worketplace.team06.client.gui.report;
 
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -9,6 +10,7 @@ import de.worketplace.team06.client.ReportView;
 
 public class HomeReportView extends ReportView {
 	public HomeReportView() {
+		this.add(ClientsideSettings.getBreadcrumbs());
 		VerticalPanel vp = new VerticalPanel();
 		SimplePanel sp = new SimplePanel();
 		vp.add(createHeadline("Startseite Report Generator", true));
@@ -24,7 +26,11 @@ public class HomeReportView extends ReportView {
 
 	@Override
 	public void setBreadcrumb() {
-		// TODO
-		ClientsideSettings.setFirstBreadcrumb(this, "Marktplätze");
+		ClientsideSettings.setFirstBreadcrumb(this, "Startseite");
+	}
+
+	@Override
+	public String returnTokenName() {
+		return "Startseite";
 	}
 }

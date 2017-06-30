@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -107,6 +108,11 @@ public class OrgaUnitPartnerProfileView extends View {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setSecondBreadcrumb(this, "Marktplatz-Details");
+		ClientsideSettings.setSecondBreadcrumb(this, "Mein Partnerprofil");
+	}
+	
+	@Override
+	public String returnTokenName() {
+		return "Mein-Partnerprofil";
 	}
 }

@@ -3,6 +3,8 @@ package de.worketplace.team06.server;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
@@ -18,9 +20,47 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
+		Vector<Call> allcalls = new Vector<Call>();
+		
+		Call c1 = new Call();
+		c1.setTitle("Blub");
+		c1.setMatchingCount(3);
+		allcalls.addElement(c1);
+		
+		Call c2 = new Call();
+		c2.setTitle("Aha");
+		c2.setMatchingCount(1);
+		allcalls.addElement(c2);
+		
+		Call c3 = new Call();
+		c3.setTitle("Lagoo");
+		c3.setMatchingCount(5);
+		allcalls.addElement(c3);
+		
+		
+		for (Call c : allcalls){
+			System.out.println(c.getMatchingCount());
+		}
+		
+		class CallComparator implements Comparator<Call>
+		{
+		  @Override public int compare( Call call1, Call call2 )
+		  {
+		    return call2.getMatchingCount() - call1.getMatchingCount();
+		  }
+		}
+		
+		Collections.sort(allcalls, new CallComparator());
+		
+		for (Call c : allcalls){
+			System.out.println(c.getMatchingCount());
+		}
+		
+		
+		
 //		fillDatabaseWithExamples(admin);
 		
-		testOfFindByProjectID(admin);
+//		testOfFindByProjectID(admin);
 		
 //		testOfGetProjectsFor(admin);
 		

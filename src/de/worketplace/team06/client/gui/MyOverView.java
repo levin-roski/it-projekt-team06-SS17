@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -313,5 +314,10 @@ public class MyOverView extends View {
 	@Override
 	public void setBreadcrumb() {
 		ClientsideSettings.setFirstBreadcrumb(this, "Mein Bereich");
+	}
+
+	@Override
+	public String returnTokenName() {
+		return "Startseite";
 	}
 }

@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -35,9 +36,9 @@ public class MarketplaceOverView extends View {
 		allMarketplaceSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Marketplace currentMarketplace = allMarketplaceSsm.getSelectedObject();
-				ClientsideSettings.setCurrentMarketplaceId(currentMarketplace.getID());
-				mainPanel.setView(new MarketplaceView(currentMarketplace));
+				Marketplace selectedMarketplace = allMarketplaceSsm.getSelectedObject();
+				ClientsideSettings.setCurrentMarketplaceId(selectedMarketplace.getID());
+				History.newItem("Marktplatz-Details"+selectedMarketplace.getID());
 			}
 		});
 
@@ -95,5 +96,10 @@ public class MarketplaceOverView extends View {
 	@Override
 	public void setBreadcrumb() {
 		ClientsideSettings.setFirstBreadcrumb(this, "Marktplätze");		
+	}
+
+	@Override
+	public String returnTokenName() {
+		return "Marktplaetze";
 	}
 }

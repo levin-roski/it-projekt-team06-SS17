@@ -6,7 +6,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.gui.MainPanel;
-import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
 import de.worketplace.team06.shared.bo.OrgaUnit;
 
 public abstract class Page extends VerticalPanel {

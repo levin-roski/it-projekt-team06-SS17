@@ -1,6 +1,8 @@
 package de.worketplace.team06.server.report;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -168,11 +170,100 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	/**
 	 * 
+	 * @param o
+	 * @return 
 	 */
 	@Override
 	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException {
-		//TODO: Überlegung, wie die Partnerprofile verglichen werden. Ggf. DB "like"
-		return null;
+		
+		//Partnerprofil des angemeldeten Users auslesen
+		PartnerProfile pp = wpadmin.createPartnerProfileFor(o);
+		
+		//Alle Eigenschaften des angemeldeten Users in einen Vektor einlesen
+		Vector<Property> allPropsOfOu = wpadmin.getAllPropertiesFor(pp);
+		
+		//Alle Ausschreibungen in einen Vektor einlesen
+		Vector<Call> allCalls = wpadmin.getAllCalls();
+		
+		//Vektor für die zutreffenden Ausschreibungen instanziieren
+		Vector<Call> matchingCalls = new Vector<Call>();
+		
+		//Erstellung einer Instanz des Reports
+		AllCallsMatchingWithUserReport report = new AllCallsMatchingWithUserReport();
+		
+		//Setzen des Reporttitels und dem Generierungsdatum
+		report.setTitle("Alle interessanten Ausschreibungen für den Benutzer");
+		report.setCreated(new Timestamp(System.currentTimeMillis()));
+		
+		Row headline = new Row();
+		
+		//Kopfzeile mit den Überschriften 
+		headline.addColumn(new Column("Titel"));
+		headline.addColumn(new Column("Bewerbungsfrist"));
+		headline.addColumn(new Column("Projektname"));
+		headline.addColumn(new Column("Status"));
+		
+		//Kopfzeile dem Report hinzufügen
+		report.addRow(headline);
+	
+		/*
+		 * Innerhalb der verschachtelten Schleifen werden die Eigenschaften der Ausschreibungen(PartnerProfile)
+		 * mit dein Eigenschaften der OrgaUnit(PartnerProfil) verglichen und bei einem Treffer dem Vektor
+		 * matchingCalls hinzugefügt. Ebenso wird bei jedem Treffer überprüft, ob die Ausschreibung bereits
+		 * zum matchingCalls Vektor hinzugefügt wurde oder nicht. Wenn Ja wird nur der MatchingCount dieser
+		 * Instanz erhöht. 
+		 */
+		for(Call c : allCalls){
+			PartnerProfile tempPartnerProfile = wpadmin.getPartnerProfileFor(c);
+			Vector<Property> tempProperties = wpadmin.getAllPropertiesFor(tempPartnerProfile);
+			
+			for (Property prop : tempProperties){
+				for (Property prop2 : allPropsOfOu){
+					if (prop.getValue() == prop2.getValue() && prop.getName() == prop2.getName()){
+						if(!matchingCalls.contains(c)){
+							matchingCalls.addElement(c);
+							c.setMatchingCount(1);
+						}
+						else{
+							int temp = c.getMatchingCount();
+							temp++;
+							c.setMatchingCount(temp);
+						}
+					}
+				}
+			}
+		}
+		
+		
+		/*
+		 * Die Lokale Klasse bildet die Differenz der Größe MatchingCount. Die Klasse stellt eine 
+		 * einfache Möglichkeit dar eine Rückgabe <0, =0 oder >0 zu bekommen. (Funktioniert 
+		 * allerdings nicht mit Fließkommazahlen) Da wir die Ausgabe 
+		 * reverse sortieren wollen rechnen wir call2 - call1. 
+		 */
+		class CallComparator implements Comparator<Call>
+		{
+		  @Override public int compare( Call call1, Call call2 )
+		  {
+		    return call2.getMatchingCount() - call1.getMatchingCount();
+		  }
+		}
+		
+		// Mit dem CallComparator-Objekt lässt sich der Vector nach dem MatchingCount sortieren
+		Collections.sort(matchingCalls, new CallComparator());
+		
+		for (Call call : matchingCalls){
+			Project proj = wpadmin.getProjectByID(call.getProjectID());
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(call.getTitle()));
+			rowToAdd.addColumn(new Column(call.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(proj.getTitle()));
+			rowToAdd.addColumn(new Column(call.getStatusString()));
+			report.addRow(rowToAdd);
+		}
+		
+		
+		return report;
 	}
 	
 	
@@ -384,7 +475,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	/**
-	 * Methode zum Generieren eines Reports für die Anzahl aller Bewerbungen des Users und dessen Stati (FanIn-Analyse)
+	 * Methode zum Generieren eines Reports für die Anzahl aller Bewerbungen aller Teilnehmer und dessen Stati (FanIn-Analyse)
+	 * Die OrgaUnit wird übergeben, damit ggf. noch Header/Impressum-Daten hinzugefügt werden können.
 	 */
 	@Override
 	public FanInOfApplicationsOfUserReport createFanInOfApplicationsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
@@ -399,6 +491,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
 		headline.addColumn(new Column("Name"));
+		headline.addColumn(new Column("Typ"));
 		headline.addColumn(new Column("laufend"));
 		headline.addColumn(new Column("abgelehnt"));
 		headline.addColumn(new Column("angenommen"));
@@ -410,34 +503,43 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Integer assumed = 0;
 		Integer rejected = 0;
 		
+		//Alle Organisations-Einheiten aus der Datenbank auslesen
+		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
+		allOrgaUnits = wpadmin.getAllOrgaUnits();
+		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
-		Vector<Application> applications = wpadmin.getApplicationsFor(o);
-		for (Application a : applications){
-			switch (a.getStatus()){
-			case 0:
-				ongoing++;
-				break;
-			case 1:
-				assumed++;
-				break;
-			case 2:
-				rejected++;
-				break;
+		for (OrgaUnit ou : allOrgaUnits){
+			Vector<Application> applications = wpadmin.getApplicationsFor(ou);
+			for (Application a : applications){
+				switch (a.getStatus()){
+				case 0:
+					ongoing++;
+					break;
+				case 1:
+					assumed++;
+					break;
+				case 2:
+					rejected++;
+					break;
+				}
 			}
-		}
 
-		Row rowToAdd = new Row();
-		rowToAdd.addColumn(new Column(getNameForOrgaUnit(o)));
-		rowToAdd.addColumn(new Column(ongoing.toString()));
-		rowToAdd.addColumn(new Column(assumed.toString()));
-		rowToAdd.addColumn(new Column(rejected.toString()));
-		report.addRow(rowToAdd);
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(getNameForOrgaUnit(ou)));
+			rowToAdd.addColumn(new Column(ou.getType()));
+			rowToAdd.addColumn(new Column(ongoing.toString()));
+			rowToAdd.addColumn(new Column(assumed.toString()));
+			rowToAdd.addColumn(new Column(rejected.toString()));
+			report.addRow(rowToAdd);
+			
+		}
 		
 		return report;
 	}
 	
 	/**
-	 * Methode zum Generieren eines Reports für die Anzahl aller Ausschreibungen des Users und dessen Stati (FanOut-Analyse)
+	 * Methode zum Generieren eines Reports für die Anzahl aller Ausschreibungen aller Teilnehmer und dessen Stati (FanOut-Analyse)
+	 * Die OrgaUnit wird übergeben, damit ggf. noch Header/Impressum-Daten hinzugefügt werden können.
 	 */
 	@Override
 	public FanOutOfCallsOfUserReport createFanOutOfCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException {
@@ -452,6 +554,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
 		headline.addColumn(new Column("Name"));
+		headline.addColumn(new Column("Typ"));
 		headline.addColumn(new Column("laufend"));
 		headline.addColumn(new Column("erfolgreich besetzt"));
 		headline.addColumn(new Column("laufend"));
@@ -463,31 +566,39 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Integer successful = 0;
 		Integer canceled = 0;
 		
+		//Alle Organisations-Einheiten aus der Datenbank auslesen
+		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
+		allOrgaUnits = wpadmin.getAllOrgaUnits();
+		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
-		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
-		for (Project p : projects){
-			Vector<Call> calls = wpadmin.getCallsFor(p);
-			for (Call c : calls){
-				switch (c.getStatus()){
-				case 0:
-					ongoing++;
-					break;
-				case 1:
-					successful++;
-					break;
-				case 2:
-					canceled++;
-					break;
+		for (OrgaUnit ou : allOrgaUnits){
+			Vector<Project> projects = wpadmin.getProjectsForLeader(ou);
+			for (Project p : projects){
+				Vector<Call> calls = wpadmin.getCallsFor(p);
+				for (Call c : calls){
+					switch (c.getStatus()){
+					case 0:
+						ongoing++;
+						break;
+					case 1:
+						successful++;
+						break;
+					case 2:
+						canceled++;
+						break;
+					}
 				}
 			}
+
+			Row rowToAdd = new Row();
+			rowToAdd.addColumn(new Column(getNameForOrgaUnit(ou)));
+			rowToAdd.addColumn(new Column(ou.getType()));
+			rowToAdd.addColumn(new Column(ongoing.toString()));
+			rowToAdd.addColumn(new Column(successful.toString()));
+			rowToAdd.addColumn(new Column(canceled.toString()));
+			report.addRow(rowToAdd);
 		}
 
-		Row rowToAdd = new Row();
-		rowToAdd.addColumn(new Column(getNameForOrgaUnit(o)));
-		rowToAdd.addColumn(new Column(ongoing.toString()));
-		rowToAdd.addColumn(new Column(successful.toString()));
-		rowToAdd.addColumn(new Column(canceled.toString()));
-		report.addRow(rowToAdd);
 		
 		return report;
 	}
@@ -501,7 +612,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanInFanOutOfUserReport report = new FanInFanOutOfUserReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("FanIn-FanOut-Analyse für : " + getNameForOrgaUnit(o));
+		report.setTitle("FanIn-FanOut-Analyse für alle Teilnehmer");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		//Hinzufügen der einzelnen Reports
