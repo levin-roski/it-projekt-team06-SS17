@@ -623,4 +623,9 @@ public class OrgaUnitFormView extends View {
 			connectedReportGenerator.renderApplicationForLoggedIn();
 		}
 	}
+
+	@Override
+	public String returnTokenName() {
+		return "Mein-Nutzer";
+	}
 }

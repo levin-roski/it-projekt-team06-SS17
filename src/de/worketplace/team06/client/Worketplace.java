@@ -19,6 +19,7 @@ import de.worketplace.team06.client.gui.MarketplaceOverView;
 import de.worketplace.team06.client.gui.MarketplaceView;
 import de.worketplace.team06.client.gui.MyOverView;
 import de.worketplace.team06.client.gui.OrgaUnitFormView;
+import de.worketplace.team06.client.gui.OrgaUnitPartnerProfileView;
 import de.worketplace.team06.client.gui.ProjectView;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
@@ -109,6 +110,8 @@ public class Worketplace implements EntryPoint {
 				mainPanel.setView(new MarketplaceOverView());
 			} else if (historyToken.equals("Mein-Nutzer")) {
 				mainPanel.setView(new OrgaUnitFormView(null));
+			} else if (historyToken.equals("Mein-Partnerprofil")) {
+				mainPanel.setView(new OrgaUnitPartnerProfileView());
 			} else if (historyToken.substring(0, 18).equals("Marktplatz-Details")) {
 				worketplaceAdministration.getMarketplaceByID(Integer.parseInt(historyToken.substring(18)),
 						new AsyncCallback<Marketplace>() {

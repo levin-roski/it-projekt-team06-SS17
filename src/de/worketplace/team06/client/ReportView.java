@@ -17,19 +17,6 @@ public abstract class ReportView extends View {
 		this.add(html);
 	}
 	
-	protected ListBox getAllOrgaUnitsInput(final Callback callback) {
-		ListBox allUsers = new ListBox();
-//		reportGenerator. TODO hier RPC Call und alle Daten holen
-		allUsers.addChangeHandler(new ChangeHandler() {
-			public void onChange(ChangeEvent event) {
-				if (callback instanceof Callback) {
-					callback.run();
-				}
-			}
-		});
-		return allUsers;
-	}
-	
 	protected ListBox getAllApplicantsOfCurrentUserInput(final Callback callback) {
 		ListBox allUsers = new ListBox();
 //		reportGenerator. TODO hier RPC Call und alle Daten holen

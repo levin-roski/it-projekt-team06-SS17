@@ -1,5 +1,6 @@
-package de.worketplace.team06.client.gui;
+package de.worketplace.team06.client.gui.report;
 
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -27,7 +28,11 @@ public class AllCallsOfUserReportView extends ReportView {
 
 	@Override
 	public void setBreadcrumb() {
-		// TODO
-		ClientsideSettings.setFirstBreadcrumb(this, "");
+		ClientsideSettings.setFirstBreadcrumb(this, "Meine Ausschreibungen");
+	}
+
+	@Override
+	public String returnTokenName() {
+		return "Meine-Ausschreibungen";
 	}
 }

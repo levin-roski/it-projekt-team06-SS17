@@ -1,5 +1,6 @@
-package de.worketplace.team06.client.gui;
+package de.worketplace.team06.client.gui.report;
 
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -29,5 +30,10 @@ public class FanInFanOutOfUserReportView extends ReportView {
 	@Override
 	public void setBreadcrumb() {
 		ClientsideSettings.setFirstBreadcrumb(this, "Fan-In-Fan-Out-Analyse");
+	}
+
+	@Override
+	public String returnTokenName() {
+		return "Fan-In-Fan-Out-Analyse";
 	}
 }

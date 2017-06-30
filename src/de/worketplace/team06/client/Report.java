@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.worketplace.team06.client.gui.*;
+import de.worketplace.team06.client.gui.report.*;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.ReportGeneratorAsync;
@@ -102,11 +103,24 @@ public class Report implements EntryPoint {
 				mainPanel.setView(new FanInOfApplicationsOfUserReportView());
 			} else if (historyToken.equals("Fan-In-Fan-Out-Analyse")) {
 				mainPanel.setView(new FanInFanOutOfUserReportView());
+			} else if (historyToken.equals("Meine-Ausschreibungen")) {
+				mainPanel.setView(new AllCallsOfUserReportView());
+			} else if (historyToken.equals("Anzahl-meiner-Ausschreibungen-nach-Status-(Fan-Out)")) {
+				mainPanel.setView(new FanOutOfApplicationsOfUserReportView());
+			} else if (historyToken.equals("Bewerbungen-auf-meine-Ausschreibungen")) {
+				mainPanel.setView(new AllApplicationsForCallsOfUserReportView());
+			} else if (historyToken.equals("Bewerbungen-meines-Bewerbers")) {
+				mainPanel.setView(new AllApplicationsOfApplicantReportView());
+			} else if (historyToken.equals("Beteiligungen-meines-Bewerbers")) {
+				mainPanel.setView(new AllEnrollmentsOfApplicantReportView());
+			} else if (historyToken.equals("Verflechtungen-meines-Bewerbers")) {
+				mainPanel.setView(new AllInterrelationsOfApplicantReportView());
+			} else if (historyToken.equals("Verflechtungen-saemtlicher-meiner-Bewerber")) {
+				mainPanel.setView(new AllInterrelationsOfAllApplicantsOfUserReportView());
 			} else {
 				mainPanel.setView(new HomeReportView());
 			}
 		} catch (IndexOutOfBoundsException e) {
-			Window.alert("Startseite aufrufen");
 			mainPanel.setView(new HomeReportView());
 		}
 	}

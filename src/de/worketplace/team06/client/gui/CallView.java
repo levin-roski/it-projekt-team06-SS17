@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -32,7 +33,7 @@ public class CallView extends View {
 		root.setWidth("100%");
 		root.add(createHeadline("Ausschreibungs-Details", true));
 		root.add(new CallForm(currentCall, false, false, null, null));
-		
+
 		worketplaceAdministration.getPartnerProfileFor(currentCall, new AsyncCallback<PartnerProfile>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -41,27 +42,31 @@ public class CallView extends View {
 			@Override
 			public void onSuccess(PartnerProfile result) {
 				currentPartnerProfile = result;
-				
-				// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+
+				// erstellen eines SingleSelectionModels -> macht, dass immer
+				// nur ein
 				// Item zur selben Zeit ausgewählt sein kann
-				final SingleSelectionModel<Property> propertySsm = new
-				SingleSelectionModel<Property>();
-				
-				// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+				final SingleSelectionModel<Property> propertySsm = new SingleSelectionModel<Property>();
+
+				// erstellen eines SingleSelectionModels -> macht, dass immer
+				// nur ein
 				// Item zur selben Zeit ausgewählt sein kann
 				propertyTable.setSelectionModel(propertySsm);
-				
-				// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
+
+				// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile
+				// der
 				// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
 				propertySsm.addSelectionChangeHandler(new Handler() {
 					@Override
 					public void onSelectionChange(SelectionChangeEvent event) {
-					Property selectedProperty = propertySsm.getSelectedObject();
-					mainPanel.setForm(new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
-				}
+						Property selectedProperty = propertySsm.getSelectedObject();
+						mainPanel.setForm(
+								new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
+					}
 				});
 
-				// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
+				// hinzufügen der Tabellenspaltennamen sowie hinzufügen der
+				// zugehörigen
 				// Daten aus der Datenbank
 				TextColumn<Property> propertyTitleColumn = new TextColumn<Property>() {
 					@Override
@@ -74,7 +79,7 @@ public class CallView extends View {
 				TextColumn<Property> propertyValueColumn = new TextColumn<Property>() {
 					@Override
 					public String getValue(Property object) {
-						 return object.getValue();
+						return object.getValue();
 					}
 				};
 				propertyTable.addColumn(propertyValueColumn, "Eigenschaften-Name");
@@ -123,5 +128,11 @@ public class CallView extends View {
 	@Override
 	public void setBreadcrumb() {
 		ClientsideSettings.setFourthBreadcrumb(this, "Ausschreibungs-Details");
+	}
+
+	@Override
+	public String returnTokenName() {
+		return "Ausschreibungs-Details" + ClientsideSettings.getCurrentCallId() + "-"
+				+ ClientsideSettings.getCurrentProjectId() + "-" + ClientsideSettings.getCurrentMarketplaceId();
 	}
 }
