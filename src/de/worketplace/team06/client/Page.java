@@ -1,8 +1,7 @@
 package de.worketplace.team06.client;
 
-import javax.swing.text.html.HTML;
-
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
