@@ -166,5 +166,11 @@ public interface WorketplaceAdministrationAsync {
 
 	void getAllPersons(AsyncCallback<Vector<Person>> callback);
 
+	void getAllOrgaUnits(AsyncCallback<Vector<OrgaUnit>> callback);
+
+	void getAllTeams(AsyncCallback<Vector<Team>> callback);
+
+	void getAllOrganisations(AsyncCallback<Vector<Organisation>> callback);
+
 	
 }

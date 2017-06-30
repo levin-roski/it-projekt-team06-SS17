@@ -786,6 +786,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.orgaMapper.findByGoogleID(googleID);
 	}
 	
+	@Override
+	public Vector<Organisation> getAllOrganisations(){
+		return this.orgaMapper.findAll();
+	}
+	
 	
 	
 	/*
@@ -793,6 +798,36 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * -- METHODEN für OrgaUnit --
 	 * ---------------------------------
 	 */
+	
+	/**
+	 * Auslesen eines Vectors mit allen OrgaUnits
+	 * @param void
+	 * @return allOrgaUnits
+	 */
+	@Override
+	public Vector<OrgaUnit> getAllOrgaUnits() {
+		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
+		Vector<Person> allPersons = getAllPersons();
+		Vector<Team> allTeams = getAllTeams();
+		Vector<Organisation> allOrganisations = getAllOrganisations();
+		
+		
+		for(Person p : allPersons){
+			allOrgaUnits.addElement(p);
+		}
+		
+		
+		for(Team t : allTeams){
+			allOrgaUnits.addElement(t);
+		}
+		
+		
+		for(Organisation o : allOrganisations){
+			allOrgaUnits.add(o);
+		}
+		
+		return allOrgaUnits;
+	}
 	
 	@Override
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException {
@@ -1503,6 +1538,11 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	public Team getTeamByGoogleID(String googleID){
 
 		return this.teamMapper.findByGoogleID(googleID);
+	}
+	
+	@Override
+	public Vector<Team> getAllTeams(){
+		return this.teamMapper.findAll();
 	}
 	
 
