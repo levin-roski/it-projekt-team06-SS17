@@ -201,7 +201,7 @@ public class RatingMapper {
         	
         	stmt.executeUpdate("UPDATE rating " 
         	+ "SET statement=\"" + r.getRatingStatement() + "\", "
-        	+ "created=\"" +  r.getCreated() + "\" " 
+        	+ "created=\"" +  r.getCreated() + "\", " 
         	+ "rating=\"" +  r.getRating() + "\" " 
         	+ "WHERE id=" + r.getID());
         }

@@ -224,7 +224,7 @@ import de.worketplace.team06.shared.bo.Project;
         	+ "SET description=\"" + proj.getDescription() + "\", "
         	+ "SET projectleader_id=\"" + proj.getProjectLeaderID() + "\", "
         	+ "SET start_date=\"" + startdate + "\", "
-        	+ "SET end_date=\"" + enddate + "\", "
+        	+ "SET end_date=\"" + enddate + "\" "
         	+ "WHERE id=" + proj.getID());
         }
         
