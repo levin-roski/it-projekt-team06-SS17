@@ -3,6 +3,8 @@
  */
 package de.worketplace.team06.shared;
 
+import java.util.Vector;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -48,6 +50,8 @@ public interface ReportGenerator extends RemoteService {
 	public FanInFanOutOfUserReport createFanInFanOutOfUserReport(OrgaUnit o) throws IllegalArgumentException;
 	
 	public OrgaUnit getOrgaUnitFor(LoginInfo loginInfo) throws IllegalArgumentException;
+
+	public Vector<OrgaUnit> getAllApplicantsForAllCallsFrom(Person person);
 
 
 }

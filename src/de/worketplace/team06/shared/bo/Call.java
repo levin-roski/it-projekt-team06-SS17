@@ -226,5 +226,31 @@ public class Call extends BusinessObject {
 	public void setMatchingCount(Integer matchingCount) {
 		this.matchingCount = matchingCount;
 	}
+	
+	
+    public boolean equals(Call c) {
+   	 /*
+        * Abfragen, ob ein Objekt ungleich NULL ist und ob ein Objekt gecastet
+        * werden kann, sind immer wichtig!
+        */
+       if (c != null && c instanceof Call) {
+         try {
+           if (c.getID() == this.getID())
+             return true;
+         }
+         catch (IllegalArgumentException e) {
+           /*
+            * Wenn irgendetwas schief geht, dann geben wir sicherheitshalber false
+            * zurück.
+            */
+           return false;
+         }
+       }
+       /*
+        * Wenn bislang keine Gleichheit bestimmt werden konnte, dann müssen
+        * schließlich false zurückgeben.
+        */
+       return false;
+   }
 
 }

@@ -119,68 +119,39 @@ public class HTMLReportWriter extends ReportWriter {
 
 	@Override
 	public void process(AllApplicationsOfApplicantReport r) {
-		this.resetReportText();
-		
-		StringBuffer result = new StringBuffer();
-		
-		result.append("<H2>" + r.getTitle() + "</H2>");
-		result.append("<table><tr>");
-
-		Vector<Row> rows = r.getRows();
-		result.append("<table>");
-		for (int i = 0; i < rows.size(); i++) {
-			Row row = rows.elementAt(i);
-		    result.append("<tr>");
-		    for (int j = 0; j < row.getNumColumns(); j++) {
-		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
-		    }
-		    result.append("</tr>");
-		}
-		
-		result.append("</table>");
-		this.reportText = result.toString();
-		
+		simpleReportProcessWithoutHeader(r);
 	}
 
 	@Override
 	public void process(AllEnrollmentsOfApplicantReport r) {
-		this.resetReportText();
-		
-		StringBuffer result = new StringBuffer();
-		
-		result.append("<H2>" + r.getTitle() + "</H2>");
-		result.append("<table><tr>");
-
-		Vector<Row> rows = r.getRows();
-		result.append("<table>");
-		for (int i = 0; i < rows.size(); i++) {
-			Row row = rows.elementAt(i);
-		    result.append("<tr>");
-		    for (int j = 0; j < row.getNumColumns(); j++) {
-		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
-		    }
-		    result.append("</tr>");
-		}
-		
-		result.append("</table>");
-		this.reportText = result.toString();
-		
+		simpleReportProcessWithoutHeader(r);
 	}
 
 	@Override
 	public void process(AllInterrelationsOfApplicantReport r) {
 		this.resetReportText();
 		
+		//Ein Stringbuffer, an den alle folgenden HTML Inhalte angehängt werden
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
+		/*
+		 * Hinzufügen der Überschrift und den Kopfdaten in HTML-Form.
+		 * Die Methode paragraph2HTML übersetzte die Kopfdaten des Reports r in ein korrektes HTML-Format.
+		 */
+		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
-			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+			result.append("<td class=\"tdheaderdata\">" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
+		result.append("<br />");
 
+		/*
+		 * Innerhalb der Schleife wird jeder SubReport je nach Typ aus dem CompositeReport gelesen und erstellt.
+		 * Dadurch, dass innerhalb der process-Methode für den jeweiligen SubReport der aktuelle Report-Text dem StringBuffer hinzugefügt wird,
+		 * sind auch die einzelnen SubReports im StringBuffer angehängt.
+		 */
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
 			if (r.getSubReportAt(i) instanceof AllApplicationsOfApplicantReport){
@@ -204,16 +175,27 @@ public class HTMLReportWriter extends ReportWriter {
 	public void process(AllInterrelationsOfAllApplicantsOfUserReport r) {
 		this.resetReportText();
 		
+		//Ein Stringbuffer, an den alle folgenden HTML Inhalte angehängt werden
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
+		/*
+		 * Hinzufügen der Überschrift und den Kopfdaten in HTML-Form.
+		 * Die Methode paragraph2HTML übersetzte die Kopfdaten des Reports r in ein korrektes HTML-Format.
+		 */
+		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
-			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+			result.append("<td class=\"tdheaderdata\">" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
+		result.append("<br />");
 		
+		/*
+		 * Innerhalb der Schleife wird jeder SubReport aus dem CompositeReport gelesen und erstellt.
+		 * Dadurch, dass innerhalb der process-Methode für den jeweiligen SubReport der aktuelle Report-Text dem StringBuffer hinzugefügt wird,
+		 * sind auch die einzelnen SubReports im StringBuffer angehängt.
+		 */
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
 			AllInterrelationsOfApplicantReport subReport = (AllInterrelationsOfApplicantReport) r.getSubReportAt(i);
@@ -229,14 +211,12 @@ public class HTMLReportWriter extends ReportWriter {
 	
 	@Override
 	public void process(FanInOfApplicationsOfUserReport r) {
-		simpleReportProcess(r);
-		
+		simpleReportProcessWithoutHeader(r);
 	}
 
 	@Override
 	public void process(FanOutOfCallsOfUserReport r) {
-		simpleReportProcess(r);
-		
+		simpleReportProcessWithoutHeader(r);
 	}
 	
 	@Override
@@ -245,14 +225,24 @@ public class HTMLReportWriter extends ReportWriter {
 		
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
+		/*
+		 * Hinzufügen der Überschrift und den Kopfdaten in HTML-Form.
+		 * Die Methode paragraph2HTML übersetzte die Kopfdaten des Reports r in ein korrektes HTML-Format.
+		 */
+		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
-			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+			result.append("<td class=\"tdheaderdata\">" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
+		result.append("<br />");
 		
+		/*
+		 * Innerhalb der Schleife wird jeder SubReport je nach Typ aus dem CompositeReport gelesen und erstellt.
+		 * Dadurch, dass innerhalb der process-Methode für den jeweiligen SubReport der aktuelle Report-Text dem StringBuffer hinzugefügt wird,
+		 * sind auch die einzelnen SubReports im StringBuffer angehängt.
+		 */
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
 			if (r.getSubReportAt(i) instanceof FanInOfApplicationsOfUserReport){
@@ -274,34 +264,88 @@ public class HTMLReportWriter extends ReportWriter {
 	
 	/**
 	 * Einheitliche Methode zum Erstellen von SimpleReports in HTML-Format.
-	 * Da die Logik der Erstellung von SimpleReports und der Aufbaue identisch ist,
+	 * Da die Logik der Erstellung von SimpleReports und der Aufbau identisch ist,
 	 * genügt jeweils der Aufruf dieser Methode.
 	 * @param r
 	 */
 	private void simpleReportProcess(SimpleReport r){
 		this.resetReportText();
 		
+		//Ein Stringbuffer, an den alle folgenden HTML Inhalte angehängt werden
 		StringBuffer result = new StringBuffer();
 		
-		result.append("<H1>" + r.getTitle() + "</H1>");
-		result.append("<table><tr>");
+		/*
+		 * Hinzufügen der Überschrift und den Kopfdaten in HTML-Form.
+		 * Die Methode paragraph2HTML übersetzte die Kopfdaten des Reports r in ein korrektes HTML-Format.
+		 */
+		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
-			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
+			result.append("<td class=\"tdheaderdata\">" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		result.append("</table>");
+		result.append("<br />");
 
+		//Hinzufügen der einzelnen Zeilen aus dem Report in HTML-Form
 		Vector<Row> rows = r.getRows();
-		result.append("<table>");
+		result.append("<table class=\"content\">");
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.elementAt(i);
-		    result.append("<tr>");
+			
+			//Die erste Zeile der Tabelle wird ein TableHeader, ansonsten eine einfache Zeile
+			if(i == 0){
+				result.append("<tr class=\"theader\">");
+			} else {
+				result.append("<tr>");
+			}
+			
 		    for (int j = 0; j < row.getNumColumns(); j++) {
 		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
 		    }
-		    result.append("</tr>");
+			result.append("</tr>");
 		}
-		
 		result.append("</table>");
+		
+		//Setzen des Report Textes auf den Inhalt des StringBuffers
+		this.reportText = result.toString();
+	}
+	
+	/**
+	 * Einheitliche Methode zum Erstellen von SimpleReports ohne Kopfdaten in HTML-Format.
+	 * Da die Logik der Erstellung von SimpleReports und der Aufbau identisch ist,
+	 * genügt jeweils der Aufruf dieser Methode.
+	 * @param r
+	 */
+	private void simpleReportProcessWithoutHeader(SimpleReport r){
+		this.resetReportText();
+		
+		//Ein Stringbuffer, an den alle folgenden HTML Inhalte angehängt werden
+		StringBuffer result = new StringBuffer();
+		
+		result.append("<h2 class=\"report\">" + r.getTitle() + "</h2>");
+
+		//Hinzufügen der einzelnen Zeilen aus dem Report in HTML-Form
+		Vector<Row> rows = r.getRows();
+		result.append("<table class=\"content\">");
+		for (int i = 0; i < rows.size(); i++) {
+			Row row = rows.elementAt(i);
+			
+			//Die erste Zeile der Tabelle wird ein TableHeader, ansonsten eine einfache Zeile
+			if(i == 0){
+				result.append("<tr class=\"theader\">");
+			} else {
+				result.append("<tr>");
+			}
+			
+		    for (int j = 0; j < row.getNumColumns(); j++) {
+		    	result.append("<td>" + row.getColumnAt(j) + "</td>");
+		    }
+			result.append("</tr>");
+		}
+		result.append("</table>");
+		result.append("<br />");
+		
+		//Setzen des Report Textes auf den Inhalt des StringBuffers
 		this.reportText = result.toString();
 	}
 	
