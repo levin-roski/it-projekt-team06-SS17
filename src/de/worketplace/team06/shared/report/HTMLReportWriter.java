@@ -251,7 +251,8 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
+		result.append("<tr><td>" + "Erstellungsdatum: " + r.getDateForTS().toString() + "</td></tr>");
+		result.append("<tr><td>" + "Uhrzeit: " + r.getTimeForTS() + "</td></tr></table>");
 
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
