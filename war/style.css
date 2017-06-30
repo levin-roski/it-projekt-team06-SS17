@@ -74,16 +74,23 @@ button {
 
 table {
     border-collapse: collapse;
-    width: 70%;
     font-family: 'Open Sans';
+}
+
+table.content, td {
+    width: 70%;
+    border: 1px solid #ddd;
 }
 
 table.headerdata {
     width: inherit;
 }
 
-table, td {
-    border: 1px solid #ddd;
+td.tdheaderdata {
+    border: 0px transparent;
+    padding-left: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
 }
 
 tr.theader {
