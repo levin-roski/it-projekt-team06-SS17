@@ -87,8 +87,15 @@ public class Property extends BusinessObject {
         if (p != null && p instanceof Property) {
         	Property bo = (Property) p;
           try {
-            if (bo.getName().equals(this.name) && bo.getValue().equals(this.value))
-              return true;
+        	if (bo.getName() != null && this.name != null && bo.getValue() != null && this.getValue()!= null){
+        		if (bo.getName().equals(this.name) && bo.getValue().equals(this.value)){
+        			return true;
+        		}
+        	}
+        	else{
+        		return false;
+        	}
+        	  
           }
           catch (IllegalArgumentException e) {
             /*

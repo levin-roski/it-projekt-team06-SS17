@@ -215,13 +215,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException {
 		
 		//Partnerprofil des angemeldeten Users auslesen
-		PartnerProfile pp = wpadmin.createPartnerProfileFor(o);
+		PartnerProfile pp = wpadmin.getPartnerProfileFor(o);
+		
 		
 		//Alle Eigenschaften des angemeldeten Users in einen Vektor einlesen
-		Vector<Property> allPropsOfOu = wpadmin.getAllPropertiesFor(pp);
+		Vector<Property> propertiesOfOrgaUnit = wpadmin.getAllPropertiesFor(pp);
+		
 		
 		//Alle Ausschreibungen in einen Vektor einlesen
 		Vector<Call> allCalls = wpadmin.getAllCalls();
+		
 		
 		//Vektor für die zutreffenden Ausschreibungen instanziieren
 		Vector<Call> matchingCalls = new Vector<Call>();
@@ -258,27 +261,38 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * zum matchingCalls Vektor hinzugefügt wurde oder nicht. Wenn Ja wird nur der MatchingCount dieser
 		 * Instanz erhöht. 
 		 */
+		
+		if (allCalls != null){
 		for(Call c : allCalls){
 			PartnerProfile tempPartnerProfile = wpadmin.getPartnerProfileFor(c);
-			Vector<Property> tempProperties = wpadmin.getAllPropertiesFor(tempPartnerProfile);
+			Vector<Property> callProperties = wpadmin.getAllPropertiesFor(tempPartnerProfile);
 			
-			for (Property prop : tempProperties){
-				for (Property prop2 : allPropsOfOu){
-					if (prop.getValue() == prop2.getValue() && prop.getName() == prop2.getName()){
+			if (callProperties != null){
+			for (Property callProperty : callProperties){
+				
+				if(propertiesOfOrgaUnit != null){
+				for (Property orgaUnitProperty : propertiesOfOrgaUnit){
+					if (callProperty.equals(orgaUnitProperty)){
 						if(!matchingCalls.contains(c)){
-							matchingCalls.addElement(c);
 							c.setMatchingCount(1);
+							matchingCalls.addElement(c);
 						}
 						else{
-							int temp = c.getMatchingCount();
-							temp++;
-							c.setMatchingCount(temp);
+							for(Call c2 : matchingCalls){
+								if (c2.equals(c)){
+									Integer temp = c2.getMatchingCount();
+									temp++;
+									c2.setMatchingCount(temp);
+								}
+							}
 						}
 					}
 				}
+				}
+			}
 			}
 		}
-		
+		}
 		
 		/*
 		 * Die Lokale Klasse bildet die Differenz der Größe MatchingCount. Die Klasse stellt eine 
