@@ -253,7 +253,7 @@ public class HTMLReportWriter extends ReportWriter {
 		result.append("<br />");
 
 		Vector<Row> rows = r.getRows();
-		result.append("<table>");
+		result.append("<table class=\"content\">");
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.elementAt(i);
 			
@@ -289,7 +289,7 @@ public class HTMLReportWriter extends ReportWriter {
 		//result.append("<table class=\"headerdata\"><tr>");
 
 		Vector<Row> rows = r.getRows();
-		result.append("<table>");
+		result.append("<table class=\"content\">");
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.elementAt(i);
 			
