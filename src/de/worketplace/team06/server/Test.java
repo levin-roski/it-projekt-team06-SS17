@@ -15,7 +15,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		
-
+		
 		
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
@@ -103,6 +103,10 @@ public class Test {
 	
 	
 	public static void testreportblub(WorketplaceAdministrationImpl wpadmin){
+		
+		
+		
+		
 		//Alle Ausschreibungen ausgeben
 		Vector<Call> allCalls = wpadmin.getAllCalls();
 		System.out.println("Alle Calls ausgeben! ");
@@ -142,15 +146,21 @@ public class Test {
 		//Vector für die personalisierten Ausschreibungen für den Benutzer erstellen
 		Vector<Call> matchingCalls = new Vector<Call>();
 		
+		
+	
 		//Alle Ausschreibungen durchlaufen 
 		System.out.println("Verschachtelete Schleifen durchlaufen");
 		for (Call c : allCalls){
-			System.out.print("Ausschreibungstitel : " + c.getTitle());
+			//System.out.print("Ausschreibungstitel : " + c.getTitle());
 			PartnerProfile callPartnerProfile = wpadmin.getPartnerProfileFor(c);
-			System.out.print(" | mit partnerProfileId : " + callPartnerProfile.getID());
+			//System.out.print(" | mit partnerProfileId : " + callPartnerProfile.getID());
 			Vector<Property> callProperties = wpadmin.getAllPropertiesFor(callPartnerProfile);
-			 for (Property p : callProperties){
-				 System.out.println("Vergleich: " + p.getName() + p.getValue());
+			 for (Property callProperty : callProperties){
+				 for (Property orgaUnitProperty : allPropsOfOu ){
+					 if (callProperty.equals(orgaUnitProperty)){
+						 System.out.println("Matching Call : " + c.getTitle());
+					 }
+				 }
 			 }
 		}
 		
