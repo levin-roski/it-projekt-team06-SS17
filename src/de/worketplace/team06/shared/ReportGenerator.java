@@ -19,7 +19,7 @@ public interface ReportGenerator extends RemoteService {
 
 	public void init() throws IllegalArgumentException;
 	
-	public AllCallsReport createAllCallsReport() throws IllegalArgumentException;
+	public AllCallsReport createAllCallsReport(OrgaUnit o) throws IllegalArgumentException;
 	
 	public AllCallsReport createAllCallsOfUserReport(OrgaUnit o) throws IllegalArgumentException;
 

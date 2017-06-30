@@ -1,8 +1,5 @@
 package de.worketplace.team06.shared.bo;
 
-import java.util.*;
-
-
 public class Person extends OrgaUnit {
 
     /**

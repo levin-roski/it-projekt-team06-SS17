@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.Rating;
 /**
@@ -201,7 +201,7 @@ public class RatingMapper {
         	
         	stmt.executeUpdate("UPDATE rating " 
         	+ "SET statement=\"" + r.getRatingStatement() + "\", "
-        	+ "created=\"" +  r.getCreated() + "\" " 
+        	+ "created=\"" +  r.getCreated() + "\", " 
         	+ "rating=\"" +  r.getRating() + "\" " 
         	+ "WHERE id=" + r.getID());
         }

@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Vector;
 
-import de.worketplace.team06.shared.bo.Rating;
-import de.worketplace.team06.shared.bo.Project;
 import de.worketplace.team06.shared.bo.Property;
 
 /**

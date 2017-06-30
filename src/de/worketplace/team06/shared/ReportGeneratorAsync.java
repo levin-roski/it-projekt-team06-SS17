@@ -17,7 +17,7 @@ public interface ReportGeneratorAsync {
 	
 	void init(AsyncCallback<Void> callback);
 
-	void createAllCallsReport(AsyncCallback<AllCallsReport> callback);
+	void createAllCallsReport(OrgaUnit o, AsyncCallback<AllCallsReport> callback);
 	
 	void createAllCallsOfUserReport(OrgaUnit o, AsyncCallback<AllCallsReport> callback);
 

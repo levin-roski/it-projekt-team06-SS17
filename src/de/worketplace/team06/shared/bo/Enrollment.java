@@ -1,6 +1,6 @@
 package de.worketplace.team06.shared.bo;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * 
