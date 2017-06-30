@@ -69,3 +69,48 @@ button {
 .bold {
 	font-weight: bold;
 }
+
+/* Styles für Anzeige von Reports */
+
+table {
+    border-collapse: collapse;
+    width: 70%;
+    font-family: 'Open Sans';
+}
+
+table.headerdata {
+    width: inherit;
+}
+
+table, td {
+    border: 1px solid #ddd;
+}
+
+tr.theader {
+    height: 50px;
+    text-align: left;
+    background-color: #04847a;
+    color: white;
+    font-size: 18px;
+}
+
+tr, td {
+    padding: 10px;
+    text-align: left;
+    font-size: 12px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+h1.report {
+    font-family: 'Open Sans';
+    font-size: 24px;
+}
+
+h2.report {
+    font-family: 'Open Sans';
+    color: #04847a;
+    font-size: 18px;
+}
