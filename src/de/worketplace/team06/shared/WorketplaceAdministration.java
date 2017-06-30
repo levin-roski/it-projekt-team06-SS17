@@ -374,4 +374,6 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Vector<Organisation> getAllOrganisations();
 
+	public Vector<OrgaUnit> getAllApplicantsForAllCallsFrom(Person person);
+
 }
