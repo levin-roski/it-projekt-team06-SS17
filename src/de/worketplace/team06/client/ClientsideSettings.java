@@ -44,11 +44,9 @@ public class ClientsideSettings {
 	private static String BreadcrumbThirdLevelName;
 	private static View BreadcrumbFourthLevel;
 	private static String BreadcrumbFourthLevelName;
-	private static int currentMarketplaceId;
-	private static int currentProjectId;
-	private static int currentCallId;
-
-	// private static ReportGeneratorAsync reportGenerator = null;
+	private static Integer currentMarketplaceId = -1;
+	private static Integer currentProjectId = -1;
+	private static Integer currentCallId = -1;
 
 	/**
 	 * 
@@ -126,6 +124,20 @@ public class ClientsideSettings {
 		BreadcrumbFourthLevelName = name;
 	}
 
+	public static void removeAboveCurrentSelection(Integer level) {
+		if (level == 1) {
+			currentCallId = -1;
+			currentProjectId = -1;
+			currentMarketplaceId = -1;
+		} else if (level == 2) {
+			currentCallId = -1;
+			currentProjectId = -1;
+		} else if (level == 3) {
+			currentCallId = -1;
+		} else if (level == 4) {
+		}
+	}
+
 	public static HorizontalPanel getBreadcrumbs() {
 		HorizontalPanel breadcrumbs = new HorizontalPanel();
 		if (BreadcrumbFirstLevel != null) {
@@ -134,6 +146,7 @@ public class ClientsideSettings {
 			h1.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					removeAboveCurrentSelection(1);
 					mainPanel.setView(BreadcrumbFirstLevel);
 				}
 			});
@@ -145,6 +158,7 @@ public class ClientsideSettings {
 				h2.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
+						removeAboveCurrentSelection(2);
 						mainPanel.setView(BreadcrumbSecondLevel);
 					}
 				});
@@ -156,6 +170,7 @@ public class ClientsideSettings {
 					h3.addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
+							removeAboveCurrentSelection(3);
 							mainPanel.setView(BreadcrumbThirdLevel);
 						}
 					});
@@ -167,6 +182,7 @@ public class ClientsideSettings {
 						h4.addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
+								removeAboveCurrentSelection(4);
 								mainPanel.setView(BreadcrumbFourthLevel);
 							}
 						});
@@ -194,27 +210,27 @@ public class ClientsideSettings {
 		return BreadcrumbFourthLevel;
 	}
 
-	public static int getCurrentMarketplaceId() {
+	public static Integer getCurrentMarketplaceId() {
 		return currentMarketplaceId;
 	}
 
-	public static void setCurrentMarketplaceId(int currentMarketplaceId) {
+	public static void setCurrentMarketplaceId(Integer currentMarketplaceId) {
 		ClientsideSettings.currentMarketplaceId = currentMarketplaceId;
 	}
 
-	public static int getCurrentProjectId() {
+	public static Integer getCurrentProjectId() {
 		return currentProjectId;
 	}
 
-	public static void setCurrentProjectId(int currentProjectId) {
+	public static void setCurrentProjectId(Integer currentProjectId) {
 		ClientsideSettings.currentProjectId = currentProjectId;
 	}
 
-	public static int getCurrentCallId() {
+	public static Integer getCurrentCallId() {
 		return currentCallId;
 	}
 
-	public static void setCurrentCallId(int currentCallId) {
+	public static void setCurrentCallId(Integer currentCallId) {
 		ClientsideSettings.currentCallId = currentCallId;
 	}
 

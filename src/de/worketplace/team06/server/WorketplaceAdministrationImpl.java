@@ -397,6 +397,34 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.callMapper.findByProjectID(project.getID());
 	}
 	
+	   /**
+		 * Auslesen aller Ausschreibungen die eine Person in der Rolle 
+		 * des Projektleiters erstellt halt. 
+		 * @param Person projectleader
+		 * @return Vector<Call> result
+		 */
+		@Override
+		public Vector<Call> getCallsFor(Person projectleader){
+			Vector<Call> result = new Vector<Call>();
+			Vector<Project> projects = getAllProjects();
+			
+			/*
+			 * Die verschachtelte For-Schleife wird verwendet um alle Ausschreibungen
+			 * eines Projektleiters in den Vektor result zu schreiben. 
+			 */
+			for (Project proj : projects){
+				if (proj.getProjectLeaderID() == projectleader.getID()){
+					Vector<Call> calls = getCallsFor(proj);
+					for (Call c : calls){
+						if (!result.contains(c)){
+							result.addElement(c);
+						}
+					}
+				}
+			}
+			return result;
+		}
+	    
 	/**
 	 * Auslesen einer Ausschreibung mit einer CallID
 	 */
@@ -556,6 +584,32 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		return this.enrollMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
+	
+	/**
+	 * Auslesen der Beteiligungsobjekte von allen Projekten, in denen die jeweilige Person
+	 * Projektleiter ist.
+	 * @param Person projectleader
+	 * @return Vector<Enrollment> result
+	 */
+	@Override
+	public Vector<Enrollment> getEnrollmentsFor(Person projectleader){
+		Vector<Enrollment> result = new Vector<Enrollment>();
+		Vector<Project> projects = getAllProjects();
+		/*
+		 * Mit der verschachtelten for Schleife schreiben wir alle Beteiligungen
+		 * unserer Projekte (Projektleiterfunktion) in den result Vektor.
+		 */
+		for (Project p : projects){
+			if (p.getProjectLeaderID() == projectleader.getID()){
+			Vector<Enrollment> enrollments = getEnrollmentFor(p);
+			for (Enrollment e : enrollments){
+				result.addElement(e);
+			}
+			}
+		}
+		return result;
+	}
+    
 	
 	
 	

@@ -53,7 +53,7 @@ public class MarketplaceView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Project selectedProject = projectSsm.getSelectedObject();
 				ClientsideSettings.setCurrentProjectId(selectedProject.getID());
-				mainPanel.setView(new ProjectView(selectedProject));
+				History.newItem("Projekt-Details"+selectedProject.getID()+"-"+ClientsideSettings.getCurrentMarketplaceId());
 			}
 		});
 
