@@ -73,7 +73,7 @@ button {
 /* Styles für Anzeige von Reports */
 
 table.content, td.rcontent {
-    width: 70%;
+    width: 100%;
     border: 1px solid #ddd;
     border-collapse: collapse;
     font-family: 'Open Sans';
