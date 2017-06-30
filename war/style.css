@@ -2,6 +2,10 @@ body {
 	margin: 0 !important;
 }
 
+body * {
+	font-family: 'Open Sans' !important;
+}
+
 .center {
 	text-align: center;
 }
@@ -21,7 +25,9 @@ body {
 }
 
 .main-panel-overview {
-	padding: 10px 10px 0 18px;
+	padding: 10px 10px 5px 18px;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .main-panel-form {
@@ -66,59 +72,55 @@ button {
 	padding-left: 14px;
 	padding-top: 7px;
 }
+
 .bold {
 	font-weight: bold;
 }
 
-/* Styles fÃ¼r Anzeige von Reports */
-
+/* Styles für Anzeige von Reports */
 table.content, td.rcontent {
-    width: 100%;
-    border: 1px solid #ddd;
-    border-collapse: collapse;
-    font-family: 'Open Sans';
+	width: 80%;
+	border: 1px solid #ddd;
+	border-collapse: collapse;
 }
 
 table.headerdata {
-    width: inherit;
-    border-collapse: collapse;
-    font-family: 'Open Sans';
+	width: inherit;
+	border-collapse: collapse;
 }
 
 td.tdheaderdata {
-    border: 0px transparent;
-    padding-left: 10px;
-    padding-bottom: 0px;
-    padding-top: 0px;
-    border-collapse: collapse;
-    font-family: 'Open Sans';
+	border: 0px transparent;
+	padding-left: 10px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	border-collapse: collapse;
 }
 
 tr.theader {
-    height: 50px;
-    text-align: left;
-    background-color: #04847a;
-    color: white;
-    font-size: 18px;
+	height: 50px;
+	text-align: left;
+	background-color: #04847a;
+	color: white;
+	font-size: 18px;
 }
 
 tr.rcontent, td.rcontent {
-    padding: 10px;
-    text-align: left;
-    font-size: 12px;
+	padding: 10px;
+	text-align: left;
+	font-size: 14px;
+	width: inherit;
 }
 
 tr.rcontent:nth-child(even) {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
 }
 
 h1.report {
-    font-family: 'Open Sans';
-    font-size: 24px;
+	font-size: 24px;
 }
 
 h2.report {
-    font-family: 'Open Sans';
-    color: #04847a;
-    font-size: 18px;
+	color: #04847a;
+	font-size: 18px;
 }

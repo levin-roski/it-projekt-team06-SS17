@@ -12,6 +12,7 @@ public abstract class View extends Page {
 			.getWorketplaceAdministration();
 
 	public View() {
+		this.setWidth("100%");
 		setBreadcrumb();
 		loadToken();
 	}
