@@ -172,5 +172,7 @@ public interface WorketplaceAdministrationAsync {
 
 	void getAllOrganisations(AsyncCallback<Vector<Organisation>> callback);
 
+	void getAllApplicantsForAllCallsFrom(Person person, AsyncCallback<Vector<OrgaUnit>> callback);
+
 	
 }
