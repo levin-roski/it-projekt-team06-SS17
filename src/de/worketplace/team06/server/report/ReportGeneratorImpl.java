@@ -322,7 +322,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsForCallsOfUserReport report = new AllApplicationsForCallsOfUserReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle Bewerbungen auf Ausschreibungen für " + getNameForOrgaUnit(o));
+		report.setTitle("Alle Bewerbungen auf Ausschreibungen");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		//Generierung der Kopfdaten des Reports
@@ -375,7 +375,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUserToCallsReport report = new AllApplicationsOfUserToCallsReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle ausgehenden Bewerbungen für " + getNameForOrgaUnit(o));
+		report.setTitle("Alle ausgehenden Bewerbungen für");
 		report.setCreated(new Timestamp(System.currentTimeMillis()));
 		
 		//Generierung der Kopfdaten des Reports
