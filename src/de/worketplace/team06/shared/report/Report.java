@@ -132,7 +132,7 @@ public abstract class Report implements Serializable {
 	public String getDateForTS(){
 		String date = "Kein aktuelles Datum gesetzt!";
 		if(this.created != null){
-			date = new SimpleDateFormat("DD.MM.YYYY").format(this.created);
+			date = new SimpleDateFormat("dd.MM.yyyy").format(this.created);
 		}
 		return date;
 	}
@@ -145,7 +145,7 @@ public abstract class Report implements Serializable {
 	public String getTimeForTS(){
 		String time = "Keine aktuelle Uhrzeit gesetzt!";
 		if (this.created != null){
-			time = new SimpleDateFormat("HH:MM:SS").format(this.created);
+			time = new SimpleDateFormat("HH:MM").format(this.created);
 		}
 		return time;
 	}
