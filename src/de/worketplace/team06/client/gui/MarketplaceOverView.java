@@ -36,9 +36,9 @@ public class MarketplaceOverView extends View {
 		allMarketplaceSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Marketplace currentMarketplace = allMarketplaceSsm.getSelectedObject();
-				ClientsideSettings.setCurrentMarketplaceId(currentMarketplace.getID());
-				mainPanel.setView(new MarketplaceView(currentMarketplace));
+				Marketplace selectedMarketplace = allMarketplaceSsm.getSelectedObject();
+				ClientsideSettings.setCurrentMarketplaceId(selectedMarketplace.getID());
+				History.newItem("Marktplatz-Details"+selectedMarketplace.getID());
 			}
 		});
 

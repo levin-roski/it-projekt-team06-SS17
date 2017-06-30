@@ -1,18 +1,32 @@
 package de.worketplace.team06.client;
 
+import java.awt.Window;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import de.worketplace.team06.client.gui.*;
-import de.worketplace.team06.client.gui.report.*;
+import de.worketplace.team06.client.gui.MainPanel;
+import de.worketplace.team06.client.gui.OrgaUnitFormView;
+import de.worketplace.team06.client.gui.report.AllApplicationsForCallsOfUserReportView;
+import de.worketplace.team06.client.gui.report.AllApplicationsOfApplicantReportView;
+import de.worketplace.team06.client.gui.report.AllCallsMatchingWithUserReportView;
+import de.worketplace.team06.client.gui.report.AllCallsOfUserReportView;
+import de.worketplace.team06.client.gui.report.AllCallsReportView;
+import de.worketplace.team06.client.gui.report.AllEnrollmentsOfApplicantReportView;
+import de.worketplace.team06.client.gui.report.AllInterrelationsOfAllApplicantsOfUserReportView;
+import de.worketplace.team06.client.gui.report.AllInterrelationsOfApplicantReportView;
+import de.worketplace.team06.client.gui.report.FanInFanOutOfUserReportView;
+import de.worketplace.team06.client.gui.report.FanInOfApplicationsOfUserReportView;
+import de.worketplace.team06.client.gui.report.FanOutOfApplicationsOfUserReportView;
+import de.worketplace.team06.client.gui.report.HomeReportView;
+import de.worketplace.team06.client.gui.report.ReportNavigation;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.ReportGeneratorAsync;
@@ -60,7 +74,7 @@ public class Report implements EntryPoint {
 								ClientsideSettings.setCurrentUser(result);
 								renderApplicationForLoggedIn();
 							} else {
-								mainPanel.setView(new OrgaUnitFormView(Report.this));
+								mainPanel.setView(new OrgaUnitFormView());
 							}
 						}
 					});
@@ -95,7 +109,10 @@ public class Report implements EntryPoint {
 		try {
 			if (historyToken.equals("Startseite")) {
 				mainPanel.setView(new HomeReportView());
-			} else if (historyToken.equals("Alle-Ausschreibungen")) {
+			} else if (historyToken.equals("Mein-Nutzer")) {
+				mainPanel.setView(new OrgaUnitFormView());
+			}
+			else if (historyToken.equals("Alle-Ausschreibungen")) {
 				mainPanel.setView(new AllCallsReportView());
 			} else if (historyToken.equals("Passende-Ausschreibungen-zu-meinem-Partnerprofil")) {
 				mainPanel.setView(new AllCallsMatchingWithUserReportView());

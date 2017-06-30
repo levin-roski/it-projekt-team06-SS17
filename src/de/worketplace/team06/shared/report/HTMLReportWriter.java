@@ -179,7 +179,7 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
+		result.append("</table>");
 
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
@@ -212,8 +212,8 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
-
+		result.append("</table>");
+		
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
 			AllInterrelationsOfApplicantReport subReport = (AllInterrelationsOfApplicantReport) r.getSubReportAt(i);
@@ -251,8 +251,8 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
-
+		result.append("</table>");
+		
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
 			if (r.getSubReportAt(i) instanceof FanInOfApplicationsOfUserReport){
@@ -288,8 +288,7 @@ public class HTMLReportWriter extends ReportWriter {
 		if (r.getHeaderData() != null){
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
-		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
-		result.append("<tr><td>" + "Erstellungsdatum: " + r.getCreated().toString() + "</td></tr></table>");
+		result.append("</table>");
 
 		Vector<Row> rows = r.getRows();
 		result.append("<table>");

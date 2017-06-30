@@ -2,6 +2,7 @@ package de.worketplace.team06.shared.report;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import de.worketplace.team06.shared.report.Paragraph;
 
@@ -122,5 +123,31 @@ public abstract class Report implements Serializable {
   public void setCreated(Timestamp created) {
     this.created = created;
   }
+  
+	/**
+	 * Methode zum extrahieren des Datums eines Zeitstempels und Rückgabe als String
+	 * @param ts
+	 * @return date String
+	 */
+	public String getDateForTS(){
+		String date = "Kein aktuelles Datum gesetzt!";
+		if(this.created != null){
+			date = new SimpleDateFormat("dd.MM.yyyy").format(this.created);
+		}
+		return date;
+	}
+	
+	/**
+	 * Methode zum extrahieren der Uhrzeit eines Zeitstempels und Rückgabe als String
+	 * @param ts
+	 * @return time String
+	 */
+	public String getTimeForTS(){
+		String time = "Keine aktuelle Uhrzeit gesetzt!";
+		if (this.created != null){
+			time = new SimpleDateFormat("HH:MM").format(this.created);
+		}
+		return time;
+	}
 
 }

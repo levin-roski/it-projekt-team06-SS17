@@ -6,10 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Vector;
 
 import de.worketplace.team06.shared.bo.Project;
-import de.worketplace.team06.shared.bo.Team;
 
 /**
  * Die Mapper-Klasse ProjectMapper bildet Project-Objekte als Datensätze
@@ -225,7 +224,7 @@ import de.worketplace.team06.shared.bo.Team;
         	+ "SET description=\"" + proj.getDescription() + "\", "
         	+ "SET projectleader_id=\"" + proj.getProjectLeaderID() + "\", "
         	+ "SET start_date=\"" + startdate + "\", "
-        	+ "SET end_date=\"" + enddate + "\", "
+        	+ "SET end_date=\"" + enddate + "\" "
         	+ "WHERE id=" + proj.getID());
         }
         

@@ -2,7 +2,6 @@ package de.worketplace.team06.shared.bo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.*;
 
 /**
  * <p>

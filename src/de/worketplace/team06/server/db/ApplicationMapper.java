@@ -1,9 +1,16 @@
 package de.worketplace.team06.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
-import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.shared.bo.Application;
+import de.worketplace.team06.shared.bo.Call;
+import de.worketplace.team06.shared.bo.Organisation;
+import de.worketplace.team06.shared.bo.Person;
+import de.worketplace.team06.shared.bo.Team;
 
 /**
  * Die Mapper-Klasse ApplicationMapper bildet Application-Objekte als Datensätze
