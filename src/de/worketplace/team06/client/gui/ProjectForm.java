@@ -1,6 +1,5 @@
 package de.worketplace.team06.client.gui;
 
-import com.google.appengine.api.blobstore.BlobstoreServicePb.DeleteBlobRequest;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;

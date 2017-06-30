@@ -1,18 +1,12 @@
 package de.worketplace.team06.client;
 
-<<<<<<< HEAD
 import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-=======
->>>>>>> refs/heads/master
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-<<<<<<< HEAD
 import com.google.gwt.user.client.rpc.AsyncCallback;
-=======
->>>>>>> refs/heads/master
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;

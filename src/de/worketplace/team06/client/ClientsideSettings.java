@@ -23,6 +23,8 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
  * @version 1.0
  * @since 08.05.2017
  * 
+ *        TODO extends CommonSettings hinzufügen?
+ *
  */
 public class ClientsideSettings {
 	/**
@@ -42,9 +44,9 @@ public class ClientsideSettings {
 	private static String BreadcrumbThirdLevelName;
 	private static View BreadcrumbFourthLevel;
 	private static String BreadcrumbFourthLevelName;
-	private static Integer currentMarketplaceId = 0;
-	private static Integer currentProjectId = 0;
-	private static Integer currentCallId = 0;
+	private static Integer currentMarketplaceId = -1;
+	private static Integer currentProjectId = -1;
+	private static Integer currentCallId = -1;
 
 	/**
 	 * 
@@ -124,14 +126,14 @@ public class ClientsideSettings {
 
 	public static void removeAboveCurrentSelection(Integer level) {
 		if (level == 1) {
-			currentCallId = 0;
-			currentProjectId = 0;
-			currentMarketplaceId = 0;
+			currentCallId = -1;
+			currentProjectId = -1;
+			currentMarketplaceId = -1;
 		} else if (level == 2) {
-			currentCallId = 0;
-			currentProjectId = 0;
+			currentCallId = -1;
+			currentProjectId = -1;
 		} else if (level == 3) {
-			currentCallId = 0;
+			currentCallId = -1;
 		} else if (level == 4) {
 		}
 	}
@@ -145,7 +147,7 @@ public class ClientsideSettings {
 				@Override
 				public void onClick(ClickEvent event) {
 					removeAboveCurrentSelection(1);
-					BreadcrumbFirstLevel.loadToken();
+					mainPanel.setView(BreadcrumbFirstLevel);
 				}
 			});
 			breadcrumbs.add(h1);
@@ -157,7 +159,7 @@ public class ClientsideSettings {
 					@Override
 					public void onClick(ClickEvent event) {
 						removeAboveCurrentSelection(2);
-						BreadcrumbSecondLevel.loadToken();
+						mainPanel.setView(BreadcrumbSecondLevel);
 					}
 				});
 				breadcrumbs.add(h2);
@@ -169,7 +171,7 @@ public class ClientsideSettings {
 						@Override
 						public void onClick(ClickEvent event) {
 							removeAboveCurrentSelection(3);
-							BreadcrumbThirdLevel.loadToken();
+							mainPanel.setView(BreadcrumbThirdLevel);
 						}
 					});
 					breadcrumbs.add(h3);
@@ -181,7 +183,7 @@ public class ClientsideSettings {
 							@Override
 							public void onClick(ClickEvent event) {
 								removeAboveCurrentSelection(4);
-								BreadcrumbFourthLevel.loadToken();
+								mainPanel.setView(BreadcrumbFourthLevel);
 							}
 						});
 						breadcrumbs.add(h4);
