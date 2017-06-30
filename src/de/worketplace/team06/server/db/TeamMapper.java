@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Vector;
 
-import de.worketplace.team06.shared.bo.*;
+import de.worketplace.team06.shared.bo.Team;
 /**
  * Die Mapper-Klasse TeamMapper bildet Team-Objekte als Datensätze
  * in einer relationalen Datenbank ab. Durch die Bereitstellung verschiedener Methoden
