@@ -274,6 +274,35 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.appMapper.findByCallID(call.getID());
 	}
 	
+	   /**
+		 * Auslesen aller eingehender Bewerbungen für die Projekte, in denen
+		 * die Person Projektleiter ist.
+		 * @param Person projectleader
+		 * @return Vector<Application> result
+		 */
+		@Override
+		public Vector<Application> getApplicationsFor(Person projectleader){
+			Vector<Application> result = new Vector<Application>();
+			Vector<Project> projects = getAllProjects();
+			
+			/*
+			 * In den verschachtelten Schleifen werden die Bewerbungen ermittelt, die indirekt
+			 * an den Projektleiter gerichtet sind und dem Vector result hinzugefügt. 
+			 */
+			for(Project p : projects){
+				if (p.getProjectLeaderID() == projectleader.getID()){
+					Vector<Call> calls = getCallsFor(p);
+					for (Call c : calls){
+						Vector<Application> apps = getApplicationsFor(c);
+						for (Application a : apps){
+							result.addElement(a);
+						}
+					}
+				}
+			}
+			return result;
+		}
+	    
 	/**
 	 * 
 	 */
@@ -282,10 +311,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Vector<Application> allApps = this.getApplicationsFor(c);
 		return allApps.size();
 	}
-	
-	
-	
-
 	
 	/*
 	 * -----------------------
@@ -372,6 +397,34 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.callMapper.findByProjectID(project.getID());
 	}
 	
+	   /**
+		 * Auslesen aller Ausschreibungen die eine Person in der Rolle 
+		 * des Projektleiters erstellt halt. 
+		 * @param Person projectleader
+		 * @return Vector<Call> result
+		 */
+		@Override
+		public Vector<Call> getCallsFor(Person projectleader){
+			Vector<Call> result = new Vector<Call>();
+			Vector<Project> projects = getAllProjects();
+			
+			/*
+			 * Die verschachtelte For-Schleife wird verwendet um alle Ausschreibungen
+			 * eines Projektleiters in den Vektor result zu schreiben. 
+			 */
+			for (Project proj : projects){
+				if (proj.getProjectLeaderID() == projectleader.getID()){
+					Vector<Call> calls = getCallsFor(proj);
+					for (Call c : calls){
+						if (!result.contains(c)){
+							result.addElement(c);
+						}
+					}
+				}
+			}
+			return result;
+		}
+	    
 	/**
 	 * Auslesen einer Ausschreibung mit einer CallID
 	 */
@@ -531,6 +584,32 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		//***WICHTIG*** @DB-Team: Methode muss noch deklariert werden.
 		return this.enrollMapper.findByOrgaUnitID(orgaUnit.getID());
 	}
+	
+	/**
+	 * Auslesen der Beteiligungsobjekte von allen Projekten, in denen die jeweilige Person
+	 * Projektleiter ist.
+	 * @param Person projectleader
+	 * @return Vector<Enrollment> result
+	 */
+	@Override
+	public Vector<Enrollment> getEnrollmentsFor(Person projectleader){
+		Vector<Enrollment> result = new Vector<Enrollment>();
+		Vector<Project> projects = getAllProjects();
+		/*
+		 * Mit der verschachtelten for Schleife schreiben wir alle Beteiligungen
+		 * unserer Projekte (Projektleiterfunktion) in den result Vektor.
+		 */
+		for (Project p : projects){
+			if (p.getProjectLeaderID() == projectleader.getID()){
+			Vector<Enrollment> enrollments = getEnrollmentFor(p);
+			for (Enrollment e : enrollments){
+				result.addElement(e);
+			}
+			}
+		}
+		return result;
+	}
+    
 	
 	
 	
@@ -798,6 +877,27 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * -- METHODEN für OrgaUnit --
 	 * ---------------------------------
 	 */
+	@Override
+	public Vector<OrgaUnit> getAllApplicantsForAllCallsFrom(Person person){
+		Vector<OrgaUnit> applicants = new Vector<OrgaUnit>();
+		Vector<Project> projects = getAllProjects();
+		
+		for (Project pro : projects){
+			if (pro.getProjectLeaderID() == person.getID()){
+				Vector<Call> calls = getCallsFor(pro);
+				for (Call c : calls){
+					Vector<Application> apps = getApplicationsFor(c);
+					for (Application a : apps){
+						OrgaUnit o = getOrgaUnitById(a.getOrgaUnitID());
+						applicants.addElement(o);
+					}
+				}
+			}
+		}
+		return applicants;
+	}
+	
+	
 	
 	/**
 	 * Auslesen eines Vectors mit allen OrgaUnits
