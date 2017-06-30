@@ -176,5 +176,6 @@ public interface WorketplaceAdministrationAsync {
 
 	void getApplicationsFor(Person projectleader, AsyncCallback<Vector<Application>> callback);
 
-	
+	void getCallsFor(Person projectleader, AsyncCallback<Vector<Call>> callback);
+
 }

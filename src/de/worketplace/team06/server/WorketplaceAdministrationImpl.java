@@ -397,6 +397,34 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.callMapper.findByProjectID(project.getID());
 	}
 	
+	   /**
+		 * Auslesen aller Ausschreibungen die eine Person in der Rolle 
+		 * des Projektleiters erstellt halt. 
+		 * @param Person projectleader
+		 * @return Vector<Call> result
+		 */
+		@Override
+		public Vector<Call> getCallsFor(Person projectleader){
+			Vector<Call> result = new Vector<Call>();
+			Vector<Project> projects = getAllProjects();
+			
+			/*
+			 * Die verschachtelte For-Schleife wird verwendet um alle Ausschreibungen
+			 * eines Projektleiters in den Vektor result zu schreiben. 
+			 */
+			for (Project proj : projects){
+				if (proj.getProjectLeaderID() == projectleader.getID()){
+					Vector<Call> calls = getCallsFor(proj);
+					for (Call c : calls){
+						if (!result.contains(c)){
+							result.addElement(c);
+						}
+					}
+				}
+			}
+			return result;
+		}
+	    
 	/**
 	 * Auslesen einer Ausschreibung mit einer CallID
 	 */
