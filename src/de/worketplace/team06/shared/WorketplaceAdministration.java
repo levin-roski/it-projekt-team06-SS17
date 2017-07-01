@@ -44,7 +44,6 @@ import de.worketplace.team06.shared.bo.Team;
  */
 @RemoteServiceRelativePath("worketplaceAdmin")
 public interface WorketplaceAdministration extends RemoteService {
-	public Person getTestUnit();
 
     /**
      * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
