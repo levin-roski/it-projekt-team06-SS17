@@ -16,7 +16,7 @@ import de.worketplace.team06.shared.report.AllApplicationsOfApplicantReport;
 public class AllApplicationsOfApplicantReportView extends ReportView {
 	public AllApplicationsOfApplicantReportView() {
 		this.add(ClientsideSettings.getBreadcrumbs());
-		this.add(new HTML("<h2>Bitte wählen Sie den Bewerber, für den der Report generiert werden soll</h2>"));
+		this.add(new HTML("<h1>Bewerbungen meines Bewerbers</h1><p>Bitte wählen Sie den Bewerber, für den der Report generiert werden soll</p>"));
 		final HTMLPanel report = new HTMLPanel("");
 		if (ClientsideSettings.getCurrentUser().getType() == "Person") {
 			this.add(getAllApplicantsOfCurrentUserInput(new Callback() {
@@ -55,7 +55,7 @@ public class AllApplicationsOfApplicantReportView extends ReportView {
 																.append(writer.getReportText());
 													}
 												});
-										RpcWrapper.this.t.cancel();
+										t.cancel();
 									}
 								}
 							};

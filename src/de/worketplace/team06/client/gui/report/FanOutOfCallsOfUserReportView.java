@@ -5,19 +5,19 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.ReportView;
-import de.worketplace.team06.shared.report.FanInOfApplicationsOfUserReport;
+import de.worketplace.team06.shared.report.FanOutOfCallsOfUserReport;
 
-public class FanOutOfApplicationsOfUserReportView extends ReportView {
-	public FanOutOfApplicationsOfUserReportView() {
+public class FanOutOfCallsOfUserReportView extends ReportView {
+	public FanOutOfCallsOfUserReportView() {
 		this.add(ClientsideSettings.getBreadcrumbs());
-		reportGenerator.createFanInOfApplicationsOfUserReport(ClientsideSettings.getCurrentUser(), new AsyncCallback<FanInOfApplicationsOfUserReport>() {
+		reportGenerator.createFanOutOfCallsOfUserReport(ClientsideSettings.getCurrentUser(), new AsyncCallback<FanOutOfCallsOfUserReport>() {
 			public void onFailure(Throwable caught) {
 				Window.alert("Der Report konnte nicht geladen werden, bitte versuchen Sie es erneut");
 			}
 
-			public void onSuccess(FanInOfApplicationsOfUserReport result) {
+			public void onSuccess(FanOutOfCallsOfUserReport result) {
 				writer.process(result);
-				FanOutOfApplicationsOfUserReportView.this.append(writer.getReportText());
+				FanOutOfCallsOfUserReportView.this.append(writer.getReportText());
 			}
 		});
 	}

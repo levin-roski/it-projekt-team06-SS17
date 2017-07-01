@@ -147,7 +147,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			rowToAdd.addColumn(new Column(c.getTitle()));
 			rowToAdd.addColumn(new Column(c.getDescription()));
 			rowToAdd.addColumn(new Column(p.getTitle()));
-			rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(convertDate(c.getDeadline())));
 			rowToAdd.addColumn(new Column(c.getStatusString()));
 			report.addRow(rowToAdd);
 		}
@@ -197,7 +197,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				rowToAdd.addColumn(new Column(c.getTitle()));
 				rowToAdd.addColumn(new Column(c.getDescription()));
 				rowToAdd.addColumn(new Column(p.getTitle()));
-				rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+				rowToAdd.addColumn(new Column(convertDate(c.getDeadline())));
 				rowToAdd.addColumn(new Column(c.getStatusString()));
 				report.addRow(rowToAdd);
 			}
@@ -315,7 +315,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Project proj = wpadmin.getProjectByID(call.getProjectID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(call.getTitle()));
-			rowToAdd.addColumn(new Column(call.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(convertDate(call.getDeadline())));
 			rowToAdd.addColumn(new Column(proj.getTitle()));
 			rowToAdd.addColumn(new Column(call.getStatusString()));
 			report.addRow(rowToAdd);
@@ -419,7 +419,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Call c = wpadmin.getCallByID(a.getCallID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(c.getTitle()));
-			rowToAdd.addColumn(new Column(c.getDeadline().toString()));
+			rowToAdd.addColumn(new Column(convertDate(c.getDeadline())));
 			rowToAdd.addColumn(new Column(a.getText()));
 			rowToAdd.addColumn(new Column(a.getStatusString()));
 			Rating r = wpadmin.getRatingFor(a);
@@ -441,7 +441,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfApplicantReport report = new AllApplicationsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Ausgehende Bewerbungen für den Bewerber: " + getNameForOrgaUnit(applicant));
+		report.setTitle("Ausgehende Bewerbungen für " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Date());
 		
 		Row headline = new Row();
@@ -478,7 +478,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllEnrollmentsOfApplicantReport report = new AllEnrollmentsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Beteiligungen an Projekten für den Bewerber: " + getNameForOrgaUnit(applicant));
+		report.setTitle("Beteiligungen an Projekten für " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Date());
 		
 		Row headline = new Row();
@@ -496,8 +496,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Project p = wpadmin.getProjectByID(e.getProjectID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(p.getTitle()));
-			rowToAdd.addColumn(new Column(e.getStartDate().toString()));
-			rowToAdd.addColumn(new Column(e.getEndDate().toString()));
+			rowToAdd.addColumn(new Column(convertDate(e.getStartDate())));
+			rowToAdd.addColumn(new Column(convertDate(e.getEndDate())));
 			report.addRow(rowToAdd);
 		}
 		
@@ -513,7 +513,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllInterrelationsOfApplicantReport report = new AllInterrelationsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Verflechtungen des Bewerbers: " + getNameForOrgaUnit(applicant));
+		report.setTitle("Verflechtungen: " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Date());
 		
 		report.addSubReport(createAllApplicationsOfApplicantReport(applicant));
@@ -531,7 +531,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllInterrelationsOfAllApplicantsOfUserReport report = new AllInterrelationsOfAllApplicantsOfUserReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle Verflechtungen der Bewerber");
+		report.setTitle("Alle Verflechtungen meiner Bewerber");
 		report.setCreated(new Date());
 		
 		//Generierung der Kopfdaten des Reports
@@ -781,6 +781,26 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			}
 		}
 		return applicants;
+	}
+	
+	/**
+	 * Methode zum extrahieren des Datums eines Date-Objekts und Rückgabe als String
+	 * @param ts
+	 * @return date String
+	 */
+	public String convertDate(Date d){
+		String date = "Kein Datum gesetzt!";
+		DateFormat df;
+		try {
+			if(d != null){
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+				date = df.format(d);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return date;
 	}
 	
 	/**

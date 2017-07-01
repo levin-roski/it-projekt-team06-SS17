@@ -70,7 +70,7 @@ public class ReportNavigation extends VerticalPanel {
 				History.newItem("Anzahl-meiner-Bewerbungen-nach-Status-(Fan-In)");
 			}
 		}));		
-		menu.addItem(new MenuItem("Berichte für Projektleiter", applicantMenu));
+		menu.addItem(new MenuItem("Berichte für Bewerber", applicantMenu));
 		menu.addSeparator();
 
 		

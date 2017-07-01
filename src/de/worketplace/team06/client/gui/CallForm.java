@@ -127,9 +127,6 @@ public class CallForm extends Form {
 
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
-		if (addHeadline != null) {
-			root.add(addHeadline);
-		}
 
 		/*
 		 * Falls eine selektiertee Ausschreibung übergeben wurde und jetzt
@@ -169,6 +166,9 @@ public class CallForm extends Form {
 											callerInputLastName.setValue(result.getLastName());
 
 											if (!shouldUpdate) {
+												if (addHeadline != null) {
+													root.add(addHeadline);
+												}
 												final Button saveButton = new Button("Neue Ausschreibung anlegen");
 
 												saveButton.addClickHandler(new ClickHandler() {
@@ -219,13 +219,13 @@ public class CallForm extends Form {
 				t.scheduleRepeating(400);
 
 				if (shouldUpdate) {
+					if (changeHeadline != null) {
+						root.add(changeHeadline);
+					}
 					t2 = new Timer() {
 						public void run() {
 							if (project instanceof Project && projectLeader instanceof Person) {
 								RpcWrapper.this.t2.cancel();
-								if (changeHeadline != null) {
-									root.add(changeHeadline);
-								}
 								titleInput.setEnabled(false);
 								descriptionInput.setEnabled(false);
 								deadlineInput.setEnabled(false);
