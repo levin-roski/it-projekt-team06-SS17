@@ -1,7 +1,11 @@
 body {
 	margin: 0 !important;
-	font-family: Open Sans !important;
 	font-weight: normal !important;
+	background: #f7f7f7 !important;
+}
+
+body, table td, select, button{
+	font-family: Open Sans !important;
 }
 
 .center {
@@ -29,7 +33,7 @@ body {
 }
 
 .main-panel-form {
-	box-shadow: -10px -10px 5px lightgrey !important;
+	/*box-shadow: -10px -10px 5px lightgrey !important;*/
 	/*border-left: 1px solid #e0e0e0;*/
 	padding: 10px 10px 0 10px;
 	background: #454a4a !important;
@@ -39,6 +43,7 @@ body {
 .main-panel-form h1{
 	color: #fff;
 	font-weight: normal !important;
+	font-size: 18px !important;
 }
 
 .main-panel-form .gwt-Label {
@@ -68,7 +73,7 @@ button {
 
 .close-button {
 	padding: 0px 4px 0 3px !important;
-	margin: 9px 6px 0 0 !important;
+	margin: 15px 6px 0 0 !important;
 	font-size: 10px !important;
 	font-weight: bold !important;
 }
@@ -114,12 +119,10 @@ button {
 }
 
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableEvenRowCell {
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableOddRowCell {
+	
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableOddRowCell {
-	background-color: none !important;
-}
 
 .gwt-MenuBar {
 	background-color: #454a4a !important;
@@ -179,6 +182,16 @@ button {
 	border: #04847a;
 }
 
+
+.gwt-TextBox, .gwt-DateBox, .gwt-ListBox{
+	width: 200px !important;
+}
+
+
+.gwt-Label{
+	padding-right: 10px !important;
+}
+
 .gwt-Anchor {
 	color: grey !important;
 }
@@ -199,6 +212,7 @@ h2 {
 	padding-top: 20px;
 	color: #454a4a;
 }
+
 
 
 /**********************/
@@ -229,13 +243,13 @@ tr.theader {
 	text-align: left;
 	background-color: #04847a;
 	color: white;
-	font-size: 18px;
+	font-size: 14px;
 }
 
 tr.rcontent, td.rcontent {
-	padding: 8px;
+	padding: 6px;
 	text-align: left;
-	font-size: 14px;
+	/*font-size: 14px;*/
 	width: inherit;
 	font-weight: normal;
 }
