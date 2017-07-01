@@ -25,11 +25,6 @@ public class Marketplace extends BusinessObject {
      * Variable für die Beschreibung des Marktplatz
      */
     private String description;
-    
-    /**
-     * Variable für den Ersteller des Marktplatzes
-     */
-    private Integer orgaUnitID;
 
     /**
      * Auslesen des Titels des Marktplatzes
@@ -46,14 +41,6 @@ public class Marketplace extends BusinessObject {
     public String getDescription() {
 		return description;
 	}
-    
-    /**
-     * Auslesen des Erstellers des Marktplatzes
-     * @return orgaUnitID
-     */
-    public Integer getOrgaUnitID() {
-		return orgaUnitID;
-	}
 
     /**
      * Setzen des Titel des Marktplatzes
@@ -69,14 +56,6 @@ public class Marketplace extends BusinessObject {
      */
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	/**
-	 * Setzen des Erstellers des Marktplatzes
-	 * @param orgaUnitID
-	 */
-	public void setOrgaUnitID(Integer orgaUnitID) {
-		this.orgaUnitID = orgaUnitID;
 	}
 
 }

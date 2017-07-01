@@ -281,7 +281,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		 * @return Vector<Application> result
 		 */
 		@Override
-		public Vector<Application> getApplicationsFor(Person projectleader){
+		public Vector<Application> getApplicationsForProjectLeader(Person projectleader){
 			Vector<Application> result = new Vector<Application>();
 			Vector<Project> projects = getAllProjects();
 			
@@ -592,7 +592,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return Vector<Enrollment> result
 	 */
 	@Override
-	public Vector<Enrollment> getEnrollmentsFor(Person projectleader){
+	public Vector<Enrollment> getEnrollmentsForProjectLeader(Person projectleader){
 		Vector<Enrollment> result = new Vector<Enrollment>();
 		Vector<Project> projects = getAllProjects();
 		/*

@@ -172,10 +172,10 @@ public interface WorketplaceAdministrationAsync {
 
 	void getAllOrganisations(AsyncCallback<Vector<Organisation>> callback);
 
-	void getApplicationsFor(Person projectleader, AsyncCallback<Vector<Application>> callback);
+	void getApplicationsForProjectLeader(Person projectleader, AsyncCallback<Vector<Application>> callback);
 
 	void getCallsFor(Person projectleader, AsyncCallback<Vector<Call>> callback);
 
-	void getEnrollmentsFor(Person projectleader, AsyncCallback<Vector<Enrollment>> callback);
+	void getEnrollmentsForProjectLeader(Person projectleader, AsyncCallback<Vector<Enrollment>> callback);
 
 }
