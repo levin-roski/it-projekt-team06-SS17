@@ -275,7 +275,16 @@ public class HTMLReportWriter extends ReportWriter {
 		 * Hinzufügen der Überschrift und den Kopfdaten in HTML-Form.
 		 * Die Methode paragraph2HTML übersetzte die Kopfdaten des Reports r in ein korrektes HTML-Format.
 		 */
+		result.append("<table id=\"titletable\"><tr>");
+		result.append("<td>");
 		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		result.append("</td>");
+		result.append("<td align=right class=\"tdcount\">");
+		if (r.getCount() != 0){
+			result.append("<p class=\"headcount\">" + r.getCount() + "</p>");
+		}
+		result.append("</td></tr></table>");
+		
 		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
 			result.append("<td class=\"tdheaderdata\">" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
@@ -318,8 +327,16 @@ public class HTMLReportWriter extends ReportWriter {
 		//Ein Stringbuffer, an den alle folgenden HTML Inhalte angehängt werden
 		StringBuffer result = new StringBuffer();
 		
+		result.append("<table id=\"titletable\"><tr>");
+		result.append("<td>");
 		result.append("<h2 class=\"report\">" + r.getTitle() + "</h2>");
-
+		result.append("</td>");
+		result.append("<td align=right class=\"tdcount\">");
+		if (r.getCount() != 0){
+			result.append("<p class=\"headcount\">" + r.getCount() + "</p>");
+		}
+		result.append("</td></tr></table>");
+		
 		//Hinzufügen der einzelnen Zeilen aus dem Report in HTML-Form
 		Vector<Row> rows = r.getRows();
 		result.append("<table class=\"content\">");

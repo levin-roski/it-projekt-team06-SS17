@@ -141,6 +141,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		Vector<Call> calls = wpadmin.getAllCalls();
+		report.setCount(calls.size());
 		for (Call c : calls){
 			Project p = wpadmin.getProjectByID(c.getProjectID());
 			Row rowToAdd = new Row();
@@ -190,6 +191,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		int j = 0;
 		for (Project p : projects){
 			Vector<Call> calls = wpadmin.getCallsFor(p);
 			for (Call c : calls){
@@ -200,9 +202,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				rowToAdd.addColumn(new Column(convertDate(c.getDeadline())));
 				rowToAdd.addColumn(new Column(c.getStatusString()));
 				report.addRow(rowToAdd);
+				j++;
 			}
 		}
-		
+		report.setCount(j);
 		return report;
 	}
 	
@@ -310,7 +313,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		// Mit dem CallComparator-Objekt lässt sich der Vector nach dem MatchingCount sortieren
 		Collections.sort(matchingCalls, new CallComparator());
-		
+		report.setCount(matchingCalls.size());
 		for (Call call : matchingCalls){
 			Project proj = wpadmin.getProjectByID(call.getProjectID());
 			Row rowToAdd = new Row();
@@ -320,7 +323,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			rowToAdd.addColumn(new Column(call.getStatusString()));
 			report.addRow(rowToAdd);
 		}
-		
 		
 		return report;
 	}
@@ -360,6 +362,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		int j = 0;
 		for (Project p : projects){
 			Vector<Call> calls = wpadmin.getCallsFor(p);
 			for (Call c : calls){
@@ -371,13 +374,20 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 					rowToAdd.addColumn(new Column(a.getText()));
 					rowToAdd.addColumn(new Column(a.getStatusString()));
 					Rating r = wpadmin.getRatingFor(a);
-					rowToAdd.addColumn(new Column(r.getRating().toString()));
+					try {
+						rowToAdd.addColumn(new Column(r.getRating().toString()));
+					} catch (NullPointerException e) {
+						rowToAdd.addColumn(new Column("Kein Rating"));
+						//e.printStackTrace();
+					}
+					
 					rowToAdd.addColumn(new Column(p.getTitle()));
 					report.addRow(rowToAdd);
+					j++;
 				}
 			}
 		}
-		
+		report.setCount(j);
 		return report;
 	}
 	
@@ -415,6 +425,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.addRow(headline);
 		
 		Vector<Application> applications = wpadmin.getApplicationsFor(o);
+		report.setCount(applications.size());
 		for(Application a : applications){
 			Call c = wpadmin.getCallByID(a.getCallID());
 			Row rowToAdd = new Row();
@@ -456,6 +467,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.addRow(headline);
 		
 		Vector<Application> applications = wpadmin.getApplicationsFor(applicant);
+		report.setCount(applications.size());
 		for(Application a : applications){
 			Call c = wpadmin.getCallByID(a.getCallID());
 			Project p = wpadmin.getProjectByID(c.getProjectID());
@@ -492,6 +504,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.addRow(headline);
 		
 		Vector<Enrollment> enrollments = wpadmin.getEnrollmentFor(applicant);
+		report.setCount(enrollments.size());
 		for(Enrollment e : enrollments){
 			Project p = wpadmin.getProjectByID(e.getProjectID());
 			Row rowToAdd = new Row();
@@ -542,6 +555,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setHeaderData(headerData);
 		
 		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
+		int j = 0;
 		for(Project p : projects){
 			Vector<Call> calls = wpadmin.getCallsFor(p);
 			for(Call c : calls){
@@ -549,10 +563,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				for(Application a : applications){
 					OrgaUnit applicant = wpadmin.getOrgaUnitById(a.getOrgaUnitID());
 					report.addSubReport(createAllInterrelationsOfApplicantReport(applicant));
+					j++;
 				}
 			}
 		}
-		
+		report.setCount(j);
 		return report;
 	}
 	
@@ -595,6 +610,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Alle Organisations-Einheiten aus der Datenbank auslesen
 		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
 		allOrgaUnits = wpadmin.getAllOrgaUnits();
+		report.setCount(allOrgaUnits.size());
 		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		for (OrgaUnit ou : allOrgaUnits){
@@ -665,6 +681,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Alle Organisations-Einheiten aus der Datenbank auslesen
 		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
 		allOrgaUnits = wpadmin.getAllOrgaUnits();
+		report.setCount(allOrgaUnits.size());
 		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		for (OrgaUnit ou : allOrgaUnits){

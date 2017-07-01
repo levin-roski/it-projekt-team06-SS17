@@ -49,6 +49,11 @@ public abstract class Report implements Serializable {
    * Datum der Erstellung des Berichts.
    */
   private Date created;
+  
+  /**
+   * Variable zum Speichern eines beliebigen Zählers für z.B. die Anzahl der jeweiligen Objekte im Report.
+   */
+  private Integer count = null;
 
   /**
    * Auslesen des Impressums.
@@ -76,6 +81,14 @@ public abstract class Report implements Serializable {
   public Paragraph getHeaderData() {
     return this.headerData;
   }
+  
+  /**
+   * Auslesen des bliebigen Zählers
+   * @return
+   */
+  public Integer getCount() {
+		return count;
+	}
 
   /**
    * Setzen der Kopfdaten.
@@ -123,5 +136,13 @@ public abstract class Report implements Serializable {
   public void setCreated(Date created) {
     this.created = created;
   }
+  
+  /**
+   * Setzen des beliebigen Zählers
+   * @param count
+   */
+  public void setCount(Integer count) {
+		this.count = count;
+	}
 
-}
+	}

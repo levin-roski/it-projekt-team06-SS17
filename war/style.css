@@ -146,11 +146,9 @@ h2 {
 	width: inherit !important;
 }
 
-
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableOddRowCell {
 	
 }
-
 
 .gwt-MenuBar {
 	background-color: #454a4a !important;
@@ -189,6 +187,10 @@ h2 {
 	background: transparent !important;
 	border-left: none !important;
 	width: 5px !important;
+}
+
+#gwt-uid-1 {
+	background: none !important;
 }
 
 #gwt-uid-1:hover {
@@ -263,7 +265,7 @@ tr.theader {
 
 td.tdheaderdata {
 	border: 0px transparent;
-	padding-left: 5px;
+	padding-left: 8px;
 	padding-top: 0px;
 	border-collapse: collapse;
 }
@@ -273,7 +275,7 @@ td.tdheaderdata p {
 }
 
 tr.rcontent, td.rcontent {
-	padding: 5px;
+	padding: 5px 0px 5px 8px;
 	text-align: left;
 	/*font-size: 14px;*/
 	width: inherit;
@@ -297,7 +299,7 @@ h2.report {
 
 h1.hsubreport{
 	font-size: 18px !important;
-	padding: 10px 0px 20px 0px !important;
+	padding: 10px 0px 5px 0px !important;
 	margin: 0px !important;
 }
 
@@ -316,4 +318,22 @@ h1.hsubreport{
 	margin-top: 0px !important;
 	margin-bottom: 10px !important;
 	padding-top: 0px !important;
+}
+
+.headcount {
+	width: 20px;
+	height: 20px;
+	padding: 5px !important;
+	color: #fff !important;
+	border: 2px solid lightgrey !important;
+	border-radius: 50px;
+	vertical-align: middle !important;
+	text-align: center;
+	color: #04847a !important;
+	margin-right: 0 !important;
+}
+
+#titletable
+{
+	width: 80% !important;
 }
