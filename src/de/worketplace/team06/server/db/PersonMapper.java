@@ -290,7 +290,12 @@ public class PersonMapper {
 		}
 		return null;
 	}
-
+	/**
+	 * Auslesen aller Person-Objekte aus der Datenbank.
+	 * 
+	 * @return Vector<Person>
+	 * @author Theresa
+	 */
 	public Vector<Person> findAll() {
 		Connection con = DBConnection.connection();
 		Vector<Person> result = new Vector<Person>();

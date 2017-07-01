@@ -258,7 +258,12 @@ import de.worketplace.team06.shared.bo.Team;
 		    }
 			
 		}
-
+	    /**
+	     * Auslesen aller Team-Objekte aus der Datenbank.
+	     * 
+	     * @return Vector<Team>
+	     * @author Theresa
+	     */
 		public Vector<Team> findAll() {
 			Connection con = DBConnection.connection();
 			Vector<Team> allTeams = new Vector<Team>();

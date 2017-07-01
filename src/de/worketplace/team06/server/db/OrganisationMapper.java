@@ -259,7 +259,14 @@ public class OrganisationMapper {
 		}
 		return null;
 	}
-
+    
+    /**
+     * Auslesen aller Organisation-Objekte aus der Datenbank.
+     * 
+     * @return Vector<Organisation>
+     * @author Theresa
+     */
+    
 	public Vector<Organisation> findAll() {
 		Connection con = DBConnection.connection();
 		Vector<Organisation> allOrganisations = new Vector<Organisation>();
