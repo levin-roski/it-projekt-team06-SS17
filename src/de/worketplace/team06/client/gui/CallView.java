@@ -16,6 +16,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Call;
+import de.worketplace.team06.shared.bo.Enrollment;
 import de.worketplace.team06.shared.bo.PartnerProfile;
 import de.worketplace.team06.shared.bo.Property;
 
@@ -58,9 +59,12 @@ public class CallView extends View {
 				propertySsm.addSelectionChangeHandler(new Handler() {
 					@Override
 					public void onSelectionChange(SelectionChangeEvent event) {
-						Property selectedProperty = propertySsm.getSelectedObject();
-						mainPanel.setForm(
-								new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
+						if (propertySsm.getSelectedObject() != null) {
+							Property selectedProperty = propertySsm.getSelectedObject();
+							mainPanel.setForm(
+									new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
+							propertySsm.clear();
+						}
 					}
 				});
 

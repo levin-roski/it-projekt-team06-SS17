@@ -20,6 +20,7 @@ import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Enrollment;
 import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Property;
 
 public class ProjectView extends View {
 	// erstellen der Tabelle Ausschreibungen
@@ -131,9 +132,11 @@ public class ProjectView extends View {
 		enrollmentSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
-				mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
-				enrollmentSsm.clear();
+				if (enrollmentSsm.getSelectedObject() != null) {
+					Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
+					mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
+					enrollmentSsm.clear();
+				}
 			}
 		});
 
