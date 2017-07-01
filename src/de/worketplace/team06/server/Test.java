@@ -20,7 +20,15 @@ public class Test {
 		WorketplaceAdministrationImpl admin = new WorketplaceAdministrationImpl();
 		admin.init();
 		
-		testreportblub(admin);
+		//testreportblub(admin);
+		
+		Person projectleader = admin.getPersonByID(10);
+		Vector<Application> allApplications = admin.getApplicationsForProjectLeader(projectleader);
+		
+		for (Application a : allApplications){
+			System.out.println("Bewerbungstext: "+ a.getText() + "Created :" + a.getCreated());
+		}
+		
 		
 //		Person pers1 = admin.getPersonByID(7);
 //		
