@@ -26,6 +26,10 @@ public class MainPanel extends DockLayoutPanel {
 		sp.setWidth("100%");
 		sp.setHeight("100%");
 		try {
+			this.getWidget(1).removeFromParent();
+		} catch (Exception e) {
+		}
+		try {
 			this.getWidget(0);
 			this.getWidget(0).removeFromParent();
 			this.addWest(sp, 100);

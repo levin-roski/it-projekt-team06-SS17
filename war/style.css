@@ -42,9 +42,11 @@ body, table td, select, button{
 	box-sizing: border-box;
 }
 
+.main-panel > div:nth-child(3) {
+	box-shadow: -1px 0px 5px #454a4a !important;
+}
+
 .main-panel-form {
-	/*box-shadow: -10px -10px 5px lightgrey !important;*/
-	/*border-left: 1px solid #e0e0e0;*/
 	padding: 10px 10px 0 10px;
 	background: #454a4a !important;
 	font-weight: normal !important;
@@ -122,7 +124,7 @@ h2 {
 /*******************/
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget{
-	width: 90% !important;
+	width: 75% !important;
 	box-shadow: 3px 3px 5px lightgrey !important;
 	border: 1px solid lightgrey;
 }
