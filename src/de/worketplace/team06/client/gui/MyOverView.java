@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -82,7 +81,11 @@ public class MyOverView extends View {
 		TextColumn<Project> projectsStartColumn = new TextColumn<Project>() {
 			@Override
 			public String getValue(Project object) {
-				return simpleDateFormat.format(object.getStartDate());
+				try {
+					return simpleDateFormat.format(object.getStartDate());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
 			}
 		};
 		myProjectsTable.addColumn(projectsStartColumn, "Startdatum");
@@ -90,7 +93,12 @@ public class MyOverView extends View {
 		TextColumn<Project> projectsEndColumn = new TextColumn<Project>() {
 			@Override
 			public String getValue(Project object) {
-				return simpleDateFormat.format(object.getEndDate());
+				try {
+					return simpleDateFormat.format(object.getEndDate());
+
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
 			}
 		};
 		myProjectsTable.addColumn(projectsEndColumn, "Enddatum");
@@ -108,11 +116,11 @@ public class MyOverView extends View {
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
 		myCallsSsm.addSelectionChangeHandler(new Handler() {
+
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (myCallsSsm.getSelectedObject() != null) {
 					Call selectedCall = myCallsSsm.getSelectedObject();
-					Window.alert(selectedCall.getTitle());
 					mainPanel.setForm(new CallForm(selectedCall, false, true, null, null));
 					myCallsSsm.clear();
 				}
@@ -127,16 +135,7 @@ public class MyOverView extends View {
 				return object.getTitle();
 			}
 		};
-		myCallsTable.addColumn(projectsAndCallsColumn, "Projekt & Ausschreibung");
-
-		// Muss eigentlich Int (bzw. Row counter) wiedergeben
-		TextColumn<Call> callsCounterColumn = new TextColumn<Call>() {
-			@Override
-			public String getValue(Call object) {
-				return object.getDescription();
-			}
-		};
-		myCallsTable.addColumn(callsCounterColumn, "Anzahl Bewerbungen");
+		myCallsTable.addColumn(projectsAndCallsColumn, "Titel");
 
 		TextColumn<Call> descriptionColumn = new TextColumn<Call>() {
 			@Override
@@ -149,7 +148,11 @@ public class MyOverView extends View {
 		TextColumn<Call> deadlineColumn = new TextColumn<Call>() {
 			@Override
 			public String getValue(Call object) {
-				return String.valueOf(object.getDeadline());
+				try {
+					return simpleDateFormat.format(object.getDeadline());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
 			}
 		};
 		myCallsTable.addColumn(deadlineColumn, "Bewerbungsfrist");
@@ -193,7 +196,7 @@ public class MyOverView extends View {
 				return object.getText();
 			}
 		};
-		myApplicationsTable.addColumn(projectsAndRoleColumn, "Projekt & Rolle");
+		myApplicationsTable.addColumn(projectsAndRoleColumn, "Bewerbungstext");
 
 		// Muss eigentlich Int (bzw. Row counter) wiedergeben
 		TextColumn<Application> applicationsCounterColumn = new TextColumn<Application>() {
@@ -202,7 +205,7 @@ public class MyOverView extends View {
 				return object.getStatusString();
 			}
 		};
-		myApplicationsTable.addColumn(applicationsCounterColumn, "Bewertung");
+		myApplicationsTable.addColumn(applicationsCounterColumn, "Status");
 
 		myApplicationsTable.setWidth("100%", true);
 
@@ -221,7 +224,7 @@ public class MyOverView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (applicationsToMeSsm.getSelectedObject() != null) {
 					Application selectedApplication = applicationsToMeSsm.getSelectedObject();
-					mainPanel.setForm(new ApplicationForm(selectedApplication, false, true, null, null, null));
+					mainPanel.setForm(new RateApplicationForm(null, false, true, null, null, selectedApplication));
 					applicationsToMeSsm.clear();
 				}
 			}
@@ -236,6 +239,14 @@ public class MyOverView extends View {
 			}
 		};
 		applicationsToMeTable.addColumn(applicationTextColumn, "Bewerbungstext");
+
+		TextColumn<Application> applicationStatusColumn = new TextColumn<Application>() {
+			@Override
+			public String getValue(Application object) {
+				return object.getStatusString();
+			}
+		};
+		applicationsToMeTable.addColumn(applicationStatusColumn, "Status");
 
 		applicationsToMeTable.setWidth("100%", true);
 
@@ -265,10 +276,34 @@ public class MyOverView extends View {
 		TextColumn<Enrollment> enrollmentStartColumn = new TextColumn<Enrollment>() {
 			@Override
 			public String getValue(Enrollment object) {
-				return simpleDateFormat.format(object.getStartDate());
+				try {
+					return simpleDateFormat.format(object.getStartDate());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
 			}
 		};
 		myEnrollmentsTable.addColumn(enrollmentStartColumn, "Startdartum");
+
+		TextColumn<Enrollment> enrollmentEndColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				try {
+					return simpleDateFormat.format(object.getEndDate());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
+			}
+		};
+		myEnrollmentsTable.addColumn(enrollmentEndColumn, "Startdartum");
+
+		TextColumn<Enrollment> enrollmentPeriodColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return String.valueOf(object.getWorkload());
+			}
+		};
+		myEnrollmentsTable.addColumn(enrollmentPeriodColumn, "Workload (in Tagen)");
 
 		myEnrollmentsTable.setWidth("100%", true);
 
@@ -298,16 +333,40 @@ public class MyOverView extends View {
 		TextColumn<Enrollment> enrollmentToMeStartColumn = new TextColumn<Enrollment>() {
 			@Override
 			public String getValue(Enrollment object) {
-				return simpleDateFormat.format(object.getStartDate());
+				try {
+					return simpleDateFormat.format(object.getStartDate());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
 			}
 		};
 		enrollmentsToMeTable.addColumn(enrollmentToMeStartColumn, "Startdartum");
+
+		TextColumn<Enrollment> enrollmentToMeEndColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				try {
+					return simpleDateFormat.format(object.getEndDate());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
+			}
+		};
+		enrollmentsToMeTable.addColumn(enrollmentToMeEndColumn, "Startdartum");
+
+		TextColumn<Enrollment> enrollmentToMePeriodColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return String.valueOf(object.getWorkload());
+			}
+		};
+		enrollmentsToMeTable.addColumn(enrollmentToMePeriodColumn, "Workload (in Tagen)");
 
 		enrollmentsToMeTable.setWidth("100%", true);
 
 		VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
-		//root.add(createHeadline("Mein Bereich", true));
+		// root.add(createHeadline("Mein Bereich", true));
 		root.add(createSecondHeadline("Meine Projekte"));
 		root.add(myProjectsTable);
 		root.add(createSecondHeadline("Meine Ausschreibungen"));
@@ -352,7 +411,6 @@ public class MyOverView extends View {
 							myCallsTable.setRowCount(results.size(), true);
 						}
 					});
-
 		} catch (Exception e) {
 		}
 		try {
@@ -394,21 +452,21 @@ public class MyOverView extends View {
 						myEnrollmentsTable.setRowCount(results.size(), true);
 					}
 				});
-		try {
-			worketplaceAdministration.getEnrollmentsForProjectLeader((Person) ClientsideSettings.getCurrentUser(),
-					new AsyncCallback<Vector<Enrollment>>() {
-						@Override
-						public void onFailure(Throwable caught) {
-						}
+		// try {
+		worketplaceAdministration.getEnrollmentsForProjectLeader((Person) ClientsideSettings.getCurrentUser(),
+				new AsyncCallback<Vector<Enrollment>>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
 
-						@Override
-						public void onSuccess(Vector<Enrollment> results) {
-							enrollmentsToMeTable.setRowData(0, results);
-							enrollmentsToMeTable.setRowCount(results.size(), true);
-						}
-					});
-		} catch (Exception e) {
-		}
+					@Override
+					public void onSuccess(Vector<Enrollment> results) {
+						enrollmentsToMeTable.setRowData(0, results);
+						enrollmentsToMeTable.setRowCount(results.size(), true);
+					}
+				});
+		// } catch (Exception e) {
+		// }
 	}
 
 	@Override

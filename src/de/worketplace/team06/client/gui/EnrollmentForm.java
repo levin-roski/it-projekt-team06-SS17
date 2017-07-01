@@ -14,6 +14,8 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Enrollment;
+import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Rating;
 
 /**
  * Formular für die Darstellung, Bearbeitung und Löschung einer selektierten
@@ -26,13 +28,12 @@ import de.worketplace.team06.shared.bo.Enrollment;
 public class EnrollmentForm extends Form {
 	private Label startDateLabel = new Label("Startdatum");
 	private DateBox startDateInput = new DateBox();
-	private Label periodLabel = new Label("Workload (in Tagen)");
-	private IntegerBox periodInput = new IntegerBox();
 	private Label endDateLabel = new Label("Enddatum");
 	private DateBox endDateInput = new DateBox();
-	private Label orgaUnitIdLabel = new Label("Organisationseinheit");
-	private Label projectIdLabel = new Label("Projekt");
-	private Label ratingIdLabel = new Label("Bewertung");
+	private Label periodLabel = new Label("Workload (in Tagen)");
+	private IntegerBox periodInput = new IntegerBox();
+	private Label projectLabel = new Label();
+	private Label ratingLabel = new Label();
 	private Enrollment toChangeEnrollment;
 	private HorizontalPanel changeHeadline;
 
@@ -73,20 +74,19 @@ public class EnrollmentForm extends Form {
 		}
 
 		/*
-		 * Grid mit 3 Zeilen und 2 Spalten für das Formular bereitstellen.
+		 * Grid mit 6 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
-		Grid form = new Grid(3, 2);
+		Grid form = new Grid(6, 2);
 		form.setWidth("100%");
 		form.setWidget(0, 0, startDateLabel);
 		form.setWidget(0, 1, startDateInput);
-		form.setWidget(1, 0, periodLabel);
-		form.setWidget(1, 1, periodInput);
 		form.setWidget(1, 0, endDateLabel);
 		form.setWidget(1, 1, endDateInput);
-		form.setWidget(1, 0, orgaUnitIdLabel);
-		form.setWidget(1, 0, projectIdLabel);
-		form.setWidget(1, 0, ratingIdLabel);
+		form.setWidget(2, 0, periodLabel);
+		form.setWidget(2, 1, periodInput);
+		form.setWidget(3, 1, projectLabel);
+		form.setWidget(4, 1, ratingLabel);
 
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
@@ -149,7 +149,29 @@ public class EnrollmentForm extends Form {
 			}
 		});
 		panel.add(deleteButton);
-		form.setWidget(2, 1, panel);
+		form.setWidget(5, 1, panel);
 		root.add(form);
+		worketplaceAdministration.getProjectByID(toChangeEnrollment.getProjectID(),
+				new AsyncCallback<Project>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Project result) {
+						projectLabel.setText("Projekt: "+result.getTitle());
+					}
+				});
+		worketplaceAdministration.getRatingFor(toChangeEnrollment,
+				new AsyncCallback<Rating>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Rating result) {
+						ratingLabel.setText("Bewertung: "+result.getRating());
+					}
+				});
 	}
 }

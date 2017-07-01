@@ -139,7 +139,7 @@ public class CallForm extends Form {
 			protected Timer t2;
 
 			public RpcWrapper() {
-				worketplaceAdministration.getProjectByID(ClientsideSettings.getCurrentProjectId(),
+				worketplaceAdministration.getProjectByID(toChangeCall.getProjectID(),
 						new AsyncCallback<Project>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim abrufen des Projekts auf");
