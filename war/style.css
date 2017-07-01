@@ -144,11 +144,17 @@ h2 {
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget td{
 	width: inherit !important;
+	border: #fff !important;
+}
+
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableCell {
+	padding: 5px 15px !important;
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableOddRowCell {
 	
 }
+
 
 .gwt-MenuBar {
 	background-color: #454a4a !important;
