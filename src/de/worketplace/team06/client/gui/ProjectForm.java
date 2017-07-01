@@ -116,6 +116,9 @@ public class ProjectForm extends Form {
 		 * werden soll
 		 */
 		if (shouldUpdate) {
+			if (changeHeadline != null) {
+				root.add(changeHeadline);
+			}
 			nameInput.setEnabled(false);
 			beschreibungInput.setEnabled(false);
 			startDateInput.setEnabled(false);
@@ -147,9 +150,6 @@ public class ProjectForm extends Form {
 												}
 												projectLeaderInput.setSelectedIndex(indexToFind);
 
-												if (changeHeadline != null) {
-													root.add(changeHeadline);
-												}
 												nameInput.setText(toChangeProject.getTitle());
 												beschreibungInput.setText(toChangeProject.getDescription());
 												startDateInput.setValue(toChangeProject.getStartDate());

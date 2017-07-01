@@ -7,9 +7,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Enrollment;
@@ -24,11 +25,11 @@ import de.worketplace.team06.shared.bo.Enrollment;
  */
 public class EnrollmentForm extends Form {
 	private Label startDateLabel = new Label("Startdatum");
-	private TextBox startDateInput = new TextBox();
-	private Label periodLabel = new Label("Dauer");
-	private TextBox periodInput = new TextBox();
+	private DateBox startDateInput = new DateBox();
+	private Label periodLabel = new Label("Workload (in Tagen)");
+	private IntegerBox periodInput = new IntegerBox();
 	private Label endDateLabel = new Label("Enddatum");
-	private TextBox endDateInput = new TextBox();
+	private DateBox endDateInput = new DateBox();
 	private Label orgaUnitIdLabel = new Label("Organisationseinheit");
 	private Label projectIdLabel = new Label("Projekt");
 	private Label ratingIdLabel = new Label("Bewertung");
@@ -97,17 +98,17 @@ public class EnrollmentForm extends Form {
 		if (changeHeadline != null) {
 			root.add(changeHeadline);
 		}
-		startDateInput.setValue(toChangeEnrollment.getStartDate().toString());
-		periodInput.setValue(toChangeEnrollment.getWorkload().toString());
-		endDateInput.setValue(toChangeEnrollment.getEndDate().toString());
+		startDateInput.setValue(toChangeEnrollment.getStartDate());
+		periodInput.setValue(toChangeEnrollment.getWorkload());
+		endDateInput.setValue(toChangeEnrollment.getEndDate());
 		final Button saveButton = new Button("Änderungen speichern");
 		saveButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				if (startDateInput.getText().length() == 0) {
+				if (startDateInput.getValue() == null) {
 					Window.alert("Bitte vergeben Sie ein Startdatum");
-				} else if (periodInput.getText().length() == 0) {
+				} else if (periodInput.getValue() == null) {
 					Window.alert("Bitte geben Sie eine Dauer an");
-				} else if (endDateInput.getText().length() == 0) {
+				} else if (endDateInput.getValue() == null) {
 					Window.alert("Bitte geben Sie ein Enddatum an");
 				} else {
 					toChangeEnrollment.setStartDate(startDateInput.getValue());

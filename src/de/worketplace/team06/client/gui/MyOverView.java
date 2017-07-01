@@ -4,8 +4,6 @@ import java.util.Vector;
 
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -16,6 +14,8 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
+import de.worketplace.team06.shared.bo.Enrollment;
+import de.worketplace.team06.shared.bo.Person;
 import de.worketplace.team06.shared.bo.Project;
 
 public class MyOverView extends View {
@@ -23,6 +23,8 @@ public class MyOverView extends View {
 	private final CellTable<Call> myCallsTable = new CellTable<Call>();
 	private final CellTable<Application> myApplicationsTable = new CellTable<Application>();
 	private final CellTable<Application> applicationsToMeTable = new CellTable<Application>();
+	private final CellTable<Enrollment> enrollmentsToMeTable = new CellTable<Enrollment>();
+	private final CellTable<Enrollment> myEnrollmentsTable = new CellTable<Enrollment>();
 
 	public MyOverView() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
@@ -215,11 +217,11 @@ public class MyOverView extends View {
 		applicationsToMeSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-//				if (applicationsToMeSsm.getSelectedObject() != null) {
-//					Application selectedApplication = applicationsToMeSsm.getSelectedObject();
-//					mainPanel.setForm(new RateApplicationForm(pToChangeRating, pHeadline, pClosingHeadline, editCallback, deleteCallback, currentApplication) ApplicationForm(selectedApplication, false, true, null, null, null));
-//					applicationsToMeSsm.clear();
-//				} TODO Per RPC das zugehörige Rating einholen
+				if (applicationsToMeSsm.getSelectedObject() != null) {
+					Application selectedApplication = applicationsToMeSsm.getSelectedObject();
+					mainPanel.setForm(new ApplicationForm(selectedApplication, false, true, null, null, null));
+					applicationsToMeSsm.clear();
+				}
 			}
 		});
 
@@ -227,11 +229,49 @@ public class MyOverView extends View {
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
-		final SingleSelectionModel<Application> myProjectApplicationsSsm = new SingleSelectionModel<Application>();
+		final SingleSelectionModel<Enrollment> myEnrollmentsSsm = new SingleSelectionModel<Enrollment>();
 
 		// Das SingleSelectionModel wird der Tabelle Meine Marktplätze
 		// hinzugefügt
-		applicationsToMeTable.setSelectionModel(myProjectApplicationsSsm);
+		myEnrollmentsTable.setSelectionModel(myEnrollmentsSsm);
+
+		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
+		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
+		myEnrollmentsSsm.addSelectionChangeHandler(new Handler() {
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+				if (myEnrollmentsSsm.getSelectedObject() != null) {
+					Enrollment selectedEnrollment = myEnrollmentsSsm.getSelectedObject();
+					mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
+					myEnrollmentsSsm.clear();
+				}
+			}
+		});
+
+		myEnrollmentsTable.setWidth("100%", true);
+
+		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
+		// Item zur selben Zeit ausgewählt sein kann
+		final SingleSelectionModel<Enrollment> enrollmentsToMeSsm = new SingleSelectionModel<Enrollment>();
+
+		// Das SingleSelectionModel wird der Tabelle Meine Marktplätze
+		// hinzugefügt
+		myEnrollmentsTable.setSelectionModel(enrollmentsToMeSsm);
+
+		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
+		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
+		enrollmentsToMeSsm.addSelectionChangeHandler(new Handler() {
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+				if (enrollmentsToMeSsm.getSelectedObject() != null) {
+					Enrollment selectedEnrollment = enrollmentsToMeSsm.getSelectedObject();
+					mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
+					enrollmentsToMeSsm.clear();
+				}
+			}
+		});
+
+		myEnrollmentsTable.setWidth("100%", true);
 
 		VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
@@ -244,8 +284,10 @@ public class MyOverView extends View {
 		root.add(myApplicationsTable);
 		root.add(createSecondHeadline("Bewerbungen an mich"));
 		root.add(applicationsToMeTable);
-		root.add(createSecondHeadline("Mitarbeiter Beteiligungen an meinen Projekten"));
 		root.add(createSecondHeadline("Meine Projekt-Beteiligungen"));
+		root.add(myEnrollmentsTable);
+		root.add(createSecondHeadline("Mitarbeiter Beteiligungen an meinen Projekten"));
+		root.add(enrollmentsToMeTable);
 
 		this.add(root);
 		loadData();
@@ -253,8 +295,6 @@ public class MyOverView extends View {
 
 	@Override
 	public void loadData() {
-		final Vector<Call> myCalls = new Vector<Call>();
-		final Vector<Application> applicationsToMe = new Vector<Application>();
 		worketplaceAdministration.getProjectsForLeader(ClientsideSettings.getCurrentUser(),
 				new AsyncCallback<Vector<Project>>() {
 					@Override
@@ -265,38 +305,39 @@ public class MyOverView extends View {
 					public void onSuccess(Vector<Project> results) {
 						myProjectsTable.setRowData(0, results);
 						myProjectsTable.setRowCount(results.size(), true);
-						for (Project project : results) {
-							worketplaceAdministration.getCallsFor(project, new AsyncCallback<Vector<Call>>() {
-								@Override
-								public void onFailure(Throwable caught) {
-								}
-
-								@Override
-								public void onSuccess(Vector<Call> results2) {
-									Window.alert(String.valueOf(results2.size()));
-									myCalls.addAll(results2);
-									for (Call call : results2) {
-										worketplaceAdministration.getApplicationsFor(call,
-												new AsyncCallback<Vector<Application>>() {
-													@Override
-													public void onFailure(Throwable caught) {
-													}
-
-													@Override
-													public void onSuccess(Vector<Application> results3) {
-														applicationsToMe.addAll(results3);
-													}
-												});
-									}
-								}
-							});
-						}
 					}
 				});
-		myCallsTable.setRowData(0, myCalls);
-		myCallsTable.setRowCount(myCalls.size(), true);
-		applicationsToMeTable.setRowData(0, applicationsToMe);
-		applicationsToMeTable.setRowCount(applicationsToMe.size(), true);
+		try {
+			worketplaceAdministration.getCallsFor((Person) ClientsideSettings.getCurrentUser(),
+					new AsyncCallback<Vector<Call>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+
+						@Override
+						public void onSuccess(Vector<Call> results) {
+							myCallsTable.setRowData(0, results);
+							myCallsTable.setRowCount(results.size(), true);
+						}
+					});
+
+		} catch (Exception e) {
+		}
+		try {
+			worketplaceAdministration.getApplicationsFor((Person) ClientsideSettings.getCurrentUser(),
+					new AsyncCallback<Vector<Application>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+
+						@Override
+						public void onSuccess(Vector<Application> results) {
+							applicationsToMeTable.setRowData(0, results);
+							applicationsToMeTable.setRowCount(results.size(), true);
+						}
+					});
+		} catch (Exception e) {
+		}
 		worketplaceAdministration.getApplicationsFor(ClientsideSettings.getCurrentUser(),
 				new AsyncCallback<Vector<Application>>() {
 					@Override
@@ -309,6 +350,33 @@ public class MyOverView extends View {
 						myApplicationsTable.setRowCount(results.size(), true);
 					}
 				});
+		worketplaceAdministration.getEnrollmentFor(ClientsideSettings.getCurrentUser(),
+				new AsyncCallback<Vector<Enrollment>>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Vector<Enrollment> results) {
+						myEnrollmentsTable.setRowData(0, results);
+						myEnrollmentsTable.setRowCount(results.size(), true);
+					}
+				});
+		try {
+			worketplaceAdministration.getEnrollmentsFor((Person) ClientsideSettings.getCurrentUser(),
+					new AsyncCallback<Vector<Enrollment>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+
+						@Override
+						public void onSuccess(Vector<Enrollment> results) {
+							enrollmentsToMeTable.setRowData(0, results);
+							enrollmentsToMeTable.setRowCount(results.size(), true);
+						}
+					});
+		} catch (Exception e) {
+		}
 	}
 
 	@Override

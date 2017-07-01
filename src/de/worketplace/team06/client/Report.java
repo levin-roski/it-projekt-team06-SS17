@@ -23,7 +23,7 @@ import de.worketplace.team06.client.gui.report.AllInterrelationsOfAllApplicantsO
 import de.worketplace.team06.client.gui.report.AllInterrelationsOfApplicantReportView;
 import de.worketplace.team06.client.gui.report.FanInFanOutOfUserReportView;
 import de.worketplace.team06.client.gui.report.FanInOfApplicationsOfUserReportView;
-import de.worketplace.team06.client.gui.report.FanOutOfApplicationsOfUserReportView;
+import de.worketplace.team06.client.gui.report.FanOutOfCallsOfUserReportView;
 import de.worketplace.team06.client.gui.report.HomeReportView;
 import de.worketplace.team06.client.gui.report.ReportNavigation;
 import de.worketplace.team06.shared.LoginService;
@@ -122,7 +122,7 @@ public class Report implements EntryPoint {
 			} else if (historyToken.equals("Meine-Ausschreibungen")) {
 				mainPanel.setView(new AllCallsOfUserReportView());
 			} else if (historyToken.equals("Anzahl-meiner-Ausschreibungen-nach-Status-(Fan-Out)")) {
-				mainPanel.setView(new FanOutOfApplicationsOfUserReportView());
+				mainPanel.setView(new FanOutOfCallsOfUserReportView());
 			} else if (historyToken.equals("Bewerbungen-auf-meine-Ausschreibungen")) {
 				mainPanel.setView(new AllApplicationsForCallsOfUserReportView());
 			} else if (historyToken.equals("Bewerbungen-meines-Bewerbers")) {

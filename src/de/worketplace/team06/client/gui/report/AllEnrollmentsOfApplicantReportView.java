@@ -16,7 +16,7 @@ import de.worketplace.team06.shared.report.AllEnrollmentsOfApplicantReport;
 public class AllEnrollmentsOfApplicantReportView extends ReportView {
 	public AllEnrollmentsOfApplicantReportView() {
 		this.add(ClientsideSettings.getBreadcrumbs());
-		this.add(new HTML("<h2>Bitte wählen Sie den Bewerber, für den der Report generiert werden soll</h2>"));
+		this.add(new HTML("<h1>Beteiligungen meines Bewerbers</h1><p>Bitte wählen Sie den Bewerber, für den der Report generiert werden soll</p>"));
 		final HTMLPanel report = new HTMLPanel("");
 		if (ClientsideSettings.getCurrentUser().getType() == "Person") {
 			this.add(getAllApplicantsOfCurrentUserInput(new Callback() {
@@ -55,7 +55,7 @@ public class AllEnrollmentsOfApplicantReportView extends ReportView {
 														report.add(new HTML(writer.getReportText()));
 													}
 												});
-										RpcWrapper.this.t.cancel();
+										t.cancel();
 									}
 								}
 							};
