@@ -26,8 +26,9 @@ import de.worketplace.team06.shared.bo.Marketplace;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 public class MarketplaceMapper {
 	/**
@@ -37,9 +38,6 @@ public class MarketplaceMapper {
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
-     * 
-     * @author Thies
-     * @author Theresa
      */
 	private static MarketplaceMapper marketplaceMapper = null;
 	
@@ -47,7 +45,6 @@ public class MarketplaceMapper {
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies 
 	   */
 	protected MarketplaceMapper() {
 		
@@ -60,8 +57,6 @@ public class MarketplaceMapper {
 	 * Aufruf dieser statischen Methode ausgeführt werden.
 	 * 
 	 * @return TeamMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public static MarketplaceMapper marketplaceMapper() {
 		if (marketplaceMapper == null) {
@@ -78,8 +73,6 @@ public class MarketplaceMapper {
 	 * 
 	 * @param m
 	 * @return Marketplace
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Marketplace insert(Marketplace m) {
 		
@@ -111,7 +104,6 @@ public class MarketplaceMapper {
 	 * Auslesen aller Marktplätze aus der Datenbank.
 	 * 
 	 * @return Vektor<Marketplace>
-	 * @author Theresa
 	 */
 	public Vector<Marketplace> findAll() {
 		
@@ -148,7 +140,6 @@ public class MarketplaceMapper {
 		 * 
 		 * @param m
 		 * @return
-		 * @author Theresa
 		 */
 	
 		public Marketplace update(Marketplace m) {
@@ -170,42 +161,10 @@ public class MarketplaceMapper {
 			    return m;	
 		}
 		
-
-/*
-		public Vector<Marketplace> findByOrgaUnitID(Integer ouid) {	
-			Connection con = DBConnection.connection();
-			Vector<Marketplace> result = new Vector<Marketplace>();
-			try {
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT id, created, title, description, orgaunit_id FROM marketplace "
-				          + "WHERE orgaunit_id=" + ouid + " ORDER BY id");
-
-				      // Für jeden Eintrag im Suchergebnis wird nun ein Marketplace Objekt erstellt.
-				      while (rs.next()) {
-				        Marketplace m = new Marketplace();
-				        m.setID(rs.getInt("id"));
-				        m.setCreated(rs.getTimestamp("created"));
-				        m.setTitle(rs.getString("title"));
-				        m.setDescription(rs.getString("description"));
-				        m.setOrgaUnitID(rs.getInt("orgaunit_id"));
-
-				        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-				        result.addElement(m);
-				      }
-				    }
-				    catch (SQLException e2) {
-				      e2.printStackTrace();
-				    }
-
-		// Ergebnisvektor zurückgeben
-		return result;
-		}
-*/		
 		/**
 		 * Loeschen eines Marketplace-Objektes aus der Datenbank.
 		 * 
 		 * @param m
-		 * @author Theresa
 		 */
 		public void delete(Marketplace m) {
 			Connection con = DBConnection.connection();
@@ -227,7 +186,6 @@ public class MarketplaceMapper {
 		 * 
 		 * @param marketplaceID
 		 * @return
-		 * @author Theresa
 		 */
 		public Marketplace findByID(Integer marketplaceID) {
 	    	Connection con = DBConnection.connection();
