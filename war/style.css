@@ -103,16 +103,6 @@ table.content, td.rcontent {
 	border-collapse: collapse;
 }
 
-table {
-    border-collapse: collapse;
-    font-family: 'Open Sans';
-}
-
-table.content, td {
-    width: 70%;
-    border: 1px solid #ddd;
-}
-
 table.headerdata {
 	width: inherit;
 	border-collapse: collapse;
@@ -129,13 +119,13 @@ td.tdheaderdata {
 tr.theader {
 	height: 50px;
 	text-align: left;
-	background-color: #04847a !important;
+	background-color: #04847a;
 	color: white;
 	font-size: 18px;
 }
 
 tr.rcontent, td.rcontent {
-	padding: 10px;
+	padding: 8px;
 	text-align: left;
 	font-size: 14px;
 	width: inherit;
