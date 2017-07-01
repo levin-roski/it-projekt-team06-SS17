@@ -149,7 +149,7 @@ public class MyOverView extends View {
 		TextColumn<Call> deadlineColumn = new TextColumn<Call>() {
 			@Override
 			public String getValue(Call object) {
-				return String.valueOf(object.getDeadline());
+				return simpleDateFormat.format(object.getDeadline());
 			}
 		};
 		myCallsTable.addColumn(deadlineColumn, "Bewerbungsfrist");

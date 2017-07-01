@@ -11,7 +11,7 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
 public abstract class Page extends VerticalPanel {
 	protected OrgaUnit currentUser = ClientsideSettings.getCurrentUser();
 	protected MainPanel mainPanel = ClientsideSettings.getMainPanel();
-	protected final DateTimeFormat simpleDateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+	protected final DateTimeFormat simpleDateFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 
 	protected HorizontalPanel createHeadline(final String text, boolean isFirstPageElement) {
 		HorizontalPanel hp = new HorizontalPanel();
