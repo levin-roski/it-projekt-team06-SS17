@@ -317,3 +317,21 @@ h1.hsubreport{
 	margin-bottom: 10px !important;
 	padding-top: 0px !important;
 }
+
+.headcount {
+	width: 20px;
+	height: 20px;
+	padding: 5px !important;
+	color: #fff !important;
+	border: 2px solid lightgrey !important;
+	border-radius: 50px;
+	vertical-align: middle !important;
+	text-align: center;
+	color: #04847a !important;
+	margin-right: 0 !important;
+}
+
+#titletable
+{
+	width: 80% !important;
+}
