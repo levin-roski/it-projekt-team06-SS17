@@ -77,7 +77,32 @@ button {
 	font-weight: bold;
 }
 
-/* Styles für Anzeige von Reports */
+
+
+/*******************/
+/** GWT OVERRIDES **/
+/*******************/
+
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget{
+	width: 80% !important;
+}
+
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget th{
+	text-align: left !important;
+	background-color: #04847a !important;
+	color: white !important;
+	border-bottom: none;
+	text-shadow: none;
+}
+
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget td{
+	width: inherit !important;
+}
+
+
+
+
+/* Styles fÃ¼r Anzeige von Reports */
 table.content, td.rcontent {
 	width: 80%;
 	border: 1px solid #ddd;
