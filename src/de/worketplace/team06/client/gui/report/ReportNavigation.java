@@ -48,6 +48,10 @@ public class ReportNavigation extends VerticalPanel {
 			}
 		}));
 		menu.addSeparator();
+		
+		//MenuBar fanMenu = new MenuBar(true);
+		//fanMenu.setAnimationEnabled(true);	
+		
 		menu.addItem(new MenuItem("Fan-In-Fan-Out-Analyse", new Command() {
 			public void execute() {
 				History.newItem("Fan-In-Fan-Out-Analyse");
@@ -55,31 +59,26 @@ public class ReportNavigation extends VerticalPanel {
 		}));
 		menu.addSeparator();
 		
-		
-		
-		
-		MenuBar applicantMenu = new MenuBar(true);
-		applicantMenu.setAnimationEnabled(true);
-		applicantMenu.addItem(new MenuItem("Ausschreibungen zu meinem Partnerprofil", new Command() {
-			public void execute() {
-				History.newItem("Passende-Ausschreibungen-zu-meinem-Partnerprofil");
-			}
-		}));
-		applicantMenu.addItem(new MenuItem("Fan-In: Meine Bewerbungen (Status)", new Command() {
-			public void execute() {
-				History.newItem("Anzahl-meiner-Bewerbungen-nach-Status-(Fan-In)");
-			}
-		}));		
-		menu.addItem(new MenuItem("Bewerber Reports", applicantMenu));
-		menu.addSeparator();
+		//MenuBar applicantMenu = new MenuBar(true);
+		//applicantMenu.setAnimationEnabled(true);		
+		//menu.addItem(new MenuItem("Bewerber Reports", applicantMenu));
+		//menu.addSeparator();
 
-		
-		
 		MenuBar leaderMenu = new MenuBar(true);
 		leaderMenu.setAnimationEnabled(true);
 		leaderMenu.addItem(new MenuItem("Meine Ausschreibungen", new Command() {
 			public void execute() {
 				History.newItem("Meine-Ausschreibungen");
+			}
+		}));
+		leaderMenu.addItem(new MenuItem("Ausschreibungen zu meinem Partnerprofil", new Command() {
+			public void execute() {
+				History.newItem("Passende-Ausschreibungen-zu-meinem-Partnerprofil");
+			}
+		}));
+		leaderMenu.addItem(new MenuItem("Fan-In: Meine Bewerbungen (Status)", new Command() {
+			public void execute() {
+				History.newItem("Anzahl-meiner-Bewerbungen-nach-Status-(Fan-In)");
 			}
 		}));
 		leaderMenu.addItem(new MenuItem("Fan-Out: Meine Ausschreibungen (Status)", new Command() {
