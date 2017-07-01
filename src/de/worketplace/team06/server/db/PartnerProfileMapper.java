@@ -26,7 +26,9 @@ import de.worketplace.team06.shared.bo.PartnerProfile;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 public class PartnerProfileMapper {
 
@@ -38,15 +40,12 @@ public class PartnerProfileMapper {
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
      * 
-     * @author Thies
-     * @author Theresa
      */
 	private static PartnerProfileMapper partnerProfileMapper = null;
 	 /**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies
 	   */
 	protected PartnerProfileMapper(){
 		
@@ -58,8 +57,6 @@ public class PartnerProfileMapper {
 	 * Aufruf dieser statischen Methode genutzt werden.
 	 * 
 	 * @return PartnerProfileMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	
 	public static PartnerProfileMapper partnerProfileMapper(){
@@ -75,7 +72,6 @@ public class PartnerProfileMapper {
 	 * 
 	 * @param id
 	 * @return Partnerprofile-Objekt, das der uebergebenen ID entspricht
-	 * @author Theresa
 	 */
 	
 	public PartnerProfile findById (Integer id){
@@ -105,7 +101,6 @@ public class PartnerProfileMapper {
 	 * Auslesen aller PartnerProfile-Objekte aus der Datenbank.
 	 * 
 	 * @return Vektor<PartnerProfile>
-	 * @author Theresa
 	 */
 	
     public Vector<PartnerProfile> findAll() {
@@ -139,8 +134,6 @@ public class PartnerProfileMapper {
 	 * 
      * @param part
      * @return partnerprofile
-     * @author Theresa
-     * @author Thies
      */
     
     public PartnerProfile insert (PartnerProfile part) {
@@ -179,7 +172,6 @@ public class PartnerProfileMapper {
      * 
      * @param part
      * @return PartnerProfile
-     * @author Theresa
      */
     public PartnerProfile update(PartnerProfile part) {
         Connection con = DBConnection.connection();
@@ -201,7 +193,6 @@ public class PartnerProfileMapper {
      * Loeschen eines PartnerProfile-Objektes aus der Datenbank.
      * 
      * @param part
-     * @author Theresa
      */
     
     public void delete(PartnerProfile part) {
