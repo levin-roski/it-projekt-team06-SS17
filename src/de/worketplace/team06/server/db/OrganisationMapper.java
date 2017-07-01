@@ -27,8 +27,9 @@ import de.worketplace.team06.shared.bo.Organisation;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 public class OrganisationMapper {
 	
@@ -40,8 +41,6 @@ public class OrganisationMapper {
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
      * 
-     * @author Thies
-     * @author Theresa
      */
 
 	private static OrganisationMapper organisationMapper = null;
@@ -50,7 +49,6 @@ public class OrganisationMapper {
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies 
 	   */
 	
 	protected OrganisationMapper(){
@@ -64,8 +62,6 @@ public class OrganisationMapper {
 	 * Aufruf dieser statischen Methode ausgeführt werden.
 	 * 
 	 * @return OrganisationMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	
 	public static OrganisationMapper organisationMapper(){
@@ -81,9 +77,7 @@ public class OrganisationMapper {
 	 * 
 	 * @param orgaUnit
 	 * @return Organisation
-	 * @throws  
-	 * @author Thies 
-	 * @author Theresa
+	 * @throws 
      */
 	
     public Organisation insert (Organisation o) {
@@ -138,7 +132,6 @@ public class OrganisationMapper {
 	 * 
 	 * @param googleID 
 	 * @return Organisation-Objekt 
-	 * @author Theresa
 	 */
 	public Organisation findByGoogleID(String googleID) {
 		Connection con = DBConnection.connection();
@@ -177,7 +170,6 @@ public class OrganisationMapper {
      * 
      * @param orgaUnit 
      * @return Organisation
-     * @author Theresa
      */
 	public void update(Organisation o) {
 		Connection con = DBConnection.connection();
@@ -204,7 +196,6 @@ public class OrganisationMapper {
      * Löschen eines Organisation-Objektes aus der Datenbank.
      * 
      * @param orga
-     * @author Theresa
      */
     public void delete(Organisation o) {
 		Connection con = DBConnection.connection();
@@ -224,7 +215,6 @@ public class OrganisationMapper {
 	 * 
 	 * @param ouid
 	 * @return Organisation-Objekt, das der übergebenen ID entspricht
-	 * @author Theresa
 	 */
     public Organisation findByID(Integer ouid) {
     	Connection con = DBConnection.connection();
@@ -259,7 +249,13 @@ public class OrganisationMapper {
 		}
 		return null;
 	}
-
+    
+    /**
+     * Auslesen aller Organisation-Objekte aus der Datenbank.
+     * 
+     * @return Vector<Organisation>
+     */
+    
 	public Vector<Organisation> findAll() {
 		Connection con = DBConnection.connection();
 		Vector<Organisation> allOrganisations = new Vector<Organisation>();

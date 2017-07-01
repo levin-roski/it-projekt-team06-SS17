@@ -27,8 +27,9 @@ import de.worketplace.team06.shared.bo.Property;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 
 public class PropertyMapper {
@@ -40,15 +41,12 @@ public class PropertyMapper {
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
      * 
-     * @author Thies
-     * @author Theresa
      */
 	private static PropertyMapper propertyMapper = null;
 	/**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies 
 	   */
 	protected PropertyMapper(){
 		
@@ -61,8 +59,6 @@ public class PropertyMapper {
 	 * Aufruf dieser statischen Methode aufgerufen werden.
 	 * 
 	 * @return PropertyMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public static PropertyMapper propertyMapper(){
 		if (propertyMapper == null){
@@ -76,7 +72,6 @@ public class PropertyMapper {
 	 * 
 	 * @param prop
 	 * @return Property-Objekt, das der übergebenen ID entspricht
-	 * @author Theresa
 	 */
 	public Property findById (Integer id){
     	Connection con = DBConnection.connection();
@@ -108,7 +103,6 @@ public class PropertyMapper {
 	 * Auslesen aller Eigenschaften aus der Datenbank
 	 * 
 	 * @return Vektor<Property>
-	 * @author Theresa
 	 */
     public Vector<Property> findAll() {
         Connection con = DBConnection.connection();
@@ -142,7 +136,6 @@ public class PropertyMapper {
 	 * 
 	 * @param partnerProfileID 
 	 * @return Vektor<Property>
-	 * @author Theresa
 	 */
 	public Vector<Property> findByPartnerProfileID(Integer partnerProfileID) {
 		
@@ -181,8 +174,6 @@ public class PropertyMapper {
      * @param prop
      * @return Property 
      * @throws  
-     * @author Thies 
-     * @author Theresa
      */
 	
     public Property insert (Property prop) {
@@ -220,7 +211,6 @@ public class PropertyMapper {
      * 
      * @param prop
      * @return Property
-     * @author Theresa
      */
     public Property update (Property prop) {
         Connection con = DBConnection.connection();
@@ -245,7 +235,6 @@ public class PropertyMapper {
      * Loeschen eines Property-Objektes aus der Datenbank.
      * 
      * @param prop
-     * @author Theresa
      */
     public void delete(Property prop) {
         Connection con = DBConnection.connection();
@@ -264,7 +253,6 @@ public class PropertyMapper {
      * Loeschen der Eigenschaft anhand der übergebenen bzw. zugehörigen PartnerProfileID.
      * 
      * @param id
-     * @author Theresa
      */
     
     public void deleteByPartnerProfileID(Integer id) {

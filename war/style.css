@@ -1,5 +1,7 @@
 body {
 	margin: 0 !important;
+	font-family: Open Sans !important;
+	font-weight: normal !important;
 }
 
 .center {
@@ -27,24 +29,37 @@ body {
 }
 
 .main-panel-form {
-	border-left: 1px solid #e0e0e0;
+	box-shadow: -10px -10px 5px lightgrey !important;
+	/*border-left: 1px solid #e0e0e0;*/
 	padding: 10px 10px 0 10px;
+	background: #454a4a !important;
+	font-weight: normal !important;
 }
+
+.main-panel-form h1{
+	color: #fff;
+	font-weight: normal !important;
+}
+
+.main-panel-form .gwt-Label {
+	color: #fff;
+}
+
+.main-panel-form .gwt-Button {
+	background: #fff !important;
+	/*background-color: #454a4a;*/
+	color: #000 !important;
+	box-shadow: none !important;
+	border: #fff !important;
+}
+
+.main-panel-form .gwt-Button:hover {
+	color: #fff !important;
+}
+
 
 .first-element {
 	margin-top: 0;
-}
-
-.gwt-MenuBar-horizontal {
-	background: none !important;
-}
-
-.gwt-MenuBar-horizontal .gwt-MenuItem {
-	vertical-align: middle !important;
-}
-
-.gwt-MenuItem-selected {
-	background-color: #F5F5F5 !important;
 }
 
 button {
@@ -56,11 +71,6 @@ button {
 	margin: 9px 6px 0 0 !important;
 	font-size: 10px !important;
 	font-weight: bold !important;
-}
-
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td,
-	.gwt-Anchor {
-	cursor: pointer;
 }
 
 .registration-logo {
@@ -80,6 +90,13 @@ button {
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget{
 	width: 80% !important;
+	box-shadow: 3px 3px 5px lightgrey !important;
+	border: 1px solid lightgrey;
+}
+
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td,
+	.gwt-Anchor {
+	cursor: pointer;
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget th{
@@ -88,6 +105,7 @@ button {
 	color: white !important;
 	border-bottom: none;
 	text-shadow: none;
+	font-weight: normal;
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget td{
@@ -95,21 +113,100 @@ button {
 }
 
 
-/* Styles für Anzeige von Reports */
-
-table.content, td.rcontent {
-	width: 80%;
-	border: 1px solid #ddd;
-	border-collapse: collapse;
-
-table {
-    border-collapse: collapse;
-    font-family: 'Open Sans';
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableEvenRowCell {
 }
 
-table.content, td {
-    width: 70%;
-    border: 1px solid #ddd;
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableOddRowCell {
+	background-color: none !important;
+}
+
+.gwt-MenuBar {
+	background-color: #454a4a !important;
+	box-shadow: 0px 1px 5px #454a4a !important;
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: 3px solid #04847a !important;
+	border-radius: none !important;
+}
+
+.gwt-MenuBar-horizontal {
+	vertical-align: middle !important;
+	background: #454a4a !important;
+}
+
+.gwt-MenuBar .gwt-MenuItem {
+    font-family: Open Sans !important;
+    font-weight: normal;
+    font-size: 12px !important;
+    letter-spacing: 1px;
+}
+
+.gwt-MenuItem {
+	color: #fff !important;
+	vertical-align: middle !important;
+	text-transform: uppercase;
+}
+
+.gwt-MenuItem-selected{
+	background: #04847a !important;
+}
+
+.gwt-MenuItemSeparator {
+	background: transparent !important;
+	border-left: none !important;
+	width: 5px !important;
+}
+
+.menuPopupTop, .menuPopupTopLeft, .menuPopupTopCenter, .menuPopupTopRight, .menuPopupMiddle, .menuPopupMiddleLeft, .menuPopupMiddleCenter, .menuPopupMiddleRight, .menuPopupBottom, .menuPopupBottomLeft, .menuPopupBottomCenter, .menuPopupBottomRight {
+	background: #454a4a !important;
+}
+
+.gwt-Button {
+	background: #454a4a !important;
+	/*background-color: #454a4a;*/
+	color: #fff;
+	box-shadow: 2px 2px 3px lightgrey !important;
+	border: #454a4a;
+}
+
+.gwt-Button:hover {
+	background: #04847a !important;
+	/*background-color: #454a4a;*/
+	border: #04847a;
+}
+
+.gwt-Anchor {
+	color: grey !important;
+}
+
+a.gwt-Anchor:hover {
+	color: #04847a !important;
+	text-decoration: none;
+}
+
+h1 {
+	font-size: 24px;
+	padding-top: 20px;
+	color: #454a4a;
+}
+
+h2 {
+	font-size: 18px;
+	padding-top: 20px;
+	color: #454a4a;
+}
+
+
+/**********************/
+/** Report Generator **/
+/**********************/
+
+table.content{
+	width: 80%;
+	border: 1px solid lightgrey;
+	border-collapse: collapse;
+	box-shadow: 3px 3px 5px lightgrey !important;
 }
 
 table.headerdata {
@@ -134,10 +231,11 @@ tr.theader {
 }
 
 tr.rcontent, td.rcontent {
-	padding: 10px;
+	padding: 8px;
 	text-align: left;
 	font-size: 14px;
 	width: inherit;
+	font-weight: normal;
 }
 
 tr.rcontent:nth-child(even) {

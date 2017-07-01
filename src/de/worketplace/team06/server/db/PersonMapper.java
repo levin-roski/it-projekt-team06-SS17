@@ -26,8 +26,9 @@ import de.worketplace.team06.shared.bo.Person;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 
 public class PersonMapper {
@@ -39,9 +40,7 @@ public class PersonMapper {
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
-     * 
-     * @author Thies
-     * @author Theresa
+     *
      */
 	
 	
@@ -51,7 +50,6 @@ public class PersonMapper {
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies 
 	   */
 	
 	protected PersonMapper() {
@@ -65,8 +63,6 @@ public class PersonMapper {
 	 * Aufruf dieser statischen Methode genutzt werden.
 	 * 
 	 * @return PersonMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	
 	public static PersonMapper personMapper() {
@@ -83,8 +79,6 @@ public class PersonMapper {
 	 * 
 	 * @param p
 	 * @return person
-	 * @author Thies
-	 * @author Theresa
 	 */
 	
 	public Person insert(Person p) {
@@ -152,7 +146,6 @@ public class PersonMapper {
 	 * 
 	 * @param googleID
 	 * @return Person-Objekt 
-	 * @author Theresa
 	 */
 	public Person findByGoogleID(String googleID) {
 		Connection con = DBConnection.connection();
@@ -196,7 +189,6 @@ public class PersonMapper {
      * 
      * @param orgaUnit 
      * @return Person
-     * @author Theresa
      */
 	public void update(Person p) {
 		Connection con = DBConnection.connection();
@@ -226,7 +218,6 @@ public class PersonMapper {
      * Loeschen eines Person-Objektes aus der Datenbank
      * 
      * @param person
-     * @author Theresa
      */
 	
 	public void delete(Person p) {
@@ -251,7 +242,6 @@ public class PersonMapper {
 	 * 
 	 * @param ouid
 	 * @return Person-Objekt, das der übergebenen ID entspricht
-	 * @author Theresa
 	 */
 	
 	public Person findByID(Integer ouid) {
@@ -290,7 +280,11 @@ public class PersonMapper {
 		}
 		return null;
 	}
-
+	/**
+	 * Auslesen aller Person-Objekte aus der Datenbank.
+	 * 
+	 * @return Vector<Person>
+	 */
 	public Vector<Person> findAll() {
 		Connection con = DBConnection.connection();
 		Vector<Person> result = new Vector<Person>();

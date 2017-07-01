@@ -26,8 +26,9 @@ import de.worketplace.team06.shared.bo.Rating;
  * @see PropertyMapper
  * @see TeamMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 
 
@@ -41,8 +42,6 @@ public class RatingMapper {
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
      * 
-     * @author Thies
-     * @author Theresa
      */
 
 	private static RatingMapper ratingMapper = null;
@@ -50,7 +49,6 @@ public class RatingMapper {
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies 
 	   */
 	protected RatingMapper(){
 		
@@ -63,8 +61,6 @@ public class RatingMapper {
 	 * Aufruf dieser statischen Methode ausgeführt werden.
 	 * 
 	 * @return RatingMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	
 	public static RatingMapper ratingMapper(){
@@ -80,7 +76,6 @@ public class RatingMapper {
 	 * 
 	 * @param r
 	 * @return Rating-Objekt, das der übergebenen ID entspricht
-	 * @author Theresa
 	 */
 
 	public Rating findById (Integer id){
@@ -113,7 +108,6 @@ public class RatingMapper {
 	 * Auslesen aller Bewertungen aus der Datenbank.
 	 *  
 	 * @return Vektor<Rating>
-	 * @author Theresa
 	 */
     public Vector<Rating> findAll() {
     	
@@ -147,9 +141,7 @@ public class RatingMapper {
      * 
      * @param r
      * @return Rating
-     * @throws  
-     * @author Thies 
-     * @author Theresa
+     * @throws 
      */
     public Rating insert (Rating r) {
  
@@ -189,7 +181,6 @@ public class RatingMapper {
      * 
      * @param r 
      * @return Rating
-     * @author Theresa
      */
     
     public Rating update(Rating r) {
@@ -216,7 +207,6 @@ public class RatingMapper {
      * Loeschen eines Rating-Objektes aus der Datenbank.
      * 
      * @param rating
-     * @author Theresa
      */
 
     public void delete(Rating r) {
@@ -239,7 +229,6 @@ public class RatingMapper {
 	 * 
 	 * @param ApplicationID
 	 * @return Rating-Objekt 
-	 * @author Theresa
 	 */
     
     public Rating findRatingByApplicationID(Integer applicationID){

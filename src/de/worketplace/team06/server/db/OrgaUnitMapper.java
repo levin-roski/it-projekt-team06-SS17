@@ -25,8 +25,9 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 
 public class OrgaUnitMapper {
@@ -38,17 +39,12 @@ public class OrgaUnitMapper {
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
-     * 
-     * @author Thies
-     * @author Theresa
      */
 	private static OrgaUnitMapper orgaUnitMapper = null;
 	
 	/**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
-	   * 
-	   * @author Thies 
 	   */
 	protected OrgaUnitMapper() {
 		
@@ -61,8 +57,6 @@ public class OrgaUnitMapper {
 	 * Aufruf dieser statischen Methode ausgeführt werden.
 	 * 
 	 * @return TeamMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public static OrgaUnitMapper orgaUnitMapper() {
 		if (orgaUnitMapper == null) {
@@ -78,7 +72,6 @@ public class OrgaUnitMapper {
 	 * 
 	 * @param googleID
 	 * @return type
-	 * @author Theresa
 	 */
 	public String findTypeByGoogleID(String googleID){
 		
@@ -108,7 +101,6 @@ public class OrgaUnitMapper {
 	 * 
 	 * @param ouid
 	 * @return
-	 * @author Theresa
 	 */
 	public String findTypeByID(Integer ouid) {
 		
@@ -134,7 +126,6 @@ public class OrgaUnitMapper {
 	 * 
 	 * @param googleID
 	 * @return
-	 * @author Theresa
 	 */
 	public Integer findID(String googleID) {
 		
@@ -161,7 +152,6 @@ public class OrgaUnitMapper {
 	 * Aktualisieren eines Organisationseinheit-Objektes in der Datenbank.
 	 * 
 	 * @param ou
-	 * @author Theresa
 	 */
 	public void update(OrgaUnit ou) {
 		Connection con = DBConnection.connection();

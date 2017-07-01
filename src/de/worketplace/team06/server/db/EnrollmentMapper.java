@@ -32,8 +32,9 @@ import de.worketplace.team06.shared.bo.Team;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 public class EnrollmentMapper {
 	/**
@@ -44,24 +45,18 @@ public class EnrollmentMapper {
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
      * 
-     * @author Thies
-     * @author Theresa
      */
 	private static EnrollmentMapper enrollmentMapper = null;
 	
 	/**
 	 * Darstellung von Datum wird durch diese Methode vereinfacht und vereinheitlicht. 
 	 * wird aufgerufen, wenn Startdatum und Enddatum neu angelegt oder verändert werden.
-	 * 
-	 * @author Theresa
 	 */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	/**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
-	   * 
-	   * @author Thies 
 	   */
 	protected EnrollmentMapper() {
 		
@@ -73,9 +68,7 @@ public class EnrollmentMapper {
 	 * EnrollmentMapper sollte nicht über den New-Operator, sondern über den 
 	 * Aufruf dieser statischen Methode aufgerufen werden.
 	 * 
-	 * @return EnrollmentMapper
-	 * @author Thies
-	 * @author Theresa
+	 * @return EnrollmentMappe
 	 */
 	public static EnrollmentMapper enrollmentMapper() {
 		if (enrollmentMapper == null) {
@@ -91,7 +84,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param e
 	 * @return Enrollment-Objekt, das der übergebenen ID entspricht
-	 * @author Theresa
 	 */
 	public Enrollment findByID(Integer id) {
 		Connection con = DBConnection.connection();
@@ -150,7 +142,6 @@ public class EnrollmentMapper {
 	 * Auslesen aller Enrollment-Objekte aus der Datenbank.
 	 * 
 	 * @return Vektor <Enrollment>
-	 * @author Theresa
 	 */
 	public Vector<Enrollment> findAll() {
 		Connection con = DBConnection.connection();
@@ -271,7 +262,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param projectID
 	 * @return Vektor<Enrollment>
-	 * @author Theresa
 	 */
 	public Vector<Enrollment> findByProjectID (Integer projectID) {
 		
@@ -333,7 +323,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param rID
 	 * @return
-	 * @author Theresa
 	 */
 	public Enrollment findByRatingID (Integer rID) {
 		
@@ -394,7 +383,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param e
 	 * @return Enrollment
-	 * @author Theresa
 	 */
 	public Enrollment insert(Enrollment e) {
 		Connection con = DBConnection.connection();
@@ -451,7 +439,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param e
 	 * @return
-	 * @author Theresa
 	 */
 	public Enrollment update(Enrollment e) {
 		Connection con = DBConnection.connection();
@@ -478,7 +465,6 @@ public class EnrollmentMapper {
 	 * Loeschen eines Enrollment-Objektes aus der Datenbank.
 	 * 
 	 * @param e
-	 * @author Theresa
 	 */
 	public void delete(Enrollment e) {
 		Connection con = DBConnection.connection();
@@ -499,8 +485,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param e die Beteiligung, deren Person wir auslesen möchten 
 	 * @return ein Objekt, das die Person zu der Beteiligung darstellt
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Person getSourcePerson(Enrollment e) {
 		 //Bedienen am PersonMapper
@@ -512,8 +496,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param e die Beteiligung, deren Organisation wir auslesen möchten
 	 * @return ein Objekt, das die Organisation zu der Beteiligung darstellt
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Organisation getSourceOrganisation(Enrollment e) {
 		//Bedienen am OrganisationMapper
@@ -525,8 +507,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param e die Beteiligung, deren Team wir auslesen moechten
 	 * @return ein Objekt, das das Team zu der Beteiligung darstellt
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Team getSourceTeam(Enrollment e) {
 		//Bedienen am TeamMapper
@@ -538,8 +518,6 @@ public class EnrollmentMapper {
 	 * 
 	 * @param e die Beteiligung, deren Projekt wir auslesen moechten
 	 * @return ein Objekt, das das Projekt zu der Beteiligung darstellt
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Project getSourceProject(Enrollment e) {
 		//Bedienen am ProjectMapper

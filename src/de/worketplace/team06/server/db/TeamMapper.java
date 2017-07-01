@@ -26,8 +26,9 @@ import de.worketplace.team06.shared.bo.Team;
  * @see PropertyMapper
  * @see RatingMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 
 	public class TeamMapper {
@@ -39,8 +40,6 @@ import de.worketplace.team06.shared.bo.Team;
 	     * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	     * einzige Instanz dieser Klasse.
 	     * 
-	     * @author Thies
-	     * @author Theresa
 	     */
 		private static TeamMapper teamMapper = null;
 
@@ -48,7 +47,6 @@ import de.worketplace.team06.shared.bo.Team;
 		   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 		   * neue Instanzen dieser Klasse zu erzeugen.
 		   * 
-		   * @author Thies 
 		   */
 		
 		protected TeamMapper(){
@@ -62,8 +60,6 @@ import de.worketplace.team06.shared.bo.Team;
 		 * Aufruf dieser statischen Methode ausgeführt werden.
 		 * 
 		 * @return TeamMapper
-		 * @author Thies
-		 * @author Theresa
 		 */
 		
 		public static TeamMapper teamMapper(){
@@ -80,8 +76,6 @@ import de.worketplace.team06.shared.bo.Team;
 	     * @param orgaUnit
 	     * @return Team 
 	     * @throws  
-	     * @author Thies 
-	     * @author Theresa
 	     */
 	    public Team insert (Team t) {
 	    	Connection con = DBConnection.connection();
@@ -138,7 +132,6 @@ import de.worketplace.team06.shared.bo.Team;
 		 * 
 		 * @param googleID 
 		 * @return Team-Objekt 
-		 * @author Theresa
 		 */
 	    
 		public Team findByGoogleID(String googleID) {
@@ -175,7 +168,6 @@ import de.worketplace.team06.shared.bo.Team;
 	     * 
 	     * @param orgaUnit 
 	     * @return Team
-	     * @author Theresa
 	     */
 		public void update(Team t) {
 			Connection con = DBConnection.connection();
@@ -202,7 +194,6 @@ import de.worketplace.team06.shared.bo.Team;
 		 * 
 		 * @param ouid
 		 * @return Team-Objekt, das der übergebenen ID entspricht
-		 * @author Theresa
 		 */
 		
 		public Team findByID(Integer ouid) {
@@ -242,7 +233,6 @@ import de.worketplace.team06.shared.bo.Team;
 	     * Loeschen eines Team-Objekts aus der Datenbank.
 	     * 
 	     * @param team
-	     * @author Theresa
 	     */
 	    public void delete(Team t) {
 			Connection con = DBConnection.connection();
@@ -258,7 +248,11 @@ import de.worketplace.team06.shared.bo.Team;
 		    }
 			
 		}
-
+	    /**
+	     * Auslesen aller Team-Objekte aus der Datenbank.
+	     * 
+	     * @return Vector<Team>
+	     */
 		public Vector<Team> findAll() {
 			Connection con = DBConnection.connection();
 			Vector<Team> allTeams = new Vector<Team>();

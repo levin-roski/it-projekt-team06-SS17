@@ -29,7 +29,9 @@ import de.worketplace.team06.shared.bo.Call;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */ 
 
 public class CallMapper {
@@ -41,9 +43,6 @@ public class CallMapper {
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
-     * 
-     * @author Thies
-     * @author Theresa
      */
 	
 	private static CallMapper callMapper = null;
@@ -51,16 +50,12 @@ public class CallMapper {
 	/**
 	 * Darstellung von Datum wird durch diese Methode vereinfacht und vereinheitlicht. 
 	 * wird aufgerufen, wenn Startdatum und Enddatum neu angelegt oder verändert werden.
-	 * 
-	 * @author Theresa
 	 */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	/**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
-	   * 
-	   * @author Thies 
 	   */
 	protected CallMapper() {
 		
@@ -73,9 +68,6 @@ public class CallMapper {
 	 * Aufruf dieser statischen Methode aufgerufen werden.
 	 * 
 	 * @return CallMapper
-	 * @author Thies
-	 * @author Theresa
-	 * @author Patrick
 	 */
 	public static CallMapper callMapper() {
 		if (callMapper == null) {
@@ -90,8 +82,6 @@ public class CallMapper {
 	 * Methode ermoeglicht, dass ein Enrollment-Objekt in der Datenbank aktualisiert werden kann.
 	 * 
 	 * @param c
-	 * @author Theresa
-	 * @author Patrick
 	 */
 	
 	public void update(Call c) {
@@ -122,8 +112,6 @@ public class CallMapper {
 	 * 
 	 * @param c
 	 * @return
-	 * @author Theresa
-	 * @author Patrick
 	 */
 	
 	public Call insert(Call c) {
@@ -163,8 +151,6 @@ public class CallMapper {
 	 * Auslesen aller Call-Objekten aus der Datenbank.
 	 * 
 	 * @return Vector<Call> mit allen Call-Objekten.
-	 * @author Patrick
-	 * @author Theresa
 	 */
 	
 	public Vector<Call> findAll() {
@@ -203,46 +189,12 @@ public class CallMapper {
 	}
 
 	/**
-	 * Methode zur Suche nach allen Ausschreibungen, deren Eigenschaften des PartnerProfils
-	 * Gemeinsamkeiten haben mit den Eigenschaften eines PartnerProfils einer OrgaUnit.
-	 * 
-	 * @param callID
-	 * @return vector<Call> mit allen Call-Objekten, die ähnliche Partnerprofile haben.
-	 */	
-/*	public Vector<Call> findCallForSimilarPartnerProfile(Integer callID) {
-		Connection con = DBConnection.connection();
-		Vector<Call> result = new Vector<Call>();
-		
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM projektmarktplatz.'call' "
-					+ "INNER JOIN projektmarktplatz.'partnerprofile' "
-					+ "WHERE projektmarktplatz.`call`.partnerprofile_id = partnerprofile.id "
-					+ "INNER JOIN projektmarktplatz.'orgaunit' "
-					+ "INNER JOIN projektmarktplatz.'property' "
-					+ "AND projektmarktplatz.'orgaunit'.partnerprofile.property.name = call.partnerprofile.property.name "
-					+ "ORDER BY call.id");
-			// Erste Überlegung für SQL Statement, TODO: Besprechen wie Anforderung 3) anders gelöst werden kann bzw. Statement miteinander erarbeiten
-			while (rs.next()) {
-				Call c = new Call();
-			}
-		}
-		
-		catch (SQLException | ParseException e2) {
-			e2.printStackTrace();
-			return null;
-		}
-		return result;
-	}
-*/	
-	/**
 	 * Auslesen von Ausschreibungen anhand einer übergebenen projectID.
 	 * Da diese eindeutig ist wird genau ein Objekt zurückgegeben.
 	 * 
 	 * @param projectID
 	 * @return Call-Objekt, das der übergebenen projectID entspricht bzw. null, 
 	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
-	 * @author Patrick 
 	 */
 	
 	public Vector<Call> findByProjectID(Integer projectID) {
@@ -282,7 +234,6 @@ public class CallMapper {
 	 * @param callID
 	 * @return Call-Objekt, das der übergebenen ID entspricht bzw. null, 
 	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
-	 * @author Patrick
 	 */
 	
 	public Call findByID(Integer callID) {
@@ -319,7 +270,6 @@ public class CallMapper {
 	/**
 	 * Loeschen eines Call-Objektes aus der Datenbank mit der entsprechenden übergebenen ID.
 	 * @param c
-	 * @author Patrick
 	 */
 	
 	public void delete(Call c) {

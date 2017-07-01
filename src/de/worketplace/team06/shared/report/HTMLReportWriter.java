@@ -145,7 +145,6 @@ public class HTMLReportWriter extends ReportWriter {
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
-		result.append("<br />");
 
 		/*
 		 * Innerhalb der Schleife wird jeder SubReport je nach Typ aus dem CompositeReport gelesen und erstellt.
@@ -189,7 +188,6 @@ public class HTMLReportWriter extends ReportWriter {
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
-		result.append("<br />");
 		
 		/*
 		 * Innerhalb der Schleife wird jeder SubReport aus dem CompositeReport gelesen und erstellt.
@@ -236,7 +234,6 @@ public class HTMLReportWriter extends ReportWriter {
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
-		result.append("<br />");
 		
 		/*
 		 * Innerhalb der Schleife wird jeder SubReport je nach Typ aus dem CompositeReport gelesen und erstellt.
@@ -284,7 +281,6 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<td class=\"tdheaderdata\">" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
 		}
 		result.append("</table>");
-		result.append("<br />");
 
 		//Hinzufügen der einzelnen Zeilen aus dem Report in HTML-Form
 		Vector<Row> rows = r.getRows();

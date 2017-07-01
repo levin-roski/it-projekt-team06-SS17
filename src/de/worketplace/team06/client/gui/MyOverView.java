@@ -324,7 +324,7 @@ public class MyOverView extends View {
 		} catch (Exception e) {
 		}
 		try {
-			worketplaceAdministration.getApplicationsFor((Person) ClientsideSettings.getCurrentUser(),
+			worketplaceAdministration.getApplicationsForProjectLeader((Person) ClientsideSettings.getCurrentUser(),
 					new AsyncCallback<Vector<Application>>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -363,7 +363,7 @@ public class MyOverView extends View {
 					}
 				});
 		try {
-			worketplaceAdministration.getEnrollmentsFor((Person) ClientsideSettings.getCurrentUser(),
+			worketplaceAdministration.getEnrollmentsForProjectLeader((Person) ClientsideSettings.getCurrentUser(),
 					new AsyncCallback<Vector<Enrollment>>() {
 						@Override
 						public void onFailure(Throwable caught) {
