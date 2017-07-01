@@ -138,7 +138,7 @@ public class HTMLReportWriter extends ReportWriter {
 		 * Hinzufügen der Überschrift und den Kopfdaten in HTML-Form.
 		 * Die Methode paragraph2HTML übersetzte die Kopfdaten des Reports r in ein korrektes HTML-Format.
 		 */
-		result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
+		//result.append("<h1 class=\"report\">" + r.getTitle() + "</h1>");
 		result.append("<table class=\"headerdata\"><tr>");
 		if (r.getHeaderData() != null){
 			result.append("<td class=\"tdheaderdata\">" + paragraph2HTML(r.getHeaderData()) + "</td></tr>");
@@ -188,7 +188,6 @@ public class HTMLReportWriter extends ReportWriter {
 		}
 		//result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</table>");
-		
 		/*
 		 * Innerhalb der Schleife wird jeder SubReport aus dem CompositeReport gelesen und erstellt.
 		 * Dadurch, dass innerhalb der process-Methode für den jeweiligen SubReport der aktuelle Report-Text dem StringBuffer hinzugefügt wird,
@@ -196,15 +195,16 @@ public class HTMLReportWriter extends ReportWriter {
 		 */
 		for (int i = 0; i < r.getNumSubReports(); i++) {
 
+			result.append("<table class=\"subreportinter\"><tr><td>");
 			AllInterrelationsOfApplicantReport subReport = (AllInterrelationsOfApplicantReport) r.getSubReportAt(i);
+			result.append("<h1 class=\"hsubreport\">" + subReport.getTitle() + "</h1>");
 			this.process(subReport);
-				
 		    result.append(this.reportText + "\n");
-
+		    result.append("</td></tr></table>");
 		    this.resetReportText();
 		}
+		
 		this.reportText = result.toString();
-
 	}
 	
 	@Override
