@@ -307,18 +307,18 @@ public class MyOverView extends View {
 
 		VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
-		root.add(createHeadline("Mein Bereich", true));
+		//root.add(createHeadline("Mein Bereich", true));
 		root.add(createSecondHeadline("Meine Projekte"));
 		root.add(myProjectsTable);
-		root.add(createSecondHeadline("Ausschreibungen von mir"));
+		root.add(createSecondHeadline("Meine Ausschreibungen"));
 		root.add(myCallsTable);
-		root.add(createSecondHeadline("Bewerbungen von mir"));
+		root.add(createSecondHeadline("Ausgehende Bewerbungen"));
 		root.add(myApplicationsTable);
-		root.add(createSecondHeadline("Bewerbungen an mich"));
+		root.add(createSecondHeadline("Eingehende Berwerbungen"));
 		root.add(applicationsToMeTable);
 		root.add(createSecondHeadline("Meine Projekt-Beteiligungen"));
 		root.add(myEnrollmentsTable);
-		root.add(createSecondHeadline("Mitarbeiter Beteiligungen an meinen Projekten"));
+		root.add(createSecondHeadline("Beteiligungen an meinen Projekten"));
 		root.add(enrollmentsToMeTable);
 
 		this.add(root);
