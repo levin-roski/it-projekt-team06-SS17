@@ -59,7 +59,7 @@ body {
 
 
 .first-element {
-	margin-top: 0;
+	margin-top: 0 !important;
 }
 
 button {
@@ -89,7 +89,7 @@ button {
 /*******************/
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget{
-	width: 80% !important;
+	width: 90% !important;
 	box-shadow: 3px 3px 5px lightgrey !important;
 	border: 1px solid lightgrey;
 }
@@ -106,6 +106,7 @@ button {
 	border-bottom: none;
 	text-shadow: none;
 	font-weight: normal;
+	height: 30px;
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget td{
@@ -249,4 +250,14 @@ h1.report {
 h2.report {
 	color: #04847a;
 	font-size: 18px;
+}
+
+h1.hsubreport{
+	font-size: 18px !important;
+	padding-bottom: 0px !important;
+}
+
+.subreportinter {
+	width: 100%;
+	border-top: 2px solid #04847a !important;
 }

@@ -441,7 +441,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfApplicantReport report = new AllApplicationsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Ausgehende Bewerbungen für den Bewerber: " + getNameForOrgaUnit(applicant));
+		report.setTitle("Ausgehende Bewerbungen für " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Date());
 		
 		Row headline = new Row();
@@ -478,7 +478,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllEnrollmentsOfApplicantReport report = new AllEnrollmentsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Beteiligungen an Projekten für den Bewerber: " + getNameForOrgaUnit(applicant));
+		report.setTitle("Beteiligungen an Projekten für " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Date());
 		
 		Row headline = new Row();
@@ -513,7 +513,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllInterrelationsOfApplicantReport report = new AllInterrelationsOfApplicantReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Verflechtungen des Bewerbers: " + getNameForOrgaUnit(applicant));
+		report.setTitle("Verflechtungen: " + getNameForOrgaUnit(applicant));
 		report.setCreated(new Date());
 		
 		report.addSubReport(createAllApplicationsOfApplicantReport(applicant));
@@ -531,7 +531,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllInterrelationsOfAllApplicantsOfUserReport report = new AllInterrelationsOfAllApplicantsOfUserReport();
 		
 		//Setzen des Reporttitels und dem Generierungsdatum
-		report.setTitle("Alle Verflechtungen der Bewerber");
+		report.setTitle("Alle Verflechtungen meiner Bewerber");
 		report.setCreated(new Date());
 		
 		//Generierung der Kopfdaten des Reports
