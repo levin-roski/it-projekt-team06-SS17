@@ -36,7 +36,7 @@ public class ReportNavigation extends VerticalPanel {
 			}
 		}));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Startseite", new Command() {
+		menu.addItem(new MenuItem("Home", new Command() {
 			public void execute() {
 				History.newItem("Startseite");
 			}
@@ -60,17 +60,17 @@ public class ReportNavigation extends VerticalPanel {
 		
 		MenuBar applicantMenu = new MenuBar(true);
 		applicantMenu.setAnimationEnabled(true);
-		applicantMenu.addItem(new MenuItem("Passende Ausschreibungen zu meinem Partnerprofil", new Command() {
+		applicantMenu.addItem(new MenuItem("Ausschreibungen zu meinem Partnerprofil", new Command() {
 			public void execute() {
 				History.newItem("Passende-Ausschreibungen-zu-meinem-Partnerprofil");
 			}
 		}));
-		applicantMenu.addItem(new MenuItem("Anzahl meiner Bewerbungen nach Status (Fan-In)", new Command() {
+		applicantMenu.addItem(new MenuItem("Fan-In: Meine Bewerbungen (Status)", new Command() {
 			public void execute() {
 				History.newItem("Anzahl-meiner-Bewerbungen-nach-Status-(Fan-In)");
 			}
 		}));		
-		menu.addItem(new MenuItem("Berichte für Bewerber", applicantMenu));
+		menu.addItem(new MenuItem("Bewerber Reports", applicantMenu));
 		menu.addSeparator();
 
 		
@@ -82,37 +82,37 @@ public class ReportNavigation extends VerticalPanel {
 				History.newItem("Meine-Ausschreibungen");
 			}
 		}));
-		leaderMenu.addItem(new MenuItem("Anzahl meiner Ausschreibungen nach Status (Fan-Out)", new Command() {
+		leaderMenu.addItem(new MenuItem("Fan-Out: Meine Ausschreibungen (Status)", new Command() {
 			public void execute() {
 				History.newItem("Anzahl-meiner-Ausschreibungen-nach-Status-(Fan-Out)");
 			}
 		}));
-		leaderMenu.addItem(new MenuItem("Bewerbungen auf meine Ausschreibungen", new Command() {
+		leaderMenu.addItem(new MenuItem("Eingehende Bewerbungen", new Command() {
 			public void execute() {
 				History.newItem("Bewerbungen-auf-meine-Ausschreibungen");
 			}
 		}));
-		leaderMenu.addItem(new MenuItem("Bewerbungen meines Bewerbers", new Command() {
+		leaderMenu.addItem(new MenuItem("Bewerbungen eines Bewerbers", new Command() {
 			public void execute() {
 				History.newItem("Bewerbungen-meines-Bewerbers");
 			}
 		}));
-		leaderMenu.addItem(new MenuItem("Beteiligungen meines Bewerbers", new Command() {
+		leaderMenu.addItem(new MenuItem("Beteiligungen eines Bewerbers", new Command() {
 			public void execute() {
 				History.newItem("Beteiligungen-meines-Bewerbers");
 			}
 		}));
-		leaderMenu.addItem(new MenuItem("Verflechtungen meines Bewerbers", new Command() {
+		leaderMenu.addItem(new MenuItem("Verflechtungen eines Bewerbers", new Command() {
 			public void execute() {
 				History.newItem("Verflechtungen-meines-Bewerbers");
 			}
 		}));
-		leaderMenu.addItem(new MenuItem("Verflechtungen sämtlicher meiner Bewerber", new Command() {
+		leaderMenu.addItem(new MenuItem("Verflechtungen sämtlicher Bewerber", new Command() {
 			public void execute() {
 				History.newItem("Verflechtungen-saemtlicher-meiner-Bewerber");
 			}
 		}));
-		menu.addItem(new MenuItem("Berichte für Projektleiter", leaderMenu));
+		menu.addItem(new MenuItem("Projektleiter Reports", leaderMenu));
 		menu.addSeparator();
 		
 		
@@ -125,7 +125,7 @@ public class ReportNavigation extends VerticalPanel {
 				History.newItem("Mein-Nutzer");
 			}
 		}));
-		optionenMenu.addItem(new MenuItem("Zum Worketplace Editor", new Command() {
+		optionenMenu.addItem(new MenuItem("Worketplace Editor", new Command() {
 			public void execute() {
 				 Window.Location.replace("worketplace.html");
 			}
