@@ -85,7 +85,13 @@ button {
 }
 
 .bold {
-	font-weight: bold;
+	color: #fff;
+	font-weight: bold !important;
+	margin-top:10px;
+}
+
+p.center {
+	margin-top: 50px;
 }
 
 
@@ -154,12 +160,18 @@ button {
 
 .gwt-MenuItem-selected{
 	background: #04847a !important;
+	cursor: pointer !important;
 }
 
 .gwt-MenuItemSeparator {
 	background: transparent !important;
 	border-left: none !important;
 	width: 5px !important;
+}
+
+#gwt-uid-1:hover {
+	background: none !important;
+	/*cursor: pointer !important;*/
 }
 
 .menuPopupTop, .menuPopupTopLeft, .menuPopupTopCenter, .menuPopupTopRight, .menuPopupMiddle, .menuPopupMiddleLeft, .menuPopupMiddleCenter, .menuPopupMiddleRight, .menuPopupBottom, .menuPopupBottomLeft, .menuPopupBottomCenter, .menuPopupBottomRight {
@@ -229,13 +241,7 @@ table.content{
 table.headerdata {
 	width: inherit;
 	border-collapse: collapse;
-}
-
-td.tdheaderdata {
-	border: 0px transparent;
-	padding-left: 5px;
-	padding-top: 0px;
-	border-collapse: collapse;
+	margin-bottom: 30px !important;
 }
 
 tr.theader {
@@ -246,8 +252,19 @@ tr.theader {
 	font-size: 14px;
 }
 
+td.tdheaderdata {
+	border: 0px transparent;
+	padding-left: 5px;
+	padding-top: 0px;
+	border-collapse: collapse;
+}
+
+td.tdheaderdata p {
+	margin: 2px !important;
+}
+
 tr.rcontent, td.rcontent {
-	padding: 6px;
+	padding: 5px;
 	text-align: left;
 	/*font-size: 14px;*/
 	width: inherit;
@@ -265,6 +282,8 @@ h1.report {
 h2.report {
 	color: #04847a;
 	font-size: 18px;
+	padding: 5px !important;
+	margin: 5px 0 5px 0 !important;
 }
 
 h1.hsubreport{
@@ -282,7 +301,6 @@ h1.hsubreport{
 .subreportinter .theader{
 	height: 30px !important;
 }
-
 
 .subreportinter h2{
 	font-size: 14px !important;
