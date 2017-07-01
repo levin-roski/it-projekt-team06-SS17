@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -84,7 +85,7 @@ public class MyOverView extends View {
 				return simpleDateFormat.format(object.getStartDate());
 			}
 		};
-		myProjectsTable.addColumn(projectsStartColumn, "Start");
+		myProjectsTable.addColumn(projectsStartColumn, "Startdatum");
 
 		TextColumn<Project> projectsEndColumn = new TextColumn<Project>() {
 			@Override
@@ -92,7 +93,7 @@ public class MyOverView extends View {
 				return simpleDateFormat.format(object.getEndDate());
 			}
 		};
-		myProjectsTable.addColumn(projectsEndColumn, "Ende");
+		myProjectsTable.addColumn(projectsEndColumn, "Enddatum");
 
 		myProjectsTable.setWidth("100%", true);
 
@@ -111,6 +112,7 @@ public class MyOverView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (myCallsSsm.getSelectedObject() != null) {
 					Call selectedCall = myCallsSsm.getSelectedObject();
+					Window.alert(selectedCall.getTitle());
 					mainPanel.setForm(new CallForm(selectedCall, false, true, null, null));
 					myCallsSsm.clear();
 				}
@@ -225,6 +227,16 @@ public class MyOverView extends View {
 			}
 		});
 
+		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
+		// Daten aus der Datenbank
+		TextColumn<Application> applicationTextColumn = new TextColumn<Application>() {
+			@Override
+			public String getValue(Application object) {
+				return object.getText();
+			}
+		};
+		applicationsToMeTable.addColumn(applicationTextColumn, "Bewerbungstext");
+
 		applicationsToMeTable.setWidth("100%", true);
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
@@ -248,6 +260,16 @@ public class MyOverView extends View {
 			}
 		});
 
+		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
+		// Daten aus der Datenbank
+		TextColumn<Enrollment> enrollmentStartColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return simpleDateFormat.format(object.getStartDate());
+			}
+		};
+		myEnrollmentsTable.addColumn(enrollmentStartColumn, "Startdartum");
+
 		myEnrollmentsTable.setWidth("100%", true);
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
@@ -256,7 +278,7 @@ public class MyOverView extends View {
 
 		// Das SingleSelectionModel wird der Tabelle Meine Marktplätze
 		// hinzugefügt
-		myEnrollmentsTable.setSelectionModel(enrollmentsToMeSsm);
+		enrollmentsToMeTable.setSelectionModel(enrollmentsToMeSsm);
 
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
@@ -271,7 +293,17 @@ public class MyOverView extends View {
 			}
 		});
 
-		myEnrollmentsTable.setWidth("100%", true);
+		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
+		// Daten aus der Datenbank
+		TextColumn<Enrollment> enrollmentToMeStartColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return simpleDateFormat.format(object.getStartDate());
+			}
+		};
+		enrollmentsToMeTable.addColumn(enrollmentToMeStartColumn, "Startdartum");
+
+		enrollmentsToMeTable.setWidth("100%", true);
 
 		VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
