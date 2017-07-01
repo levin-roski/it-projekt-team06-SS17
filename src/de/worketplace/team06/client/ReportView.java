@@ -2,8 +2,10 @@ package de.worketplace.team06.client;
 
 import java.util.Vector;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ListBox;
@@ -40,12 +42,13 @@ public abstract class ReportView extends View {
 						allUsers.addItem("Organisation " + ((Organisation) orgaUnit).getName(), String.valueOf(orgaUnit.getID()));
 					}
 				}
+				DomEvent.fireNativeEvent(Document.get().createChangeEvent(), allUsers);
 			}
 		});
 		allUsers.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				if (callback instanceof Callback) {
-					callback.run();
+					callback.runOnePar(allUsers);
 				}
 			}
 		});

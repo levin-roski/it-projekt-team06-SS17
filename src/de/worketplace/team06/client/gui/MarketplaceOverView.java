@@ -59,7 +59,6 @@ public class MarketplaceOverView extends View {
 		allMarketplacesTable.addColumn(descriptionColumn, "Beschreibung");
 
 		allMarketplacesTable.setWidth("100%", true);
-		// allMarketplacesTable.setRowData(MARKETPLACE);
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.add(createHeadline("Alle Marktplätze", true));
