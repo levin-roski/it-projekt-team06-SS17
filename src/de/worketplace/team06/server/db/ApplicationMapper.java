@@ -31,7 +31,9 @@ import de.worketplace.team06.shared.bo.Team;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 
 public class ApplicationMapper {
@@ -44,9 +46,6 @@ public class ApplicationMapper {
      * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
      * einzige Instanz dieser Klasse.
      * 
-     * @author Thies
-     * @author Patrick
-     * @author Theresa
      */
 	
 	private static ApplicationMapper applicationMapper = null;
@@ -55,7 +54,6 @@ public class ApplicationMapper {
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies 
 	   */
 	protected ApplicationMapper() {
 		
@@ -68,9 +66,6 @@ public class ApplicationMapper {
 	 * Aufruf dieser statischen Methode aufgerufen werden.
 	 * 
 	 * @return EnrollmentMapper
-	 * @author Thies
-	 * @author Patrick
-	 * @author Theresa
 	 */
 	public static ApplicationMapper applicationMapper() {
 		if (applicationMapper == null) {
@@ -87,7 +82,6 @@ public class ApplicationMapper {
 	 * @param id
 	 * @return Application-Objekt, das der übergebenen ID entspricht bzw. null, 
 	 * wenn kein Datenbank-Tupel mit der übergebenen ID vorhanden ist.
-	 * @author Patrick
 	 */
 	public Application findByID(Integer id) {
 		Connection con = DBConnection.connection();
@@ -121,7 +115,6 @@ public class ApplicationMapper {
 	 * gespeichert sind.
 	 * 
 	 * @return Vector<Application> mit allen Application-Objekten.
-	 * @author Patrick
 	 */
 	public Vector<Application> findAll() {
 		Connection con = DBConnection.connection();
@@ -158,8 +151,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param rID
 	 * @return
-	 * @author Patrick
-	 * @author Theresa
 	 */
 	public Application findByRatingID(Integer rID) {
 		Connection con = DBConnection.connection();
@@ -194,8 +185,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param orgaUnitID
 	 * @return
-	 * @author Theresa
-	 * @author Patrick
 	 */
 	public Vector<Application> findByOrgaUnitID (Integer orgaUnitID) {
 		
@@ -236,8 +225,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param callID
 	 * @return
-	 * @author Theresa
-	 * @author Patrick
 	 */
 	public Vector<Application> findByCallID (Integer callID) {
 		
@@ -279,8 +266,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param a
 	 * @return
-	 * @author Theresa
-	 * @author Patrick
 	 */
 	public Application insert(Application a) {
 		Connection con = DBConnection.connection();
@@ -313,8 +298,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param a
 	 * @return
-	 * @author Theresa
-	 * @author Patrick
 	 */
 	public Application update(Application a) {
 		Connection con = DBConnection.connection();
@@ -335,8 +318,6 @@ public class ApplicationMapper {
 	 * Loeschen eines Application-Objekts in der Datenbank.
 	 * 
 	 * @param a
-	 * @author Theresa
-	 * @author Patrick
 	 */
 	public void delete(Application a) {
 		Connection con = DBConnection.connection();
@@ -357,8 +338,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param a die Bewerbung, deren Person wir auslesen möchten 
 	 * @return ein Objekt, das die Person zu der Bewerbung darstellt
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Person getSourcePerson(Application a) {
 		//Bedienen am PersonMapper
@@ -370,8 +349,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param a die Bewerbung, deren Organisation wir auslesen möchten
 	 * @return ein Objekt, das die Organisation zu der Bewerbung darstellt
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Organisation getSourceOrganisation(Application a) {
 		//Bedienen am OrganisationMapper
@@ -383,8 +360,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param a die Bewebung, deren Team wir auslesen moechten
 	 * @return ein Objekt, das das Team zu der Bewerbung darstellt
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Team getSourceTeam(Application a) {
 		//Bedienen am TeamMapper
@@ -396,8 +371,6 @@ public class ApplicationMapper {
 	 * 
 	 * @param a die Bewerbung, deren Ausschreibung wir auslesen möchten
 	 * @return ein Objekt, das die Ausschreibung zu der Bewerbung darstellt
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public Call getSourceCall(Application a) {
 		//Bedienen am CallMapper
