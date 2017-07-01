@@ -273,7 +273,7 @@ public class MyOverView extends View {
 
 								@Override
 								public void onSuccess(Vector<Call> results2) {
-									Window.alert(String.valueOf(results2.size()));
+									//Window.alert(String.valueOf(results2.size()));
 									myCalls.addAll(results2);
 									for (Call call : results2) {
 										worketplaceAdministration.getApplicationsFor(call,
