@@ -52,7 +52,7 @@ public class EnrollmentMapper {
 	 * Darstellung von Datum wird durch diese Methode vereinfacht und vereinheitlicht. 
 	 * wird aufgerufen, wenn Startdatum und Enddatum neu angelegt oder verändert werden.
 	 */
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	
 	/**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
@@ -86,6 +86,7 @@ public class EnrollmentMapper {
 	 * @return Enrollment-Objekt, das der übergebenen ID entspricht
 	 */
 	public Enrollment findByID(Integer id) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -144,6 +145,7 @@ public class EnrollmentMapper {
 	 * @return Vektor <Enrollment>
 	 */
 	public Vector<Enrollment> findAll() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		Vector<Enrollment> result = new Vector<Enrollment>();
@@ -203,7 +205,7 @@ public class EnrollmentMapper {
 	 * @return Vektor<Enrollment>
 	 */
 	public Vector<Enrollment> findByOrgaUnitID (Integer orgaUnitID) {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		Vector<Enrollment> result = new Vector<Enrollment>();
@@ -264,7 +266,7 @@ public class EnrollmentMapper {
 	 * @return Vektor<Enrollment>
 	 */
 	public Vector<Enrollment> findByProjectID (Integer projectID) {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		Vector<Enrollment> result = new Vector<Enrollment>();
@@ -325,7 +327,7 @@ public class EnrollmentMapper {
 	 * @return
 	 */
 	public Enrollment findByRatingID (Integer rID) {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		
@@ -385,6 +387,7 @@ public class EnrollmentMapper {
 	 * @return Enrollment
 	 */
 	public Enrollment insert(Enrollment e) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -441,6 +444,7 @@ public class EnrollmentMapper {
 	 * @return
 	 */
 	public Enrollment update(Enrollment e) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		try {

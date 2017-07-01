@@ -52,7 +52,7 @@ import de.worketplace.team06.shared.bo.Project;
 	 * 
 	 * @author Theresa
 	 */
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	 
 	/**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
@@ -84,7 +84,7 @@ import de.worketplace.team06.shared.bo.Project;
 	 * @return Project-Objekt, das der übergebenen ID entspricht
 	 */
 	public Project findByID(Integer projectID) {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -122,6 +122,7 @@ import de.worketplace.team06.shared.bo.Project;
 	 * @return Vektor <Project>
 	 */
     public Vector<Project> findAll() {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Connection con = DBConnection.connection();
         Vector<Project> result = new Vector<Project>();
         
@@ -158,6 +159,7 @@ import de.worketplace.team06.shared.bo.Project;
      * @throws  
      */
     public Project insert (Project proj) {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Connection con = DBConnection.connection();
         
         try {
@@ -202,6 +204,7 @@ import de.worketplace.team06.shared.bo.Project;
      */
     public Project update(Project proj) {
         Connection con = DBConnection.connection();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         
         try{
         	String startdate = sdf.format(proj.getStartDate());
@@ -248,7 +251,7 @@ import de.worketplace.team06.shared.bo.Project;
 	 * @return Vektor<Project>
 	 */
 	public Vector<Project> findByMarketplaceID(Integer marketplaceID) {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		Vector<Project> result = new Vector<Project>();
@@ -289,6 +292,7 @@ import de.worketplace.team06.shared.bo.Project;
 	 */
 	
 	public Vector<Project> findByProjectLeaderID(Integer projectLeaderID) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		Vector<Project> result = new Vector<Project>();
