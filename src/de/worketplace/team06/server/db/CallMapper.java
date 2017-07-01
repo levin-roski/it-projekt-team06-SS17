@@ -51,7 +51,7 @@ public class CallMapper {
 	 * Darstellung von Datum wird durch diese Methode vereinfacht und vereinheitlicht. 
 	 * wird aufgerufen, wenn Startdatum und Enddatum neu angelegt oder verändert werden.
 	 */
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 	
 	/**
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
@@ -85,6 +85,7 @@ public class CallMapper {
 	 */
 	
 	public void update(Call c) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     	Connection con = DBConnection.connection();
     	
     	try {
@@ -115,6 +116,7 @@ public class CallMapper {
 	 */
 	
 	public Call insert(Call c) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -154,7 +156,7 @@ public class CallMapper {
 	 */
 	
 	public Vector<Call> findAll() {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
         Vector<Call> result = new Vector<Call>();
         
@@ -198,6 +200,7 @@ public class CallMapper {
 	 */
 	
 	public Vector<Call> findByProjectID(Integer projectID) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		Vector<Call> result = new Vector<Call>();
 		
@@ -237,7 +240,7 @@ public class CallMapper {
 	 */
 	
 	public Call findByID(Integer callID) {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Connection con = DBConnection.connection();
 		
 		try {						
