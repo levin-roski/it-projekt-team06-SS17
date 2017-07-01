@@ -1,3 +1,13 @@
+/**********************************/
+/** WELCOME TO TOBY'S PLAYGROUND **/
+/**********************************/
+/**  In this Stylesheet, we are  **/
+/**  going to make our Project   **/
+/**  great. We added some new    **/
+/**  CSS-Tags and overrided      **/
+/**  some GWT Stuff.             **/
+/**********************************/
+
 body {
 	margin: 0 !important;
 	font-weight: normal !important;
@@ -92,6 +102,18 @@ button {
 
 p.center {
 	margin-top: 50px;
+}
+
+h1 {
+	font-size: 24px;
+	padding-top: 10px;
+	color: #454a4a;
+}
+
+h2 {
+	font-size: 18px;
+	padding-top: 20px;
+	color: #454a4a;
 }
 
 
@@ -212,19 +234,6 @@ a.gwt-Anchor:hover {
 	color: #04847a !important;
 	text-decoration: none;
 }
-
-h1 {
-	font-size: 24px;
-	padding-top: 10px;
-	color: #454a4a;
-}
-
-h2 {
-	font-size: 18px;
-	padding-top: 20px;
-	color: #454a4a;
-}
-
 
 
 /**********************/
