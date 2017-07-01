@@ -101,6 +101,7 @@ table.content, td.rcontent {
 	width: 80%;
 	border: 1px solid #ddd;
 	border-collapse: collapse;
+}
 
 table {
     border-collapse: collapse;
@@ -128,7 +129,7 @@ td.tdheaderdata {
 tr.theader {
 	height: 50px;
 	text-align: left;
-	background-color: #04847a;
+	background-color: #04847a !important;
 	color: white;
 	font-size: 18px;
 }
