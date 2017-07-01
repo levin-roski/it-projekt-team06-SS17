@@ -759,8 +759,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Organisation createOrganisation(String name, String description, String street, Integer zipcode, String city, String googleID) throws IllegalArgumentException {
+		Organisation o = this.getOrganisationByGoogleID(googleID);
+		if (o != null){
+			return o;
+		}
 		
-		Organisation o = new Organisation();
+		o = new Organisation();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		o.setCreated(created);
@@ -1068,7 +1072,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Person createPerson(String firstName, String lastName, String street, Integer zipcode, String city, String description, String googleID) throws IllegalArgumentException {
-		Person p = new Person();
+		Person p = this.getPersonByGoogleID(googleID);
+		if (p != null){
+			return p;
+		}
+		
+		p = new Person();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		p.setCreated(created);
@@ -1539,8 +1548,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 */
 	@Override
 	public Team createTeam(String name, String description, Integer membercount, String googleID) throws IllegalArgumentException {
+		Team t = this.getTeamByGoogleID(googleID);
+		if (t != null){
+			return t;
+		}
 		
-		Team t = new Team();
+		t = new Team();
 		Timestamp created = new Timestamp(System.currentTimeMillis());
 		
 		t.setCreated(created);
