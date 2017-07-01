@@ -68,8 +68,8 @@ public class ProjectForm extends Form {
 			changeHeadline = createHeadline("Projekt bearbeiten", true);
 			addHeadline = createHeadline("Projekt hinzufügen", true);
 		}
-		startDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
-		endDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
+		startDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
+		endDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
 	}
 
 	/**
