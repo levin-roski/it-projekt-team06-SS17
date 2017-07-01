@@ -374,11 +374,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 					rowToAdd.addColumn(new Column(a.getText()));
 					rowToAdd.addColumn(new Column(a.getStatusString()));
 					Rating r = wpadmin.getRatingFor(a);
-					if(r.getRating() != null){
+					try {
 						rowToAdd.addColumn(new Column(r.getRating().toString()));
-					} else {
+					} catch (NullPointerException e) {
 						rowToAdd.addColumn(new Column("Kein Rating"));
+						//e.printStackTrace();
 					}
+					
 					rowToAdd.addColumn(new Column(p.getTitle()));
 					report.addRow(rowToAdd);
 					j++;
