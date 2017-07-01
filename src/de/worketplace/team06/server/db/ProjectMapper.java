@@ -29,8 +29,9 @@ import de.worketplace.team06.shared.bo.Project;
  * @see RatingMapper
  * @see TeamMapper
  * 
- * @author Patrick
- * @author Theresa
+ * @author Strepp
+ * @author Vocke
+ * @author Thies
  */
 
  public class ProjectMapper {
@@ -42,8 +43,6 @@ import de.worketplace.team06.shared.bo.Project;
 	     * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	     * einzige Instanz dieser Klasse.
 	     * 
-	     * @author Thies
-	     * @author Theresa
 	     */
 	private static ProjectMapper projectMapper = null;
 	
@@ -59,7 +58,6 @@ import de.worketplace.team06.shared.bo.Project;
 	   * Geschuetzter Konstruktor - verhindert die Moeglichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   * 
-	   * @author Thies
 	   */
 	protected ProjectMapper(){
 		
@@ -71,8 +69,6 @@ import de.worketplace.team06.shared.bo.Project;
 	 * Aufruf dieser statischen Methode aufgerufen werden.
 	 * 
 	 * @return ProjectMapper
-	 * @author Thies
-	 * @author Theresa
 	 */
 	public static ProjectMapper projectMapper(){
 		if (projectMapper == null){
@@ -86,7 +82,6 @@ import de.worketplace.team06.shared.bo.Project;
 	 * 
 	 * @param proj
 	 * @return Project-Objekt, das der übergebenen ID entspricht
-	 * @author Theresa
 	 */
 	public Project findByID(Integer projectID) {
 		
@@ -125,7 +120,6 @@ import de.worketplace.team06.shared.bo.Project;
 	 * Auslesen aller Project-Objekte in der Datenbank.
 	 * 
 	 * @return Vektor <Project>
-	 * @author Theresa
 	 */
     public Vector<Project> findAll() {
         Connection con = DBConnection.connection();
@@ -162,7 +156,6 @@ import de.worketplace.team06.shared.bo.Project;
      * @param proj
      * @return Project
      * @throws  
-     * @author Theresa
      */
     public Project insert (Project proj) {
         Connection con = DBConnection.connection();
@@ -206,7 +199,6 @@ import de.worketplace.team06.shared.bo.Project;
      * 
      * @param proj
      * @return Project
-     * @author Theresa
      */
     public Project update(Project proj) {
         Connection con = DBConnection.connection();
@@ -236,7 +228,6 @@ import de.worketplace.team06.shared.bo.Project;
      * Loeschen eines Project-Objektes aus der Datenbank.
      * 
      * @param proj
-     * @author Theresa
      */
     public void delete(Project proj) {
         Connection con = DBConnection.connection();
@@ -255,7 +246,6 @@ import de.worketplace.team06.shared.bo.Project;
 	 * 
 	 * @param marketplaceID
 	 * @return Vektor<Project>
-	 * @author Theresa
 	 */
 	public Vector<Project> findByMarketplaceID(Integer marketplaceID) {
 		
@@ -296,8 +286,6 @@ import de.worketplace.team06.shared.bo.Project;
 	 * 
 	 * @param projectOwnerID
 	 * @return Vector<Project> 
-	 * @author Patrick
-	 * @author Theresa
 	 */
 	
 	public Vector<Project> findByProjectLeaderID(Integer projectLeaderID) {
