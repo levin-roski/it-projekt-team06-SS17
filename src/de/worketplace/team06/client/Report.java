@@ -8,11 +8,13 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.worketplace.team06.client.gui.MainPanel;
 import de.worketplace.team06.client.gui.OrgaUnitFormView;
+import de.worketplace.team06.client.gui.UserNavigationReport;
 import de.worketplace.team06.client.gui.report.AllApplicationsForCallsOfUserReportView;
 import de.worketplace.team06.client.gui.report.AllApplicationsOfApplicantReportView;
 import de.worketplace.team06.client.gui.report.AllCallsMatchingWithUserReportView;
@@ -95,7 +97,14 @@ public class Report implements EntryPoint {
 		/*
 		 * Navigationsleiste des Editors
 		 */
-		RootPanel.get("navigation").add(new ReportNavigation());
+		HorizontalPanel fullNav = new HorizontalPanel();
+		ReportNavigation editNav = new ReportNavigation();
+		editNav.setStyleName("editNav");
+		fullNav.add(editNav);
+		UserNavigationReport userNav = new UserNavigationReport();
+		userNav.setStyleName("userNav");
+		fullNav.add(userNav);
+		RootPanel.get("navigation").add(fullNav);
 
 		renderUrlToken(null);
 	}
