@@ -121,18 +121,17 @@ h2 {
 /** GWT OVERRIDES **/
 /*******************/
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget{
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget, .GPBYFDEGE {
 	width: 90% !important;
 	box-shadow: 3px 3px 5px lightgrey !important;
 	border: 1px solid lightgrey;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td,
-	.gwt-Anchor {
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td, .GPBYFDEGE tbody td {
 	cursor: pointer;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget th{
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget th, .GPBYFDEGE th {
 	text-align: left !important;
 	background-color: #04847a !important;
 	color: white !important;
@@ -142,12 +141,12 @@ h2 {
 	height: 30px;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget td{
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget td, .GPBYFDEGE td {
 	width: inherit !important;
 	border: #fff !important;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableCell {
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableCell, .GPBYFDEFD {
 	padding: 5px 15px !important;
 }
 
