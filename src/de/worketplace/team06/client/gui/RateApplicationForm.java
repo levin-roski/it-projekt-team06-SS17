@@ -7,20 +7,20 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTML;
+//import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.worketplace.team06.client.ClientsideSettings;
+//import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Application;
-import de.worketplace.team06.shared.bo.Call;
+//import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Enrollment;
-import de.worketplace.team06.shared.bo.OrgaUnit;
-import de.worketplace.team06.shared.bo.Project;
+//import de.worketplace.team06.shared.bo.OrgaUnit;
+//import de.worketplace.team06.shared.bo.Project;
 import de.worketplace.team06.shared.bo.Rating;
 
 /**
@@ -43,8 +43,8 @@ public class RateApplicationForm extends Form {
 	 * nötige Panels einfügen und diesem Widget hinzufügen.
 	 */
 	private final Grid form = new Grid(3, 2);
-	private Call currentCall = new Call();
-	private Project currentProject = new Project();
+	//private Call currentCall = new Call();
+	//private Project currentProject = new Project();
 
 	/**
 	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die dann
