@@ -103,8 +103,8 @@ public class OrgaUnitFormView extends View {
 
 			typeInput.setEnabled(false);
 			descriptionInput.setText(toChangeOrgaUnit.getDescription());
-			final Button saveButton = new Button("Änderungen speichern");
-			final Button deleteButton = new Button("Diesen Nutzer entfernen");
+			final Button saveButton = new Button("Speichern");
+			final Button deleteButton = new Button("Nutzer entfernen");
 
 			switch (toChangeOrgaUnit.getType()) {
 			case "Person":
@@ -409,7 +409,7 @@ public class OrgaUnitFormView extends View {
 					form.clearCell(7, 0);
 					form.clearCell(7, 1);
 
-					final Button saveButton = new Button("Neuen Nutzer anlegen");
+					final Button saveButton = new Button("Nutzer anlegen");
 					final Button logoutButton = new Button("Logout");
 					logoutButton.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {

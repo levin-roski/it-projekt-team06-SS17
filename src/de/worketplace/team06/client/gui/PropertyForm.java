@@ -98,7 +98,7 @@ public class PropertyForm extends Form {
 			}
 			nameInput.setText(toChangeProperty.getName());
 			valueInput.setText(toChangeProperty.getValue());
-			final Button saveButton = new Button("Änderungen speichern");
+			final Button saveButton = new Button("Speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (nameInput.getText().length() == 0) {
@@ -127,7 +127,7 @@ public class PropertyForm extends Form {
 			});
 			final VerticalPanel panel = new VerticalPanel();
 			panel.add(saveButton);
-			final Button deleteButton = new Button("Diese Eigenschaft entfernen");
+			final Button deleteButton = new Button("Eigenschaft entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					final boolean confirmDelete = Window.confirm("Möchten Sie die Eigenschaft wirklich löschen?");
@@ -155,7 +155,7 @@ public class PropertyForm extends Form {
 			if (addHeadline != null) {
 				root.add(addHeadline);
 			}
-			final Button saveButton = new Button("Neue Eigenschaft anlegen");
+			final Button saveButton = new Button("Eigenschaft anlegen");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (nameInput.getText().length() == 0) {
