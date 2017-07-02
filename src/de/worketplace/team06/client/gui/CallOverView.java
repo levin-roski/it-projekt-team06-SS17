@@ -2,13 +2,10 @@ package de.worketplace.team06.client.gui;
 
 import java.util.Vector;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -75,14 +72,6 @@ public class CallOverView extends View {
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.add(createHeadline("Alle Ausschreibungen", true));
 		root.add(allCallsTable);
-
-//		final Button newButton = new Button("Ausschreibung hinzufügen");
-//		newButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				mainPanel.setForm(new CallForm(null, false, true));
-//			}
-//		});
-//		root.add(newButton);
 
 		this.add(root);
 
