@@ -1423,9 +1423,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Erstellen einer Bewertung für eine Bewerbung
+	 * @param Application application
+	 * @param Float rating
+	 * @param String ratingStatement
+	 * @return Enrollment autoenroll
 	 */
 	@Override
-	public Rating rateApplication(Application application, Float rating, String ratingStatement)
+	public Enrollment rateApplication(Application application, Float rating, String ratingStatement)
 			throws IllegalArgumentException {
 		
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -1451,13 +1455,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Project p = this.getProjectByID(c.getProjectID());
 		OrgaUnit ou = this.getOrgaUnitById(application.getOrgaUnitID());
 		
+		Enrollment autoenroll = new Enrollment();
 		if (r.getRating() == 1){
-			this.createAutomaticEnrollment(p, ou, r);
+			autoenroll = this.createAutomaticEnrollment(p, ou, r);
 			application.setStatus(1);
+			this.appMapper.update(application);
 		}
 		
-		return r;
+		return autoenroll;
 	}
+	
 	
 	/**
 	 * Auslesen einer Bewertung für eine Bewerbung

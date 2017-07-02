@@ -62,7 +62,7 @@ public interface WorketplaceAdministrationAsync {
 	void init(AsyncCallback<Void> callback);
 
 	void rateApplication(Application application, Float rating, String ratingStatemant,
-			AsyncCallback<Rating> callback);
+			AsyncCallback<Enrollment> callback);
 
 	void saveApplication(Application application, AsyncCallback<Void> callback);
 
