@@ -50,9 +50,9 @@ public class AllApplicationsOfApplicantReportView extends ReportView {
 													}
 
 													public void onSuccess(AllApplicationsOfApplicantReport result) {
+														report.clear();
 														writer.process(result);
-														AllApplicationsOfApplicantReportView.this
-																.append(writer.getReportText());
+														report.add(new HTML(writer.getReportText()));
 													}
 												});
 										t.cancel();

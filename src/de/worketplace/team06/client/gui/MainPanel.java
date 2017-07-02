@@ -26,15 +26,13 @@ public class MainPanel extends DockLayoutPanel {
 		sp.setWidth("100%");
 		sp.setHeight("100%");
 		try {
+			this.getWidget(1).removeFromParent();
+		} catch (Exception e) {
+		}
+		try {
 			this.getWidget(0);
-			try {
-				Widget item = this.getWidget(1);
-				this.getWidget(0).removeFromParent();
-				this.insertWest(sp, 75, item);
-			} catch (Exception e) {
-				this.getWidget(0).removeFromParent();
-				this.addWest(sp, 100);
-			}
+			this.getWidget(0).removeFromParent();
+			this.addWest(sp, 100);
 		} catch (Exception e) {
 			this.addWest(new ScrollPanel(viewItem), 100);
 		}
@@ -51,12 +49,6 @@ public class MainPanel extends DockLayoutPanel {
 			this.getWidget(1).removeFromParent();
 			this.addEast(sp, 25);
 		} catch (Exception e) {
-			try {
-				Widget overviewWidget = this.getWidget(0);
-				this.getWidget(0).removeFromParent();
-				this.addWest(overviewWidget, 75);
-			} catch (Exception e1) {
-			}
 			this.addEast(sp, 25);
 		}
 		this.getWidget(1).setStyleName("main-panel-form");

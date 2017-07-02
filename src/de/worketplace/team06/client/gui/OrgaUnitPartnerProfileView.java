@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -54,8 +53,11 @@ public class OrgaUnitPartnerProfileView extends View {
 		propertySsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Property selectedProperty = propertySsm.getSelectedObject();
-				mainPanel.setForm(new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
+				if (propertySsm.getSelectedObject() != null) {
+					Property selectedProperty = propertySsm.getSelectedObject();
+					mainPanel.setForm(new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
+					propertySsm.clear();
+				}
 			}
 		});
 

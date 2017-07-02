@@ -42,9 +42,11 @@ body, table td, select, button{
 	box-sizing: border-box;
 }
 
+.main-panel > div:nth-child(3) {
+	box-shadow: -1px 0px 5px #454a4a !important;
+}
+
 .main-panel-form {
-	/*box-shadow: -10px -10px 5px lightgrey !important;*/
-	/*border-left: 1px solid #e0e0e0;*/
 	padding: 10px 10px 0 10px;
 	background: #454a4a !important;
 	font-weight: normal !important;
@@ -61,17 +63,23 @@ body, table td, select, button{
 }
 
 .main-panel-form .gwt-Button {
-	background: #fff !important;
+	background: #04847a !important;
 	/*background-color: #454a4a;*/
-	color: #000 !important;
+	color: #fff !important;
 	box-shadow: none !important;
-	border: #fff !important;
+	border: 2px solid #04847a !important;
+	margin-top: 15px !important;
 }
 
 .main-panel-form .gwt-Button:hover {
 	color: #fff !important;
+	border: 2px solid #fff !important;
 }
 
+.main-panel-form .gwt-Button:active {
+	color: #fff !important;
+	border: 2px solid grey !important;
+}
 
 .first-element {
 	margin-top: 0 !important;
@@ -122,7 +130,7 @@ h2 {
 /*******************/
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget, .GPBYFDEGE {
-	width: 90% !important;
+	width: 74% !important;
 	box-shadow: 3px 3px 5px lightgrey !important;
 	border: 1px solid lightgrey;
 	margin-bottom: 10px;
@@ -159,11 +167,11 @@ h2 {
 .gwt-MenuBar {
 	background-color: #454a4a !important;
 	box-shadow: 0px 1px 5px #454a4a !important;
-	border-top: none !important;
-	border-left: none !important;
-	border-right: none !important;
+	border-top: 0 !important;
+	border-left: 0 !important;
+	border-right: 0 !important;
 	border-bottom: 3px solid #04847a !important;
-	border-radius: none !important;
+	border-radius: 0 !important;
 }
 
 .gwt-MenuBar-horizontal {
@@ -182,6 +190,7 @@ h2 {
 	color: #fff !important;
 	vertical-align: middle !important;
 	text-transform: uppercase;
+	border: 0 !important;
 }
 
 .gwt-MenuItem-selected{
@@ -213,7 +222,7 @@ h2 {
 	/*background-color: #454a4a;*/
 	color: #fff;
 	box-shadow: 2px 2px 3px lightgrey !important;
-	border: #454a4a;
+	border: 1px solid #454a4a;
 	height: 40px;
 	margin-top: 3px !important;
 }
@@ -221,7 +230,7 @@ h2 {
 .gwt-Button:hover {
 	background: #04847a !important;
 	/*background-color: #454a4a;*/
-	border: #04847a;
+	border: 1px solid #04847a !important;
 }
 
 

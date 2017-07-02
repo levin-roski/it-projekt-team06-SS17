@@ -30,6 +30,11 @@ public class ProjectView extends View {
 
 	public ProjectView(Project pCurrentProject) {
 		currentProject = pCurrentProject;
+		if (currentProject.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
+			ClientsideSettings.setIsCurrentProjectLeader(true);
+		} else {
+			ClientsideSettings.setIsCurrentProjectLeader(false);
+		}
 		final VerticalPanel root = new VerticalPanel();
 		root.setWidth("100%");
 		root.add(ClientsideSettings.getBreadcrumbs());
@@ -41,7 +46,7 @@ public class ProjectView extends View {
 			}
 
 			@Override
-			public <T> void runOnePar(T parameter) {		
+			public <T> void runOnePar(T parameter) {
 			}
 		}, null));
 
@@ -60,23 +65,55 @@ public class ProjectView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				Call selectedCall = callSsm.getSelectedObject();
 				ClientsideSettings.setCurrentCallId(selectedCall.getID());
-				History.newItem("Ausschreibungs-Details"+selectedCall.getID()+"-"+ClientsideSettings.getCurrentProjectId()+"-"+ClientsideSettings.getCurrentMarketplaceId());
+				History.newItem(
+						"Ausschreibungs-Details" + selectedCall.getID() + "-" + ClientsideSettings.getCurrentProjectId()
+								+ "-" + ClientsideSettings.getCurrentMarketplaceId());
 			}
 		});
 
-		TextColumn<Call> callsTitleColumn = new TextColumn<Call>() {
+		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
+		// Daten aus der Datenbank
+		TextColumn<Call> projectsAndCallsColumn = new TextColumn<Call>() {
 			@Override
 			public String getValue(Call object) {
 				return object.getTitle();
 			}
 		};
-		callTable.addColumn(callsTitleColumn, "Name");
+		callTable.addColumn(projectsAndCallsColumn, "Titel");
+
+		TextColumn<Call> descriptionColumn = new TextColumn<Call>() {
+			@Override
+			public String getValue(Call object) {
+				return object.getDescription();
+			}
+		};
+		callTable.addColumn(descriptionColumn, "Beschreibung");
+
+		TextColumn<Call> deadlineColumn = new TextColumn<Call>() {
+			@Override
+			public String getValue(Call object) {
+				try {
+					return simpleDateFormat.format(object.getDeadline());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
+			}
+		};
+		callTable.addColumn(deadlineColumn, "Bewerbungsfrist");
+
+		TextColumn<Call> statusColumn = new TextColumn<Call>() {
+			@Override
+			public String getValue(Call object) {
+				return object.getStatusString();
+			}
+		};
+		callTable.addColumn(statusColumn, "Status");
 
 		root.add(createSecondHeadline("Ausschreibungen"));
 		root.add(callTable);
 		callTable.setWidth("100%", true);
 
-		if (currentProject.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
+		if (ClientsideSettings.isCurrentProjectLeader()) {
 			final Button newButton = new Button("Neue Ausschreibung hinzufügen");
 			newButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
@@ -96,39 +133,52 @@ public class ProjectView extends View {
 
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-		enrollmentSsm.addSelectionChangeHandler(new Handler() {
-			@Override
-			public void onSelectionChange(SelectionChangeEvent event) {
-				// Enrollment selectedEnrollment =
-				// enrollmentSsm.getSelectedObject();
-				// mainPanel.setForm(new EnrollmentForm(selectedEnrollment,
-				// false, true));
-			}
-		});
+		if (ClientsideSettings.isCurrentProjectLeader()) {
+			enrollmentSsm.addSelectionChangeHandler(new Handler() {
+				@Override
+				public void onSelectionChange(SelectionChangeEvent event) {
+					if (enrollmentSsm.getSelectedObject() != null) {
+						Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
+						mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
+						enrollmentSsm.clear();
+					}
+				}
+			});
+		}
 
-		TextColumn<Enrollment> enrollmentTitleColumn = new TextColumn<Enrollment>() {
-			@Override
-			public String getValue(Enrollment object) {
-				return String.valueOf(object.getOrgaUnitID());
-			}
-		};
-		enrollmentTable.addColumn(enrollmentTitleColumn, "Name");
-
-		TextColumn<Enrollment> timePeriodColumn = new TextColumn<Enrollment>() {
+		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
+		// Daten aus der Datenbank
+		TextColumn<Enrollment> enrollmentStartColumn = new TextColumn<Enrollment>() {
 			@Override
 			public String getValue(Enrollment object) {
-				return String.valueOf(object.getStartDate());
+				try {
+					return simpleDateFormat.format(object.getStartDate());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
 			}
 		};
-		enrollmentTable.addColumn(timePeriodColumn, "Von - Bis");
+		enrollmentTable.addColumn(enrollmentStartColumn, "Startdartum");
 
-		TextColumn<Enrollment> workloadColumn = new TextColumn<Enrollment>() {
+		TextColumn<Enrollment> enrollmentEndColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				try {
+					return simpleDateFormat.format(object.getEndDate());
+				} catch (Exception e) {
+					return "Kein Datum gesetzt";
+				}
+			}
+		};
+		enrollmentTable.addColumn(enrollmentEndColumn, "Startdartum");
+
+		TextColumn<Enrollment> enrollmentPeriodColumn = new TextColumn<Enrollment>() {
 			@Override
 			public String getValue(Enrollment object) {
 				return String.valueOf(object.getWorkload());
 			}
 		};
-		enrollmentTable.addColumn(workloadColumn, "Workload");
+		enrollmentTable.addColumn(enrollmentPeriodColumn, "Workload (in Tagen)");
 
 		root.add(createSecondHeadline("Beteiligungen"));
 		root.add(enrollmentTable);

@@ -42,27 +42,38 @@ public class CallView extends View {
 			public void onSuccess(PartnerProfile result) {
 				currentPartnerProfile = result;
 
-				// erstellen eines SingleSelectionModels -> macht, dass immer
-				// nur ein
-				// Item zur selben Zeit ausgewählt sein kann
-				final SingleSelectionModel<Property> propertySsm = new SingleSelectionModel<Property>();
+				// Folgendes SelectionModel nur hinzufügen, wenn der aktuelle
+				// Nutzer Projektleiter ist
+				if (ClientsideSettings.isCurrentProjectLeader()) {
+					// erstellen eines SingleSelectionModels -> macht, dass
+					// immer
+					// nur ein
+					// Item zur selben Zeit ausgewählt sein kann
+					final SingleSelectionModel<Property> propertySsm = new SingleSelectionModel<Property>();
 
-				// erstellen eines SingleSelectionModels -> macht, dass immer
-				// nur ein
-				// Item zur selben Zeit ausgewählt sein kann
-				propertyTable.setSelectionModel(propertySsm);
+					// erstellen eines SingleSelectionModels -> macht, dass
+					// immer
+					// nur ein
+					// Item zur selben Zeit ausgewählt sein kann
+					propertyTable.setSelectionModel(propertySsm);
 
-				// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile
-				// der
-				// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-				propertySsm.addSelectionChangeHandler(new Handler() {
-					@Override
-					public void onSelectionChange(SelectionChangeEvent event) {
-						Property selectedProperty = propertySsm.getSelectedObject();
-						mainPanel.setForm(
-								new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
-					}
-				});
+					// hinzufügen eines SelectionChangeHandler -> wenn eine
+					// Zeile
+					// der
+					// Tabelle gedrückt wird soll die neue Tabelle geöffnet
+					// werden
+					propertySsm.addSelectionChangeHandler(new Handler() {
+						@Override
+						public void onSelectionChange(SelectionChangeEvent event) {
+							if (propertySsm.getSelectedObject() != null) {
+								Property selectedProperty = propertySsm.getSelectedObject();
+								mainPanel.setForm(new PropertyForm(selectedProperty, false, true, null, null,
+										currentPartnerProfile));
+								propertySsm.clear();
+							}
+						}
+					});
+				}
 
 				// hinzufügen der Tabellenspaltennamen sowie hinzufügen der
 				// zugehörigen
@@ -87,13 +98,15 @@ public class CallView extends View {
 				root.add(propertyTable);
 				propertyTable.setWidth("100%", true);
 
-				final Button addButton = new Button("Eigenschaft hinzufügen");
-				addButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						mainPanel.setForm(new PropertyForm(null, false, true, null, null, currentPartnerProfile));
-					}
-				});
-				root.add(addButton);
+				if (ClientsideSettings.isCurrentProjectLeader()) {
+					final Button addButton = new Button("Eigenschaft hinzufügen");
+					addButton.addClickHandler(new ClickHandler() {
+						public void onClick(ClickEvent event) {
+							mainPanel.setForm(new PropertyForm(null, false, true, null, null, currentPartnerProfile));
+						}
+					});
+					root.add(addButton);
+				}
 
 				final Button secondButton = new Button("Auf diese Ausschreibung bewerben");
 				secondButton.addClickHandler(new ClickHandler() {
