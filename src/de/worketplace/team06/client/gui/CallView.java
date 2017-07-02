@@ -28,6 +28,7 @@ public class CallView extends View {
 
 	public CallView(Call pCurrentCall) {
 		currentCall = pCurrentCall;
+		setBreadcrumb();
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.setWidth("100%");
@@ -157,7 +158,7 @@ public class CallView extends View {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setFourthBreadcrumb(this, "Ausschreibungs-Details");
+		ClientsideSettings.setFourthBreadcrumb(this, currentCall.getTitle());
 	}
 
 	@Override

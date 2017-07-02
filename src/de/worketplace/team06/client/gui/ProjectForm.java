@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -38,8 +37,6 @@ public class ProjectForm extends Form {
 	private DateBox startDateInput = new DateBox();
 	private Label endDateLabel = new Label("Enddatum");
 	private DateBox endDateInput = new DateBox();
-	private Label projectLeaderLabel = new Label("Projektleiter");
-	private ListBox projectLeaderInput = getAllPersonsListBox(null);
 	private Boolean shouldUpdate = false;
 	private Project toChangeProject;
 	private Person projectLeader;
@@ -93,10 +90,10 @@ public class ProjectForm extends Form {
 		}
 
 		/*
-		 * Grid mit 7 Zeilen und 2 Spalten für das Formular bereitstellen.
+		 * Grid mit 6 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
-		final Grid form = new Grid(6, 2);
+		final Grid form = new Grid(5, 2);
 		form.setWidth("100%");
 		form.setWidget(0, 0, nameLabel);
 		form.setWidget(0, 1, nameInput);
@@ -106,8 +103,6 @@ public class ProjectForm extends Form {
 		form.setWidget(2, 1, startDateInput);
 		form.setWidget(3, 0, endDateLabel);
 		form.setWidget(3, 1, endDateInput);
-		form.setWidget(4, 0, projectLeaderLabel);
-		form.setWidget(4, 1, projectLeaderInput);
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 		/*
@@ -122,7 +117,6 @@ public class ProjectForm extends Form {
 			beschreibungInput.setEnabled(false);
 			startDateInput.setEnabled(false);
 			endDateInput.setEnabled(false);
-			projectLeaderInput.setEnabled(false);
 
 			class RpcWrapper {
 				protected Timer t;
@@ -130,125 +124,111 @@ public class ProjectForm extends Form {
 				public RpcWrapper() {
 					t = new Timer() {
 						public void run() {
-							if (projectLeaderInput.getItemCount() > 0) {
-								t.cancel();
-								worketplaceAdministration.getPersonByID(toChangeProject.getProjectLeaderID(),
-										new AsyncCallback<Person>() {
-											public void onFailure(Throwable caught) {
-												Window.alert("Es trat ein Fehler beim auslesen des Projektleiters auf");
-											}
+							t.cancel();
+							worketplaceAdministration.getPersonByID(toChangeProject.getProjectLeaderID(),
+									new AsyncCallback<Person>() {
+										public void onFailure(Throwable caught) {
+											Window.alert("Es trat ein Fehler beim auslesen des Projektleiters auf");
+										}
 
-											public void onSuccess(Person result) {
-												projectLeader = result;
-												int indexToFind = -1;
-												for (int i = 0; i < projectLeaderInput.getItemCount(); i++) {
-													if (projectLeaderInput.getValue(i)
-															.equals(String.valueOf(projectLeader.getID()))) {
-														indexToFind = i;
-														break;
+										public void onSuccess(Person result) {
+											projectLeader = result;
+
+											nameInput.setText(toChangeProject.getTitle());
+											beschreibungInput.setText(toChangeProject.getDescription());
+											startDateInput.setValue(toChangeProject.getStartDate());
+											endDateInput.setValue(toChangeProject.getEndDate());
+
+											saveButton = new Button("Speichern");
+											saveButton.addClickHandler(new ClickHandler() {
+												public void onClick(ClickEvent event) {
+													if (nameInput.getText().length() == 0) {
+														Window.alert("Bitte vergeben Sie einen Namen");
+													} else if (beschreibungInput.getText().length() == 0) {
+														Window.alert("Bitte beschreiben Sie Ihr Projekt genauer");
+													} else if (startDateInput.getValue() == null) {
+														Window.alert("Bitte geben Sie ein Startdatum ein");
+													} else if (endDateInput.getValue() == null) {
+														Window.alert("Bitte geben Sie ein Enddatum ein");
+													} else {
+														toChangeProject.setTitle(nameInput.getText());
+														toChangeProject.setDescription(beschreibungInput.getText());
+														toChangeProject.setStartDate(startDateInput.getValue());
+														toChangeProject.setEndDate(endDateInput.getValue());
+														worketplaceAdministration.saveProject(toChangeProject,
+																new AsyncCallback<Void>() {
+																	public void onFailure(Throwable caught) {
+																		Window.alert(
+																				"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+																	}
+
+																	public void onSuccess(Void result) {
+																		renderFormSuccess();
+																		Window.alert(
+																				"Das Projekt wurde erfolgreich geändert");
+																	}
+																});
 													}
 												}
-												projectLeaderInput.setSelectedIndex(indexToFind);
+											});
+											final VerticalPanel panel = new VerticalPanel();
+											panel.add(saveButton);
+											saveButton.setEnabled(false);
+											saveButton.setVisible(false);
+											deleteButton = new Button("Projekt entfernen");
+											deleteButton.addClickHandler(new ClickHandler() {
+												public void onClick(ClickEvent event) {
+													final boolean confirmDelete = Window
+															.confirm("Möchten Sie das Projekt wirklich löschen?");
+													if (confirmDelete) {
+														worketplaceAdministration.deleteProject(toChangeProject,
+																new AsyncCallback<Void>() {
+																	public void onFailure(Throwable caught) {
+																		Window.alert(
+																				"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+																	}
 
-												nameInput.setText(toChangeProject.getTitle());
-												beschreibungInput.setText(toChangeProject.getDescription());
-												startDateInput.setValue(toChangeProject.getStartDate());
-												endDateInput.setValue(toChangeProject.getEndDate());
-
-												saveButton = new Button("Speichern");
-												saveButton.addClickHandler(new ClickHandler() {
-													public void onClick(ClickEvent event) {
-														if (nameInput.getText().length() == 0) {
-															Window.alert("Bitte vergeben Sie einen Namen");
-														} else if (beschreibungInput.getText().length() == 0) {
-															Window.alert("Bitte beschreiben Sie Ihr Projekt genauer");
-														} else if (startDateInput.getValue() == null) {
-															Window.alert("Bitte geben Sie ein Startdatum ein");
-														} else if (endDateInput.getValue() == null) {
-															Window.alert("Bitte geben Sie ein Enddatum ein");
-														} else {
-															toChangeProject.setTitle(nameInput.getText());
-															toChangeProject.setDescription(beschreibungInput.getText());
-															toChangeProject.setStartDate(startDateInput.getValue());
-															toChangeProject.setEndDate(endDateInput.getValue());
-															worketplaceAdministration.saveProject(toChangeProject,
-																	new AsyncCallback<Void>() {
-																		public void onFailure(Throwable caught) {
-																			Window.alert(
-																					"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
-																		}
-
-																		public void onSuccess(Void result) {
-																			renderFormSuccess();
-																			Window.alert(
-																					"Das Projekt wurde erfolgreich geändert");
-																		}
-																	});
-														}
-													}
-												});
-												final VerticalPanel panel = new VerticalPanel();
-												panel.add(saveButton);
-												saveButton.setEnabled(false);
-												saveButton.setVisible(false);
-												deleteButton = new Button("Projekt entfernen");
-												deleteButton.addClickHandler(new ClickHandler() {
-													public void onClick(ClickEvent event) {
-														final boolean confirmDelete = Window
-																.confirm("Möchten Sie das Projekt wirklich löschen?");
-														if (confirmDelete) {
-															worketplaceAdministration.deleteProject(toChangeProject,
-																	new AsyncCallback<Void>() {
-																		public void onFailure(Throwable caught) {
-																			Window.alert(
-																					"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
-																		}
-
-																		public void onSuccess(Void result) {
-																			Window.alert(
-																					"Das Projekt wurde erfolgreich gelöscht");
-																			History.newItem("Marktplatz-Details"
-																					+ ClientsideSettings
-																							.getCurrentMarketplaceId());
-																		}
-																	});
-														}
-													}
-												});
-												panel.add(deleteButton);
-												deleteButton.setEnabled(false);
-												deleteButton.setVisible(false);
-												form.setWidget(5, 1, panel);
-												if (ClientsideSettings.getCurrentUser().getID() == projectLeader
-														.getID()) {
-													nameInput.setEnabled(true);
-													beschreibungInput.setEnabled(true);
-													startDateInput.setEnabled(true);
-													endDateInput.setEnabled(true);
-													projectLeaderInput.setEnabled(true);
-													saveButton.setEnabled(true);
-													saveButton.setVisible(true);
-													if (deleteButton instanceof Button) {
-														deleteButton.setEnabled(true);
-														deleteButton.setVisible(true);
+																	public void onSuccess(Void result) {
+																		Window.alert(
+																				"Das Projekt wurde erfolgreich gelöscht");
+																		History.newItem("Marktplatz-Details"
+																				+ ClientsideSettings
+																						.getCurrentMarketplaceId());
+																	}
+																});
 													}
 												}
-												if (ClientsideSettings.isCurrentProjectLeader() && shouldUpdate) {
-													nameInput.setEnabled(true);
-													beschreibungInput.setEnabled(true);
-													startDateInput.setEnabled(true);
-													endDateInput.setEnabled(true);
-													projectLeaderInput.setEnabled(true);
-													saveButton.setEnabled(true);
-													saveButton.setVisible(true);
-													if (deleteButton instanceof Button) {
-														deleteButton.setEnabled(true);
-														deleteButton.setVisible(true);
-													}
+											});
+											panel.add(deleteButton);
+											deleteButton.setEnabled(false);
+											deleteButton.setVisible(false);
+											form.setWidget(4, 1, panel);
+											if (ClientsideSettings.getCurrentUser().getID() == projectLeader.getID()) {
+												nameInput.setEnabled(true);
+												beschreibungInput.setEnabled(true);
+												startDateInput.setEnabled(true);
+												endDateInput.setEnabled(true);
+												saveButton.setEnabled(true);
+												saveButton.setVisible(true);
+												if (deleteButton instanceof Button) {
+													deleteButton.setEnabled(true);
+													deleteButton.setVisible(true);
 												}
 											}
-										});
-							}
+											if (ClientsideSettings.isCurrentProjectLeader() && shouldUpdate) {
+												nameInput.setEnabled(true);
+												beschreibungInput.setEnabled(true);
+												startDateInput.setEnabled(true);
+												endDateInput.setEnabled(true);
+												saveButton.setEnabled(true);
+												saveButton.setVisible(true);
+												if (deleteButton instanceof Button) {
+													deleteButton.setEnabled(true);
+													deleteButton.setVisible(true);
+												}
+											}
+										}
+									});
 						}
 					};
 					// Schedule the timer to check if all RPC calls finished
@@ -297,15 +277,7 @@ public class ProjectForm extends Form {
 				}
 
 			});
-			int indexToFind1 = -1;
-			for (int i = 0; i < projectLeaderInput.getItemCount(); i++) {
-				if (projectLeaderInput.getValue(i).equals(ClientsideSettings.getCurrentUser().getID())) {
-					indexToFind1 = i;
-					break;
-				}
-			}
-			projectLeaderInput.setSelectedIndex(indexToFind1);
-			form.setWidget(5, 1, saveButton);
+			form.setWidget(4, 1, saveButton);
 		}
 		root.add(form);
 	}
