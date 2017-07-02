@@ -1441,6 +1441,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		r.setRatingStatement(ratingStatement);
 		r.setCreated(created);
 		
+		
+		
 		//***WICHTIG*** Hier fehlt noch die Zuweisung zur Application. Wie realisieren wir das genau?
 		
 		//Setzen einer vorläufigen ID
@@ -1453,6 +1455,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		saveApplication(application);
 		
+
 		Call c = this.getCallByID(application.getCallID());
 		Project p = this.getProjectByID(c.getProjectID());
 		OrgaUnit ou = this.getOrgaUnitById(application.getOrgaUnitID());
@@ -1460,8 +1463,10 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		if (r.getRating() == 1){
 			Enrollment autoenroll = this.createAutomaticEnrollment(p, ou, r, c.getTitle());
+			c.setStatus(1);
+			this.saveCall(c);
 			application.setStatus(1);
-			this.appMapper.update(application);
+			this.saveApplication(application);
 			return autoenroll;
 		}
 		return null;
