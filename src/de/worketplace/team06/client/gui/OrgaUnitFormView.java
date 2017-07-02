@@ -59,6 +59,7 @@ public class OrgaUnitFormView extends View {
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
 	public OrgaUnitFormView() {
+		setBreadcrumb();
 		changeHeadline = createHeadline("Meinen Nutzer bearbeiten", true);
 		addHeadline = createHeadline("Meinen Nutzer erstellen", true);
 

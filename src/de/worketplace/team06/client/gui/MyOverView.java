@@ -28,6 +28,7 @@ public class MyOverView extends View {
 	private final CellTable<Enrollment> myEnrollmentsTable = new CellTable<Enrollment>();
 
 	public MyOverView() {
+		setBreadcrumb();
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Project> myProjectsSsm = new SingleSelectionModel<Project>();
