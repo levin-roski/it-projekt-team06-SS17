@@ -40,10 +40,6 @@ import de.worketplace.team06.shared.report.Report;
 import de.worketplace.team06.shared.report.Row;
 import de.worketplace.team06.shared.report.SimpleParagraph;
 
-/**
- * @author Toby
- *
- */
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator{
 	
 	/**
@@ -479,6 +475,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
 		headline.addColumn(new Column("Projekt"));
+		headline.addColumn(new Column("Tätigkeit"));
 		headline.addColumn(new Column("Beteiligungsbeginn"));
 		headline.addColumn(new Column("Beteiligungsende"));
 		
@@ -491,6 +488,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Project p = wpadmin.getProjectByID(e.getProjectID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(p.getTitle()));
+			try {
+				rowToAdd.addColumn(new Column(e.getJobdescription()));
+			} catch (NullPointerException e1) {
+				rowToAdd.addColumn(new Column("Keine Tätigkeit gesetzt"));
+			}
 			rowToAdd.addColumn(new Column(convertDate(e.getStartDate())));
 			rowToAdd.addColumn(new Column(convertDate(e.getEndDate())));
 			report.addRow(rowToAdd);
