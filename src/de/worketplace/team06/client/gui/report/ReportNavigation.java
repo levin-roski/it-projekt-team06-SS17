@@ -36,12 +36,6 @@ public class ReportNavigation extends VerticalPanel {
 			}
 		}));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Home", new Command() {
-			public void execute() {
-				History.newItem("Startseite");
-			}
-		}));
-		menu.addSeparator();
 		menu.addItem(new MenuItem("Alle Ausschreibungen", new Command() {
 			public void execute() {
 				History.newItem("Alle-Ausschreibungen");
