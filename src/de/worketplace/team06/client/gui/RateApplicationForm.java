@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Application;
+import de.worketplace.team06.shared.bo.Enrollment;
 import de.worketplace.team06.shared.bo.Rating;
 
 /**
@@ -163,7 +164,7 @@ public class RateApplicationForm extends Form {
 					} else {
 						worketplaceAdministration.rateApplication(currentApplication,
 								Float.parseFloat(ratingInput.getSelectedValue()), descriptionInput.getText(),
-								new AsyncCallback<Rating>() {
+								new AsyncCallback<Enrollment>() {
 									@Override
 									public void onFailure(Throwable caught) {
 										Window.alert(
@@ -171,9 +172,12 @@ public class RateApplicationForm extends Form {
 									}
 
 									@Override
-									public void onSuccess(Rating result) {
+									public void onSuccess(Enrollment result) {
 										renderFormSuccess();
 										Window.alert("Die Bewerbung wurde Bewertet");
+										if (result instanceof Enrollment) {
+											mainPanel.setForm(new EnrollmentForm(result, false, true));
+										}
 									}
 								});
 					}
