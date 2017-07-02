@@ -383,6 +383,9 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public boolean orgaUnitHasAlreadyAppliedFor(Call call, OrgaUnit ou);
 
+	public Enrollment createAutomaticEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, String jobdescription)
+			throws IllegalArgumentException;
+
 
 
 }
