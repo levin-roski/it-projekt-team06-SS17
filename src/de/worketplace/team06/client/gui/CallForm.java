@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -39,7 +40,7 @@ public class CallForm extends Form {
 	private Label titleLabel = new Label("Titel");
 	private TextBox titleInput = new TextBox();
 	private Label descriptionLabel = new Label("Beschreibung");
-	private TextBox descriptionInput = new TextBox();
+	private TextArea descriptionInput = new TextArea();
 	private Label deadlineLabel = new Label("Bewerbungsfrist");
 	private DateBox deadlineInput = new DateBox();
 	private Label statusLabel = new Label("Status");
@@ -278,7 +279,7 @@ public class CallForm extends Form {
 									}
 								});
 
-								final VerticalPanel panel = new VerticalPanel();
+								final HorizontalPanel panel = new HorizontalPanel();
 								panel.add(changeSaveButton);
 
 								changeDeleteButton.addClickHandler(new ClickHandler() {

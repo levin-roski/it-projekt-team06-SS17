@@ -199,6 +199,12 @@ public class ApplicationForm extends Form {
 				new AsyncCallback<Rating>() {
 					@Override
 					public void onFailure(Throwable caught) {
+						ratingHeadline.setVisible(true);
+						ratingLabel.setText("Noch keine Bewertung vergeben");
+						ratingLabel.setVisible(true);
+						ratingInput.setVisible(false);
+						ratingTextLabel.setVisible(false);
+						ratingTextInput.setVisible(false);
 					}
 
 					@Override
@@ -216,7 +222,16 @@ public class ApplicationForm extends Form {
 						ratingTextInput.setEnabled(false);
 						ratingHeadline.setVisible(true);
 						}
+						else{
+							ratingHeadline.setVisible(true);
+							ratingLabel.setText("Noch keine Bewertung vergeben");
+							ratingLabel.setVisible(true);
+							ratingInput.setVisible(false);
+							ratingTextLabel.setVisible(false);
+							ratingTextInput.setVisible(false);
+						}
 					}
+					
 				});
 	}
 }

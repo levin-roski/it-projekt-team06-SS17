@@ -295,7 +295,7 @@ public class MyOverView extends View {
 				}
 			}
 		};
-		myEnrollmentsTable.addColumn(enrollmentStartColumn, "Startdartum");
+		myEnrollmentsTable.addColumn(enrollmentStartColumn, "Startdatum");
 
 		TextColumn<Enrollment> enrollmentEndColumn = new TextColumn<Enrollment>() {
 			@Override
@@ -307,7 +307,7 @@ public class MyOverView extends View {
 				}
 			}
 		};
-		myEnrollmentsTable.addColumn(enrollmentEndColumn, "Enddartum");
+		myEnrollmentsTable.addColumn(enrollmentEndColumn, "Enddatum");
 
 		TextColumn<Enrollment> enrollmentPeriodColumn = new TextColumn<Enrollment>() {
 			@Override
@@ -360,7 +360,7 @@ public class MyOverView extends View {
 				}
 			}
 		};
-		enrollmentsToMeTable.addColumn(enrollmentToMeStartColumn, "Startdartum");
+		enrollmentsToMeTable.addColumn(enrollmentToMeStartColumn, "Startdatum");
 
 		TextColumn<Enrollment> enrollmentToMeEndColumn = new TextColumn<Enrollment>() {
 			@Override
@@ -372,7 +372,7 @@ public class MyOverView extends View {
 				}
 			}
 		};
-		enrollmentsToMeTable.addColumn(enrollmentToMeEndColumn, "Enddartum");
+		enrollmentsToMeTable.addColumn(enrollmentToMeEndColumn, "Enddatum");
 
 		TextColumn<Enrollment> enrollmentToMePeriodColumn = new TextColumn<Enrollment>() {
 			@Override

@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -39,7 +40,7 @@ public class OrgaUnitFormView extends View {
 	private Label typeLabel = new Label("Nutzertyp");
 	private ListBox typeInput = new ListBox();
 	private Label descriptionLabel = new Label("Beschreibung");
-	private TextBox descriptionInput = new TextBox();
+	private TextArea descriptionInput = new TextArea();
 	private boolean shouldUpdate = false;
 	private OrgaUnit toChangeOrgaUnit;
 	private HorizontalPanel changeHeadline;
