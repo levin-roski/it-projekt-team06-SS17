@@ -36,6 +36,10 @@ body, table td, select, button{
 	margin-top: 68px;
 }
 
+.main-panel .gwt-Label{
+	color: 000px !important;
+}
+
 .main-panel-overview {
 	padding: 10px 10px 5px 18px;
 	-moz-box-sizing: border-box;

@@ -82,7 +82,7 @@ public class OrgaUnitPartnerProfileView extends View {
 		root.add(propertyTable);
 		propertyTable.setWidth("100%", true);
 
-		final Button newButton = new Button("Neue Eigenschaft hinzufügen");
+		final Button newButton = new Button("Eigenschaft hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				mainPanel.setForm(new PropertyForm(null, false, true, null, null, currentPartnerProfile));

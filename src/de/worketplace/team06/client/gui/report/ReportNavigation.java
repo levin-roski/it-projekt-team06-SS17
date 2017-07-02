@@ -111,7 +111,7 @@ public class ReportNavigation extends VerticalPanel {
 				History.newItem("Verflechtungen-saemtlicher-meiner-Bewerber");
 			}
 		}));
-		menu.addItem(new MenuItem("Projektleiter Reports", leaderMenu));
+		menu.addItem(new MenuItem("Reports", leaderMenu));
 		menu.addSeparator();
 		
 		

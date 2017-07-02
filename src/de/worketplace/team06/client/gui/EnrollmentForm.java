@@ -107,7 +107,7 @@ public class EnrollmentForm extends Form {
 		startDateInput.setValue(toChangeEnrollment.getStartDate());
 		periodInput.setValue(toChangeEnrollment.getWorkload());
 		endDateInput.setValue(toChangeEnrollment.getEndDate());
-		final Button saveButton = new Button("Änderungen speichern");
+		final Button saveButton = new Button("Speichern");
 		saveButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (startDateInput.getValue() == null) {
@@ -136,7 +136,7 @@ public class EnrollmentForm extends Form {
 		});
 		final VerticalPanel panel = new VerticalPanel();
 		panel.add(saveButton);
-		final Button deleteButton = new Button("Diese Beteiligung entfernen");
+		final Button deleteButton = new Button("Beteiligung entfernen");
 		deleteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				final boolean confirmDelete = Window.confirm("Möchten Sie die Beteiligung wirklich löschen?");

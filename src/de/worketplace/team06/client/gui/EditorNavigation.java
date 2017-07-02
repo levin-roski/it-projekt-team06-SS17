@@ -57,7 +57,7 @@ public class EditorNavigation extends VerticalPanel {
 				History.newItem("Mein-Partnerprofil");
 			}
 		}));
-		optionenMenu.addItem(new MenuItem("Zum Report Generator", new Command() {
+		optionenMenu.addItem(new MenuItem("Report Generator", new Command() {
 			public void execute() {
 				 Window.Location.replace("report.html");
 			}

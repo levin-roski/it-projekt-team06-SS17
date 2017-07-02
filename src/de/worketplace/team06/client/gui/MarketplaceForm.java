@@ -97,7 +97,7 @@ public class MarketplaceForm extends Form {
 			}
 			nameInput.setText(toChangeMarketplace.getTitle());
 			descriptionInput.setText(toChangeMarketplace.getDescription());
-			final Button saveButton = new Button("Änderungen speichern");
+			final Button saveButton = new Button("Speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (nameInput.getText().length() == 0) {
@@ -126,7 +126,7 @@ public class MarketplaceForm extends Form {
 			});
 			final VerticalPanel panel = new VerticalPanel();
 			panel.add(saveButton);
-			final Button deleteButton = new Button("Diesen Marktplatz entfernen");
+			final Button deleteButton = new Button("Marktplatz entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					final boolean confirmDelete = Window.confirm("Möchten Sie den Marktplatz wirklich löschen?");
@@ -154,7 +154,7 @@ public class MarketplaceForm extends Form {
 			if (addHeadline != null) {
 				root.add(addHeadline);
 			}
-			final Button saveButton = new Button("Neuen Marktplatz anlegen");
+			final Button saveButton = new Button("Marktplatz anlegen");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (nameInput.getText().length() == 0) {

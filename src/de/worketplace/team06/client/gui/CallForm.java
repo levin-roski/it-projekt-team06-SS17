@@ -139,7 +139,7 @@ public class CallForm extends Form {
 							public void onSuccess(Project result) {
 								project = result;
 								if (!shouldUpdate) {
-									final Button saveButton = new Button("Neue Ausschreibung anlegen");
+									final Button saveButton = new Button("Ausschreibung anlegen");
 
 									saveButton.addClickHandler(new ClickHandler() {
 										public void onClick(ClickEvent event) {
@@ -226,7 +226,7 @@ public class CallForm extends Form {
 								deadlineInput.setValue(toChangeCall.getDeadline());
 								statusInput.setVisibleItemCount(toChangeCall.getStatus());
 
-								changeSaveButton = new Button("Änderungen speichern");
+								changeSaveButton = new Button("Speichern");
 								changeSaveButton.setVisible(false);
 								changeSaveButton.setEnabled(false);
 
@@ -265,7 +265,7 @@ public class CallForm extends Form {
 								final VerticalPanel panel = new VerticalPanel();
 								panel.add(changeSaveButton);
 
-								changeDeleteButton = new Button("Diese Ausschreibung entfernen");
+								changeDeleteButton = new Button("Ausschreibung entfernen");
 								changeDeleteButton.setVisible(false);
 								changeDeleteButton.setEnabled(false);
 								changeDeleteButton.addClickHandler(new ClickHandler() {

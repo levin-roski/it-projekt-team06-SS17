@@ -114,7 +114,7 @@ public class ProjectView extends View {
 		callTable.setWidth("100%", true);
 
 		if (ClientsideSettings.isCurrentProjectLeader()) {
-			final Button newButton = new Button("Neue Ausschreibung hinzufügen");
+			final Button newButton = new Button("Ausschreibung hinzufügen");
 			newButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					mainPanel.setForm(new CallForm(null, false, true, null, null));
