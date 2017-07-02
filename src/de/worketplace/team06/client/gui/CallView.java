@@ -6,8 +6,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -107,16 +109,30 @@ public class CallView extends View {
 					root.add(addButton);
 				}
 
-				if (!ClientsideSettings.isCurrentProjectLeader()) {
-					final Button secondButton = new Button("Bewerben");
-					secondButton.addClickHandler(new ClickHandler() {
-						public void onClick(ClickEvent event) {
-							mainPanel.setForm(new ApplicationForm(null, false, true, currentCall));
-						}
-					});
-					root.add(secondButton);
-				}
+				worketplaceAdministration.orgaUnitHasAlreadyAppliedFor(currentCall, ClientsideSettings.getCurrentUser(), new AsyncCallback<Boolean>() {
+							@Override
+							public void onFailure(Throwable caught) {
+							}
 
+							@Override
+							public void onSuccess(Boolean result) {
+								if (!ClientsideSettings.isCurrentProjectLeader() && !result) {
+									final Button secondButton = new Button("Bewerben");
+									secondButton.addClickHandler(new ClickHandler() {
+										public void onClick(ClickEvent event) {
+											mainPanel.setForm(new ApplicationForm(null, false, true, currentCall));
+										}
+									});
+									root.add(secondButton);
+								}
+								else {
+									Label alreadyApplied = new Label("Sie haben sich bereits auf diese Ausschreibung beworben");
+									root.add(alreadyApplied);
+								}
+
+							}
+						});
+				
 				CallView.this.add(root);
 				loadData();
 			}

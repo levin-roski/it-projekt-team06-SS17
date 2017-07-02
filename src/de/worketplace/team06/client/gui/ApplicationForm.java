@@ -154,7 +154,7 @@ public class ApplicationForm extends Form {
 									public void onSuccess(Application result) {
 										Window.alert("Die Bewerbung auf die Ausschreibung \"" + currentCall.getTitle()
 												+ "\" wurde erstellt");
-										renderFormSuccess();
+										Window.Location.reload();
 									}
 								});
 					}
