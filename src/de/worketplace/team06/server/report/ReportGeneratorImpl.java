@@ -120,17 +120,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle Ausschreibungen");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		try {
-			headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		} catch (NullPointerException e) {
-			headerData.addSubParagraph(new SimpleParagraph("User: Unbekannter Nutzer"));
-			e.printStackTrace();
-		}
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Row headline = new Row();
 		
@@ -870,6 +861,27 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			e.printStackTrace();
 		}
 		return time;	
+	}
+	/**
+	 * Einheitliche Methode zur Erstellung der Kopfdaten.
+	 * Rückgabe des Zusammengesetzten Paragraphen.
+	 * @param o
+	 * 
+	 * @return CompositeParagraph
+	 */
+	private CompositeParagraph createHeaderData(OrgaUnit o, Report report){
+		//Generierung der Kopfdaten des Reports
+		CompositeParagraph headerData = new CompositeParagraph();
+		try {
+			headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		} catch (NullPointerException e) {
+			headerData.addSubParagraph(new SimpleParagraph("User: Unbekannter Nutzer"));
+			e.printStackTrace();
+		}
+		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
+		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
+		
+		return headerData;
 	}
 	
 }
