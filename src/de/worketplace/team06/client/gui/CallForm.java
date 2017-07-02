@@ -114,10 +114,10 @@ public class CallForm extends Form {
 		form.setWidget(1, 1, descriptionInput);
 		form.setWidget(2, 0, deadlineLabel);
 		form.setWidget(2, 1, deadlineInput);
-		
-		statusInput.addItem("Laufend");
-		statusInput.addItem("Erfolgreich");
-		statusInput.addItem("Abgelehnt");
+
+		statusInput.addItem("Laufend", "0");
+		statusInput.addItem("Erfolgreich", "1");
+		statusInput.addItem("Abgelehnt", "2");
 
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
@@ -241,7 +241,14 @@ public class CallForm extends Form {
 								deadlineInput.setFormat(new DateBox.DefaultFormat(
 										DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
 								deadlineInput.setValue(toChangeCall.getDeadline());
-								statusInput.setVisibleItemCount(toChangeCall.getStatus());
+								int indexToFind = -1;
+								for (int i = 0; i < statusInput.getItemCount(); i++) {
+									if (statusInput.getValue(i).equals(String.valueOf(toChangeCall.getStatus()))) {
+										indexToFind = i;
+										break;
+									}
+								}
+								statusInput.setSelectedIndex(indexToFind);
 
 								changeSaveButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
