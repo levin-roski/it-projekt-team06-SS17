@@ -210,9 +210,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	/**
-	 * 
+	 * Methode zum Generieren eines Reports für alle Ausschreibungen, die zum Partnerprofil der übergebenen Organisations-Einheit passt.
 	 * @param o
-	 * @return 
+	 * @return report
 	 */
 	@Override
 	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException {
