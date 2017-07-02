@@ -159,7 +159,7 @@ public class EnrollmentMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id, jobdescription FROM enrollment " + "ORDER BY id");
 			
 			while (rs.next()) {
 				
@@ -224,7 +224,7 @@ public class EnrollmentMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id, jobdescription FROM enrollment " + "WHERE orgaunit_id ='" + orgaUnitID + "'ORDER BY id");
 			
 				while (rs.next()) {
 				
@@ -291,7 +291,7 @@ public class EnrollmentMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE project_id ='" + projectID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id, jobdescription FROM enrollment " + "WHERE project_id ='" + projectID + "'ORDER BY id");
 			
 				while (rs.next()) {
 				
@@ -357,7 +357,7 @@ public class EnrollmentMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE rating_id ='" + rID + "'ORDER BY id");
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id, jobdescription FROM enrollment " + "WHERE rating_id ='" + rID + "'ORDER BY id");
 			
 				if (rs.next()) {
 				
