@@ -106,13 +106,13 @@ p.center {
 
 h1 {
 	font-size: 24px;
-	padding-top: 10px;
+	padding-top: 15px;
 	color: #454a4a;
 }
 
 h2 {
 	font-size: 18px;
-	padding-top: 20px;
+	padding-top: 15px;
 	color: #454a4a;
 }
 
@@ -125,6 +125,7 @@ h2 {
 	width: 90% !important;
 	box-shadow: 3px 3px 5px lightgrey !important;
 	border: 1px solid lightgrey;
+	margin-bottom: 10px;
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td, .GPBYFDEGE tbody td {
@@ -214,7 +215,7 @@ h2 {
 	box-shadow: 2px 2px 3px lightgrey !important;
 	border: #454a4a;
 	height: 40px;
-	margin-top: 20px !important;
+	margin-top: 3px !important;
 }
 
 .gwt-Button:hover {
