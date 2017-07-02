@@ -381,7 +381,7 @@ public interface WorketplaceAdministration extends RemoteService {
 
 	public Vector<Application> getApplicationsForProjectLeader(Person projectleader);
 
-	public boolean OrgaUnitHasAlreadyAppliedFor(Call call, OrgaUnit ou);
+	public boolean orgaUnitHasAlreadyAppliedFor(Call call, OrgaUnit ou);
 
 
 

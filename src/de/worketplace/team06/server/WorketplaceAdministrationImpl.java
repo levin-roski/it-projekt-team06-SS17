@@ -1639,7 +1639,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * 
 	 */
 	@Override
-	public boolean OrgaUnitHasAlreadyAppliedFor(Call call, OrgaUnit ou){
+	public boolean orgaUnitHasAlreadyAppliedFor(Call call, OrgaUnit ou){
 		Vector<Application> ouapplications = this.getApplicationsFor(ou);
 		for (Application a : ouapplications){
 			if (call.getID() == a.getCallID()){
@@ -1647,7 +1647,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			}
 		}
 		return false;
-		
 	}
 
 	/*
