@@ -208,8 +208,10 @@ public class OrgaUnitFormView extends View {
 										}
 									}
 								});
-								formStatic.setWidget(7, 1, saveButton);
-								formStatic.setWidget(8, 1, deleteButton);
+								HorizontalPanel hp = new HorizontalPanel();
+								hp.add(saveButton);
+								hp.add(deleteButton);
+								formStatic.setWidget(7, 1, hp);
 							}
 						});
 				break;
@@ -286,8 +288,10 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formStatic.setWidget(4, 1, saveButton);
-						formStatic.setWidget(5, 1, deleteButton);
+						HorizontalPanel hp = new HorizontalPanel();
+						hp.add(saveButton);
+						hp.add(deleteButton);
+						formStatic.setWidget(4, 1, hp);
 					}
 				});
 				break;
@@ -384,8 +388,10 @@ public class OrgaUnitFormView extends View {
 										}
 									}
 								});
-								formStatic.setWidget(6, 1, saveButton);
-								formStatic.setWidget(7, 1, deleteButton);
+								HorizontalPanel hp = new HorizontalPanel();
+								hp.add(saveButton);
+								hp.add(deleteButton);
+								formStatic.setWidget(6, 1, hp);
 							}
 						});
 				break;
@@ -428,6 +434,10 @@ public class OrgaUnitFormView extends View {
 					});
 
 					String type = typeInput.getSelectedValue();
+					HorizontalPanel hp = new HorizontalPanel();
+					hp.add(saveButton);
+					hp.add(logoutButton);
+					formStatic.setWidget(7, 1, hp);
 					switch (type) {
 					case "Person":
 						Label firstnameLabel = new Label("Vorname");
@@ -488,8 +498,7 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formDynamic.setWidget(7, 1, saveButton);
-						formDynamic.setWidget(8, 1, logoutButton);
+						formStatic.setWidget(7, 1, hp);
 						break;
 
 					case "Team":
@@ -532,8 +541,7 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formDynamic.setWidget(4, 1, saveButton);
-						formDynamic.setWidget(5, 1, logoutButton);
+						formStatic.setWidget(4, 1, hp);
 						break;
 
 					case "Organisation":
@@ -589,8 +597,7 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formDynamic.setWidget(6, 1, saveButton);
-						formDynamic.setWidget(7, 1, logoutButton);
+						formStatic.setWidget(6, 1, hp);
 						break;
 					}
 				}
