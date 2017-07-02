@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.worketplace.team06.client.gui.CallOverView;
 import de.worketplace.team06.client.gui.CallView;
 import de.worketplace.team06.client.gui.EditorNavigation;
 import de.worketplace.team06.client.gui.MainPanel;
@@ -111,6 +112,8 @@ public class Worketplace implements EntryPoint {
 				mainPanel.setView(new MarketplaceOverView());
 			} else if (historyToken.equals("Projekte")) {
 				mainPanel.setView(new ProjectOverView());
+			} else if (historyToken.equals("Ausschreibungen")) {
+				mainPanel.setView(new CallOverView());
 			} else if (historyToken.equals("Mein-Nutzer")) {
 				mainPanel.setView(new OrgaUnitFormView());
 			} else if (historyToken.equals("Mein-Partnerprofil")) {

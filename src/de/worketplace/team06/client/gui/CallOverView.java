@@ -16,59 +16,61 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
-import de.worketplace.team06.shared.bo.Project;
+import de.worketplace.team06.shared.bo.Call;
 
-public class ProjectOverView extends View {
-	// erstellen der Tabelle Meine Projekte
-	private final CellTable<Project> allProjectsTable = new CellTable<Project>();
+public class CallOverView extends View {
+	// erstellen der Tabelle Meine Ausschreibungen
+	private final CellTable<Call> allCallsTable = new CellTable<Call>();
 
-	public ProjectOverView() {
+	public CallOverView() {
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
-		final SingleSelectionModel<Project> AllProjectSsm = new SingleSelectionModel<Project>();
+		final SingleSelectionModel<Call> allCallSsm = new SingleSelectionModel<Call>();
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
-		allProjectsTable.setSelectionModel(AllProjectSsm);
+		allCallsTable.setSelectionModel(allCallSsm);
 
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-		AllProjectSsm.addSelectionChangeHandler(new Handler() {
+		allCallSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				if (AllProjectSsm.getSelectedObject() != null) {
-					Project selectedProject = AllProjectSsm.getSelectedObject();
-					mainPanel.setForm(new ProjectForm(selectedProject, false, true, null));
-					AllProjectSsm.clear();
+				if (allCallSsm.getSelectedObject() != null) {
+					Call selectedCall = allCallSsm.getSelectedObject();
+					ClientsideSettings.setCurrentCallId(selectedCall.getID());
+					History.newItem("Ausschreibung-Details" + selectedCall.getID());
+					allCallSsm.clear();
 				}
 			}
 		});
-		TextColumn<Project> titleColumn = new TextColumn<Project>() {
+
+		TextColumn<Call> titleColumn = new TextColumn<Call>() {
 			@Override
-			public String getValue(Project object) {
+			public String getValue(Call object) {
 				return object.getTitle();
 			}
 		};
-		allProjectsTable.addColumn(titleColumn, "Name");
+		allCallsTable.addColumn(titleColumn, "Name");
 
-		TextColumn<Project> descriptionColumn = new TextColumn<Project>() {
+		TextColumn<Call> descriptionColumn = new TextColumn<Call>() {
 			@Override
-			public String getValue(Project object) {
+			public String getValue(Call object) {
 				return object.getDescription();
 			}
 		};
-		allProjectsTable.addColumn(descriptionColumn, "Beschreibung");
+		allCallsTable.addColumn(descriptionColumn, "Beschreibung");
 
-		allProjectsTable.setWidth("100%", true);
+		allCallsTable.setWidth("100%", true);
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
-		root.add(createHeadline("Alle Projekte", true));
-		root.add(allProjectsTable);
+		root.add(createHeadline("Alle Ausschreibungen", true));
+		root.add(allCallsTable);
 
-		final Button newButton = new Button("Projekt hinzufügen");
+		final Button newButton = new Button("Ausschreibung hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				mainPanel.setForm(new ProjectForm(null, false));
+				mainPanel.setForm(new CallForm(null, false, true));
 			}
 		});
 		root.add(newButton);
@@ -80,26 +82,26 @@ public class ProjectOverView extends View {
 
 	@Override
 	public void loadData() {
-		worketplaceAdministration.getAllProjects(new AsyncCallback<Vector<Project>>() {
+		worketplaceAdministration.getAllCalls(new AsyncCallback<Vector<Call>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(Vector<Project> results) {
-				allProjectsTable.setRowData(0, results);
-				allProjectsTable.setRowCount(results.size(), true);
+			public void onSuccess(Vector<Call> results) {
+				allCallsTable.setRowData(0, results);
+				allCallsTable.setRowCount(results.size(), true);
 			}
 		});
 	}
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setFirstBreadcrumb(this, "Projekte");
+		ClientsideSettings.setFirstBreadcrumb(this, "Ausschreibungen");
 	}
 
 	@Override
 	public String returnTokenName() {
-		return "Projekte";
+		return "Ausschreibungen";
 	}
 }
