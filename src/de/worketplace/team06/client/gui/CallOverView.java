@@ -17,6 +17,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Call;
+import de.worketplace.team06.shared.bo.Project;
 
 public class CallOverView extends View {
 	// erstellen der Tabelle Meine Ausschreibungen
@@ -38,8 +39,15 @@ public class CallOverView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (allCallSsm.getSelectedObject() != null) {
 					Call selectedCall = allCallSsm.getSelectedObject();
-					ClientsideSettings.setCurrentCallId(selectedCall.getID());
-					History.newItem("Ausschreibung-Details" + selectedCall.getID());
+					worketplaceAdministration.getProjectByID(selectedCall.getProjectID(), new AsyncCallback<Project>() {
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+						@Override
+						public void onSuccess(Project result) {
+							History.newItem("Projekt-Details" + result.getID() + "-" + result.getMarketplaceID());
+						}
+					});
 					allCallSsm.clear();
 				}
 			}
@@ -67,13 +75,13 @@ public class CallOverView extends View {
 		root.add(createHeadline("Alle Ausschreibungen", true));
 		root.add(allCallsTable);
 
-		final Button newButton = new Button("Ausschreibung hinzufügen");
-		newButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				mainPanel.setForm(new CallForm(null, false, true));
-			}
-		});
-		root.add(newButton);
+//		final Button newButton = new Button("Ausschreibung hinzufügen");
+//		newButton.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				mainPanel.setForm(new CallForm(null, false, true));
+//			}
+//		});
+//		root.add(newButton);
 
 		this.add(root);
 

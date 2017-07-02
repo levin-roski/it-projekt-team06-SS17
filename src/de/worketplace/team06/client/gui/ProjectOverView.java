@@ -38,7 +38,8 @@ public class ProjectOverView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (AllProjectSsm.getSelectedObject() != null) {
 					Project selectedProject = AllProjectSsm.getSelectedObject();
-					mainPanel.setForm(new ProjectForm(selectedProject, false, true, null));
+					History.newItem(
+							"Projekt-Details" + selectedProject.getID() + "-" + selectedProject.getMarketplaceID());
 					AllProjectSsm.clear();
 				}
 			}
@@ -65,13 +66,13 @@ public class ProjectOverView extends View {
 		root.add(createHeadline("Alle Projekte", true));
 		root.add(allProjectsTable);
 
-		final Button newButton = new Button("Projekt hinzufügen");
-		newButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				mainPanel.setForm(new ProjectForm(null, false));
-			}
-		});
-		root.add(newButton);
+//		final Button newButton = new Button("Projekt hinzufügen");
+//		newButton.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				mainPanel.setForm(new ProjectForm(null, false));
+//			}
+//		});
+//		root.add(newButton);
 
 		this.add(root);
 
