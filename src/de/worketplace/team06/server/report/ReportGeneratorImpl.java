@@ -166,17 +166,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle eigenen Ausschreibungen");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		try {
-			headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		} catch (NullPointerException e) {
-			headerData.addSubParagraph(new SimpleParagraph("User: Unbekannter Nutzer"));
-			e.printStackTrace();
-		}
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Row headline = new Row();
 		
@@ -242,12 +233,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle interessanten Ausschreibungen für den Benutzer");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Row headline = new Row();
 		
@@ -344,12 +331,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle Bewerbungen auf Ausschreibungen");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Row headline = new Row();
 		
@@ -408,12 +391,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle ausgehenden Bewerbungen für");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Row headline = new Row();
 		
@@ -550,12 +529,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle Verflechtungen meiner Bewerber");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
 		int j = 0;
@@ -587,12 +562,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("FanIn: Anzahl der Bewerbungen");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Row headline = new Row();
 		
@@ -658,12 +629,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("FanOut: Anzahl der Ausschreibungen");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Row headline = new Row();
 		
@@ -731,12 +698,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("FanIn-FanOut-Analyse für alle Teilnehmer");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		//Hinzufügen der einzelnen Reports
 		report.addSubReport(createFanInOfApplicationsOfUserReport(o));
