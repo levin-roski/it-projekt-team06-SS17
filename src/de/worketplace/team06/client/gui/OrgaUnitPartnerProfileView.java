@@ -24,6 +24,7 @@ public class OrgaUnitPartnerProfileView extends View {
 	PartnerProfile currentPartnerProfile;
 
 	public OrgaUnitPartnerProfileView() {
+		setBreadcrumb();
 		worketplaceAdministration.getPartnerProfileFor(ClientsideSettings.getCurrentUser(), new AsyncCallback<PartnerProfile>() {
 			@Override
 			public void onFailure(Throwable caught) {
