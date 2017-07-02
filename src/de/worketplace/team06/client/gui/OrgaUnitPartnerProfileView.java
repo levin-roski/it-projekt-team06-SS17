@@ -55,7 +55,7 @@ public class OrgaUnitPartnerProfileView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (propertySsm.getSelectedObject() != null) {
 					Property selectedProperty = propertySsm.getSelectedObject();
-					mainPanel.setForm(new PropertyForm(selectedProperty, false, true, null, null, currentPartnerProfile));
+					mainPanel.setForm(new PropertyForm(selectedProperty, false, true, currentPartnerProfile));
 					propertySsm.clear();
 				}
 			}
@@ -85,7 +85,7 @@ public class OrgaUnitPartnerProfileView extends View {
 		final Button newButton = new Button("Eigenschaft hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				mainPanel.setForm(new PropertyForm(null, false, true, null, null, currentPartnerProfile));
+				mainPanel.setForm(new PropertyForm(null, false, true, currentPartnerProfile));
 			}
 		});
 		root.add(newButton);

@@ -42,7 +42,7 @@ public class MyOverView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (myProjectsSsm.getSelectedObject() != null) {
 					Project selectedProject = myProjectsSsm.getSelectedObject();
-					mainPanel.setForm(new ProjectForm(selectedProject, false, true, null, null, null));
+					mainPanel.setForm(new ProjectForm(selectedProject, false, true, null));
 					myProjectsSsm.clear();
 				}
 			}
@@ -109,7 +109,7 @@ public class MyOverView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (myCallsSsm.getSelectedObject() != null) {
 					Call selectedCall = myCallsSsm.getSelectedObject();
-					mainPanel.setForm(new CallForm(selectedCall, false, true, null, null));
+					mainPanel.setForm(new CallForm(selectedCall, false, true));
 					myCallsSsm.clear();
 				}
 			}
@@ -170,7 +170,7 @@ public class MyOverView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (myApplicationsSsm.getSelectedObject() != null) {
 					Application selectedApplication = myApplicationsSsm.getSelectedObject();
-					mainPanel.setForm(new ApplicationForm(selectedApplication, false, true, null, null, null));
+					mainPanel.setForm(new ApplicationForm(selectedApplication, false, true, null));
 					myApplicationsSsm.clear();
 				}
 			}
@@ -212,7 +212,7 @@ public class MyOverView extends View {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (applicationsToMeSsm.getSelectedObject() != null) {
 					Application selectedApplication = applicationsToMeSsm.getSelectedObject();
-					mainPanel.setForm(new RateApplicationForm(null, false, true, null, null, selectedApplication));
+					mainPanel.setForm(new RateApplicationForm(null, false, true, selectedApplication));
 					applicationsToMeSsm.clear();
 				}
 			}

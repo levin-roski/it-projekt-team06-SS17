@@ -14,7 +14,6 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Marketplace;
@@ -31,16 +30,7 @@ public class MarketplaceView extends View {
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.setWidth("100%");
 		root.add(createHeadline("Marktplatz-Details", true));
-		root.add(new MarketplaceForm(currentMarketplace, false, false, null, new Callback() {
-			@Override
-			public void run() {
-				mainPanel.setView(new MarketplaceOverView());
-			}
-
-			@Override
-			public <T> void runOnePar(T parameter) {
-			}
-		}));
+		root.add(new MarketplaceForm(currentMarketplace, false, false));
 
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
@@ -106,7 +96,7 @@ public class MarketplaceView extends View {
 		final Button newButton = new Button("Projekt hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				mainPanel.setForm(new ProjectForm(null, false, true, null, null, currentMarketplace));
+				mainPanel.setForm(new ProjectForm(null, false, true, currentMarketplace));
 			}
 		});
 		root.add(newButton);

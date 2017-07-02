@@ -31,7 +31,7 @@ public class CallView extends View {
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.setWidth("100%");
 		root.add(createHeadline("Ausschreibungs-Details", true));
-		root.add(new CallForm(currentCall, false, false, null, null));
+		root.add(new CallForm(currentCall, false, false));
 
 		worketplaceAdministration.getPartnerProfileFor(currentCall, new AsyncCallback<PartnerProfile>() {
 			@Override
@@ -67,8 +67,7 @@ public class CallView extends View {
 						public void onSelectionChange(SelectionChangeEvent event) {
 							if (propertySsm.getSelectedObject() != null) {
 								Property selectedProperty = propertySsm.getSelectedObject();
-								mainPanel.setForm(new PropertyForm(selectedProperty, false, true, null, null,
-										currentPartnerProfile));
+								mainPanel.setForm(new PropertyForm(selectedProperty, false, true, currentPartnerProfile));
 								propertySsm.clear();
 							}
 						}
@@ -102,7 +101,7 @@ public class CallView extends View {
 					final Button addButton = new Button("Eigenschaft hinzufügen");
 					addButton.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {
-							mainPanel.setForm(new PropertyForm(null, false, true, null, null, currentPartnerProfile));
+							mainPanel.setForm(new PropertyForm(null, false, true, currentPartnerProfile));
 						}
 					});
 					root.add(addButton);
@@ -112,7 +111,7 @@ public class CallView extends View {
 					final Button secondButton = new Button("Bewerben");
 					secondButton.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {
-							mainPanel.setForm(new ApplicationForm(null, false, true, null, null, currentCall));
+							mainPanel.setForm(new ApplicationForm(null, false, true, currentCall));
 						}
 					});
 					root.add(secondButton);

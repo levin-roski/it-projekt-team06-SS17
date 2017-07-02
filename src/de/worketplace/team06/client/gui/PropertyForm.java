@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.PartnerProfile;
 import de.worketplace.team06.shared.bo.Property;
@@ -69,7 +68,7 @@ public class PropertyForm extends Form {
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
 	public PropertyForm(Property pToChangeProperty, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback, final PartnerProfile addToPartnerProfile) {
+			final PartnerProfile addToPartnerProfile) {
 		this(pToChangeProperty, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Eigenschaft bearbeiten", true);
@@ -114,12 +113,8 @@ public class PropertyForm extends Form {
 							}
 
 							public void onSuccess(Void result) {
+								renderFormSuccess();
 								Window.alert("Die Eigenschaft wurde erfolgreich geändert");
-								if (editCallback != null) {
-									editCallback.run();
-								} else {
-									renderFormSuccess();
-								}
 							}
 						});
 					}
@@ -138,12 +133,8 @@ public class PropertyForm extends Form {
 							}
 
 							public void onSuccess(Void result) {
+								renderFormSuccess();
 								Window.alert("Die Eigenschaft wurde erfolgreich gelöscht");
-								if (deleteCallback != null) {
-									deleteCallback.run();
-								} else {
-									renderFormSuccess();
-								}
 							}
 						});
 					}
@@ -163,8 +154,8 @@ public class PropertyForm extends Form {
 					} else if (valueInput.getText().length() == 0) {
 						Window.alert("Bitte vergeben Sie einen Wert");
 					} else {
-						worketplaceAdministration.createProperty(addToPartnerProfile, nameInput.getText(), valueInput.getText(),
-								new AsyncCallback<Property>() {
+						worketplaceAdministration.createProperty(addToPartnerProfile, nameInput.getText(),
+								valueInput.getText(), new AsyncCallback<Property>() {
 									public void onFailure(Throwable caught) {
 										Window.alert(
 												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");

@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Application;
@@ -66,8 +65,7 @@ public class ApplicationForm extends Form {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public ApplicationForm(Application pToChangeApplication, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback, final Call currentCall) {
+	public ApplicationForm(Application pToChangeApplication, final boolean pHeadline, final boolean pClosingHeadline, final Call currentCall) {
 		this(pToChangeApplication, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Bewerbung bearbeiten", true);
@@ -107,12 +105,8 @@ public class ApplicationForm extends Form {
 							}
 
 							public void onSuccess(Void result) {
+								renderFormSuccess();
 								Window.alert("Die Bewerbung wurde erfolgreich geändert");
-								if (editCallback != null) {
-									editCallback.run();
-								} else {
-									renderFormSuccess();
-								}
 							}
 						});
 					}
@@ -131,12 +125,8 @@ public class ApplicationForm extends Form {
 							}
 
 							public void onSuccess(Void result) {
+								renderFormSuccess();
 								Window.alert("Die Bewerbung wurde erfolgreich gelöscht");
-								if (deleteCallback != null) {
-									deleteCallback.run();
-								} else {
-									renderFormSuccess();
-								}
 							}
 						});
 					}

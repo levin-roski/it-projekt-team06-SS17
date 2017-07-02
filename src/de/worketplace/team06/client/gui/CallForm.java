@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -16,7 +17,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
@@ -93,8 +93,7 @@ public class CallForm extends Form {
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
 
-	public CallForm(final Call pToChangeCall, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback) {
+	public CallForm(final Call pToChangeCall, final boolean pHeadline, final boolean pClosingHeadline) {
 		this(pToChangeCall, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Ausschreibung bearbeiten", true);
@@ -165,11 +164,7 @@ public class CallForm extends Form {
 															public void onSuccess(Call result) {
 																Window.alert(
 																		"Die Ausschreibung wurde erfolgreich erstellt");
-																if (editCallback != null) {
-																	editCallback.run();
-																} else {
-																	renderFormSuccess();
-																}
+																renderFormSuccess();
 															}
 														});
 											}
@@ -259,11 +254,7 @@ public class CallForm extends Form {
 
 												public void onSuccess(Void result) {
 													Window.alert("Die Ausschreibung wurde erfolgreich geändert");
-													if (editCallback != null) {
-														editCallback.run();
-													} else {
-														renderFormSuccess();
-													}
+													renderFormSuccess();
 												}
 											});
 										}
@@ -290,11 +281,8 @@ public class CallForm extends Form {
 
 												public void onSuccess(Void result) {
 													Window.alert("Die Ausschreibung wurde erfolgreich gelöscht");
-													if (deleteCallback != null) {
-														deleteCallback.run();
-													} else {
-														renderFormSuccess();
-													}
+													History.newItem("Projekt-Details" + ClientsideSettings.getCurrentProjectId() + "-"
+															+ ClientsideSettings.getCurrentMarketplaceId());
 												}
 											});
 										}
