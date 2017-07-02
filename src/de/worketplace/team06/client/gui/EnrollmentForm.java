@@ -2,6 +2,7 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -76,7 +77,9 @@ public class EnrollmentForm extends Form {
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Beteiligung bearbeiten", true);
 		}
-
+		
+		startDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
+		endDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
 		/*
 		 * Grid mit 6 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
