@@ -164,9 +164,9 @@ public class ProjectForm extends Form {
 																	}
 
 																	public void onSuccess(Void result) {
-																		renderFormSuccess();
 																		Window.alert(
 																				"Das Projekt wurde erfolgreich geändert");
+																		renderFormSuccess();
 																	}
 																});
 													}

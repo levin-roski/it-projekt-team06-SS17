@@ -1,5 +1,7 @@
 package de.worketplace.team06.client.gui;
 
+import java.util.Vector;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
@@ -15,6 +17,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Marketplace;
+import de.worketplace.team06.shared.bo.Project;
 
 /**
  * Formular für die Darstellung, Bearbeitung und Löschung eines selektierten
@@ -113,8 +116,8 @@ public class MarketplaceForm extends Form {
 							}
 
 							public void onSuccess(Void result) {
-								renderFormSuccess();
 								Window.alert("Der Marktplatz wurde erfolgreich geändert");
+								renderFormSuccess();
 							}
 						});
 					}
@@ -125,19 +128,31 @@ public class MarketplaceForm extends Form {
 			final Button deleteButton = new Button("Marktplatz entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					final boolean confirmDelete = Window.confirm("Möchten Sie den Marktplatz wirklich löschen?");
-					if (confirmDelete) {
-						worketplaceAdministration.deleteMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+					worketplaceAdministration.getProjectsFor(toChangeMarketplace, new AsyncCallback<Vector<Project>>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
 							}
 
-							public void onSuccess(Void result) {
-								Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
-								History.replaceItem("Marktplaetze");
+							public void onSuccess(Vector<Project> result) {
+								if (result.size() > 0) {
+									Window.alert("Dieser Marktplatz enthält Projekte, bitte löschen Sie erst alle enthaltenen Projekte.");
+								} else {
+									final boolean confirmDelete = Window.confirm("Möchten Sie den Marktplatz wirklich löschen?");
+									if (confirmDelete) {
+										worketplaceAdministration.deleteMarketplace(toChangeMarketplace, new AsyncCallback<Void>() {
+											public void onFailure(Throwable caught) {
+												Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+											}
+
+											public void onSuccess(Void result) {
+												Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
+												History.replaceItem("Marktplaetze");
+											}
+										});
+									}
+								}
 							}
 						});
-					}
 				}
 			});
 			panel.add(deleteButton);
