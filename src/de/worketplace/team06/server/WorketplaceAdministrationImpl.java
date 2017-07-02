@@ -1467,7 +1467,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return null;
 	}
 	
-	
 	/**
 	 * Auslesen einer Bewertung für eine Bewerbung
 	 * @param application
@@ -1626,6 +1625,30 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		return this.teamMapper.findAll();
 	}
 	
+	/*
+	 * ---------------------------
+	 * -- Permissions --
+	 * ---------------------------
+	 */
+	
+	/**
+	 * Abfragen ob die OrgaUnit sich bereits auf die Ausschreibung beworben hat. 
+	 * @param Call call
+	 * @param OrgaUnit ou
+	 * @return Boolean true/false
+	 * 
+	 */
+	@Override
+	public boolean OrgaUnitHasAlreadyAppliedFor(Call call, OrgaUnit ou){
+		Vector<Application> ouapplications = this.getApplicationsFor(ou);
+		for (Application a : ouapplications){
+			if (call.getID() == a.getCallID()){
+				return true;
+			}
+		}
+		return false;
+		
+	}
 
 	/*
 	 * ***************************************************************************
@@ -1639,6 +1662,8 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * ---------------------------
 	 */
 		
+	
+	
 	private User getUser() {
 	    UserService userService = UserServiceFactory.getUserService();
 	    return userService.getCurrentUser();
