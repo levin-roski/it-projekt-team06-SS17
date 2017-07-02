@@ -5,16 +5,20 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
+import de.worketplace.team06.shared.bo.Enrollment;
+import de.worketplace.team06.shared.bo.Rating;
 
 /**
  * Formular für die Darstellung, Bearbeitung und Löschung einer selektierten
@@ -26,8 +30,13 @@ import de.worketplace.team06.shared.bo.Call;
 public class ApplicationForm extends Form {
 	private Label textLabel = new Label("Ihr Bewerbungstext");
 	private TextArea textInput = new TextArea();
+	private Label ratingLabel = new Label();
+	private DoubleBox ratingInput = new DoubleBox();
+	private Label ratingTextLabel = new Label();
+	private TextBox ratingTextInput = new TextBox();
 	private boolean shouldUpdate = false;
 	private Application toChangeApplication;
+	private HorizontalPanel ratingHeadline;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
 
@@ -71,18 +80,32 @@ public class ApplicationForm extends Form {
 			changeHeadline = createHeadlineWithCloseButton("Bewerbung bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Auf Ausschreibung bewerben", true);
 		}
+		
+		ratingHeadline = createHeadline("Bewertung der Bewerbung");
 
 		/*
 		 * Grid mit 4 Zeilen und 1 Spalte für das Formular bereitstellen. Danach
 		 * nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
-		Grid form = new Grid(4, 1);
+		Grid form = new Grid(3, 1);
 		form.setWidth("100%");
 		form.setWidget(0, 0, textLabel);
 		form.setWidget(1, 0, textInput);
 		textInput.setSize("100%", "150px");
+		
+		Grid ratingform = new Grid(3, 2);
+		ratingform.setWidget(0, 0, ratingHeadline);
+		ratingform.setWidget(1, 0, ratingLabel);
+		ratingform.setWidget(1, 1, ratingInput);
+		ratingform.setWidget(2, 0, ratingTextLabel);
+		ratingform.setWidget(2, 1, ratingTextInput);
+		
+		
+		
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
+		
+		
 		/*
 		 * Falls eine selektierte Bewerbung übergeben wurde und jetzt
 		 * dargestellt werden soll
@@ -134,6 +157,11 @@ public class ApplicationForm extends Form {
 			});
 			panel.add(deleteButton);
 			form.setWidget(2, 0, panel);
+			ratingHeadline.setVisible(false);
+			ratingLabel.setVisible(false);
+			ratingInput.setVisible(false);
+			ratingTextLabel.setVisible(false);
+			ratingTextInput.setVisible(false);
 		} else {
 			if (addHeadline != null) {
 				root.add(addHeadline);
@@ -161,7 +189,35 @@ public class ApplicationForm extends Form {
 				}
 			});
 			form.setWidget(2, 0, saveButton);
+			
 		}
 		root.add(form);
+		root.add(ratingHeadline);
+		root.add(ratingform);
+		
+		
+		worketplaceAdministration.getRatingFor(pToChangeApplication,
+				new AsyncCallback<Rating>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Rating result) {
+						if(result != null){
+						ratingLabel.setVisible(true);
+						ratingInput.setVisible(true);
+						ratingTextLabel.setVisible(true);
+						ratingTextInput.setVisible(true);
+						ratingLabel.setText("Bewertung");
+						ratingInput.setValue(Double.valueOf(String.valueOf(result.getRating())));
+						ratingInput.setEnabled(false);
+						ratingTextLabel.setText("Bewertungstext");
+						ratingTextInput.setValue(result.getRatingStatement());
+						ratingTextInput.setEnabled(false);
+						ratingHeadline.setVisible(true);
+						}
+					}
+				});
 	}
 }

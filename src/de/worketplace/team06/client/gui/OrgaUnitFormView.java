@@ -45,10 +45,8 @@ public class OrgaUnitFormView extends View {
 	private OrgaUnit toChangeOrgaUnit;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
-	/*
-	 * Grid mit 9 Zeilen und 2 Spalten für das Formular bereitstellen.
-	 */
-	protected final Grid form = new Grid(9, 2);
+	protected Grid formStatic;
+	protected Grid formDynamic = new Grid(1, 2);
 
 	/**
 	 * Im Konstruktor kann eine selektierter Marktplatz übergeben werden, der
@@ -75,11 +73,6 @@ public class OrgaUnitFormView extends View {
 		typeInput.addItem("Team");
 		typeInput.addItem("Organisation");
 
-		form.setWidth("100%");
-		form.setWidget(0, 0, typeLabel);
-		form.setWidget(0, 1, typeInput);
-		form.setWidget(1, 0, descriptionLabel);
-		form.setWidget(1, 1, descriptionInput);
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
 		this.add(root);
@@ -89,6 +82,15 @@ public class OrgaUnitFormView extends View {
 		 * werden soll
 		 */
 		if (shouldUpdate) {
+			/*
+			 * Grid mit 9 Zeilen und 2 Spalten für das Formular bereitstellen.
+			 */
+			formStatic = new Grid(9, 2);
+			formStatic.setWidget(0, 0, typeLabel);
+			formStatic.setWidget(0, 1, typeInput);
+			formStatic.setWidget(1, 0, descriptionLabel);
+			formStatic.setWidget(1, 1, descriptionInput);
+
 			History.newItem("Mein-Nutzer");
 			if (changeHeadline != null) {
 				root.add(changeHeadline);
@@ -118,34 +120,34 @@ public class OrgaUnitFormView extends View {
 							@Override
 							public void onSuccess(final Person toChangePerson) {
 								Label firstnameLabel = new Label("Vorname");
-								form.setWidget(2, 0, firstnameLabel);
+								formStatic.setWidget(2, 0, firstnameLabel);
 								final TextBox firstnameInput = new TextBox();
 								firstnameInput.setText(toChangePerson.getFirstName());
-								form.setWidget(2, 1, firstnameInput);
+								formStatic.setWidget(2, 1, firstnameInput);
 
 								Label lastnameLabel = new Label("Nachname");
-								form.setWidget(3, 0, lastnameLabel);
+								formStatic.setWidget(3, 0, lastnameLabel);
 								final TextBox lastnameInput = new TextBox();
 								lastnameInput.setText(toChangePerson.getLastName());
-								form.setWidget(3, 1, lastnameInput);
+								formStatic.setWidget(3, 1, lastnameInput);
 
 								Label streetLabel = new Label("Straße");
-								form.setWidget(4, 0, streetLabel);
+								formStatic.setWidget(4, 0, streetLabel);
 								final TextBox streetInput = new TextBox();
 								streetInput.setText(toChangePerson.getStreet());
-								form.setWidget(4, 1, streetInput);
+								formStatic.setWidget(4, 1, streetInput);
 
 								Label zipcodeLabel = new Label("Postleitzahl");
-								form.setWidget(5, 0, zipcodeLabel);
+								formStatic.setWidget(5, 0, zipcodeLabel);
 								final TextBox zipcodeInput = new TextBox();
 								zipcodeInput.setText(toChangePerson.getZipcode().toString());
-								form.setWidget(5, 1, zipcodeInput);
+								formStatic.setWidget(5, 1, zipcodeInput);
 
 								Label cityLabel = new Label("Stadt");
-								form.setWidget(6, 0, cityLabel);
+								formStatic.setWidget(6, 0, cityLabel);
 								final TextBox cityInput = new TextBox();
 								cityInput.setText(toChangePerson.getCity());
-								form.setWidget(6, 1, cityInput);
+								formStatic.setWidget(6, 1, cityInput);
 
 								deleteButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
@@ -206,8 +208,8 @@ public class OrgaUnitFormView extends View {
 										}
 									}
 								});
-								form.setWidget(7, 1, saveButton);
-								form.setWidget(8, 1, deleteButton);
+								formStatic.setWidget(7, 1, saveButton);
+								formStatic.setWidget(8, 1, deleteButton);
 							}
 						});
 				break;
@@ -221,16 +223,16 @@ public class OrgaUnitFormView extends View {
 					@Override
 					public void onSuccess(final Team toChangeTeam) {
 						Label nameLabel = new Label("Team-Name");
-						form.setWidget(2, 0, nameLabel);
+						formStatic.setWidget(2, 0, nameLabel);
 						final TextBox nameInput = new TextBox();
 						nameInput.setText(toChangeTeam.getName());
-						form.setWidget(2, 1, nameInput);
+						formStatic.setWidget(2, 1, nameInput);
 
 						Label countLabel = new Label("Anzahl Mitglieder");
-						form.setWidget(3, 0, countLabel);
+						formStatic.setWidget(3, 0, countLabel);
 						final TextBox countInput = new TextBox();
 						countInput.setText(toChangeTeam.getMembercount().toString());
-						form.setWidget(3, 1, countInput);
+						formStatic.setWidget(3, 1, countInput);
 
 						deleteButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
@@ -284,8 +286,8 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						form.setWidget(4, 1, saveButton);
-						form.setWidget(5, 1, deleteButton);
+						formStatic.setWidget(4, 1, saveButton);
+						formStatic.setWidget(5, 1, deleteButton);
 					}
 				});
 				break;
@@ -300,28 +302,28 @@ public class OrgaUnitFormView extends View {
 							@Override
 							public void onSuccess(final Organisation toChangeOrganisation) {
 								Label nameLabel = new Label("Vorname");
-								form.setWidget(2, 0, nameLabel);
+								formStatic.setWidget(2, 0, nameLabel);
 								final TextBox nameInput = new TextBox();
 								nameInput.setText(toChangeOrganisation.getName());
-								form.setWidget(2, 1, nameInput);
+								formStatic.setWidget(2, 1, nameInput);
 
 								Label streetLabel = new Label("Nachname");
-								form.setWidget(3, 0, streetLabel);
+								formStatic.setWidget(3, 0, streetLabel);
 								final TextBox streetInput = new TextBox();
 								streetInput.setText(toChangeOrganisation.getStreet());
-								form.setWidget(3, 1, streetInput);
+								formStatic.setWidget(3, 1, streetInput);
 
 								Label zipcodeLabel = new Label("Postleitzahl");
-								form.setWidget(4, 0, zipcodeLabel);
+								formStatic.setWidget(4, 0, zipcodeLabel);
 								final TextBox zipcodeInput = new TextBox();
 								zipcodeInput.setText(toChangeOrganisation.getZipcode().toString());
-								form.setWidget(4, 1, zipcodeInput);
+								formStatic.setWidget(4, 1, zipcodeInput);
 
 								Label cityLabel = new Label("Stadt");
-								form.setWidget(5, 0, cityLabel);
+								formStatic.setWidget(5, 0, cityLabel);
 								final TextBox cityInput = new TextBox();
 								cityInput.setText(toChangeOrganisation.getCity());
-								form.setWidget(5, 1, cityInput);
+								formStatic.setWidget(5, 1, cityInput);
 
 								deleteButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
@@ -382,13 +384,13 @@ public class OrgaUnitFormView extends View {
 										}
 									}
 								});
-								form.setWidget(6, 1, saveButton);
-								form.setWidget(7, 1, deleteButton);
+								formStatic.setWidget(6, 1, saveButton);
+								formStatic.setWidget(7, 1, deleteButton);
 							}
 						});
 				break;
 			}
-
+			root.add(formStatic);
 		} else {
 			RootPanel.get("navigation").add(new HTML("<img src=\"/logo.png\" class=\"registration-logo\">"));
 			if (addHeadline != null) {
@@ -397,19 +399,22 @@ public class OrgaUnitFormView extends View {
 
 			typeInput.addChangeHandler(new ChangeHandler() {
 				public void onChange(ChangeEvent event) {
-					form.clearCell(2, 0);
-					form.clearCell(2, 1);
-					form.clearCell(3, 0);
-					form.clearCell(3, 1);
-					form.clearCell(4, 0);
-					form.clearCell(4, 1);
-					form.clearCell(5, 0);
-					form.clearCell(5, 1);
-					form.clearCell(6, 0);
-					form.clearCell(6, 1);
-					form.clearCell(7, 0);
-					form.clearCell(7, 1);
-
+					formDynamic.clear(true);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.insertRow(0);
+					formDynamic.setWidget(0, 0, typeLabel);
+					formDynamic.setWidget(0, 1, typeInput);
+					formDynamic.setWidget(1, 0, descriptionLabel);
+					formDynamic.setWidget(1, 1, descriptionInput);
 					final Button saveButton = new Button("Nutzer anlegen");
 					final Button logoutButton = new Button("Logout");
 					logoutButton.addClickHandler(new ClickHandler() {
@@ -426,29 +431,29 @@ public class OrgaUnitFormView extends View {
 					switch (type) {
 					case "Person":
 						Label firstnameLabel = new Label("Vorname");
-						form.setWidget(2, 0, firstnameLabel);
+						formDynamic.setWidget(2, 0, firstnameLabel);
 						final TextBox firstnameInput = new TextBox();
-						form.setWidget(2, 1, firstnameInput);
+						formDynamic.setWidget(2, 1, firstnameInput);
 
 						Label lastnameLabel = new Label("Nachname");
-						form.setWidget(3, 0, lastnameLabel);
+						formDynamic.setWidget(3, 0, lastnameLabel);
 						final TextBox lastnameInput = new TextBox();
-						form.setWidget(3, 1, lastnameInput);
+						formDynamic.setWidget(3, 1, lastnameInput);
 
 						Label streetLabel = new Label("Straße");
-						form.setWidget(4, 0, streetLabel);
+						formDynamic.setWidget(4, 0, streetLabel);
 						final TextBox streetInput = new TextBox();
-						form.setWidget(4, 1, streetInput);
+						formDynamic.setWidget(4, 1, streetInput);
 
 						Label zipcodeLabel = new Label("Postleitzahl");
-						form.setWidget(5, 0, zipcodeLabel);
+						formDynamic.setWidget(5, 0, zipcodeLabel);
 						final TextBox zipcodeInput = new TextBox();
-						form.setWidget(5, 1, zipcodeInput);
+						formDynamic.setWidget(5, 1, zipcodeInput);
 
 						Label cityLabel = new Label("Stadt");
-						form.setWidget(6, 0, cityLabel);
+						formDynamic.setWidget(6, 0, cityLabel);
 						final TextBox cityInput = new TextBox();
-						form.setWidget(6, 1, cityInput);
+						formDynamic.setWidget(6, 1, cityInput);
 
 						saveButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
@@ -483,20 +488,20 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						form.setWidget(7, 1, saveButton);
-						form.setWidget(8, 1, logoutButton);
+						formDynamic.setWidget(7, 1, saveButton);
+						formDynamic.setWidget(8, 1, logoutButton);
 						break;
 
 					case "Team":
 						Label nameLabel = new Label("Team-Name");
-						form.setWidget(2, 0, nameLabel);
+						formDynamic.setWidget(2, 0, nameLabel);
 						final TextBox nameInput = new TextBox();
-						form.setWidget(2, 1, nameInput);
+						formDynamic.setWidget(2, 1, nameInput);
 
 						Label countLabel = new Label("Anzahl Mitglieder");
-						form.setWidget(3, 0, countLabel);
+						formDynamic.setWidget(3, 0, countLabel);
 						final TextBox countInput = new TextBox();
-						form.setWidget(3, 1, countInput);
+						formDynamic.setWidget(3, 1, countInput);
 
 						saveButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
@@ -527,30 +532,30 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						form.setWidget(4, 1, saveButton);
-						form.setWidget(5, 1, logoutButton);
+						formDynamic.setWidget(4, 1, saveButton);
+						formDynamic.setWidget(5, 1, logoutButton);
 						break;
 
 					case "Organisation":
 						Label nameLabel1 = new Label("Vorname");
-						form.setWidget(2, 0, nameLabel1);
+						formDynamic.setWidget(2, 0, nameLabel1);
 						final TextBox nameInput1 = new TextBox();
-						form.setWidget(2, 1, nameInput1);
+						formDynamic.setWidget(2, 1, nameInput1);
 
 						Label streetLabel1 = new Label("Nachname");
-						form.setWidget(3, 0, streetLabel1);
+						formDynamic.setWidget(3, 0, streetLabel1);
 						final TextBox streetInput1 = new TextBox();
-						form.setWidget(3, 1, streetInput1);
+						formDynamic.setWidget(3, 1, streetInput1);
 
 						Label zipcodeLabel1 = new Label("Postleitzahl");
-						form.setWidget(4, 0, zipcodeLabel1);
+						formDynamic.setWidget(4, 0, zipcodeLabel1);
 						final TextBox zipcodeInput1 = new TextBox();
-						form.setWidget(4, 1, zipcodeInput1);
+						formDynamic.setWidget(4, 1, zipcodeInput1);
 
 						Label cityLabel1 = new Label("Stadt");
-						form.setWidget(5, 0, cityLabel1);
+						formDynamic.setWidget(5, 0, cityLabel1);
 						final TextBox cityInput1 = new TextBox();
-						form.setWidget(5, 1, cityInput1);
+						formDynamic.setWidget(5, 1, cityInput1);
 
 						saveButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
@@ -584,15 +589,15 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						form.setWidget(6, 1, saveButton);
-						form.setWidget(7, 1, logoutButton);
+						formDynamic.setWidget(6, 1, saveButton);
+						formDynamic.setWidget(7, 1, logoutButton);
 						break;
 					}
 				}
 			});
 			DomEvent.fireNativeEvent(Document.get().createChangeEvent(), typeInput);
 		}
-		root.add(form);
+		root.add(formDynamic);
 	}
 
 	@Override

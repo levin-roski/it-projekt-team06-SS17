@@ -37,6 +37,14 @@ public abstract class Form extends Page {
 		hp.add(sh);
 		return hp;
 	}
+	
+	protected HorizontalPanel createHeadline(final String text) {
+		HorizontalPanel hp = new HorizontalPanel();
+		HTML sh = new HTML();
+			sh.setHTML("<h1>"+text+"</h1>");
+		hp.add(sh);
+		return hp;
+	}
 
 	protected void renderFormSuccess() {
 		ClientsideSettings.getCurrentView().loadData();
