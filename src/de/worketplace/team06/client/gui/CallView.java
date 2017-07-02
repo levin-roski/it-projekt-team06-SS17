@@ -85,7 +85,7 @@ public class CallView extends View {
 						return object.getName();
 					}
 				};
-				propertyTable.addColumn(propertyTitleColumn, "Name");
+				propertyTable.addColumn(propertyTitleColumn, "Eigenschaften");
 
 				TextColumn<Property> propertyValueColumn = new TextColumn<Property>() {
 					@Override
@@ -93,7 +93,7 @@ public class CallView extends View {
 						return object.getValue();
 					}
 				};
-				propertyTable.addColumn(propertyValueColumn, "Eigenschaften-Name");
+				propertyTable.addColumn(propertyValueColumn, "Wert");
 
 				root.add(createSecondHeadline("Partnerprofil dieser Ausschreibung"));
 				root.add(propertyTable);
