@@ -178,9 +178,10 @@ public class EnrollmentForm extends Form {
 
 					@Override
 					public void onSuccess(Rating result) {
-						ratingLabel.setText("Bewertung"+result.getRating());
+						ratingLabel.setText("Bewertung");
 						String temp = String.valueOf(result.getRating());
 						ratingInput.setValue(Double.valueOf(temp));
+						ratingInput.setEnabled(false);
 						
 					}
 				});
