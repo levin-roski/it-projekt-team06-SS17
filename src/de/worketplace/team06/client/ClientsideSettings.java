@@ -3,6 +3,8 @@ package de.worketplace.team06.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -148,7 +150,7 @@ public class ClientsideSettings {
 				@Override
 				public void onClick(ClickEvent event) {
 					removeAboveCurrentSelection(1);
-					mainPanel.setView(BreadcrumbFirstLevel);
+					History.newItem(BreadcrumbFirstLevel.returnTokenName());
 				}
 			});
 			breadcrumbs.add(h1);
@@ -160,7 +162,7 @@ public class ClientsideSettings {
 					@Override
 					public void onClick(ClickEvent event) {
 						removeAboveCurrentSelection(2);
-						mainPanel.setView(BreadcrumbSecondLevel);
+						History.newItem(BreadcrumbSecondLevel.returnTokenName());
 					}
 				});
 				breadcrumbs.add(h2);
@@ -172,7 +174,7 @@ public class ClientsideSettings {
 						@Override
 						public void onClick(ClickEvent event) {
 							removeAboveCurrentSelection(3);
-							mainPanel.setView(BreadcrumbThirdLevel);
+							History.newItem(BreadcrumbThirdLevel.returnTokenName());
 						}
 					});
 					breadcrumbs.add(h3);
@@ -184,7 +186,7 @@ public class ClientsideSettings {
 							@Override
 							public void onClick(ClickEvent event) {
 								removeAboveCurrentSelection(4);
-								mainPanel.setView(BreadcrumbFourthLevel);
+								History.newItem(BreadcrumbFourthLevel.returnTokenName());
 							}
 						});
 						breadcrumbs.add(h4);
