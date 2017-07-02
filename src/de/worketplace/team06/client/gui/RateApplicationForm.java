@@ -174,7 +174,7 @@ public class RateApplicationForm extends Form {
 									@Override
 									public void onSuccess(Enrollment result) {
 										renderFormSuccess();
-										Window.alert("Die Bewerbung wurde Bewertet");
+										Window.alert("Die Bewerbung wurde bewertet");
 										if (result instanceof Enrollment) {
 											mainPanel.setForm(new EnrollmentForm(result, false, true));
 										}
