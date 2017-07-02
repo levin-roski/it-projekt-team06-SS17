@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -38,11 +39,15 @@ public class MyOverView extends View {
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
 		myProjectsSsm.addSelectionChangeHandler(new Handler() {
+			/**
+			 * @param event
+			 */
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (myProjectsSsm.getSelectedObject() != null) {
 					Project selectedProject = myProjectsSsm.getSelectedObject();
-					mainPanel.setForm(new ProjectForm(selectedProject, false, true, null));
+					History.newItem(
+							"Projekt-Details" + selectedProject.getID() + "-" + selectedProject.getMarketplaceID());
 					myProjectsSsm.clear();
 				}
 			}
@@ -108,9 +113,18 @@ public class MyOverView extends View {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (myCallsSsm.getSelectedObject() != null) {
-					Call selectedCall = myCallsSsm.getSelectedObject();
-					mainPanel.setForm(new CallForm(selectedCall, false, true));
-					myCallsSsm.clear();
+					final Call selectedCall = myCallsSsm.getSelectedObject();
+					worketplaceAdministration.getProjectByID(selectedCall.getProjectID(), new AsyncCallback<Project>() {
+								@Override
+								public void onFailure(Throwable caught) {
+								}
+
+								@Override
+								public void onSuccess(Project results) {
+									myCallsSsm.clear();
+									History.newItem("Ausschreibungs-Details"+selectedCall.getID()+"-"+results.getID()+"-"+results.getMarketplaceID());
+								}
+							});
 				}
 			}
 		});
@@ -178,13 +192,13 @@ public class MyOverView extends View {
 
 		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
 		// Daten aus der Datenbank
-		TextColumn<Application> projectsAndRoleColumn = new TextColumn<Application>() {
+		TextColumn<Application> bewerbungstextColumn = new TextColumn<Application>() {
 			@Override
 			public String getValue(Application object) {
 				return object.getText();
 			}
 		};
-		myApplicationsTable.addColumn(projectsAndRoleColumn, "Bewerbungstext");
+		myApplicationsTable.addColumn(bewerbungstextColumn, "Bewerbungstext");
 
 		// Muss eigentlich Int (bzw. Row counter) wiedergeben
 		TextColumn<Application> applicationsCounterColumn = new TextColumn<Application>() {
@@ -333,7 +347,7 @@ public class MyOverView extends View {
 			}
 		};
 		enrollmentsToMeTable.addColumn(enrollmentToMeDescriptionColumn, "Tätigkeit");
-		
+
 		TextColumn<Enrollment> enrollmentToMeStartColumn = new TextColumn<Enrollment>() {
 			@Override
 			public String getValue(Enrollment object) {
