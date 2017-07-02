@@ -2,6 +2,7 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -28,9 +29,15 @@ public class RateApplicationForm extends Form {
 	private Label descriptionLabel = new Label("Bewertungstext");
 	private TextBox descriptionInput = new TextBox();
 	private boolean shouldUpdate = false;
+	private boolean rpcFinished = false;
 	private Rating toChangeRating;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
+	/*
+	 * Grid mit 3 Zeilen und 2 Spalten für das Formular bereitstellen. Danach
+	 * nötige Panels einfügen und diesem Widget hinzufügen.
+	 */
+	private final Grid form = new Grid(3, 2);
 
 	/**
 	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die dann
@@ -45,7 +52,7 @@ public class RateApplicationForm extends Form {
 	public RateApplicationForm(Rating pToChangeRating, final boolean pHeadline) {
 		if (pToChangeRating != null) {
 			shouldUpdate = true;
-			this.toChangeRating = pToChangeRating;
+			toChangeRating = pToChangeRating;
 		}
 		if (pHeadline) {
 			changeHeadline = createHeadline("Bewertung bearbeiten", true);
@@ -74,119 +81,9 @@ public class RateApplicationForm extends Form {
 			addHeadline = createHeadlineWithCloseButton("Bewertung hinzufügen", true);
 		}
 
-		/*
-		 * Grid mit 3 Zeilen und 2 Spalten für das Formular bereitstellen.
-		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
-		 */
-		Grid form = new Grid(3, 2);
 		form.setWidth("100%");
 		form.setWidget(0, 0, nameLabel);
 		form.setWidget(0, 1, ratingInput);
-		form.setWidget(1, 0, descriptionLabel);
-		form.setWidget(1, 1, descriptionInput);
-		final VerticalPanel root = new VerticalPanel();
-		this.add(root);
-		/*
-		 * Falls eine selektierte Bewerbung übergeben wurde und jetzt
-		 * dargestellt werden soll
-		 */
-		if (shouldUpdate) {
-			if (changeHeadline != null) {
-				root.add(changeHeadline);
-			}
-			int indexToFind = -1;
-			for (int i = 0; i < ratingInput.getItemCount(); i++) {
-				if (ratingInput.getItemText(i).equals(toChangeRating.getRating().toString())) {
-					indexToFind = i;
-					break;
-				}
-			}
-			ratingInput.setSelectedIndex(indexToFind);
-			descriptionInput.setText(toChangeRating.getRatingStatement());
-			final Button saveButton = new Button("Speichern");
-			saveButton.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					if (ratingInput.getSelectedValue().length() == 0) {
-						Window.alert("Bitte vergeben eine Bewertung");
-					} else if (descriptionInput.getText().length() == 0) {
-						Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
-					} else if (ratingInput.getSelectedValue() == "Bitte wählen") {
-						Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
-					} else {
-						toChangeRating.setRating(Float.parseFloat(ratingInput.getName()));
-						toChangeRating.setRatingStatement(descriptionInput.getText());
-						worketplaceAdministration.saveRating(toChangeRating, new AsyncCallback<Void>() {
-							public void onFailure(Throwable caught) {
-								Window.alert("Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
-							}
-
-							public void onSuccess(Void result) {
-								renderFormSuccess();
-								Window.alert("Die Bewertung wurde erfolgreich bewertet");
-							}
-						});
-					}
-				}
-			});
-			final VerticalPanel panel = new VerticalPanel();
-			panel.add(saveButton);
-			final Button deleteButton = new Button("Bewertung entfernen");
-			deleteButton.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					final boolean confirmDelete = Window.confirm("Möchten Sie die Bewertung wirklich löschen?");
-					if (confirmDelete) {
-						worketplaceAdministration.deleteRating(toChangeRating, new AsyncCallback<Void>() {
-							public void onFailure(Throwable caught) {
-								Window.alert("Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
-							}
-
-							public void onSuccess(Void result) {
-								renderFormSuccess();
-								Window.alert("Die Bewertung wurde erfolgreich gelöscht");
-							}
-						});
-					}
-				}
-			});
-			panel.add(deleteButton);
-			form.setWidget(2, 1, panel);
-		} else {
-			if (addHeadline != null) {
-				root.add(addHeadline);
-			}
-			final Button saveButton = new Button("Bewertung anlegen");
-			saveButton.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					if (ratingInput.getSelectedValue().length() == 0) {
-						Window.alert("Bitte vergeben Sie eine Bewertung");
-					} else if (descriptionInput.getText().length() == 0) {
-						Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
-					} else {
-						worketplaceAdministration.rateApplication(currentApplication,
-								Float.parseFloat(ratingInput.getSelectedValue()), descriptionInput.getText(),
-								new AsyncCallback<Enrollment>() {
-									@Override
-									public void onFailure(Throwable caught) {
-										Window.alert(
-												"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
-									}
-
-									@Override
-									public void onSuccess(Enrollment result) {
-										renderFormSuccess();
-										Window.alert("Die Bewerbung wurde bewertet");
-										if (result instanceof Enrollment) {
-											mainPanel.setForm(new EnrollmentForm(result, false, true));
-										}
-									}
-								});
-					}
-				}
-			});
-			form.setWidget(2, 1, saveButton);
-		}
-		root.add(form);
-
 		ratingInput.addItem("0.1");
 		ratingInput.addItem("0.2");
 		ratingInput.addItem("0.3");
@@ -198,6 +95,150 @@ public class RateApplicationForm extends Form {
 		ratingInput.addItem("0.9");
 		ratingInput.addItem("1.0");
 		ratingInput.setVisibleItemCount(1);
-		ratingInput.setFocus(true);
+		form.setWidget(1, 0, descriptionLabel);
+		form.setWidget(1, 1, descriptionInput);
+		final VerticalPanel root = new VerticalPanel();
+		this.add(root);
+
+		if (shouldUpdate == false) {
+			worketplaceAdministration.getRatingFor(currentApplication, new AsyncCallback<Rating>() {
+				public void onFailure(Throwable caught) {
+				}
+
+				public void onSuccess(Rating result) {
+					if (result instanceof Rating) {
+						toChangeRating = result;
+						shouldUpdate = true;
+					}
+					rpcFinished = true;
+				}
+			});
+		} else {
+			rpcFinished = true;
+		}
+
+		class RpcWrapper {
+			protected Timer t;
+
+			public RpcWrapper() {
+				t = new Timer() {
+					public void run() {
+						if (rpcFinished) {
+							t.cancel();
+							/*
+							 * Falls eine selektierte Bewerbung übergeben wurde
+							 * und jetzt dargestellt werden soll
+							 */
+							if (shouldUpdate) {
+								if (changeHeadline != null) {
+									root.add(changeHeadline);
+								}
+								int indexToFind = -1;
+								for (int i = 0; i < ratingInput.getItemCount(); i++) {
+									if (ratingInput.getItemText(i).equals(String.valueOf(toChangeRating.getRating()).substring(0, 3))) {
+										indexToFind = i;
+										break;
+									}
+								}
+								ratingInput.setSelectedIndex(indexToFind);
+								descriptionInput.setText(toChangeRating.getRatingStatement());
+								final Button saveButton = new Button("Speichern");
+								saveButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										if (ratingInput.getSelectedValue().length() == 0) {
+											Window.alert("Bitte vergeben eine Bewertung");
+										} else if (descriptionInput.getText().length() == 0) {
+											Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
+										} else if (ratingInput.getSelectedValue() == "Bitte wählen") {
+											Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
+										} else {
+											toChangeRating.setRating(Float.parseFloat(ratingInput.getSelectedValue()));
+											toChangeRating.setRatingStatement(descriptionInput.getText());
+											worketplaceAdministration.saveRating(toChangeRating,
+													new AsyncCallback<Void>() {
+														public void onFailure(Throwable caught) {
+															Window.alert(
+																	"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+														}
+
+														public void onSuccess(Void result) {
+															renderFormSuccess();
+															Window.alert("Die Bewertung wurde erfolgreich geändert");
+														}
+													});
+										}
+									}
+								});
+								final VerticalPanel panel = new VerticalPanel();
+								panel.add(saveButton);
+								final Button deleteButton = new Button("Bewertung entfernen");
+								deleteButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										final boolean confirmDelete = Window
+												.confirm("Möchten Sie die Bewertung wirklich löschen?");
+										if (confirmDelete) {
+											worketplaceAdministration.deleteRating(toChangeRating,
+													new AsyncCallback<Void>() {
+														public void onFailure(Throwable caught) {
+															Window.alert(
+																	"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+														}
+
+														public void onSuccess(Void result) {
+															renderFormSuccess();
+															Window.alert("Die Bewertung wurde erfolgreich gelöscht");
+														}
+													});
+										}
+									}
+								});
+								panel.add(deleteButton);
+								form.setWidget(2, 1, panel);
+							} else {
+								if (addHeadline != null) {
+									root.add(addHeadline);
+								}
+								final Button saveButton = new Button("Bewertung anlegen");
+								saveButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										if (ratingInput.getSelectedValue().length() == 0) {
+											Window.alert("Bitte vergeben Sie eine Bewertung");
+										} else if (descriptionInput.getText().length() == 0) {
+											Window.alert("Bitte beschreiben Sie Ihre Bewertung genauer");
+										} else {
+											worketplaceAdministration.rateApplication(currentApplication,
+													Float.parseFloat(ratingInput.getSelectedValue()),
+													descriptionInput.getText(), new AsyncCallback<Enrollment>() {
+														@Override
+														public void onFailure(Throwable caught) {
+															Window.alert(
+																	"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+														}
+
+														@Override
+														public void onSuccess(Enrollment result) {
+															renderFormSuccess();
+															Window.alert("Die Bewerbung wurde bewertet");
+															if (result instanceof Enrollment) {
+																mainPanel.setForm(
+																		new EnrollmentForm(result, false, true));
+															}
+														}
+													});
+										}
+									}
+								});
+								form.setWidget(2, 1, saveButton);
+							}
+							root.add(form);
+						}
+					}
+				};
+				// Schedule the timer to check if all RPC calls finished
+				// each 400 milliseconds
+				t.scheduleRepeating(400);
+			}
+		}
+		new RpcWrapper();
 	}
 }
