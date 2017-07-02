@@ -294,7 +294,7 @@ public class EnrollmentMapper {
 					e.setWorkload(null);
 					}
 					try{
-					e.setEndDate(sdf.parse(rs.getString("start_date")));
+					e.setEndDate(sdf.parse(rs.getString("end_date")));
 					}
 					catch(NullPointerException e6){
 					e.setEndDate(null);
