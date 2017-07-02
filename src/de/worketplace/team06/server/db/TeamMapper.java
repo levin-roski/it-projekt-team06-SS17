@@ -240,7 +240,7 @@ import de.worketplace.team06.shared.bo.Team;
 		    try {
 		    	Statement stmt = con.createStatement();
 		    	//Loeschen des Teams aus den Tabellen orgaunit und Team
-		    	stmt.executeUpdate("DELETE orgaunit, team FROM orgaunit INNER JOIN team ON orgaunit.id = team.id WHERE orgaunit.id= " + t.getID());
+		    	stmt.executeUpdate("DELETE team, orgaunit FROM team INNER JOIN orgaunit ON orgaunit.id = team.id WHERE orgaunit.id= " + t.getID());
 		    	
 		    }
 		    catch (SQLException e2) {
