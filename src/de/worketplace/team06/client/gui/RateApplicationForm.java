@@ -7,15 +7,20 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Application;
+import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Enrollment;
+import de.worketplace.team06.shared.bo.OrgaUnit;
+import de.worketplace.team06.shared.bo.Project;
 import de.worketplace.team06.shared.bo.Rating;
 
 /**
@@ -38,6 +43,8 @@ public class RateApplicationForm extends Form {
 	 * nötige Panels einfügen und diesem Widget hinzufügen.
 	 */
 	private final Grid form = new Grid(3, 2);
+	private Call currentCall = new Call();
+	private Project currentProject = new Project();
 
 	/**
 	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die dann
@@ -193,7 +200,7 @@ public class RateApplicationForm extends Form {
 									}
 								});
 								panel.add(deleteButton);
-								form.setWidget(2, 1, panel);
+								
 							} else {
 								if (addHeadline != null) {
 									root.add(addHeadline);
@@ -227,8 +234,77 @@ public class RateApplicationForm extends Form {
 													});
 										}
 									}
+									
+									
+									
 								});
+											
 								form.setWidget(2, 1, saveButton);
+								
+		
+//								worketplaceAdministration.getProjectByID(ClientsideSettings.getCurrentProjectId(), new AsyncCallback<Project>() {
+//									public void onFailure(Throwable caught) {
+//										Window.alert(
+//												"Es trat ein Fehler beim Auslesen des Projektes auf, bitte versuchen Sie es erneut");
+//									}
+//
+//									public void onSuccess(Project result) {
+//										currentProject = result;
+//									}
+//								});
+//								
+//								form.setWidget(3, 1, new HTML("<div class=\"applicationactions\"><h2>Aktion für Bewerbung</h2><span id=\"line\"></span></div>"));
+//								final Button acceptButton = new Button("Annehmen");
+//								acceptButton.setStyleName("acceptButton");
+//								acceptButton.addClickHandler(new ClickHandler() {
+//									public void onClick(ClickEvent event) {
+//										final boolean confirmAccept = Window
+//												.confirm("Möchten Sie die Bewertung annehmen?");
+//										if (confirmAccept) {
+//											worketplaceAdministration.createEnrollment(currentApplication, currentProject, ClientsideSettings.getCurrentUser(), null, null, null, 0, new AsyncCallback<Enrollment>() {
+//												public void onFailure(Throwable caught) {
+//													Window.alert(
+//															"Es trat ein Fehler beim Annehmen auf, bitte versuchen Sie es erneut");
+//												}
+//
+//												public void onSuccess(Enrollment result) {
+//													renderFormSuccess();
+//													Window.alert("Die Bewerbung wurde angenommen");
+//												}
+//											});
+//										}
+//									}
+//								});
+//								form.setWidget(4, 1, acceptButton);
+//								
+//								
+//								final Button declineButton = new Button("Ablehnen");
+//								declineButton.setStyleName("declineButton");
+//								declineButton.addClickHandler(new ClickHandler() {
+//									public void onClick(ClickEvent event) {
+//										final boolean confirmDecline = Window
+//												.confirm("Möchten Sie die Bewerbung wirklich ablehnen?");
+//										if (confirmDecline) {
+//											currentApplication.setStatus(2);
+//											worketplaceAdministration.saveApplication(currentApplication, new AsyncCallback<Void>() {
+//												public void onFailure(Throwable caught) {
+//													Window.alert(
+//															"Es trat ein Fehler beim Ablehnen auf, bitte versuchen Sie es erneut");
+//												}
+//
+//												public void onSuccess(Void result) {
+//													renderFormSuccess();
+//													Window.alert("Die Bewerbung wurde abgelehnt");
+//												}
+//											});
+//										}
+//									}
+//								});
+//								form.setWidget(4, 2, declineButton);
+								
+
+	
+								
 							}
 							root.add(form);
 						}

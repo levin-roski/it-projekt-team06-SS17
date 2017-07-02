@@ -181,6 +181,9 @@ public interface WorketplaceAdministrationAsync {
 
 	void orgaUnitHasAlreadyAppliedFor(Call call, OrgaUnit ou, AsyncCallback<Boolean> callback);
 
+	void createAutomaticEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, String jobdescription,
+			AsyncCallback<Enrollment> callback);
+
 
 
 }

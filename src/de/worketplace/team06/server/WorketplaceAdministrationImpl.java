@@ -525,6 +525,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return Enrollment e;
 	 */
 	//Kein Override wird nur auf ServerEbene angesprochen
+	@Override
 	public Enrollment createAutomaticEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, String jobdescription) throws IllegalArgumentException {
 		Enrollment e = new Enrollment();
 		
