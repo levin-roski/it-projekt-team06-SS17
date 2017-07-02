@@ -179,6 +179,8 @@ public interface WorketplaceAdministrationAsync {
 
 	void getApplicationsForProjectLeader(Person projectleader, AsyncCallback<Vector<Application>> callback);
 
+	void orgaUnitHasAlreadyAppliedFor(Call call, OrgaUnit ou, AsyncCallback<Boolean> callback);
+
 
 
 }
