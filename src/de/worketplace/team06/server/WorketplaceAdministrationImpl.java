@@ -1457,14 +1457,14 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Project p = this.getProjectByID(c.getProjectID());
 		OrgaUnit ou = this.getOrgaUnitById(application.getOrgaUnitID());
 		
-		Enrollment autoenroll = new Enrollment();
+		
 		if (r.getRating() == 1){
-			autoenroll = this.createAutomaticEnrollment(p, ou, r, c.getTitle());
+			Enrollment autoenroll = this.createAutomaticEnrollment(p, ou, r, c.getTitle());
 			application.setStatus(1);
 			this.appMapper.update(application);
+			return autoenroll;
 		}
-		
-		return autoenroll;
+		return null;
 	}
 	
 	
