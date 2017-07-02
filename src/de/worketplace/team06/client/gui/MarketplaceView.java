@@ -38,7 +38,7 @@ public class MarketplaceView extends View {
 			}
 
 			@Override
-			public <T> void runOnePar(T parameter) {	
+			public <T> void runOnePar(T parameter) {
 			}
 		}));
 
@@ -55,9 +55,13 @@ public class MarketplaceView extends View {
 		projectSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Project selectedProject = projectSsm.getSelectedObject();
-				ClientsideSettings.setCurrentProjectId(selectedProject.getID());
-				History.newItem("Projekt-Details"+selectedProject.getID()+"-"+ClientsideSettings.getCurrentMarketplaceId());
+				if (projectSsm.getSelectedObject() != null) {
+					Project selectedProject = projectSsm.getSelectedObject();
+					ClientsideSettings.setCurrentProjectId(selectedProject.getID());
+					History.newItem("Projekt-Details" + selectedProject.getID() + "-"
+							+ ClientsideSettings.getCurrentMarketplaceId());
+					projectSsm.clear();
+				}
 			}
 		});
 
@@ -128,7 +132,7 @@ public class MarketplaceView extends View {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setSecondBreadcrumb(this, "Marktplatz-Details");		
+		ClientsideSettings.setSecondBreadcrumb(this, "Marktplatz-Details");
 	}
 
 	@Override

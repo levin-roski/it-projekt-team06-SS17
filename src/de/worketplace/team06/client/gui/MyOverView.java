@@ -283,7 +283,7 @@ public class MyOverView extends View {
 				}
 			}
 		};
-		myEnrollmentsTable.addColumn(enrollmentEndColumn, "Startdartum");
+		myEnrollmentsTable.addColumn(enrollmentEndColumn, "Enddartum");
 
 		TextColumn<Enrollment> enrollmentPeriodColumn = new TextColumn<Enrollment>() {
 			@Override
@@ -340,7 +340,7 @@ public class MyOverView extends View {
 				}
 			}
 		};
-		enrollmentsToMeTable.addColumn(enrollmentToMeEndColumn, "Startdartum");
+		enrollmentsToMeTable.addColumn(enrollmentToMeEndColumn, "Enddartum");
 
 		TextColumn<Enrollment> enrollmentToMePeriodColumn = new TextColumn<Enrollment>() {
 			@Override
@@ -440,7 +440,7 @@ public class MyOverView extends View {
 						myEnrollmentsTable.setRowCount(results.size(), true);
 					}
 				});
-		// try {
+		 try {
 		worketplaceAdministration.getEnrollmentsForProjectLeader((Person) ClientsideSettings.getCurrentUser(),
 				new AsyncCallback<Vector<Enrollment>>() {
 					@Override
@@ -453,8 +453,8 @@ public class MyOverView extends View {
 						enrollmentsToMeTable.setRowCount(results.size(), true);
 					}
 				});
-		// } catch (Exception e) {
-		// }
+		 } catch (Exception e) {
+		 }
 	}
 
 	@Override

@@ -63,11 +63,14 @@ public class ProjectView extends View {
 		callSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Call selectedCall = callSsm.getSelectedObject();
-				ClientsideSettings.setCurrentCallId(selectedCall.getID());
-				History.newItem(
-						"Ausschreibungs-Details" + selectedCall.getID() + "-" + ClientsideSettings.getCurrentProjectId()
-								+ "-" + ClientsideSettings.getCurrentMarketplaceId());
+				if (callSsm.getSelectedObject() != null) {
+					Call selectedCall = callSsm.getSelectedObject();
+					ClientsideSettings.setCurrentCallId(selectedCall.getID());
+					History.newItem("Ausschreibungs-Details" + selectedCall.getID() + "-"
+							+ ClientsideSettings.getCurrentProjectId() + "-"
+							+ ClientsideSettings.getCurrentMarketplaceId());
+					callSsm.clear();
+				}
 			}
 		});
 
@@ -170,7 +173,7 @@ public class ProjectView extends View {
 				}
 			}
 		};
-		enrollmentTable.addColumn(enrollmentEndColumn, "Startdartum");
+		enrollmentTable.addColumn(enrollmentEndColumn, "Enddartum");
 
 		TextColumn<Enrollment> enrollmentPeriodColumn = new TextColumn<Enrollment>() {
 			@Override

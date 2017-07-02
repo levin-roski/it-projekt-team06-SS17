@@ -117,7 +117,7 @@ public class CallView extends View {
 					});
 					root.add(secondButton);
 				}
-				
+
 				CallView.this.add(root);
 				loadData();
 			}
