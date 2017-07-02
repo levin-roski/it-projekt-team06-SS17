@@ -63,16 +63,15 @@ body, table td, select, button{
 }
 
 .main-panel-form .gwt-Label {
-	color: #fff;
+	color: #fff !important;
 	margin-bottom: 5px !important;
 }
 
-.main-panel .gwt-Label{
-	color: #000 !important;
-}
+
 
 .gwt-TextArea {
 	width: 200px !important;
+	height: 70px !important;
 }
 
 .main-panel-form .gwt-TextBox, .main-panel-form .gwt-ListBox, .main-panel-form .gwt-DateBox, .main-panel-form .gwt-TextArea{
