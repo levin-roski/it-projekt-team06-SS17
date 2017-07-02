@@ -118,28 +118,19 @@ public class CallForm extends Form {
 		statusInput.addItem("Laufend");
 		statusInput.addItem("Erfolgreich");
 		statusInput.addItem("Abgelehnt");
-		form.setWidget(4, 1, callerIDLabel);
-		callerIDLabel.setStyleName("bold");
-		form.setWidget(5, 0, callerFirstNameLabel);
-		form.setWidget(5, 1, callerInputFirstName);
-		form.setWidget(6, 0, callerLastNameLabel);
-		form.setWidget(6, 1, callerInputLastName);
-		
+
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
-
-		/*
-		 * Falls eine selektiertee Ausschreibung übergeben wurde und jetzt
-		 * dargestellt werden soll
-		 * 
-		 */
+		if (!shouldUpdate && addHeadline != null) {
+			root.add(addHeadline);
+		}
 
 		class RpcWrapper {
 			protected Timer t;
 			protected Timer t2;
 
 			public RpcWrapper() {
-				worketplaceAdministration.getProjectByID(toChangeCall.getProjectID(),
+				worketplaceAdministration.getProjectByID(ClientsideSettings.getCurrentProjectId(),
 						new AsyncCallback<Project>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim abrufen des Projekts auf");
@@ -147,6 +138,46 @@ public class CallForm extends Form {
 
 							public void onSuccess(Project result) {
 								project = result;
+								if (!shouldUpdate) {
+									final Button saveButton = new Button("Neue Ausschreibung anlegen");
+
+									saveButton.addClickHandler(new ClickHandler() {
+										public void onClick(ClickEvent event) {
+											if (titleInput.getText().length() == 0) {
+												Window.alert("Bitte vergeben Sie einen Titel");
+											} else if (descriptionInput.getText().length() == 0) {
+												Window.alert("Bitte vergeben Sie eine Beschreibung");
+											} else if (deadlineInput.getValue() == null) {
+												Window.alert("Bitte vergeben Sie eine Bewerbungsfrist");
+											} else {
+												worketplaceAdministration.createCall(project,
+														(Person) ClientsideSettings.getCurrentUser(),
+														titleInput.getValue(), descriptionInput.getValue(),
+														deadlineInput.getValue(), new AsyncCallback<Call>() {
+															public void onFailure(Throwable caught) {
+																Window.alert(
+																		"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+															}
+
+															public void onSuccess(Call result) {
+																Window.alert(
+																		"Die Ausschreibung wurde erfolgreich erstellt");
+																if (editCallback != null) {
+																	editCallback.run();
+																} else {
+																	renderFormSuccess();
+																}
+															}
+														});
+											}
+										}
+									});
+									form.setWidget(4, 1, saveButton);
+									form.getWidget(5, 0).setVisible(false);
+									form.getWidget(5, 1).setVisible(false);
+									form.getWidget(6, 0).setVisible(false);
+									form.getWidget(6, 1).setVisible(false);
+								}
 							}
 						});
 
@@ -164,51 +195,6 @@ public class CallForm extends Form {
 											projectLeader = result;
 											callerInputFirstName.setValue(result.getFirstName());
 											callerInputLastName.setValue(result.getLastName());
-
-											if (!shouldUpdate) {
-												if (addHeadline != null) {
-													root.add(addHeadline);
-												}
-												final Button saveButton = new Button("Neue Ausschreibung anlegen");
-
-												saveButton.addClickHandler(new ClickHandler() {
-													public void onClick(ClickEvent event) {
-														if (titleInput.getText().length() == 0) {
-															Window.alert("Bitte vergeben Sie einen Titel");
-														} else if (descriptionInput.getText().length() == 0) {
-															Window.alert("Bitte vergeben Sie eine Beschreibung");
-														} else if (deadlineInput.getValue() == null) {
-															Window.alert("Bitte vergeben Sie eine Bewerbungsfrist");
-														} else {
-															worketplaceAdministration.createCall(project,
-																	(Person) ClientsideSettings.getCurrentUser(),
-																	titleInput.getValue(), descriptionInput.getValue(),
-																	deadlineInput.getValue(),
-																	new AsyncCallback<Call>() {
-																		public void onFailure(Throwable caught) {
-																			Window.alert(
-																					"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
-																		}
-
-																		public void onSuccess(Call result) {
-																			Window.alert(
-																					"Die Ausschreibung wurde erfolgreich geändert");
-																			if (editCallback != null) {
-																				editCallback.run();
-																			} else {
-																				renderFormSuccess();
-																			}
-																		}
-																	});
-														}
-													}
-												});
-												form.setWidget(4, 1, saveButton);
-												form.getWidget(5, 0).setVisible(false);
-												form.getWidget(5, 1).setVisible(false);
-												form.getWidget(6, 0).setVisible(false);
-												form.getWidget(6, 1).setVisible(false);
-											}
 										}
 									});
 						}
@@ -235,8 +221,8 @@ public class CallForm extends Form {
 
 								titleInput.setText(toChangeCall.getTitle());
 								descriptionInput.setText(toChangeCall.getDescription());
-								deadlineInput.setFormat(new DateBox.DefaultFormat(
-										DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
+								deadlineInput.setFormat(
+										new DateBox.DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
 								deadlineInput.setValue(toChangeCall.getDeadline());
 								statusInput.setVisibleItemCount(toChangeCall.getStatus());
 
@@ -288,29 +274,33 @@ public class CallForm extends Form {
 												.confirm("Möchten Sie die Ausschreibung löschen?"
 														+ "Es werden damit alle zugehörigen Bewerbungen und deren Bewertungen gelöscht.");
 										if (confirmDelete) {
-											worketplaceAdministration.deleteCall(toChangeCall,
-													new AsyncCallback<Void>() {
-														public void onFailure(Throwable caught) {
-															Window.alert(
-																	"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
-														}
+											worketplaceAdministration.deleteCall(toChangeCall, new AsyncCallback<Void>() {
+												public void onFailure(Throwable caught) {
+													Window.alert(
+															"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+												}
 
-														public void onSuccess(Void result) {
-															Window.alert(
-																	"Die Ausschreibung wurde erfolgreich gelöscht");
-															if (deleteCallback != null) {
-																deleteCallback.run();
-															} else {
-																renderFormSuccess();
-															}
-														}
-													});
+												public void onSuccess(Void result) {
+													Window.alert("Die Ausschreibung wurde erfolgreich gelöscht");
+													if (deleteCallback != null) {
+														deleteCallback.run();
+													} else {
+														renderFormSuccess();
+													}
+												}
+											});
 										}
 									}
 								});
 								panel.add(changeDeleteButton);
 
 								form.setWidget(7, 1, panel);
+								form.setWidget(4, 1, callerIDLabel);
+								callerIDLabel.setStyleName("bold");
+								form.setWidget(5, 0, callerFirstNameLabel);
+								form.setWidget(5, 1, callerInputFirstName);
+								form.setWidget(6, 0, callerLastNameLabel);
+								form.setWidget(6, 1, callerInputLastName);
 
 								if (project.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
 									titleInput.setEnabled(true);
@@ -332,6 +322,7 @@ public class CallForm extends Form {
 			}
 		}
 		new RpcWrapper();
+
 		root.add(form);
 	}
 }
