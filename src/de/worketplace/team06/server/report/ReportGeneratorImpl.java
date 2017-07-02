@@ -579,10 +579,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Kopfzeile dem Report hinzufügen
 		report.addRow(headline);
 		
-		Integer ongoing = 0;
-		Integer assumed = 0;
-		Integer rejected = 0;
-		
 		//Alle Organisations-Einheiten aus der Datenbank auslesen
 		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
 		allOrgaUnits = wpadmin.getAllOrgaUnits();
@@ -590,6 +586,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		for (OrgaUnit ou : allOrgaUnits){
+			
+			//Variablen zum hochzählen der Anzahl des jewiligen Status
+			Integer ongoing = 0;
+			Integer assumed = 0;
+			Integer rejected = 0;
+			
 			Vector<Application> applications = wpadmin.getApplicationsFor(ou);
 			for (Application a : applications){
 				switch (a.getStatus()){
@@ -612,7 +614,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			rowToAdd.addColumn(new Column(assumed.toString()));
 			rowToAdd.addColumn(new Column(rejected.toString()));
 			report.addRow(rowToAdd);
-			
 		}
 		
 		return report;
@@ -646,10 +647,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Kopfzeile dem Report hinzufügen
 		report.addRow(headline);
 		
-		Integer ongoing = 0;
-		Integer successful = 0;
-		Integer canceled = 0;
-		
 		//Alle Organisations-Einheiten aus der Datenbank auslesen
 		Vector<OrgaUnit> allOrgaUnits = new Vector<OrgaUnit>();
 		allOrgaUnits = wpadmin.getAllOrgaUnits();
@@ -657,6 +654,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		for (OrgaUnit ou : allOrgaUnits){
+			
+			//Variablen zum hochzählen der Anzahl des jewiligen Status
+			Integer ongoing = 0;
+			Integer successful = 0;
+			Integer canceled = 0;
+			
 			Vector<Project> projects = wpadmin.getProjectsForLeader(ou);
 			for (Project p : projects){
 				Vector<Call> calls = wpadmin.getCallsFor(p);
