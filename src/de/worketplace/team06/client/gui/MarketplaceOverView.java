@@ -70,7 +70,7 @@ public class MarketplaceOverView extends View {
 		final Button newButton = new Button("Marktplatz hinzufügen");
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				mainPanel.setForm(new MarketplaceForm(null, false, true, null, null));
+				mainPanel.setForm(new MarketplaceForm(null, false, true));
 			}
 		});
 		root.add(newButton);

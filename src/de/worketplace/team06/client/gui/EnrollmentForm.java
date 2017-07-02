@@ -130,8 +130,8 @@ public class EnrollmentForm extends Form {
 						}
 
 						public void onSuccess(Void result) {
-							Window.alert("Die Beteiligung wurde erfolgreich geändert");
 							renderFormSuccess();
+							Window.alert("Die Beteiligung wurde erfolgreich geändert");
 						}
 					});
 				}
@@ -150,8 +150,8 @@ public class EnrollmentForm extends Form {
 						}
 
 						public void onSuccess(Void result) {
-							Window.alert("Die Beteiligung wurde erfolgreich gelöscht");
 							renderFormSuccess();
+							Window.alert("Die Beteiligung wurde erfolgreich gelöscht");
 						}
 					});
 				}

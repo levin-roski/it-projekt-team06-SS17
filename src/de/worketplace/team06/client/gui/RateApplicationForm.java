@@ -12,9 +12,9 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Application;
+import de.worketplace.team06.shared.bo.Enrollment;
 import de.worketplace.team06.shared.bo.Rating;
 
 /**
@@ -33,8 +33,8 @@ public class RateApplicationForm extends Form {
 	private HorizontalPanel addHeadline;
 
 	/**
-	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die
-	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
+	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die dann
+	 * bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
 	 * Bewertung erstellt werden soll.
 	 * 
 	 * @param pToChangeRating
@@ -54,8 +54,8 @@ public class RateApplicationForm extends Form {
 	}
 
 	/**
-	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die
-	 * dann bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
+	 * Im Konstruktor kann eine selektierte Bewertung übergeben werden, die dann
+	 * bearbeitet und gelöscht werden kann. null übergeben, falls eine neue
 	 * Bewertung erstellt werden soll.
 	 * 
 	 * @param pToChangeRating
@@ -67,7 +67,7 @@ public class RateApplicationForm extends Form {
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
 	public RateApplicationForm(Rating pToChangeRating, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback, final Application currentApplication) {
+			final Application currentApplication) {
 		this(pToChangeRating, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Bewertung bearbeiten", true);
@@ -121,12 +121,8 @@ public class RateApplicationForm extends Form {
 							}
 
 							public void onSuccess(Void result) {
+								renderFormSuccess();
 								Window.alert("Die Bewertung wurde erfolgreich bewertet");
-								if (editCallback != null) {
-									editCallback.run();
-								} else {
-									renderFormSuccess();
-								}
 							}
 						});
 					}
@@ -145,12 +141,8 @@ public class RateApplicationForm extends Form {
 							}
 
 							public void onSuccess(Void result) {
+								renderFormSuccess();
 								Window.alert("Die Bewertung wurde erfolgreich gelöscht");
-								if (deleteCallback != null) {
-									deleteCallback.run();
-								} else {
-									renderFormSuccess();
-								}
 							}
 						});
 					}
@@ -172,7 +164,7 @@ public class RateApplicationForm extends Form {
 					} else {
 						worketplaceAdministration.rateApplication(currentApplication,
 								Float.parseFloat(ratingInput.getSelectedValue()), descriptionInput.getText(),
-								new AsyncCallback<Rating>() {
+								new AsyncCallback<Enrollment>() {
 									@Override
 									public void onFailure(Throwable caught) {
 										Window.alert(
@@ -180,9 +172,12 @@ public class RateApplicationForm extends Form {
 									}
 
 									@Override
-									public void onSuccess(Rating result) {
-										Window.alert("Die Bewerbung wurde Bewertet");
+									public void onSuccess(Enrollment result) {
 										renderFormSuccess();
+										Window.alert("Die Bewerbung wurde Bewertet");
+										if (result instanceof Enrollment) {
+											mainPanel.setForm(new EnrollmentForm(result, false, true));
+										}
 									}
 								});
 					}

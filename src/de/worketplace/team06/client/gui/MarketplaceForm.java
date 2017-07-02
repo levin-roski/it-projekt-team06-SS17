@@ -2,6 +2,7 @@ package de.worketplace.team06.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -11,7 +12,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.worketplace.team06.client.Callback;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Marketplace;
 
@@ -67,8 +67,7 @@ public class MarketplaceForm extends Form {
 	 *            Falls true wird dem Formular eine Überschrift mit Button, der
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
-	public MarketplaceForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final boolean pClosingHeadline,
-			final Callback editCallback, final Callback deleteCallback) {
+	public MarketplaceForm(Marketplace pToChangeMarketplace, final boolean pHeadline, final boolean pClosingHeadline) {
 		this(pToChangeMarketplace, pHeadline);
 		if (pClosingHeadline) {
 			changeHeadline = createHeadlineWithCloseButton("Marktplatz bearbeiten", true);
@@ -113,12 +112,8 @@ public class MarketplaceForm extends Form {
 							}
 
 							public void onSuccess(Void result) {
+								renderFormSuccess();
 								Window.alert("Der Marktplatz wurde erfolgreich geändert");
-								if (editCallback != null) {
-									editCallback.run();
-								} else {
-									renderFormSuccess();
-								}
 							}
 						});
 					}
@@ -138,11 +133,7 @@ public class MarketplaceForm extends Form {
 
 							public void onSuccess(Void result) {
 								Window.alert("Der Marktplatz wurde erfolgreich gelöscht");
-								if (deleteCallback != null) {
-									deleteCallback.run();
-								} else {
-									renderFormSuccess();
-								}
+								History.replaceItem("Marktplaetze");
 							}
 						});
 					}
@@ -170,8 +161,8 @@ public class MarketplaceForm extends Form {
 									}
 
 									public void onSuccess(Marketplace result) {
-										Window.alert("Der Marktplatz \"" + result.getTitle() + "\" wurde erstellt");
 										renderFormSuccess();
+										Window.alert("Der Marktplatz \"" + result.getTitle() + "\" wurde erstellt");
 									}
 								});
 					}
