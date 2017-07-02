@@ -13,7 +13,6 @@ public abstract class View extends Page {
 
 	public View() {
 		this.setWidth("100%");
-		setBreadcrumb();
 		loadToken();
 	}
 

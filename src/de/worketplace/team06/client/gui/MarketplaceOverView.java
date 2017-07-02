@@ -23,6 +23,7 @@ public class MarketplaceOverView extends View {
 	private final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
 	public MarketplaceOverView() {
+		setBreadcrumb();
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Marketplace> allMarketplaceSsm = new SingleSelectionModel<Marketplace>();

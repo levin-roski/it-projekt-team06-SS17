@@ -26,6 +26,7 @@ public class MarketplaceView extends View {
 
 	public MarketplaceView(Marketplace pCurrentMarketplace) {
 		currentMarketplace = pCurrentMarketplace;
+		setBreadcrumb();
 		final VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
 		root.setWidth("100%");
@@ -122,7 +123,7 @@ public class MarketplaceView extends View {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setSecondBreadcrumb(this, "Marktplatz-Details");
+		ClientsideSettings.setSecondBreadcrumb(this, currentMarketplace.getTitle());
 	}
 
 	@Override

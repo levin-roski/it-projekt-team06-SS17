@@ -20,6 +20,10 @@ import de.worketplace.team06.shared.report.HTMLReportWriter;
 public abstract class ReportView extends View {
 	protected ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	protected HTMLReportWriter writer = new HTMLReportWriter();
+	
+	public ReportView() {
+		setBreadcrumb();
+	}
 
 	protected void append(String text) {
 		HTML html = new HTML(text);
