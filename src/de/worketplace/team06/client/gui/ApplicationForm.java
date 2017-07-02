@@ -17,7 +17,6 @@ import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.Form;
 import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.Call;
-import de.worketplace.team06.shared.bo.Enrollment;
 import de.worketplace.team06.shared.bo.Rating;
 
 /**
