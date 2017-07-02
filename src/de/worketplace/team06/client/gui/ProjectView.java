@@ -141,6 +141,14 @@ public class ProjectView extends View {
 
 		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
 		// Daten aus der Datenbank
+		TextColumn<Enrollment> enrollmentDescriptionColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return object.getJobdescription();
+			}
+		};
+		enrollmentTable.addColumn(enrollmentDescriptionColumn, "Tätigkeit");
+		
 		TextColumn<Enrollment> enrollmentStartColumn = new TextColumn<Enrollment>() {
 			@Override
 			public String getValue(Enrollment object) {
