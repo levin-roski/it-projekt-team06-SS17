@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -27,7 +28,7 @@ public class RateApplicationForm extends Form {
 	private Label nameLabel = new Label("Bewertung");
 	private ListBox ratingInput = new ListBox();
 	private Label descriptionLabel = new Label("Bewertungstext");
-	private TextBox descriptionInput = new TextBox();
+	private TextArea descriptionInput = new TextArea();
 	private boolean shouldUpdate = false;
 	private boolean rpcFinished = false;
 	private Rating toChangeRating;
