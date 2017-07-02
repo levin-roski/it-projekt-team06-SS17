@@ -55,8 +55,8 @@ public class CallForm extends Form {
 	protected Project project;
 	private HorizontalPanel changeHeadline;
 	private HorizontalPanel addHeadline;
-	Button changeDeleteButton;
-	Button changeSaveButton;
+	Button changeDeleteButton = new Button("Ausschreibung entfernen");
+	Button changeSaveButton = new Button("Speichern");
 
 	/**
 	 * Im Konstruktor kann eine selektierte Ausschreibung übergeben werden, die
@@ -99,9 +99,9 @@ public class CallForm extends Form {
 			changeHeadline = createHeadlineWithCloseButton("Ausschreibung bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Ausschreibung hinzufügen", true);
 		}
-		
+
 		deadlineInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
-		
+
 		/*
 		 * Grid mit 8 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
@@ -114,6 +114,10 @@ public class CallForm extends Form {
 		form.setWidget(1, 1, descriptionInput);
 		form.setWidget(2, 0, deadlineLabel);
 		form.setWidget(2, 1, deadlineInput);
+		
+		statusInput.addItem("Laufend");
+		statusInput.addItem("Erfolgreich");
+		statusInput.addItem("Abgelehnt");
 
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
@@ -126,58 +130,76 @@ public class CallForm extends Form {
 			protected Timer t2;
 
 			public RpcWrapper() {
-				Integer porjectID;
+				Integer projectID;
 				if (ClientsideSettings.getCurrentProjectId() != -1) {
-					porjectID = ClientsideSettings.getCurrentProjectId();
+					projectID = ClientsideSettings.getCurrentProjectId();
 				} else {
-					porjectID = toChangeCall.getProjectID();
+					projectID = toChangeCall.getProjectID();
 				}
-				worketplaceAdministration.getProjectByID(porjectID,
-						new AsyncCallback<Project>() {
-							public void onFailure(Throwable caught) {
-								Window.alert("Es trat ein Fehler beim abrufen des Projekts auf");
+				worketplaceAdministration.getProjectByID(projectID, new AsyncCallback<Project>() {
+					public void onFailure(Throwable caught) {
+						Window.alert("Es trat ein Fehler beim abrufen des Projekts auf");
+					}
+
+					public void onSuccess(Project result) {
+						project = result;
+
+						if (shouldUpdate) {
+							titleInput.setEnabled(false);
+							descriptionInput.setEnabled(false);
+							deadlineInput.setEnabled(false);
+							statusInput.setEnabled(false);
+							changeSaveButton.setVisible(false);
+							changeSaveButton.setEnabled(false);
+							changeDeleteButton.setVisible(false);
+							changeDeleteButton.setEnabled(false);
+							if (result.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
+								titleInput.setEnabled(true);
+								descriptionInput.setEnabled(true);
+								deadlineInput.setEnabled(true);
+								statusInput.setEnabled(true);
+								changeSaveButton.setVisible(true);
+								changeSaveButton.setEnabled(true);
+								changeDeleteButton.setVisible(true);
+								changeDeleteButton.setEnabled(true);
 							}
+						} else {
+							final Button saveButton = new Button("Ausschreibung anlegen");
 
-							public void onSuccess(Project result) {
-								project = result;
-								if (!shouldUpdate) {
-									final Button saveButton = new Button("Ausschreibung anlegen");
+							saveButton.addClickHandler(new ClickHandler() {
+								public void onClick(ClickEvent event) {
+									if (titleInput.getText().length() == 0) {
+										Window.alert("Bitte vergeben Sie einen Titel");
+									} else if (descriptionInput.getText().length() == 0) {
+										Window.alert("Bitte vergeben Sie eine Beschreibung");
+									} else if (deadlineInput.getValue() == null) {
+										Window.alert("Bitte vergeben Sie eine Bewerbungsfrist");
+									} else {
+										worketplaceAdministration.createCall(project,
+												(Person) ClientsideSettings.getCurrentUser(), titleInput.getValue(),
+												descriptionInput.getValue(), deadlineInput.getValue(),
+												new AsyncCallback<Call>() {
+													public void onFailure(Throwable caught) {
+														Window.alert(
+																"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
+													}
 
-									saveButton.addClickHandler(new ClickHandler() {
-										public void onClick(ClickEvent event) {
-											if (titleInput.getText().length() == 0) {
-												Window.alert("Bitte vergeben Sie einen Titel");
-											} else if (descriptionInput.getText().length() == 0) {
-												Window.alert("Bitte vergeben Sie eine Beschreibung");
-											} else if (deadlineInput.getValue() == null) {
-												Window.alert("Bitte vergeben Sie eine Bewerbungsfrist");
-											} else {
-												worketplaceAdministration.createCall(project,
-														(Person) ClientsideSettings.getCurrentUser(),
-														titleInput.getValue(), descriptionInput.getValue(),
-														deadlineInput.getValue(), new AsyncCallback<Call>() {
-															public void onFailure(Throwable caught) {
-																Window.alert(
-																		"Es trat ein Fehler beim Speichern auf, bitte versuchen Sie es erneut");
-															}
-
-															public void onSuccess(Call result) {
-																Window.alert(
-																		"Die Ausschreibung wurde erfolgreich erstellt");
-																renderFormSuccess();
-															}
-														});
-											}
-										}
-									});
-									form.setWidget(3, 1, saveButton);
-									form.getWidget(5, 0).setVisible(false);
-									form.getWidget(5, 1).setVisible(false);
-									form.getWidget(6, 0).setVisible(false);
-									form.getWidget(6, 1).setVisible(false);
+													public void onSuccess(Call result) {
+														Window.alert("Die Ausschreibung wurde erfolgreich erstellt");
+														renderFormSuccess();
+													}
+												});
+									}
 								}
-							}
-						});
+							});
+							form.setWidget(3, 1, saveButton);
+							form.getWidget(5, 0).setVisible(false);
+							form.getWidget(5, 1).setVisible(false);
+							form.getWidget(6, 0).setVisible(false);
+							form.getWidget(6, 1).setVisible(false);
+						}
+					}
+				});
 
 				t = new Timer() {
 					public void run() {
@@ -193,6 +215,8 @@ public class CallForm extends Form {
 											projectLeader = result;
 											callerInputFirstName.setValue(result.getFirstName());
 											callerInputLastName.setValue(result.getLastName());
+											callerInputFirstName.setEnabled(false);
+											callerInputLastName.setEnabled(false);
 										}
 									});
 						}
@@ -205,9 +229,6 @@ public class CallForm extends Form {
 				if (shouldUpdate) {
 					form.setWidget(3, 0, statusLabel);
 					form.setWidget(3, 1, statusInput);
-					statusInput.addItem("Laufend");
-					statusInput.addItem("Erfolgreich");
-					statusInput.addItem("Abgelehnt");
 					if (changeHeadline != null) {
 						root.add(changeHeadline);
 					}
@@ -215,23 +236,12 @@ public class CallForm extends Form {
 						public void run() {
 							if (project instanceof Project && projectLeader instanceof Person) {
 								RpcWrapper.this.t2.cancel();
-								titleInput.setEnabled(false);
-								descriptionInput.setEnabled(false);
-								deadlineInput.setEnabled(false);
-								statusInput.setEnabled(false);
-								callerInputFirstName.setEnabled(false);
-								callerInputLastName.setEnabled(false);
-
 								titleInput.setText(toChangeCall.getTitle());
 								descriptionInput.setText(toChangeCall.getDescription());
-								deadlineInput.setFormat(
-										new DateBox.DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
+								deadlineInput.setFormat(new DateBox.DefaultFormat(
+										DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
 								deadlineInput.setValue(toChangeCall.getDeadline());
 								statusInput.setVisibleItemCount(toChangeCall.getStatus());
-
-								changeSaveButton = new Button("Speichern");
-								changeSaveButton.setVisible(false);
-								changeSaveButton.setEnabled(false);
 
 								changeSaveButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
@@ -264,27 +274,27 @@ public class CallForm extends Form {
 								final VerticalPanel panel = new VerticalPanel();
 								panel.add(changeSaveButton);
 
-								changeDeleteButton = new Button("Ausschreibung entfernen");
-								changeDeleteButton.setVisible(false);
-								changeDeleteButton.setEnabled(false);
 								changeDeleteButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										final boolean confirmDelete = Window
 												.confirm("Möchten Sie die Ausschreibung löschen?"
 														+ "Es werden damit alle zugehörigen Bewerbungen und deren Bewertungen gelöscht.");
 										if (confirmDelete) {
-											worketplaceAdministration.deleteCall(toChangeCall, new AsyncCallback<Void>() {
-												public void onFailure(Throwable caught) {
-													Window.alert(
-															"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
-												}
+											worketplaceAdministration.deleteCall(toChangeCall,
+													new AsyncCallback<Void>() {
+														public void onFailure(Throwable caught) {
+															Window.alert(
+																	"Es trat ein Fehler beim Löschen auf, bitte versuchen Sie es erneut");
+														}
 
-												public void onSuccess(Void result) {
-													Window.alert("Die Ausschreibung wurde erfolgreich gelöscht");
-													History.newItem("Projekt-Details" + ClientsideSettings.getCurrentProjectId() + "-"
-															+ ClientsideSettings.getCurrentMarketplaceId());
-												}
-											});
+														public void onSuccess(Void result) {
+															Window.alert(
+																	"Die Ausschreibung wurde erfolgreich gelöscht");
+															History.newItem("Projekt-Details"
+																	+ ClientsideSettings.getCurrentProjectId() + "-"
+																	+ ClientsideSettings.getCurrentMarketplaceId());
+														}
+													});
 										}
 									}
 								});
@@ -297,26 +307,6 @@ public class CallForm extends Form {
 								form.setWidget(5, 1, callerInputFirstName);
 								form.setWidget(6, 0, callerLastNameLabel);
 								form.setWidget(6, 1, callerInputLastName);
-
-								if (String.valueOf(project.getProjectLeaderID()).length() > 0) {
-									titleInput.setEnabled(true);
-									descriptionInput.setEnabled(true);
-									deadlineInput.setEnabled(true);
-									statusInput.setEnabled(true);
-									changeSaveButton.setVisible(true);
-									changeSaveButton.setEnabled(true);
-									changeDeleteButton.setVisible(true);
-									changeDeleteButton.setEnabled(true);
-								} else if (ClientsideSettings.isCurrentProjectLeader()) {
-									titleInput.setEnabled(true);
-									descriptionInput.setEnabled(true);
-									deadlineInput.setEnabled(true);
-									statusInput.setEnabled(true);
-									changeSaveButton.setVisible(true);
-									changeSaveButton.setEnabled(true);
-									changeDeleteButton.setVisible(true);
-									changeDeleteButton.setEnabled(true);
-								}
 							}
 						}
 					};
