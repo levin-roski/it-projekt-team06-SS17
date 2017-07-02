@@ -5,10 +5,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
@@ -33,7 +35,9 @@ public class EnrollmentForm extends Form {
 	private Label periodLabel = new Label("Workload (in Tagen)");
 	private IntegerBox periodInput = new IntegerBox();
 	private Label projectLabel = new Label();
+	private TextBox projectInput = new TextBox();
 	private Label ratingLabel = new Label();
+	private DoubleBox ratingInput = new DoubleBox();
 	private Enrollment toChangeEnrollment;
 	private HorizontalPanel changeHeadline;
 
@@ -85,8 +89,10 @@ public class EnrollmentForm extends Form {
 		form.setWidget(1, 1, endDateInput);
 		form.setWidget(2, 0, periodLabel);
 		form.setWidget(2, 1, periodInput);
-		form.setWidget(3, 1, projectLabel);
-		form.setWidget(4, 1, ratingLabel);
+		form.setWidget(3, 0, projectLabel);
+		form.setWidget(3, 1, projectInput);
+		form.setWidget(4, 0, ratingLabel);
+		form.setWidget(4, 1, ratingInput);
 
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
@@ -159,7 +165,9 @@ public class EnrollmentForm extends Form {
 
 					@Override
 					public void onSuccess(Project result) {
-						projectLabel.setText("Projekt: "+result.getTitle());
+						projectLabel.setText("Projekt");
+						projectInput.setText(result.getTitle());
+						projectInput.setEnabled(false);
 					}
 				});
 		worketplaceAdministration.getRatingFor(toChangeEnrollment,
@@ -170,7 +178,10 @@ public class EnrollmentForm extends Form {
 
 					@Override
 					public void onSuccess(Rating result) {
-						ratingLabel.setText("Bewertung: "+result.getRating());
+						ratingLabel.setText("Bewertung"+result.getRating());
+						String temp = String.valueOf(result.getRating());
+						ratingInput.setValue(Double.valueOf(temp));
+						
 					}
 				});
 	}
