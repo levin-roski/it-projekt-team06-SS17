@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -32,7 +33,7 @@ public class ProjectForm extends Form {
 	private Label nameLabel = new Label("Name");
 	private TextBox nameInput = new TextBox();
 	private Label beschreibungLabel = new Label("Beschreibung");
-	private TextBox beschreibungInput = new TextBox();
+	private TextArea beschreibungInput = new TextArea();
 	private Label startDateLabel = new Label("Startdatum");
 	private DateBox startDateInput = new DateBox();
 	private Label endDateLabel = new Label("Enddatum");
@@ -171,7 +172,7 @@ public class ProjectForm extends Form {
 													}
 												}
 											});
-											final VerticalPanel panel = new VerticalPanel();
+											final HorizontalPanel panel = new HorizontalPanel();
 											panel.add(saveButton);
 											saveButton.setEnabled(false);
 											saveButton.setVisible(false);

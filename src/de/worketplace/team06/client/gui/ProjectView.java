@@ -29,6 +29,7 @@ public class ProjectView extends View {
 
 	public ProjectView(Project pCurrentProject) {
 		currentProject = pCurrentProject;
+		setBreadcrumb();
 		if (currentProject.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
 			ClientsideSettings.setIsCurrentProjectLeader(true);
 		} else {
@@ -218,7 +219,7 @@ public class ProjectView extends View {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setThirdBreadcrumb(this, "Projekt-Details");
+		ClientsideSettings.setThirdBreadcrumb(this, currentProject.getTitle());
 	}
 
 	@Override

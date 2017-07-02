@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -27,7 +28,7 @@ public class MarketplaceForm extends Form {
 	private Label nameLabel = new Label("Name");
 	private TextBox nameInput = new TextBox();
 	private Label descriptionLabel = new Label("Beschreibung");
-	private TextBox descriptionInput = new TextBox();
+	private TextArea descriptionInput = new TextArea();
 	private boolean shouldUpdate = false;
 	private Marketplace toChangeMarketplace;
 	private HorizontalPanel changeHeadline;
@@ -119,7 +120,7 @@ public class MarketplaceForm extends Form {
 					}
 				}
 			});
-			final VerticalPanel panel = new VerticalPanel();
+			final HorizontalPanel panel = new HorizontalPanel();
 			panel.add(saveButton);
 			final Button deleteButton = new Button("Marktplatz entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {

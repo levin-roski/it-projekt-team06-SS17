@@ -45,6 +45,18 @@ public class EditorNavigation extends VerticalPanel {
 			}
 		}));
 		menu.addSeparator();
+		menu.addItem(new MenuItem("Projekte", new Command() {
+			public void execute() {
+				History.newItem("Projekte");
+			}
+		}));
+		menu.addSeparator();
+		menu.addItem(new MenuItem("Ausschreibungen", new Command() {
+			public void execute() {
+				History.newItem("Ausschreibungen");
+			}
+		}));
+		menu.addSeparator();
 		MenuBar optionenMenu = new MenuBar(true);
 		optionenMenu.setAnimationEnabled(true);
 		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {

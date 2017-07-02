@@ -63,26 +63,36 @@ body, table td, select, button{
 }
 
 .main-panel-form .gwt-Label {
-	color: #fff;
+	color: #fff !important;
+	margin-bottom: 5px !important;
 }
 
-.main-panel-form .gwt-Button {
-	background: #04847a !important;
-	/*background-color: #454a4a;*/
-	color: #fff !important;
-	box-shadow: none !important;
-	border: 2px solid #04847a !important;
-	margin-top: 15px !important;
+.gwt-TextArea {
+	width: 200px !important;
+	height: 70px !important;
 }
 
-.main-panel-form .gwt-Button:hover {
+.main-panel-form .gwt-TextBox, .main-panel-form .gwt-ListBox, .main-panel-form .gwt-DateBox, .main-panel-form .gwt-TextArea{
+	background: #515757 !important;
 	color: #fff !important;
-	border: 2px solid #fff !important;
+	border: 1px solid grey !important;
+	font-weight: normal !important;
+	font-family: 'Open Sans' !important;
+	font-size: 12px !important;
 }
 
-.main-panel-form .gwt-Button:active {
+.gwt-TextBox, .gwt-ListBox, .gwt-DateBox, .gwt-Label, .gwt-TextArea{
+	margin-bottom: 5px !important;
+	font-weight: normal !important;
+	font-family: 'Open Sans' !important;
+	font-size: 12px !important;
+}
+
+.main-panel-form input {
+	margin-bottom: 5px !important;
+	background: #515757 !important;
 	color: #fff !important;
-	border: 2px solid grey !important;
+	border: 1px solid grey !important;
 }
 
 .first-element {
@@ -95,7 +105,7 @@ button {
 
 .close-button {
 	padding: 0px 3px 0 3px !important;
-	margin: 18px 6px 0 0 !important;
+	margin: 20px 6px 0 0 !important;
 	font-size: 10px !important;
 	font-weight: bold !important;
 }
@@ -107,8 +117,6 @@ button {
 }
 
 .bold {
-	color: #fff;
-	font-weight: bold !important;
 	margin-top:10px;
 }
 
@@ -160,13 +168,12 @@ h2 {
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableCell, .GPBYFDEFD {
-	padding: 5px 15px !important;
+	padding: 9px 15px !important;
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableOddRowCell {
 	
 }
-
 
 .gwt-MenuBar {
 	background-color: #454a4a !important;
@@ -219,21 +226,42 @@ h2 {
 }
 
 .gwt-Button {
-	background: #454a4a !important;
+	background: #04847a !important;
 	/*background-color: #454a4a;*/
 	color: #fff;
 	box-shadow: 2px 2px 3px lightgrey !important;
-	border: 1px solid #454a4a;
-	height: 40px;
+	border: 2px solid #04847a !important;
+	height: 30px;
 	margin-top: 3px !important;
+	margin-right: 6px !important;
+	font-weight: Lighter !important;
+	font-size: 11.5px !important;
 }
 
 .gwt-Button:hover {
-	background: #04847a !important;
+	background: #454a4a !important;
 	/*background-color: #454a4a;*/
-	border: 1px solid #04847a !important;
+	border: 2px solid #454a4a !important;
 }
 
+.main-panel-form .gwt-Button {
+	background: #04847a !important;
+	/*background-color: #454a4a;*/
+	color: #fff !important;
+	box-shadow: none !important;
+	border: 2px solid #04847a !important;
+	margin-top: 3px !important;
+}
+
+.main-panel-form .gwt-Button:hover {
+	color: #fff !important;
+	border: 2px solid #fff !important;
+}
+
+.main-panel-form .gwt-Button:active {
+	color: #fff !important;
+	border: 2px solid grey !important;
+}
 
 .gwt-TextBox, .gwt-DateBox, .gwt-ListBox{
 	width: 200px !important;
