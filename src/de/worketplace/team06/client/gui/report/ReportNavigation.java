@@ -35,7 +35,6 @@ public class ReportNavigation extends VerticalPanel {
 				History.newItem("Startseite");
 			}
 		}));
-		menu.addSeparator();
 		menu.addItem(new MenuItem("Alle Ausschreibungen", new Command() {
 			public void execute() {
 				History.newItem("Alle-Ausschreibungen");
@@ -105,30 +104,6 @@ public class ReportNavigation extends VerticalPanel {
 				History.newItem("Verflechtungen-saemtlicher-meiner-Bewerber");
 			}
 		}));
-		menu.addItem(new MenuItem("Reports", leaderMenu));
-		menu.addSeparator();
-		
-		
-		
-		
-		MenuBar optionenMenu = new MenuBar(true);
-		optionenMenu.setAnimationEnabled(true);
-		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {
-			public void execute() {
-				History.newItem("Mein-Nutzer");
-			}
-		}));
-		optionenMenu.addItem(new MenuItem("Worketplace Editor", new Command() {
-			public void execute() {
-				 Window.Location.replace("worketplace.html");
-			}
-		}));
-		optionenMenu.addItem(new MenuItem("Logout", new Command() {
-			public void execute() {
-				Window.Location.replace(ClientsideSettings.getLoginInfo().getLogoutUrl());
-			}
-		}));
-		menu.addItem(new MenuItem("Mehr", optionenMenu));
-		menu.addSeparator();
+		menu.addItem(new MenuItem("Meine Reports", leaderMenu));
 	}
 }
