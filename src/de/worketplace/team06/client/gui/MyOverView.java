@@ -115,16 +115,17 @@ public class MyOverView extends View {
 				if (myCallsSsm.getSelectedObject() != null) {
 					final Call selectedCall = myCallsSsm.getSelectedObject();
 					worketplaceAdministration.getProjectByID(selectedCall.getProjectID(), new AsyncCallback<Project>() {
-								@Override
-								public void onFailure(Throwable caught) {
-								}
+						@Override
+						public void onFailure(Throwable caught) {
+						}
 
-								@Override
-								public void onSuccess(Project results) {
-									myCallsSsm.clear();
-									History.newItem("Ausschreibungs-Details"+selectedCall.getID()+"-"+results.getID()+"-"+results.getMarketplaceID());
-								}
-							});
+						@Override
+						public void onSuccess(Project results) {
+							myCallsSsm.clear();
+							History.newItem("Ausschreibungs-Details" + selectedCall.getID() + "-" + results.getID()
+									+ "-" + results.getMarketplaceID());
+						}
+					});
 				}
 			}
 		});
@@ -384,19 +385,27 @@ public class MyOverView extends View {
 
 		VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
-		// root.add(createHeadline("Mein Bereich", true));
-		root.add(createSecondHeadline("Meine Projekte"));
-		root.add(myProjectsTable);
-		root.add(createSecondHeadline("Meine Ausschreibungen"));
-		root.add(myCallsTable);
+		root.add(createHeadline("Mein Bereich", true));
+		if (ClientsideSettings.getCurrentUser() instanceof Person) {
+			root.add(createSecondHeadline("Meine Projekte"));
+			root.add(myProjectsTable);
+		}
+		if (ClientsideSettings.getCurrentUser() instanceof Person) {
+			root.add(createSecondHeadline("Meine Ausschreibungen"));
+			root.add(myCallsTable);
+		}
 		root.add(createSecondHeadline("Ausgehende Bewerbungen"));
 		root.add(myApplicationsTable);
-		root.add(createSecondHeadline("Eingehende Bewerbungen"));
-		root.add(applicationsToMeTable);
+		if (ClientsideSettings.getCurrentUser() instanceof Person) {
+			root.add(createSecondHeadline("Eingehende Bewerbungen"));
+			root.add(applicationsToMeTable);
+		}
 		root.add(createSecondHeadline("Meine Projekt-Beteiligungen"));
 		root.add(myEnrollmentsTable);
-		root.add(createSecondHeadline("Beteiligungen an meinen Projekten"));
-		root.add(enrollmentsToMeTable);
+		if (ClientsideSettings.getCurrentUser() instanceof Person) {
+			root.add(createSecondHeadline("Beteiligungen an meinen Projekten"));
+			root.add(enrollmentsToMeTable);
+		}
 
 		this.add(root);
 		loadData();
