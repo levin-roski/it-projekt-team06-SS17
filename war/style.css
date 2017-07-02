@@ -185,13 +185,10 @@ h2 {
 
 .gwt-MenuBar .gwt-MenuItem {
     font-family: Open Sans !important;
-    font-weight: normal;
+    font-weight: Lighter !important;
     font-size: 12px !important;
-    letter-spacing: 1px;
-}
-
-.gwt-MenuItem {
-	color: #fff !important;
+    letter-spacing: 0.5px;
+    color: #fff !important;
 	vertical-align: middle !important;
 	text-transform: uppercase;
 	border: 0 !important;
@@ -203,8 +200,8 @@ h2 {
 }
 
 .gwt-MenuItemSeparator {
-	background: transparent !important;
-	border-left: none !important;
+	background: none !important;
+	border: 0 !important;
 	width: 5px !important;
 }
 
