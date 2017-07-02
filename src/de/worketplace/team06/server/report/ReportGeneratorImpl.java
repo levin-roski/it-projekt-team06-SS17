@@ -475,6 +475,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Kopfzeile mit den Überschriften der einzelnen Spalten im Report erstellen
 		headline.addColumn(new Column("Projekt"));
+		headline.addColumn(new Column("Tätigkeit"));
 		headline.addColumn(new Column("Beteiligungsbeginn"));
 		headline.addColumn(new Column("Beteiligungsende"));
 		
@@ -487,6 +488,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Project p = wpadmin.getProjectByID(e.getProjectID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(p.getTitle()));
+			rowToAdd.addColumn(new Column(e.getJobdescription()));
 			rowToAdd.addColumn(new Column(convertDate(e.getStartDate())));
 			rowToAdd.addColumn(new Column(convertDate(e.getEndDate())));
 			report.addRow(rowToAdd);
