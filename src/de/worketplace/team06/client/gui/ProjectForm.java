@@ -171,7 +171,7 @@ public class ProjectForm extends Form {
 													}
 												}
 											});
-											final VerticalPanel panel = new VerticalPanel();
+											final HorizontalPanel panel = new HorizontalPanel();
 											panel.add(saveButton);
 											saveButton.setEnabled(false);
 											saveButton.setVisible(false);
