@@ -40,10 +40,6 @@ import de.worketplace.team06.shared.report.Report;
 import de.worketplace.team06.shared.report.Row;
 import de.worketplace.team06.shared.report.SimpleParagraph;
 
-/**
- * @author Toby
- *
- */
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator{
 	
 	/**
