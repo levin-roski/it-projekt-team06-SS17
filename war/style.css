@@ -160,6 +160,10 @@ h2 {
 	color: #454a4a;
 }
 
+#editorButton .gwt-Button, #reportGeneratorButton .gwt-Button {
+	padding: 3px 7px !important;
+}
+
 
 /*******************/
 /** GWT OVERRIDES **/
