@@ -63,17 +63,23 @@ body, table td, select, button{
 }
 
 .main-panel-form .gwt-Button {
-	background: #fff !important;
+	background: #04847a !important;
 	/*background-color: #454a4a;*/
-	color: #000 !important;
+	color: #fff !important;
 	box-shadow: none !important;
-	border: #fff !important;
+	border: 2px solid #04847a !important;
+	margin-top: 15px !important;
 }
 
 .main-panel-form .gwt-Button:hover {
 	color: #fff !important;
+	border: 2px solid #fff !important;
 }
 
+.main-panel-form .gwt-Button:active {
+	color: #fff !important;
+	border: 2px solid grey !important;
+}
 
 .first-element {
 	margin-top: 0 !important;
@@ -108,13 +114,13 @@ p.center {
 
 h1 {
 	font-size: 24px;
-	padding-top: 10px;
+	padding-top: 15px;
 	color: #454a4a;
 }
 
 h2 {
 	font-size: 18px;
-	padding-top: 20px;
+	padding-top: 15px;
 	color: #454a4a;
 }
 
@@ -123,18 +129,18 @@ h2 {
 /** GWT OVERRIDES **/
 /*******************/
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget{
-	width: 75% !important;
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget, .GPBYFDEGE {
+	width: 74% !important;
 	box-shadow: 3px 3px 5px lightgrey !important;
 	border: 1px solid lightgrey;
+	margin-bottom: 10px;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td,
-	.gwt-Anchor {
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget tbody td, .GPBYFDEGE tbody td {
 	cursor: pointer;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget th{
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget th, .GPBYFDEGE th {
 	text-align: left !important;
 	background-color: #04847a !important;
 	color: white !important;
@@ -144,22 +150,28 @@ h2 {
 	height: 30px;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget td{
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableWidget td, .GPBYFDEGE td {
 	width: inherit !important;
+	border: #fff !important;
+}
+
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableCell, .GPBYFDEFD {
+	padding: 5px 15px !important;
 }
 
 .com-google-gwt-user-cellview-client-CellTable-Style-cellTableOddRowCell {
 	
 }
 
+
 .gwt-MenuBar {
 	background-color: #454a4a !important;
 	box-shadow: 0px 1px 5px #454a4a !important;
-	border-top: none !important;
-	border-left: none !important;
-	border-right: none !important;
+	border-top: 0 !important;
+	border-left: 0 !important;
+	border-right: 0 !important;
 	border-bottom: 3px solid #04847a !important;
-	border-radius: none !important;
+	border-radius: 0 !important;
 }
 
 .gwt-MenuBar-horizontal {
@@ -178,6 +190,7 @@ h2 {
 	color: #fff !important;
 	vertical-align: middle !important;
 	text-transform: uppercase;
+	border: 0 !important;
 }
 
 .gwt-MenuItem-selected{
@@ -209,15 +222,15 @@ h2 {
 	/*background-color: #454a4a;*/
 	color: #fff;
 	box-shadow: 2px 2px 3px lightgrey !important;
-	border: #454a4a;
+	border: 1px solid #454a4a;
 	height: 40px;
-	margin-top: 20px !important;
+	margin-top: 3px !important;
 }
 
 .gwt-Button:hover {
 	background: #04847a !important;
 	/*background-color: #454a4a;*/
-	border: #04847a;
+	border: 1px solid #04847a !important;
 }
 
 
