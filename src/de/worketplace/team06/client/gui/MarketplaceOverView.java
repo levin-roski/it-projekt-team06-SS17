@@ -19,7 +19,7 @@ import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Marketplace;
 
 public class MarketplaceOverView extends View {
-	// erstellen der Tabelle Meine Marktplätze 
+	// erstellen der Tabelle Meine Marktplätze
 	private final CellTable<Marketplace> allMarketplacesTable = new CellTable<Marketplace>();
 
 	public MarketplaceOverView() {
@@ -36,9 +36,12 @@ public class MarketplaceOverView extends View {
 		allMarketplaceSsm.addSelectionChangeHandler(new Handler() {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Marketplace selectedMarketplace = allMarketplaceSsm.getSelectedObject();
-				ClientsideSettings.setCurrentMarketplaceId(selectedMarketplace.getID());
-				History.newItem("Marktplatz-Details"+selectedMarketplace.getID());
+				if (allMarketplaceSsm.getSelectedObject() != null) {
+					Marketplace selectedMarketplace = allMarketplaceSsm.getSelectedObject();
+					ClientsideSettings.setCurrentMarketplaceId(selectedMarketplace.getID());
+					History.newItem("Marktplatz-Details" + selectedMarketplace.getID());
+					allMarketplaceSsm.clear();
+				}
 			}
 		});
 
@@ -94,7 +97,7 @@ public class MarketplaceOverView extends View {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setFirstBreadcrumb(this, "Marktplätze");		
+		ClientsideSettings.setFirstBreadcrumb(this, "Marktplätze");
 	}
 
 	@Override

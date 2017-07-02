@@ -100,7 +100,9 @@ public class CallForm extends Form {
 			changeHeadline = createHeadlineWithCloseButton("Ausschreibung bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Ausschreibung hinzufügen", true);
 		}
-
+		
+		deadlineInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
+		
 		/*
 		 * Grid mit 8 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
@@ -113,11 +115,6 @@ public class CallForm extends Form {
 		form.setWidget(1, 1, descriptionInput);
 		form.setWidget(2, 0, deadlineLabel);
 		form.setWidget(2, 1, deadlineInput);
-		form.setWidget(3, 0, statusLabel);
-		form.setWidget(3, 1, statusInput);
-		statusInput.addItem("Laufend");
-		statusInput.addItem("Erfolgreich");
-		statusInput.addItem("Abgelehnt");
 
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
@@ -130,7 +127,13 @@ public class CallForm extends Form {
 			protected Timer t2;
 
 			public RpcWrapper() {
-				worketplaceAdministration.getProjectByID(ClientsideSettings.getCurrentProjectId(),
+				Integer porjectID;
+				if (ClientsideSettings.getCurrentProjectId() != -1) {
+					porjectID = ClientsideSettings.getCurrentProjectId();
+				} else {
+					porjectID = toChangeCall.getProjectID();
+				}
+				worketplaceAdministration.getProjectByID(porjectID,
 						new AsyncCallback<Project>() {
 							public void onFailure(Throwable caught) {
 								Window.alert("Es trat ein Fehler beim abrufen des Projekts auf");
@@ -172,7 +175,7 @@ public class CallForm extends Form {
 											}
 										}
 									});
-									form.setWidget(4, 1, saveButton);
+									form.setWidget(3, 1, saveButton);
 									form.getWidget(5, 0).setVisible(false);
 									form.getWidget(5, 1).setVisible(false);
 									form.getWidget(6, 0).setVisible(false);
@@ -205,6 +208,11 @@ public class CallForm extends Form {
 				t.scheduleRepeating(400);
 
 				if (shouldUpdate) {
+					form.setWidget(3, 0, statusLabel);
+					form.setWidget(3, 1, statusInput);
+					statusInput.addItem("Laufend");
+					statusInput.addItem("Erfolgreich");
+					statusInput.addItem("Abgelehnt");
 					if (changeHeadline != null) {
 						root.add(changeHeadline);
 					}
@@ -302,7 +310,16 @@ public class CallForm extends Form {
 								form.setWidget(6, 0, callerLastNameLabel);
 								form.setWidget(6, 1, callerInputLastName);
 
-								if (project.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
+								if (String.valueOf(project.getProjectLeaderID()).length() > 0) {
+									titleInput.setEnabled(true);
+									descriptionInput.setEnabled(true);
+									deadlineInput.setEnabled(true);
+									statusInput.setEnabled(true);
+									changeSaveButton.setVisible(true);
+									changeSaveButton.setEnabled(true);
+									changeDeleteButton.setVisible(true);
+									changeDeleteButton.setEnabled(true);
+								} else if (ClientsideSettings.isCurrentProjectLeader()) {
 									titleInput.setEnabled(true);
 									descriptionInput.setEnabled(true);
 									deadlineInput.setEnabled(true);
