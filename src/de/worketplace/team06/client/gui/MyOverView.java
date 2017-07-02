@@ -261,6 +261,14 @@ public class MyOverView extends View {
 
 		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
 		// Daten aus der Datenbank
+		TextColumn<Enrollment> enrollmentDescriptionColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return object.getJobdescription();
+			}
+		};
+		myEnrollmentsTable.addColumn(enrollmentDescriptionColumn, "Tätigkeit");
+
 		TextColumn<Enrollment> enrollmentStartColumn = new TextColumn<Enrollment>() {
 			@Override
 			public String getValue(Enrollment object) {
@@ -318,6 +326,14 @@ public class MyOverView extends View {
 
 		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
 		// Daten aus der Datenbank
+		TextColumn<Enrollment> enrollmentToMeDescriptionColumn = new TextColumn<Enrollment>() {
+			@Override
+			public String getValue(Enrollment object) {
+				return object.getJobdescription();
+			}
+		};
+		enrollmentsToMeTable.addColumn(enrollmentToMeDescriptionColumn, "Tätigkeit");
+		
 		TextColumn<Enrollment> enrollmentToMeStartColumn = new TextColumn<Enrollment>() {
 			@Override
 			public String getValue(Enrollment object) {
@@ -440,21 +456,21 @@ public class MyOverView extends View {
 						myEnrollmentsTable.setRowCount(results.size(), true);
 					}
 				});
-		 try {
-		worketplaceAdministration.getEnrollmentsForProjectLeader((Person) ClientsideSettings.getCurrentUser(),
-				new AsyncCallback<Vector<Enrollment>>() {
-					@Override
-					public void onFailure(Throwable caught) {
-					}
+		try {
+			worketplaceAdministration.getEnrollmentsForProjectLeader((Person) ClientsideSettings.getCurrentUser(),
+					new AsyncCallback<Vector<Enrollment>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+						}
 
-					@Override
-					public void onSuccess(Vector<Enrollment> results) {
-						enrollmentsToMeTable.setRowData(0, results);
-						enrollmentsToMeTable.setRowCount(results.size(), true);
-					}
-				});
-		 } catch (Exception e) {
-		 }
+						@Override
+						public void onSuccess(Vector<Enrollment> results) {
+							enrollmentsToMeTable.setRowData(0, results);
+							enrollmentsToMeTable.setRowCount(results.size(), true);
+						}
+					});
+		} catch (Exception e) {
+		}
 	}
 
 	@Override

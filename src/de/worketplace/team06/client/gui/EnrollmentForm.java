@@ -29,6 +29,8 @@ import de.worketplace.team06.shared.bo.Rating;
  * @author Roski
  */
 public class EnrollmentForm extends Form {
+	private Label titleLabel = new Label("Tätigkeit");
+	private TextBox titleInput = new TextBox();
 	private Label startDateLabel = new Label("Startdatum");
 	private DateBox startDateInput = new DateBox();
 	private Label endDateLabel = new Label("Enddatum");
@@ -39,6 +41,8 @@ public class EnrollmentForm extends Form {
 	private TextBox projectInput = new TextBox();
 	private Label ratingLabel = new Label();
 	private DoubleBox ratingInput = new DoubleBox();
+	private Label ratingTextLabel = new Label();
+	private TextBox ratingTextInput = new TextBox();
 	private Enrollment toChangeEnrollment;
 	private HorizontalPanel changeHeadline;
 
@@ -81,21 +85,25 @@ public class EnrollmentForm extends Form {
 		startDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
 		endDateInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
 		/*
-		 * Grid mit 6 Zeilen und 2 Spalten für das Formular bereitstellen.
+		 * Grid mit 8 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
-		Grid form = new Grid(6, 2);
+		Grid form = new Grid(8, 2);
 		form.setWidth("100%");
-		form.setWidget(0, 0, startDateLabel);
-		form.setWidget(0, 1, startDateInput);
-		form.setWidget(1, 0, endDateLabel);
-		form.setWidget(1, 1, endDateInput);
-		form.setWidget(2, 0, periodLabel);
-		form.setWidget(2, 1, periodInput);
-		form.setWidget(3, 0, projectLabel);
-		form.setWidget(3, 1, projectInput);
-		form.setWidget(4, 0, ratingLabel);
-		form.setWidget(4, 1, ratingInput);
+		form.setWidget(0, 0, titleLabel);
+		form.setWidget(0, 1, titleInput);
+		form.setWidget(1, 0, startDateLabel);
+		form.setWidget(1, 1, startDateInput);
+		form.setWidget(2, 0, endDateLabel);
+		form.setWidget(2, 1, endDateInput);
+		form.setWidget(3, 0, periodLabel);
+		form.setWidget(3, 1, periodInput);
+		form.setWidget(4, 0, projectLabel);
+		form.setWidget(4, 1, projectInput);
+		form.setWidget(5, 0, ratingLabel);
+		form.setWidget(5, 1, ratingInput);
+		form.setWidget(6, 0, ratingTextLabel);
+		form.setWidget(6, 1, ratingTextInput);
 
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
@@ -110,6 +118,7 @@ public class EnrollmentForm extends Form {
 		startDateInput.setValue(toChangeEnrollment.getStartDate());
 		periodInput.setValue(toChangeEnrollment.getWorkload());
 		endDateInput.setValue(toChangeEnrollment.getEndDate());
+		titleInput.setValue(toChangeEnrollment.getJobdescription());
 		final Button saveButton = new Button("Speichern");
 		saveButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -123,6 +132,7 @@ public class EnrollmentForm extends Form {
 					toChangeEnrollment.setStartDate(startDateInput.getValue());
 					toChangeEnrollment.setWorkload(periodInput.getValue());
 					toChangeEnrollment.setEndDate(endDateInput.getValue());
+					toChangeEnrollment.setJobdescription(titleInput.getValue());
 
 					worketplaceAdministration.saveEnrollment(toChangeEnrollment, new AsyncCallback<Void>() {
 						public void onFailure(Throwable caught) {
@@ -158,7 +168,7 @@ public class EnrollmentForm extends Form {
 			}
 		});
 		panel.add(deleteButton);
-		form.setWidget(5, 1, panel);
+		form.setWidget(7, 1, panel);
 		root.add(form);
 		worketplaceAdministration.getProjectByID(toChangeEnrollment.getProjectID(),
 				new AsyncCallback<Project>() {
@@ -182,10 +192,11 @@ public class EnrollmentForm extends Form {
 					@Override
 					public void onSuccess(Rating result) {
 						ratingLabel.setText("Bewertung");
-						String temp = String.valueOf(result.getRating());
-						ratingInput.setValue(Double.valueOf(temp));
+						ratingInput.setValue(Double.valueOf(String.valueOf(result.getRating())));
 						ratingInput.setEnabled(false);
-						
+						ratingTextLabel.setText("Bewertungstext");
+						ratingTextInput.setValue(result.getRatingStatement());
+						ratingTextInput.setEnabled(false);
 					}
 				});
 	}

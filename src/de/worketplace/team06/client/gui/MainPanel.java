@@ -57,15 +57,6 @@ public class MainPanel extends DockLayoutPanel {
 	}
 
 	public void closeForm() {
-		try {
-			this.getWidget(1).removeFromParent();
-			try {
-				Widget overviewWidget = this.getWidget(0);
-				this.getWidget(0).removeFromParent();
-				this.addWest(overviewWidget, 100);
-			} catch (Exception e1) {
-			}
-		} catch (Exception e) {
-		}
+		this.getWidget(1).removeFromParent();
 	}
 }
