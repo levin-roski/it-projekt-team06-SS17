@@ -3,7 +3,6 @@ package de.worketplace.team06.client.gui;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -61,8 +60,8 @@ public class ProjectForm extends Form {
 	 */
 	public ProjectForm(Project pToChangeProject, final boolean pHeadline) {
 		if (pToChangeProject != null) {
+			toChangeProject = pToChangeProject;
 			shouldUpdate = true;
-			this.toChangeProject = pToChangeProject;
 		}
 		if (pHeadline) {
 			changeHeadline = createHeadline("Projekt bearbeiten", true);
@@ -94,7 +93,7 @@ public class ProjectForm extends Form {
 		}
 
 		/*
-		 * Grid mit 5 Zeilen und 2 Spalten für das Formular bereitstellen.
+		 * Grid mit 7 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
 		 */
 		final Grid form = new Grid(6, 2);
@@ -124,6 +123,7 @@ public class ProjectForm extends Form {
 			startDateInput.setEnabled(false);
 			endDateInput.setEnabled(false);
 			projectLeaderInput.setEnabled(false);
+
 			class RpcWrapper {
 				protected Timer t;
 
@@ -227,6 +227,19 @@ public class ProjectForm extends Form {
 												form.setWidget(5, 1, panel);
 												if (ClientsideSettings.getCurrentUser().getID() == projectLeader
 														.getID()) {
+													nameInput.setEnabled(true);
+													beschreibungInput.setEnabled(true);
+													startDateInput.setEnabled(true);
+													endDateInput.setEnabled(true);
+													projectLeaderInput.setEnabled(true);
+													saveButton.setEnabled(true);
+													saveButton.setVisible(true);
+													if (deleteButton instanceof Button) {
+														deleteButton.setEnabled(true);
+														deleteButton.setVisible(true);
+													}
+												}
+												if (ClientsideSettings.isCurrentProjectLeader() && shouldUpdate) {
 													nameInput.setEnabled(true);
 													beschreibungInput.setEnabled(true);
 													startDateInput.setEnabled(true);

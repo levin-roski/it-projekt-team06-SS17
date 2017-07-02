@@ -15,7 +15,6 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.worketplace.team06.client.ClientsideSettings;
 import de.worketplace.team06.client.View;
-import de.worketplace.team06.shared.bo.Application;
 import de.worketplace.team06.shared.bo.PartnerProfile;
 import de.worketplace.team06.shared.bo.Property;
 

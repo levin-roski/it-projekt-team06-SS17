@@ -20,7 +20,6 @@ import de.worketplace.team06.client.View;
 import de.worketplace.team06.shared.bo.Call;
 import de.worketplace.team06.shared.bo.Enrollment;
 import de.worketplace.team06.shared.bo.Project;
-import de.worketplace.team06.shared.bo.Property;
 
 public class ProjectView extends View {
 	// erstellen der Tabelle Ausschreibungen
@@ -31,6 +30,11 @@ public class ProjectView extends View {
 
 	public ProjectView(Project pCurrentProject) {
 		currentProject = pCurrentProject;
+		if (currentProject.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
+			ClientsideSettings.setIsCurrentProjectLeader(true);
+		} else {
+			ClientsideSettings.setIsCurrentProjectLeader(false);
+		}
 		final VerticalPanel root = new VerticalPanel();
 		root.setWidth("100%");
 		root.add(ClientsideSettings.getBreadcrumbs());
@@ -109,7 +113,7 @@ public class ProjectView extends View {
 		root.add(callTable);
 		callTable.setWidth("100%", true);
 
-		if (currentProject.getProjectLeaderID() == ClientsideSettings.getCurrentUser().getID()) {
+		if (ClientsideSettings.isCurrentProjectLeader()) {
 			final Button newButton = new Button("Neue Ausschreibung hinzufügen");
 			newButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
@@ -129,16 +133,18 @@ public class ProjectView extends View {
 
 		// hinzufügen eines SelectionChangeHandler -> wenn eine Zeile der
 		// Tabelle gedrückt wird soll die neue Tabelle geöffnet werden
-		enrollmentSsm.addSelectionChangeHandler(new Handler() {
-			@Override
-			public void onSelectionChange(SelectionChangeEvent event) {
-				if (enrollmentSsm.getSelectedObject() != null) {
-					Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
-					mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
-					enrollmentSsm.clear();
+		if (ClientsideSettings.isCurrentProjectLeader()) {
+			enrollmentSsm.addSelectionChangeHandler(new Handler() {
+				@Override
+				public void onSelectionChange(SelectionChangeEvent event) {
+					if (enrollmentSsm.getSelectedObject() != null) {
+						Enrollment selectedEnrollment = enrollmentSsm.getSelectedObject();
+						mainPanel.setForm(new EnrollmentForm(selectedEnrollment, false, true));
+						enrollmentSsm.clear();
+					}
 				}
-			}
-		});
+			});
+		}
 
 		// hinzufügen der Tabellenspaltennamen sowie hinzufügen der zugehörigen
 		// Daten aus der Datenbank

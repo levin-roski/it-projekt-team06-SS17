@@ -47,6 +47,7 @@ public class ClientsideSettings {
 	private static Integer currentMarketplaceId = -1;
 	private static Integer currentProjectId = -1;
 	private static Integer currentCallId = -1;
+	private static boolean isCurrentProjectLeader = false;
 
 	/**
 	 * 
@@ -240,5 +241,13 @@ public class ClientsideSettings {
 
 	public static void setLoginInfo(LoginInfo loginInfo) {
 		ClientsideSettings.loginInfo = loginInfo;
+	}
+
+	public static boolean isCurrentProjectLeader() {
+		return isCurrentProjectLeader;
+	}
+
+	public static void setIsCurrentProjectLeader(boolean isCurrentProjectLeader) {
+		ClientsideSettings.isCurrentProjectLeader = isCurrentProjectLeader;
 	}
 }

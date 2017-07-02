@@ -124,7 +124,7 @@ public class CallForm extends Form {
 		form.setWidget(5, 1, callerInputFirstName);
 		form.setWidget(6, 0, callerLastNameLabel);
 		form.setWidget(6, 1, callerInputLastName);
-
+		
 		final VerticalPanel root = new VerticalPanel();
 		this.add(root);
 
