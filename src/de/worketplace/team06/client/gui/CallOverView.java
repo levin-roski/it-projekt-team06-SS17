@@ -38,17 +38,18 @@ public class CallOverView extends View {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				if (allCallSsm.getSelectedObject() != null) {
-					Call selectedCall = allCallSsm.getSelectedObject();
+					final Call selectedCall = allCallSsm.getSelectedObject();
 					worketplaceAdministration.getProjectByID(selectedCall.getProjectID(), new AsyncCallback<Project>() {
 						@Override
 						public void onFailure(Throwable caught) {
 						}
+
 						@Override
-						public void onSuccess(Project result) {
-							History.newItem("Projekt-Details" + result.getID() + "-" + result.getMarketplaceID());
+						public void onSuccess(Project results) {
+							allCallSsm.clear();
+							History.newItem("Ausschreibungs-Details"+selectedCall.getID()+"-"+results.getID()+"-"+results.getMarketplaceID());
 						}
 					});
-					allCallSsm.clear();
 				}
 			}
 		});
