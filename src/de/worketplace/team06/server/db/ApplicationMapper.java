@@ -304,12 +304,35 @@ public class ApplicationMapper {
 		
 	
 		try {
+			con.setAutoCommit(false);
 			Statement stmt = con.createStatement();
+			stmt.executeUpdate("SET foreign_key_checks = 0");
 			stmt.executeUpdate("UPDATE application SET text='" + a.getText() + "', rating_id="+ a.getRatingID() + ", status="+ a.getStatus() + " WHERE id=" + a.getID());
 			// alt:  stmt.executeUpdate("UPDATE application " + "SET text=\"" + a.getText() + "\" " + "WHERE id=" + a.getID());
+			stmt.executeUpdate("SET foreign_key_checks = 1");
+			con.commit();
 		}
 		catch (SQLException e2) {
-			e2.printStackTrace();
+			try {
+				System.out.println("Die SQL Transaktion konnte nicht vollständig ausgeführt werden. "
+						+ "Es wird versucht die Transaktion rückgängig zu machen!");
+				con.rollback();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			  finally {
+				 
+				  e2.printStackTrace();
+			}	
+		}
+		finally{
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		return a;
 	}
