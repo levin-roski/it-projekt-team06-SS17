@@ -69,7 +69,7 @@ public class OrgaUnitPartnerProfileView extends View {
 				return object.getName();
 			}
 		};
-		propertyTable.addColumn(propertyTitleColumn, "Eigenschaften-Name");
+		propertyTable.addColumn(propertyTitleColumn, "Eigenschaft");
 
 		TextColumn<Property> propertyValueColumn = new TextColumn<Property>() {
 			@Override
@@ -77,7 +77,7 @@ public class OrgaUnitPartnerProfileView extends View {
 				return object.getValue();
 			}
 		};
-		propertyTable.addColumn(propertyValueColumn, "Eigenschaften-Name");
+		propertyTable.addColumn(propertyValueColumn, "Wert");
 
 		root.add(propertyTable);
 		propertyTable.setWidth("100%", true);

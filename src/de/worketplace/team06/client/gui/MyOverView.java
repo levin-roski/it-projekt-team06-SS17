@@ -377,7 +377,7 @@ public class MyOverView extends View {
 		root.add(myCallsTable);
 		root.add(createSecondHeadline("Ausgehende Bewerbungen"));
 		root.add(myApplicationsTable);
-		root.add(createSecondHeadline("Eingehende Berwerbungen"));
+		root.add(createSecondHeadline("Eingehende Bewerbungen"));
 		root.add(applicationsToMeTable);
 		root.add(createSecondHeadline("Meine Projekt-Beteiligungen"));
 		root.add(myEnrollmentsTable);
