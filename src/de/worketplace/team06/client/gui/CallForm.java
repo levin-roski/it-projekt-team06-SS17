@@ -100,7 +100,9 @@ public class CallForm extends Form {
 			changeHeadline = createHeadlineWithCloseButton("Ausschreibung bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Ausschreibung hinzufügen", true);
 		}
-
+		
+		deadlineInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
+		
 		/*
 		 * Grid mit 8 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
