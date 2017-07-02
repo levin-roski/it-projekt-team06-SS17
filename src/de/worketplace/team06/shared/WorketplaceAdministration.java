@@ -236,7 +236,7 @@ public interface WorketplaceAdministration extends RemoteService {
      * @param ratingStatemant 
      * @return
      */
-    public Rating rateApplication(Application application, Float rating, String ratingStatemant) throws IllegalArgumentException;
+    public Enrollment rateApplication(Application application, Float rating, String ratingStatemant) throws IllegalArgumentException;
 
     /**
      * @param rating

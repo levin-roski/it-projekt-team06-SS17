@@ -53,6 +53,12 @@ public class Enrollment extends BusinessObject {
      */
     private Integer orgaUnitID;
 
+    
+    /**
+     * String für die Beschreibung der Tätigkeit.
+     */
+    private String jobdescription;
+    
     /**
      * Auslesen des Startdatums
      * @return startDate
@@ -108,6 +114,13 @@ public class Enrollment extends BusinessObject {
 		return this.orgaUnitID;
 	}
 
+	/**
+	 * Auslesen der Tätigkeit
+	 * @return String jobdescription
+	 */
+	public String getJobdescription() {
+		return jobdescription;
+	}
     /**
      * Setzen des Startdatums
      * @param startDate
@@ -176,6 +189,14 @@ public class Enrollment extends BusinessObject {
 	 */
 	public void setOrgaUnitID(Integer orgaUnitID) {
 		this.orgaUnitID = orgaUnitID;
+	}
+
+	/**
+	 * Setzen der Tätigkeit
+	 * @param jobdescription
+	 */
+	public void setJobdescription(String jobdescription) {
+		this.jobdescription = jobdescription;
 	}
 
 }

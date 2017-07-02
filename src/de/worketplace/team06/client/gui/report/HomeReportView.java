@@ -12,10 +12,10 @@ public class HomeReportView extends ReportView {
 		this.add(ClientsideSettings.getBreadcrumbs());
 		VerticalPanel vp = new VerticalPanel();
 		SimplePanel sp = new SimplePanel();
-		vp.add(createHeadline("Startseite Report Generator", true));
+		vp.add(createHeadline("Report Generator - Startseite", true));
 		vp.add(sp);
 		sp.add(new HTML(
-				"<p>Im oberen Navigationsmenü können Sie verschiedene Reports für die Auswertung von Worketplace generieren.</p>"));
+				"<p class=\"homereport\">Im oberen Navigationsmenü können Sie verschiedene Reports für die Auswertungen von Worketplace generieren.</p>"));
 		this.add(vp);
 	}
 

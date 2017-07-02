@@ -249,6 +249,7 @@ h2 {
 
 .gwt-Anchor {
 	color: grey !important;
+	cursor: pointer !important;
 }
 
 a.gwt-Anchor:hover {

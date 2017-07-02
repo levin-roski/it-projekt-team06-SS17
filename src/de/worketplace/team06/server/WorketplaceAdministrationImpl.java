@@ -472,10 +472,12 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		
 		Enrollment e = new Enrollment();
+		Call c = this.callMapper.findByID(app.getCallID());
 		
 		e.setRatingID(rating.getID());
 		e.setProjectID(project.getID());
 		e.setOrgaUnitID(orgaUnit.getID());
+		e.setJobdescription(c.getTitle());
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -499,7 +501,6 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 			saveApplication(app);
 			
 			//Den Ausschreibunsstatus auf erfolgreich besetzt setzen
-			Call c = this.callMapper.findByID(app.getCallID());
 			c.setStatus(1);
 			
 			//Den Status der übrigen Bewerbungen auf abgelehnt setzen
@@ -524,12 +525,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	 * @return Enrollment e;
 	 */
 	//Kein Override wird nur auf ServerEbene angesprochen
-	public Enrollment createAutomaticEnrollment(Project project, OrgaUnit orgaUnit, Rating rating) throws IllegalArgumentException {
+	public Enrollment createAutomaticEnrollment(Project project, OrgaUnit orgaUnit, Rating rating, String jobdescription) throws IllegalArgumentException {
 		Enrollment e = new Enrollment();
 		
 		e.setRatingID(rating.getID());
 		e.setProjectID(project.getID());
 		e.setOrgaUnitID(orgaUnit.getID());
+		e.setJobdescription(jobdescription);
 		
 		//Erzeugen eines Objekts vom Typ Date um das Erstellungsdatum zu setzen.
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -1423,9 +1425,13 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 	
 	/**
 	 * Erstellen einer Bewertung für eine Bewerbung
+	 * @param Application application
+	 * @param Float rating
+	 * @param String ratingStatement
+	 * @return Enrollment autoenroll
 	 */
 	@Override
-	public Rating rateApplication(Application application, Float rating, String ratingStatement)
+	public Enrollment rateApplication(Application application, Float rating, String ratingStatement)
 			throws IllegalArgumentException {
 		
 		Timestamp created = new Timestamp(System.currentTimeMillis());
@@ -1451,13 +1457,16 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		Project p = this.getProjectByID(c.getProjectID());
 		OrgaUnit ou = this.getOrgaUnitById(application.getOrgaUnitID());
 		
+		Enrollment autoenroll = new Enrollment();
 		if (r.getRating() == 1){
-			this.createAutomaticEnrollment(p, ou, r);
+			autoenroll = this.createAutomaticEnrollment(p, ou, r, c.getTitle());
 			application.setStatus(1);
+			this.appMapper.update(application);
 		}
 		
-		return r;
+		return autoenroll;
 	}
+	
 	
 	/**
 	 * Auslesen einer Bewertung für eine Bewerbung

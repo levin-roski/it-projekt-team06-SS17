@@ -122,7 +122,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Generierung der Kopfdaten des Reports
 		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		try {
+			headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		} catch (NullPointerException e) {
+			headerData.addSubParagraph(new SimpleParagraph("User: Unbekannter Nutzer"));
+			e.printStackTrace();
+		}
 		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
 		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
 		report.setHeaderData(headerData);
@@ -172,7 +177,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Generierung der Kopfdaten des Reports
 		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		try {
+			headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
+		} catch (NullPointerException e) {
+			headerData.addSubParagraph(new SimpleParagraph("User: Unbekannter Nutzer"));
+			e.printStackTrace();
+		}
 		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
 		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
 		report.setHeaderData(headerData);
@@ -189,9 +199,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Kopfzeile dem Report hinzufügen
 		report.addRow(headline);
 		
+		int j = 0;
 		//Relevanten Daten in den Vektor laden und Zeile für Zeile dem Report hinzufügen
 		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
-		int j = 0;
+		j = 0;
 		for (Project p : projects){
 			Vector<Call> calls = wpadmin.getCallsFor(p);
 			for (Call c : calls){
@@ -205,14 +216,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				j++;
 			}
 		}
+		
 		report.setCount(j);
 		return report;
 	}
 	
 	/**
-	 * 
+	 * Methode zum Generieren eines Reports für alle Ausschreibungen, die zum Partnerprofil der übergebenen Organisations-Einheit passt.
 	 * @param o
-	 * @return 
+	 * @return report
 	 */
 	@Override
 	public AllCallsMatchingWithUserReport createAllCallsMatchingWithUserReport(OrgaUnit o) throws IllegalArgumentException {
@@ -778,7 +790,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	/**
-	 * 
+	 * Methode zum Auslesen aller Bewerber für alle Ausschreibungen, die der übergebenen Person zugeordnet sind.
 	 */
 	@Override
 	public Vector<OrgaUnit> getAllApplicantsForAllCallsFrom(Person person){
