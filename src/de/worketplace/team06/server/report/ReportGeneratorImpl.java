@@ -529,12 +529,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle Verflechtungen meiner Bewerber");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Vector<Project> projects = wpadmin.getProjectsForLeader(o);
 		int j = 0;
