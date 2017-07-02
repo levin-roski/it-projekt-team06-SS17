@@ -212,13 +212,13 @@ import de.worketplace.team06.shared.bo.Project;
         	
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE project " 
-        	+ "SET title=\"" + proj.getTitle() + "\", " 
-        	+ "SET description=\"" + proj.getDescription() + "\", "
-        	+ "SET projectleader_id=\"" + proj.getProjectLeaderID() + "\", "
-        	+ "SET start_date=\"" + startdate + "\", "
-        	+ "SET end_date=\"" + enddate + "\" "
-        	+ "WHERE id=" + proj.getID());
+        	stmt.executeUpdate("UPDATE project SET " +
+        			"title ='" + proj.getTitle() + 
+        			"', description ='" + proj.getDescription() +
+        			"', projectleader_id=" + proj.getProjectLeaderID() +
+        			", start_date='" + startdate +
+        			"', end_date='" + enddate +
+        			"' Where id=" + proj.getID());
         }
         
         catch (SQLException e){
