@@ -92,7 +92,7 @@ public class EnrollmentMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id FROM enrollment " + "WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("Select id, created, start_date, period, end_date, orgaunit_id, project_id, rating_id, jobdescription FROM enrollment " + "WHERE id = " + id);
 			/*
 			 * es kann maximal nur ein Tupel zurueckgegeben werden, da ID Primaerschluessel ist, 
 			 * dann wird geprueft, ob für diese ID ein Tupel in der DB vorhanden ist
@@ -127,6 +127,12 @@ public class EnrollmentMapper {
 				}
 				catch(NullPointerException e7){
 				e.setRatingID(null);
+				}
+				try{
+					e.setJobdescription(rs.getString("jobdescription"));
+					}
+				catch(NullPointerException e8){
+					e.setJobdescription(null);
 				}
 				
 				return e;
@@ -187,6 +193,12 @@ public class EnrollmentMapper {
 				catch(NullPointerException e7){
 				e.setRatingID(null);
 				}
+				try{
+				e.setJobdescription(rs.getString("jobdescription"));
+				}
+				catch(NullPointerException e8){
+				e.setJobdescription(null);
+				}
 				
 				result.addElement(e);
 			}
@@ -245,6 +257,12 @@ public class EnrollmentMapper {
 					}
 					catch(NullPointerException e7){
 					e.setRatingID(null);
+					}
+					try{
+					e.setJobdescription(rs.getString("jobdescription"));
+					}
+					catch(NullPointerException e8){
+					e.setJobdescription(null);
 					}
 				
 				result.addElement(e);
@@ -307,6 +325,12 @@ public class EnrollmentMapper {
 					catch(NullPointerException e7){
 					e.setRatingID(null);
 					}
+					try{
+					e.setJobdescription(rs.getString("jobdescription"));
+					}
+					catch(NullPointerException e8){
+					e.setJobdescription(null);
+					}
 				
 				result.addElement(e);
 			}
@@ -367,6 +391,12 @@ public class EnrollmentMapper {
 					catch(NullPointerException e7){
 					e.setRatingID(null);
 					}
+					try{
+						e.setJobdescription(rs.getString("jobdescription"));
+					}
+					catch(NullPointerException e8){
+					e.setJobdescription(null);
+					}
 				
 				return e;
 			}
@@ -425,10 +455,10 @@ public class EnrollmentMapper {
 				stmt = con.createStatement();
 				// Einfuegeoption, damit das neue PartnerProfile-Tupel in die Datenbank eingefuegt werden kann.
 				stmt.executeUpdate("INSERT INTO enrollment (id, created, start_date, end_date, period,"
-						+ " orgaunit_id, project_id, rating_id) " + "VALUES (" + e.getID() + ",'"
+						+ " orgaunit_id, project_id, rating_id, jobdescription) " + "VALUES (" + e.getID() + ",'"
 						+ e.getCreated() + "'," + startdate + "," + enddate + ","
 				        + e.getWorkload() + "," + e.getOrgaUnitID() + "," + e.getProjectID() + ","
-						+ e.getRatingID()+ ")");
+						+ e.getRatingID()+ ",'" + e.getJobdescription() + "')");
 			}
 		}
 		catch (SQLException e2) {
@@ -455,8 +485,9 @@ public class EnrollmentMapper {
 			
 			stmt.executeUpdate("UPDATE enrollment SET start_date='" + startdate +
 					"', end_date='" + enddate + "', orgaunit_id=" + e.getOrgaUnitID() + 
-					", project_id=" + e.getProjectID() + ", rating_id=" + e.getRatingID() + ", period=" + e.getWorkload() +
-					" WHERE id=" + e.getID());
+					", project_id=" + e.getProjectID() + ", rating_id=" + e.getRatingID() +
+					", period=" + e.getWorkload() + ", jobdescription='" + e.getJobdescription() +
+					"' WHERE id=" + e.getID());
 			
 		}
 		catch (SQLException e2) {
