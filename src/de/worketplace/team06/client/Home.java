@@ -12,13 +12,15 @@ import com.google.gwt.user.client.ui.RootPanel;
  * Entry-Point-Klasse des Projekts <b>Worketplace</b>. Diese stellt eine
  * Startseite dar, die eine Navigation zwischen dem Editor oder dem Report
  * Generator bietet.
+ * 
+ * @author Roski
  */
 public class Home implements EntryPoint {
 	/**
-	 * Da diese Klasse die Implementierung des Interface <code>EntryPoint</code>
-	 * zusichert, benötigen wir eine Methode
-	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
-	 * <code>main()</code>-Methode normaler Java-Applikationen.
+	 * Durch Interface <code>EntryPoint</code> nötig. Wird ausgeführt, sobald
+	 * per URL angesprochen. <code>public void onModuleLoad()</code>. Diese ist
+	 * das GWT-Pendant der <code>main()</code>-Methode normaler
+	 * Java-Applikationen.
 	 */
 	public void onModuleLoad() {
 		final Image logo = new Image("logo.png");

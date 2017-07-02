@@ -3,16 +3,21 @@ package de.worketplace.team06.client.gui;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.History;
-//import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.worketplace.team06.client.ClientsideSettings;
 
+/**
+ * Editor Navigation, welche bei einem Klick die Token-Navigation ändert, oder
+ * die gesamte URL.
+ * 
+ * @author Roski
+ */
 public class EditorNavigation extends VerticalPanel {
 	MainPanel mainPanel = ClientsideSettings.getMainPanel();
-	
+
 	public EditorNavigation() {
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
@@ -21,6 +26,7 @@ public class EditorNavigation extends VerticalPanel {
 		this.add(menu);
 		final SafeHtml logo = new SafeHtml() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String asString() {
 				return "<img src=\"/logo.png\" style=\"width: 225px;\">";
@@ -55,28 +61,5 @@ public class EditorNavigation extends VerticalPanel {
 				History.newItem("Ausschreibungen");
 			}
 		}));
-//		MenuBar optionenMenu = new MenuBar(true);
-//		optionenMenu.setAnimationEnabled(true);
-//		optionenMenu.addItem(new MenuItem("Mein Nutzer", new Command() {
-//			public void execute() {
-//				History.newItem("Mein-Nutzer");
-//			}
-//		}));
-//		optionenMenu.addItem(new MenuItem("Mein Partnerprofil", new Command() {
-//			public void execute() {
-//				History.newItem("Mein-Partnerprofil");
-//			}
-//		}));
-//		optionenMenu.addItem(new MenuItem("Report Generator", new Command() {
-//			public void execute() {
-//				 Window.Location.replace("report.html");
-//			}
-//		}));
-//		optionenMenu.addItem(new MenuItem("Logout", new Command() {
-//			public void execute() {
-//				Window.Location.replace(ClientsideSettings.getLoginInfo().getLogoutUrl());
-//			}
-//		}));
-//		menu.addItem(new MenuItem("Mehr", optionenMenu));
 	}
 }

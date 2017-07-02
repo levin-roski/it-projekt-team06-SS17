@@ -37,16 +37,18 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
 /**
  * Entry-Point-Klasse des Projekts <b>Worketplace</b>. Diese enhtählt die
  * Funktionalitäten des Report Generators.
+ * 
+ * @author Roski
  */
 public class Report implements EntryPoint {
 	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	private MainPanel mainPanel;
 
 	/**
-	 * Da diese Klasse die Implementierung des Interface <code>EntryPoint</code>
-	 * zusichert, benötigen wir eine Methode
-	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
-	 * <code>main()</code>-Methode normaler Java-Applikationen.
+	 * Durch Interface <code>EntryPoint</code> nötig. Wird ausgeführt, sobald
+	 * per URL angesprochen. <code>public void onModuleLoad()</code>. Diese ist
+	 * das GWT-Pendant der <code>main()</code>-Methode normaler
+	 * Java-Applikationen.
 	 */
 	@Override
 	public void onModuleLoad() {
@@ -113,14 +115,13 @@ public class Report implements EntryPoint {
 		if (historyToken == null) {
 			historyToken = History.getToken();
 		}
-		// Parse the history token
+		// Die Tokens der Navigation rendern
 		try {
 			if (historyToken.equals("Startseite")) {
 				mainPanel.setView(new HomeReportView());
 			} else if (historyToken.equals("Mein-Nutzer")) {
 				mainPanel.setView(new OrgaUnitFormView());
-			}
-			else if (historyToken.equals("Alle-Ausschreibungen")) {
+			} else if (historyToken.equals("Alle-Ausschreibungen")) {
 				mainPanel.setView(new AllCallsReportView());
 			} else if (historyToken.equals("Passende-Ausschreibungen-zu-meinem-Partnerprofil")) {
 				mainPanel.setView(new AllCallsMatchingWithUserReportView());

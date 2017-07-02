@@ -93,7 +93,7 @@ public class RateApplicationForm extends Form {
 		ratingInput.addItem("0.7");
 		ratingInput.addItem("0.8");
 		ratingInput.addItem("0.9");
-		ratingInput.addItem("1.0");
+		ratingInput.addItem("1");
 		ratingInput.setVisibleItemCount(1);
 		form.setWidget(1, 0, descriptionLabel);
 		form.setWidget(1, 1, descriptionInput);

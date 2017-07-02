@@ -14,6 +14,11 @@ import de.worketplace.team06.shared.bo.Organisation;
 import de.worketplace.team06.shared.bo.Person;
 import de.worketplace.team06.shared.bo.Team;
 
+/**
+ * Navigation, die rechts neben der Report und Editornavigation angezeigt wird.
+ * 
+ * @author Tobias Müller
+ */
 public class UserNavigationReport extends VerticalPanel {
 	MainPanel mainPanel = ClientsideSettings.getMainPanel();
 

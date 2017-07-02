@@ -37,6 +37,8 @@ import de.worketplace.team06.shared.bo.Project;
 /**
  * Entry-Point-Klasse des Projekts <b>Worketplace</b>. Diese enhtählt die
  * Funktionalitäten des Editors.
+ * 
+ * @author Roski
  */
 public class Worketplace implements EntryPoint {
 	private WorketplaceAdministrationAsync worketplaceAdministration = ClientsideSettings
@@ -44,10 +46,10 @@ public class Worketplace implements EntryPoint {
 	private MainPanel mainPanel;
 
 	/**
-	 * Da diese Klasse die Implementierung des Interface <code>EntryPoint</code>
-	 * zusichert, benötigen wir eine Methode
-	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
-	 * <code>main()</code>-Methode normaler Java-Applikationen.
+	 * Durch Interface <code>EntryPoint</code> nötig. Wird ausgeführt, sobald
+	 * per URL angesprochen. <code>public void onModuleLoad()</code>. Diese ist
+	 * das GWT-Pendant der <code>main()</code>-Methode normaler
+	 * Java-Applikationen.
 	 */
 	@Override
 	public void onModuleLoad() {
@@ -115,7 +117,7 @@ public class Worketplace implements EntryPoint {
 		if (historyToken == null) {
 			historyToken = History.getToken();
 		}
-		// Parse the history token
+		// Die Tokens der Navigation rendern
 		try {
 			if (historyToken.substring(0, 12).equals("Marktplaetze")) {
 				mainPanel.setView(new MarketplaceOverView());
@@ -143,7 +145,8 @@ public class Worketplace implements EntryPoint {
 							}
 						});
 			} else if (historyToken.substring(0, 15).equals("Projekt-Details")) {
-				// Split projectID to ids[0] and marketplaceID to ids[1]
+				// Token String mit ids in Array splitten -> projectID ids[0]
+				// und marketplaceID ids[1]
 				final String[] ids = historyToken.substring(15).split("-");
 				class RpcWrapper {
 					protected Marketplace selectedMarketplace;
@@ -191,15 +194,14 @@ public class Worketplace implements EntryPoint {
 								}
 							}
 						};
-						// Schedule the timer to check if all RPC calls finished
-						// each 400 milliseconds
+						// RPC Timer, der alle 400 Millisekunden die Existenz der Rückgabe von anderen RPC Calls prüft
 						t.scheduleRepeating(400);
 					}
 				}
 				new RpcWrapper(ids);
 			} else if (historyToken.substring(0, 22).equals("Ausschreibungs-Details")) {
-				// Split callID to ids[0], projectID to ids[1] and marketplaceID
-				// to ids[2]
+				// Token String mit ids in Array splitten -> ids[0] projectID,
+				// ids[1] marketplaceID
 				final String[] ids = historyToken.substring(22).split("-");
 
 				class RpcWrapper {
@@ -272,9 +274,9 @@ public class Worketplace implements EntryPoint {
 											}
 										}
 									};
-									// Schedule the timer to check if all RPC
-									// calls finished
-									// each 400 milliseconds
+									// RPC Timer, der alle 400 Millisekunden die
+									// Existenz der Rückgabe von anderen RPC
+									// Calls prüft
 									t2.scheduleRepeating(400);
 								} else if (checkRpcTimerCounter == 25) {
 									t.cancel();
@@ -283,8 +285,8 @@ public class Worketplace implements EntryPoint {
 								}
 							}
 						};
-						// Schedule the timer to check if all RPC calls finished
-						// each 400 milliseconds
+						// RPC Timer, der alle 400 Millisekunden die Existenz
+						// der Rückgabe von anderen RPC Calls prüft
 						t.scheduleRepeating(400);
 					}
 				}

@@ -18,19 +18,11 @@ import de.worketplace.team06.shared.bo.OrgaUnit;
 
 /**
  * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen
- * relevant sind
+ * relevant sind.
  *
  * @author Roski
- * @version 1.0
- * @since 08.05.2017
- * 
- *        TODO extends CommonSettings hinzufügen?
- *
  */
 public class ClientsideSettings {
-	/**
-	 * 
-	 */
 	private static WorketplaceAdministrationAsync worketplaceAdministration;
 	private static LoginInfo loginInfo;
 	private static OrgaUnit currentUser;
@@ -51,8 +43,7 @@ public class ClientsideSettings {
 	private static boolean isCurrentProjectLeader = false;
 
 	/**
-	 * 
-	 * @return
+	 * @return Gibt die aktuelle Instanz von WorketplaceAdministration zurück.
 	 */
 	public static WorketplaceAdministrationAsync getWorketplaceAdministration() {
 		if (worketplaceAdministration == null) {
@@ -94,6 +85,7 @@ public class ClientsideSettings {
 		currentView = pCurrentView;
 	}
 
+	// Methoden um die aktuellen Views als Breadcrumb zu speichern.
 	public static void setFirstBreadcrumb(View view, String name) {
 		BreadcrumbFirstLevel = view;
 		BreadcrumbFirstLevelName = name;
@@ -126,6 +118,14 @@ public class ClientsideSettings {
 		BreadcrumbFourthLevelName = name;
 	}
 
+	/**
+	 * Entfernt alle IDs von übergeordneten Elementen.
+	 * 
+	 * @param level
+	 *            Kann von 1-4 gesetzt werden, tiefe Zahlen wie 1 sind z.B.
+	 *            Marktplätze, Mein Nutzer und 4 enthält die
+	 *            Ausschreibungs-Details
+	 */
 	public static void removeAboveCurrentSelection(Integer level) {
 		if (level == 1) {
 			currentCallId = -1;
@@ -140,6 +140,9 @@ public class ClientsideSettings {
 		}
 	}
 
+	/**
+	 * @return Gibt die aktuellen Breadcrumbs als HorizontalPanel zurück.
+	 */
 	public static HorizontalPanel getBreadcrumbs() {
 		HorizontalPanel breadcrumbs = new HorizontalPanel();
 		if (BreadcrumbFirstLevel != null) {
