@@ -226,7 +226,7 @@ public class PersonMapper {
 	    try {
 	    	Statement stmt = con.createStatement();
 	    	//Löschen der Person aus der Tabelle orgaunit und person.
-	    	stmt.executeUpdate("DELETE orgaunit, person FROM orgaunit INNER JOIN person "
+	    	stmt.executeUpdate("DELETE person, orgaunit FROM person INNER JOIN orgaunit "
 	    			+ "ON orgaunit.id = person.id WHERE orgaunit.id= " + p.getID());
 	    	
 	    }
