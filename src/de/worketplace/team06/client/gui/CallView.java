@@ -109,7 +109,7 @@ public class CallView extends View {
 				}
 
 				if (!ClientsideSettings.isCurrentProjectLeader()) {
-					final Button secondButton = new Button("Auf diese Ausschreibung bewerben");
+					final Button secondButton = new Button("Bewerben");
 					secondButton.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {
 							mainPanel.setForm(new ApplicationForm(null, false, true, null, null, currentCall));

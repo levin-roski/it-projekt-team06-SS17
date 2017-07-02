@@ -100,7 +100,9 @@ public class CallForm extends Form {
 			changeHeadline = createHeadlineWithCloseButton("Ausschreibung bearbeiten", true);
 			addHeadline = createHeadlineWithCloseButton("Ausschreibung hinzufügen", true);
 		}
-
+		
+		deadlineInput.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd.MM.yyyy")));
+		
 		/*
 		 * Grid mit 8 Zeilen und 2 Spalten für das Formular bereitstellen.
 		 * Danach nötige Panels einfügen und diesem Widget hinzufügen.
@@ -140,7 +142,7 @@ public class CallForm extends Form {
 							public void onSuccess(Project result) {
 								project = result;
 								if (!shouldUpdate) {
-									final Button saveButton = new Button("Neue Ausschreibung anlegen");
+									final Button saveButton = new Button("Ausschreibung anlegen");
 
 									saveButton.addClickHandler(new ClickHandler() {
 										public void onClick(ClickEvent event) {
@@ -232,7 +234,7 @@ public class CallForm extends Form {
 								deadlineInput.setValue(toChangeCall.getDeadline());
 								statusInput.setVisibleItemCount(toChangeCall.getStatus());
 
-								changeSaveButton = new Button("Änderungen speichern");
+								changeSaveButton = new Button("Speichern");
 								changeSaveButton.setVisible(false);
 								changeSaveButton.setEnabled(false);
 
@@ -271,7 +273,7 @@ public class CallForm extends Form {
 								final VerticalPanel panel = new VerticalPanel();
 								panel.add(changeSaveButton);
 
-								changeDeleteButton = new Button("Diese Ausschreibung entfernen");
+								changeDeleteButton = new Button("Ausschreibung entfernen");
 								changeDeleteButton.setVisible(false);
 								changeDeleteButton.setEnabled(false);
 								changeDeleteButton.addClickHandler(new ClickHandler() {

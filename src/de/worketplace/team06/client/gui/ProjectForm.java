@@ -155,7 +155,7 @@ public class ProjectForm extends Form {
 												startDateInput.setValue(toChangeProject.getStartDate());
 												endDateInput.setValue(toChangeProject.getEndDate());
 
-												saveButton = new Button("Änderungen speichern");
+												saveButton = new Button("Speichern");
 												saveButton.addClickHandler(new ClickHandler() {
 													public void onClick(ClickEvent event) {
 														if (nameInput.getText().length() == 0) {
@@ -195,7 +195,7 @@ public class ProjectForm extends Form {
 												panel.add(saveButton);
 												saveButton.setEnabled(false);
 												saveButton.setVisible(false);
-												deleteButton = new Button("Dieses Projekt entfernen");
+												deleteButton = new Button("Projekt entfernen");
 												deleteButton.addClickHandler(new ClickHandler() {
 													public void onClick(ClickEvent event) {
 														final boolean confirmDelete = Window
@@ -272,7 +272,7 @@ public class ProjectForm extends Form {
 			if (addHeadline != null) {
 				root.add(addHeadline);
 			}
-			saveButton = new Button("Neues Projekt anlegen");
+			saveButton = new Button("Projekt anlegen");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (nameInput.getText().length() == 0) {

@@ -1453,6 +1453,7 @@ public class WorketplaceAdministrationImpl extends RemoteServiceServlet implemen
 		
 		if (r.getRating() == 1){
 			this.createAutomaticEnrollment(p, ou, r);
+			application.setStatus(1);
 		}
 		
 		return r;

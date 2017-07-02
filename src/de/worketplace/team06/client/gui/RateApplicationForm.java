@@ -103,7 +103,7 @@ public class RateApplicationForm extends Form {
 			}
 			ratingInput.setSelectedIndex(indexToFind);
 			descriptionInput.setText(toChangeRating.getRatingStatement());
-			final Button saveButton = new Button("Änderungen speichern");
+			final Button saveButton = new Button("Speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (ratingInput.getSelectedValue().length() == 0) {
@@ -134,7 +134,7 @@ public class RateApplicationForm extends Form {
 			});
 			final VerticalPanel panel = new VerticalPanel();
 			panel.add(saveButton);
-			final Button deleteButton = new Button("Diese Bewertung entfernen");
+			final Button deleteButton = new Button("Bewertung entfernen");
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					final boolean confirmDelete = Window.confirm("Möchten Sie die Bewertung wirklich löschen?");
