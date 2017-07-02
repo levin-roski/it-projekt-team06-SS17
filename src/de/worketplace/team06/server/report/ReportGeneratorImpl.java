@@ -166,17 +166,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		report.setTitle("Alle eigenen Ausschreibungen");
 		report.setCreated(new Date());
 		
-		//Generierung der Kopfdaten des Reports
-		CompositeParagraph headerData = new CompositeParagraph();
-		try {
-			headerData.addSubParagraph(new SimpleParagraph("User: " + getNameForOrgaUnit(o)));
-		} catch (NullPointerException e) {
-			headerData.addSubParagraph(new SimpleParagraph("User: Unbekannter Nutzer"));
-			e.printStackTrace();
-		}
-		headerData.addSubParagraph(new SimpleParagraph("Datum: " + getDateForReport(report)));
-		headerData.addSubParagraph(new SimpleParagraph("Uhrzeit: " + getTimeForReport(report)));
-		report.setHeaderData(headerData);
+		//Hinzufügen der Kopfdaten
+		report.setHeaderData(createHeaderData(o, report));
 		
 		Row headline = new Row();
 		
