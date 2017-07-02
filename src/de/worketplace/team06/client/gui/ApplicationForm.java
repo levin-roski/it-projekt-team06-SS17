@@ -94,7 +94,7 @@ public class ApplicationForm extends Form {
 				root.add(changeHeadline);
 			}
 			textInput.setText(toChangeApplication.getText());
-			final Button saveButton = new Button("Änderungen speichern");
+			final Button saveButton = new Button("Speichern");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (textInput.getText().length() == 0) {
@@ -148,7 +148,7 @@ public class ApplicationForm extends Form {
 			if (addHeadline != null) {
 				root.add(addHeadline);
 			}
-			final Button saveButton = new Button("Auf Ausschreibung bewerben");
+			final Button saveButton = new Button("Bewerben");
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (textInput.getText().length() == 0) {
