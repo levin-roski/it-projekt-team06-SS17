@@ -389,7 +389,7 @@ public class OrgaUnitFormView extends View {
 						});
 				break;
 			}
-
+			root.add(formStatic);
 		} else {
 			RootPanel.get("navigation").add(new HTML("<img src=\"/logo.png\" class=\"registration-logo\">"));
 			if (addHeadline != null) {
