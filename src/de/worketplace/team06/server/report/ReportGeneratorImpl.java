@@ -488,7 +488,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Project p = wpadmin.getProjectByID(e.getProjectID());
 			Row rowToAdd = new Row();
 			rowToAdd.addColumn(new Column(p.getTitle()));
-			rowToAdd.addColumn(new Column(e.getJobdescription()));
+			try {
+				rowToAdd.addColumn(new Column(e.getJobdescription()));
+			} catch (NullPointerException e1) {
+				rowToAdd.addColumn(new Column("Keine Tätigkeit gesetzt"));
+			}
 			rowToAdd.addColumn(new Column(convertDate(e.getStartDate())));
 			rowToAdd.addColumn(new Column(convertDate(e.getEndDate())));
 			report.addRow(rowToAdd);
