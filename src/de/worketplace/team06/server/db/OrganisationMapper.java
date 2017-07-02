@@ -202,7 +202,7 @@ public class OrganisationMapper {
 	    try {
 	    	Statement stmt = con.createStatement();
 	    	//Löschen des Organisation-Objektes aus der Tabelle orgaunit und organisation
-	    	stmt.executeUpdate("DELETE orgaunit, organisation FROM orgaunit INNER JOIN organisation ON orgaunit.id = organisation.id WHERE orgaunit.id= " + o.getID());	
+	    	stmt.executeUpdate("DELETE organisation, orgaunit FROM organisation INNER JOIN orgaunit ON orgaunit.id = organisation.id WHERE orgaunit.id= " + o.getID());	
 	    }
 	    catch (SQLException e2) {
 				  e2.printStackTrace();		
