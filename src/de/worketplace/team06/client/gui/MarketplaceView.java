@@ -94,13 +94,15 @@ public class MarketplaceView extends View {
 		root.add(projectTable);
 		projectTable.setWidth("100%", true);
 
-		final Button newButton = new Button("Projekt hinzufügen");
-		newButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				mainPanel.setForm(new ProjectForm(null, false, true, currentMarketplace));
-			}
-		});
-		root.add(newButton);
+		if (ClientsideSettings.getCurrentUser().getType() == "Person") {
+			final Button newButton = new Button("Projekt hinzufügen");
+			newButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					mainPanel.setForm(new ProjectForm(null, false, true, currentMarketplace));
+				}
+			});
+			root.add(newButton);
+		}
 
 		this.add(root);
 		loadData();

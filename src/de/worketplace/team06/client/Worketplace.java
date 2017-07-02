@@ -9,6 +9,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -23,6 +24,7 @@ import de.worketplace.team06.client.gui.OrgaUnitFormView;
 import de.worketplace.team06.client.gui.OrgaUnitPartnerProfileView;
 import de.worketplace.team06.client.gui.ProjectOverView;
 import de.worketplace.team06.client.gui.ProjectView;
+import de.worketplace.team06.client.gui.UserNavigation;
 import de.worketplace.team06.shared.LoginService;
 import de.worketplace.team06.shared.LoginServiceAsync;
 import de.worketplace.team06.shared.WorketplaceAdministrationAsync;
@@ -97,7 +99,14 @@ public class Worketplace implements EntryPoint {
 		/*
 		 * Navigationsleiste des Editors
 		 */
-		RootPanel.get("navigation").add(new EditorNavigation());
+		HorizontalPanel fullNav = new HorizontalPanel();
+		EditorNavigation editNav = new EditorNavigation();
+		editNav.setStyleName("editNav");
+		fullNav.add(editNav);
+		UserNavigation userNav = new UserNavigation();
+		userNav.setStyleName("userNav");
+		fullNav.add(userNav);
+		RootPanel.get("navigation").add(fullNav);
 
 		renderUrlToken(null);
 	}

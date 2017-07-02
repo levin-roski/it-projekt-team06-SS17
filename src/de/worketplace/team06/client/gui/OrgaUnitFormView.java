@@ -60,6 +60,7 @@ public class OrgaUnitFormView extends View {
 	 *            das aktuelle Item schließt, vorangehängt
 	 */
 	public OrgaUnitFormView() {
+		setBreadcrumb();
 		changeHeadline = createHeadline("Meinen Nutzer bearbeiten", true);
 		addHeadline = createHeadline("Meinen Nutzer erstellen", true);
 
@@ -152,7 +153,7 @@ public class OrgaUnitFormView extends View {
 								deleteButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										final boolean confirmDelete = Window
-												.confirm("Möchten Sie Ihren Nutzer wirklich löschen?");
+												.confirm("Möchten Sie Ihren Nutzer wirklich entfernen? \nVorsicht alle Ihre Daten gehen verloren!");
 										if (confirmDelete) {
 											try {
 												worketplaceAdministration.deletePerson(toChangePerson,
@@ -166,6 +167,7 @@ public class OrgaUnitFormView extends View {
 															@Override
 															public void onSuccess(Void result) {
 																Window.alert("Der Nutzer wurde erfolgreich gelöscht");
+																Window.Location.replace(ClientsideSettings.getLoginInfo().getLogoutUrl());
 															}
 														});
 											} catch (Exception e) {
@@ -208,8 +210,10 @@ public class OrgaUnitFormView extends View {
 										}
 									}
 								});
-								formStatic.setWidget(7, 1, saveButton);
-								formStatic.setWidget(8, 1, deleteButton);
+								HorizontalPanel hp = new HorizontalPanel();
+								hp.add(saveButton);
+								hp.add(deleteButton);
+								formStatic.setWidget(7, 1, hp);
 							}
 						});
 				break;
@@ -237,7 +241,7 @@ public class OrgaUnitFormView extends View {
 						deleteButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
 								final boolean confirmDelete = Window
-										.confirm("Möchten Sie Ihren Nutzer wirklich löschen?");
+										.confirm("Möchten Sie Ihren Nutzer wirklich löschen? \nVorsicht alle Ihre Daten gehen verloren!");
 								if (confirmDelete) {
 									try {
 										worketplaceAdministration.deleteTeam(toChangeTeam, new AsyncCallback<Void>() {
@@ -250,6 +254,7 @@ public class OrgaUnitFormView extends View {
 											@Override
 											public void onSuccess(Void result) {
 												Window.alert("Der Nutzer wurde erfolgreich gelöscht");
+												Window.Location.replace(ClientsideSettings.getLoginInfo().getLogoutUrl());
 											}
 										});
 									} catch (Exception e) {
@@ -286,8 +291,10 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formStatic.setWidget(4, 1, saveButton);
-						formStatic.setWidget(5, 1, deleteButton);
+						HorizontalPanel hp = new HorizontalPanel();
+						hp.add(saveButton);
+						hp.add(deleteButton);
+						formStatic.setWidget(4, 1, hp);
 					}
 				});
 				break;
@@ -301,13 +308,13 @@ public class OrgaUnitFormView extends View {
 
 							@Override
 							public void onSuccess(final Organisation toChangeOrganisation) {
-								Label nameLabel = new Label("Vorname");
+								Label nameLabel = new Label("Name");
 								formStatic.setWidget(2, 0, nameLabel);
 								final TextBox nameInput = new TextBox();
 								nameInput.setText(toChangeOrganisation.getName());
 								formStatic.setWidget(2, 1, nameInput);
 
-								Label streetLabel = new Label("Nachname");
+								Label streetLabel = new Label("Straße");
 								formStatic.setWidget(3, 0, streetLabel);
 								final TextBox streetInput = new TextBox();
 								streetInput.setText(toChangeOrganisation.getStreet());
@@ -328,7 +335,7 @@ public class OrgaUnitFormView extends View {
 								deleteButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										final boolean confirmDelete = Window
-												.confirm("Möchten Sie Ihren Nutzer wirklich löschen?");
+												.confirm("Möchten Sie Ihren Nutzer wirklich löschen? \nVorsicht alle Ihre Daten gehen verloren!");
 										if (confirmDelete) {
 											try {
 												worketplaceAdministration.deleteOrganisation(toChangeOrganisation,
@@ -342,6 +349,7 @@ public class OrgaUnitFormView extends View {
 															@Override
 															public void onSuccess(Void result) {
 																Window.alert("Der Nutzer wurde erfolgreich gelöscht");
+																Window.Location.replace(ClientsideSettings.getLoginInfo().getLogoutUrl());
 															}
 														});
 											} catch (Exception e) {
@@ -354,9 +362,9 @@ public class OrgaUnitFormView extends View {
 										if (descriptionInput.getText().length() == 0) {
 											Window.alert("Bitte beschreiben Sie Ihren Nutzer genauer");
 										} else if (nameInput.getText().length() == 0) {
-											Window.alert("Bitte füllen Sie das Feld Vorname");
+											Window.alert("Bitte füllen Sie das Feld Name");
 										} else if (streetInput.getText().length() == 0) {
-											Window.alert("Bitte füllen Sie das Feld Nachname");
+											Window.alert("Bitte füllen Sie das Feld Straße");
 										} else {
 											toChangeOrganisation.setDescription(descriptionInput.getText());
 											toChangeOrganisation.setName(nameInput.getText());
@@ -384,8 +392,10 @@ public class OrgaUnitFormView extends View {
 										}
 									}
 								});
-								formStatic.setWidget(6, 1, saveButton);
-								formStatic.setWidget(7, 1, deleteButton);
+								HorizontalPanel hp = new HorizontalPanel();
+								hp.add(saveButton);
+								hp.add(deleteButton);
+								formStatic.setWidget(6, 1, hp);
 							}
 						});
 				break;
@@ -428,6 +438,10 @@ public class OrgaUnitFormView extends View {
 					});
 
 					String type = typeInput.getSelectedValue();
+					HorizontalPanel hp = new HorizontalPanel();
+					hp.add(saveButton);
+					hp.add(logoutButton);
+					formStatic.setWidget(7, 1, hp);
 					switch (type) {
 					case "Person":
 						Label firstnameLabel = new Label("Vorname");
@@ -488,8 +502,7 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formDynamic.setWidget(7, 1, saveButton);
-						formDynamic.setWidget(8, 1, logoutButton);
+						formStatic.setWidget(7, 1, hp);
 						break;
 
 					case "Team":
@@ -508,7 +521,7 @@ public class OrgaUnitFormView extends View {
 								if (descriptionInput.getText().length() == 0) {
 									Window.alert("Bitte beschreiben Sie Ihren Nutzer genauer");
 								} else if (nameInput.getText().length() == 0) {
-									Window.alert("Bitte füllen Sie das Feld Name");
+									Window.alert("Bitte füllen Sie das Feld Team-Name");
 								} else {
 									int count = 0;
 									try {
@@ -532,17 +545,16 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formDynamic.setWidget(4, 1, saveButton);
-						formDynamic.setWidget(5, 1, logoutButton);
+						formStatic.setWidget(4, 1, hp);
 						break;
 
 					case "Organisation":
-						Label nameLabel1 = new Label("Vorname");
+						Label nameLabel1 = new Label("Name");
 						formDynamic.setWidget(2, 0, nameLabel1);
 						final TextBox nameInput1 = new TextBox();
 						formDynamic.setWidget(2, 1, nameInput1);
 
-						Label streetLabel1 = new Label("Nachname");
+						Label streetLabel1 = new Label("Straße");
 						formDynamic.setWidget(3, 0, streetLabel1);
 						final TextBox streetInput1 = new TextBox();
 						formDynamic.setWidget(3, 1, streetInput1);
@@ -562,9 +574,9 @@ public class OrgaUnitFormView extends View {
 								if (descriptionInput.getText().length() == 0) {
 									Window.alert("Bitte beschreiben Sie Ihren Nutzer genauer");
 								} else if (nameInput1.getText().length() == 0) {
-									Window.alert("Bitte füllen Sie das Feld Vorname");
+									Window.alert("Bitte füllen Sie das Feld Name");
 								} else if (streetInput1.getText().length() == 0) {
-									Window.alert("Bitte füllen Sie das Feld Nachname");
+									Window.alert("Bitte füllen Sie das Feld Straße");
 								} else {
 									int zipcode = 0;
 									try {
@@ -589,8 +601,7 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formDynamic.setWidget(6, 1, saveButton);
-						formDynamic.setWidget(7, 1, logoutButton);
+						formStatic.setWidget(6, 1, hp);
 						break;
 					}
 				}

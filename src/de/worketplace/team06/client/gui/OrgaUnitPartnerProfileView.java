@@ -111,7 +111,7 @@ public class OrgaUnitPartnerProfileView extends View {
 
 	@Override
 	public void setBreadcrumb() {
-		ClientsideSettings.setSecondBreadcrumb(this, "Mein Partnerprofil");
+		ClientsideSettings.setFirstBreadcrumb(this, "Mein Partnerprofil");
 	}
 	
 	@Override
