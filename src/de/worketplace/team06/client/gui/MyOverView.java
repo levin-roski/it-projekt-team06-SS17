@@ -386,7 +386,7 @@ public class MyOverView extends View {
 
 		VerticalPanel root = new VerticalPanel();
 		root.add(ClientsideSettings.getBreadcrumbs());
-		root.add(createHeadline("Mein Bereich", true));
+		//root.add(createHeadline("Mein Bereich", true));
 		if (ClientsideSettings.getCurrentUser() instanceof Person) {
 			root.add(createSecondHeadline("Meine Projekte"));
 			root.add(myProjectsTable);

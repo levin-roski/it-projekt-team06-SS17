@@ -436,12 +436,9 @@ public class OrgaUnitFormView extends View {
 							}
 						}
 					});
-
+					
 					String type = typeInput.getSelectedValue();
 					HorizontalPanel hp = new HorizontalPanel();
-					hp.add(saveButton);
-					hp.add(logoutButton);
-					formStatic.setWidget(7, 1, hp);
 					switch (type) {
 					case "Person":
 						Label firstnameLabel = new Label("Vorname");
@@ -498,11 +495,13 @@ public class OrgaUnitFormView extends View {
 												public void onSuccess(Person result) {
 													runAfterInsert();
 												}
-											});
+									});
 								}
 							}
 						});
-						formStatic.setWidget(7, 1, hp);
+						hp.add(saveButton);
+						hp.add(logoutButton);
+						formDynamic.setWidget(7, 1, hp);
 						break;
 
 					case "Team":
@@ -545,7 +544,9 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formStatic.setWidget(4, 1, hp);
+						hp.add(saveButton);
+						hp.add(logoutButton);
+						formDynamic.setWidget(4, 1, hp);
 						break;
 
 					case "Organisation":
@@ -601,7 +602,9 @@ public class OrgaUnitFormView extends View {
 								}
 							}
 						});
-						formStatic.setWidget(6, 1, hp);
+						hp.add(saveButton);
+						hp.add(logoutButton);
+						formDynamic.setWidget(6, 1, hp);
 						break;
 					}
 				}

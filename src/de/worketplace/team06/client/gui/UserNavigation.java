@@ -33,6 +33,7 @@ public class UserNavigation extends VerticalPanel {
 
 		menu.addItem(new MenuItem(usericon, new Command() {
 			public void execute() {
+				History.newItem("Mein-Nutzer");
 			}
 		}));
 		MenuBar optionenMenu = new MenuBar(true);
@@ -61,13 +62,13 @@ public class UserNavigation extends VerticalPanel {
 		OrgaUnit user = ClientsideSettings.getCurrentUser();
 		String name = "Unknown User";
 		if (user instanceof Person) {
-			Person p = new Person();
+			Person p = (Person) user;
 			name = p.getFirstName() + " " + p.getLastName();
 		} else if (user instanceof Team) {
-			Team t = new Team();
+			Team t = (Team) user;
 			name = t.getName();
 		} else if (user instanceof Organisation) {
-			Organisation org = new Organisation();
+			Organisation org = (Organisation) user;
 			name = org.getName();
 		}
 		menu.addItem(new MenuItem(name, optionenMenu));

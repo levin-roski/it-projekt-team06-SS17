@@ -20,6 +20,7 @@ public class ProjectOverView extends View {
 	private final CellTable<Project> allProjectsTable = new CellTable<Project>();
 
 	public ProjectOverView() {
+		setBreadcrumb();
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Project> AllProjectSsm = new SingleSelectionModel<Project>();

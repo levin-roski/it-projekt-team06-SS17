@@ -195,12 +195,13 @@ h2 {
 	border: #fff !important;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableCell, .GPBYFDEFD {
+/**/
+.com-google-gwt-user-cellview-client-CellTable-Style-cellTableCell {
 	padding: 9px 15px !important;
 }
 
-.com-google-gwt-user-cellview-client-CellTable-Style-cellTableOddRowCell {
-	
+.GPBYFDEPC td, .GPBYFDEPD td {
+	padding: 9px 15px !important;
 }
 
 .gwt-MenuBar {
@@ -222,7 +223,6 @@ h2 {
     color: #fff !important;
 	vertical-align: middle !important;
 	border: 0 !important;
-	text-transform: uppercase;
 }
 
 .gwt-MenuItem-selected{
@@ -245,16 +245,17 @@ h2 {
 	/*cursor: pointer !important;*/
 }
 
-#gwt-uid-14 {
-	background: none !important;
-}
-
-#gwt-uid-14:hover {
+.userNav #gwt-uid-6, .userNav #gwt-uid-6:hover, .userNav #gwt-uid-14, .userNav #gwt-uid-14:hover {
 	background: none !important;
 }
 
 .menuPopupTop, .menuPopupTopLeft, .menuPopupTopCenter, .menuPopupTopRight, .menuPopupMiddle, .menuPopupMiddleLeft, .menuPopupMiddleCenter, .menuPopupMiddleRight, .menuPopupBottom, .menuPopupBottomLeft, .menuPopupBottomCenter, .menuPopupBottomRight {
 	background: #454a4a !important;
+}
+
+.gwt-MenuBarPopup {
+	border: 2px solid #04847a !important;
+	font-weight: Lighter !important;
 }
 
 .gwt-Button {

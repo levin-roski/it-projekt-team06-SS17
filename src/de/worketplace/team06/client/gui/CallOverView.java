@@ -21,6 +21,7 @@ public class CallOverView extends View {
 	private final CellTable<Call> allCallsTable = new CellTable<Call>();
 
 	public CallOverView() {
+		setBreadcrumb();
 		// erstellen eines SingleSelectionModels -> macht, dass immer nur ein
 		// Item zur selben Zeit ausgewählt sein kann
 		final SingleSelectionModel<Call> allCallSsm = new SingleSelectionModel<Call>();

@@ -200,6 +200,8 @@ public class RateApplicationForm extends Form {
 									}
 								});
 								panel.add(deleteButton);
+								form.setWidget(2, 1, panel);
+								
 								
 							} else {
 								if (addHeadline != null) {
@@ -242,6 +244,9 @@ public class RateApplicationForm extends Form {
 								form.setWidget(2, 1, saveButton);
 								
 		
+								
+								
+								
 //								worketplaceAdministration.getProjectByID(ClientsideSettings.getCurrentProjectId(), new AsyncCallback<Project>() {
 //									public void onFailure(Throwable caught) {
 //										Window.alert(
@@ -253,7 +258,9 @@ public class RateApplicationForm extends Form {
 //									}
 //								});
 //								
-//								form.setWidget(3, 1, new HTML("<div class=\"applicationactions\"><h2>Aktion für Bewerbung</h2><span id=\"line\"></span></div>"));
+//
+//								//form.setWidget(3, 1, new HTML("<div class=\"applicationactions\"><h2>Aktion für Bewerbung</h2><span id=\"line\"></span></div>"));
+//								final VerticalPanel panel = new VerticalPanel();
 //								final Button acceptButton = new Button("Annehmen");
 //								acceptButton.setStyleName("acceptButton");
 //								acceptButton.addClickHandler(new ClickHandler() {
@@ -275,8 +282,7 @@ public class RateApplicationForm extends Form {
 //										}
 //									}
 //								});
-//								form.setWidget(4, 1, acceptButton);
-//								
+//								panel.add(acceptButton);
 //								
 //								final Button declineButton = new Button("Ablehnen");
 //								declineButton.setStyleName("declineButton");
@@ -300,10 +306,12 @@ public class RateApplicationForm extends Form {
 //										}
 //									}
 //								});
-//								form.setWidget(4, 2, declineButton);
+//								panel.add(declineButton);
+//								form.setWidget(3, 1, panel);
 								
-
-	
+								
+								
+								
 								
 							}
 							root.add(form);
